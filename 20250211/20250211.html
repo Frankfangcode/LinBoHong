@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中翻英強化訓練 | Translation Quiz</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- 設定字型 -->
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-100 flex flex-col items-center justify-center font-sans text-slate-800">
+
+    <!-- 測驗區域 (Quiz Section) -->
+    <div id="quiz-container" class="w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden m-4 transition-all duration-300">
+        
+        <!-- Header -->
+        <div class="bg-slate-800 p-6 text-white flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i data-lucide="book-open" class="w-5 h-5"></i>
+                <h1 class="text-lg font-bold tracking-wide">中翻英強化訓練</h1>
+            </div>
+            <span id="question-counter" class="text-sm font-medium bg-slate-700 px-3 py-1 rounded-full">
+                1 / 5
+            </span>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-200 h-1.5">
+            <div id="progress-bar" class="bg-blue-500 h-1.5 transition-all duration-300 ease-out" style="width: 20%"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-8">
+            <div class="mb-8">
+                <label class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    請翻譯以下句子
+                </label>
+                <h2 id="question-text" class="text-2xl md:text-3xl font-bold text-slate-800 leading-snug min-h-[4rem]">
+                    <!-- 題目將由 JS 插入 -->
+                </h2>
+            </div>
+
+            <div class="relative">
+                <textarea
+                    id="answer-input"
+                    placeholder="請在此輸入英文翻譯..."
+                    class="w-full h-40 p-4 text-lg border-2 border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all resize-none bg-slate-50 text-slate-700"
+                    spellcheck="false"
+                ></textarea>
+                <div class="absolute bottom-4 right-4 text-slate-400">
+                    <i data-lucide="pen-tool" class="w-4 h-4"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Navigation -->
+        <div class="bg-slate-50 p-6 border-t border-slate-100 flex justify-between items-center">
+            <button
+                id="prev-btn"
+                onclick="handlePrev()"
+                class="flex items-center gap-1 px-4 py-2 rounded-lg font-medium transition-colors text-slate-300 cursor-not-allowed"
+                disabled
+            >
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                上一題
+            </button>
+
+            <button
+                id="next-btn"
+                onclick="handleNext()"
+                class="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all transform active:scale-95 font-medium"
+            >
+                <span id="next-btn-text">下一題</span>
+                <i id="next-btn-icon" data-lucide="chevron-right" class="w-4.5 h-4.5"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 結果區域 (Result Section) - 預設隱藏 -->
+    <div id="result-container" class="w-full max-w-3xl hidden m-4">
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <div class="flex items-center justify-center mb-6">
+                <div class="bg-green-100 p-3 rounded-full">
+                    <i data-lucide="check-circle" class="w-8 h-8 text-green-600"></i>
+                </div>
+            </div>
+            <h2 class="text-2xl font-bold text-center text-slate-800 mb-2">測驗完成</h2>
+            <p class="text-center text-slate-500 mb-8">請仔細比對你的翻譯與參考答案的差異。</p>
+            
+            <!-- 結果列表將由 JS 插入 -->
+            <div id="result-list" class="space-y-8"></div>
+
+            <div class="mt-10 flex justify-center">
+                <button 
+                    onclick="handleRestart()"
+                    class="flex items-center gap-2 px-6 py-3 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors shadow-md font-medium"
+                >
+                    <i data-lucide="refresh-ccw" class="w-4.5 h-4.5"></i>
+                    重新測驗
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-6 text-slate-400 text-sm">
+        © Teacher Ze-Xiang's English Class
+    </div>
+
+    <script>
+        // 資料設定
+        const questions = [
+            {
+                id: 1,
+                chinese: "Anna說這家咖啡廳的咖啡比城裡其他的都好。",
+                answer: "Anna says that the coffee at this café is superior to any other coffee in town."
+            },
+            {
+                id: 2,
+                chinese: "任何參與這項烹飪比賽的人將需要自行攜帶料理的食材。",
+                answer: "Anyone who participates in the cooking contest will have to bring their own ingredients for their dishes."
+            },
+            {
+                id: 3,
+                chinese: "因為我這個月沒賺很多錢，所以我每周花費限制在1000元以內。",
+                answer: "Since I didn't make a lot of money this month, I'm restricting my spending to NT$1000 a week."
+            },
+            {
+                id: 4,
+                chinese: "政府因新法而遭受抨擊，公民要求總統下台。",
+                answer: "The government has come under criticism for the new law, and citizens have called upon the president to step down."
+            },
+            {
+                id: 5,
+                chinese: "身為地球村的成員，我們不該把自己局限在這個小島上。",
+                answer: "As members of the global community, we should not limit ourselves to this small island."
+            }
+        ];
+
+        // 狀態變數
+        let currentStep = 0;
+        let userAnswers = {};
+
+        // DOM 元素
+        const quizContainer = document.getElementById('quiz-container');
+        const resultContainer = document.getElementById('result-container');
+        const questionText = document.getElementById('question-text');
+        const questionCounter = document.getElementById('question-counter');
+        const progressBar = document.getElementById('progress-bar');
+        const answerInput = document.getElementById('answer-input');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const nextBtnText = document.getElementById('next-btn-text');
+        const nextBtnIcon = document.getElementById('next-btn-icon');
+        const resultList = document.getElementById('result-list');
+
+        // 初始化
+        function init() {
+            renderQuestion();
+            lucide.createIcons();
+            
+            // 監聽輸入變化
+            answerInput.addEventListener('input', (e) => {
+                userAnswers[questions[currentStep].id] = e.target.value;
+            });
+            
+            // 支援 Enter + Ctrl/Cmd 提交 (可選)
+            answerInput.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    handleNext();
+                }
+            });
+        }
+
+        // 渲染當前題目介面
+        function renderQuestion() {
+            const q = questions[currentStep];
+            
+            // 更新文字
+            questionText.textContent = q.chinese;
+            questionCounter.textContent = `${currentStep + 1} / ${questions.length}`;
+            
+            // 更新輸入框
+            answerInput.value = userAnswers[q.id] || '';
+            answerInput.focus();
+
+            // 更新進度條
+            const progress = ((currentStep + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            // 更新按鈕狀態
+            if (currentStep === 0) {
+                prevBtn.disabled = true;
+                prevBtn.classList.add('text-slate-300', 'cursor-not-allowed');
+                prevBtn.classList.remove('text-slate-600', 'hover:bg-slate-200');
+            } else {
+                prevBtn.disabled = false;
+                prevBtn.classList.remove('text-slate-300', 'cursor-not-allowed');
+                prevBtn.classList.add('text-slate-600', 'hover:bg-slate-200');
+            }
+
+            // 更新下一步按鈕文字
+            if (currentStep === questions.length - 1) {
+                nextBtnText.textContent = '提交答案';
+                // 我們需要重新設置 icon 屬性以便 lucide 重新渲染
+                nextBtnIcon.setAttribute('data-lucide', 'check-circle');
+            } else {
+                nextBtnText.textContent = '下一題';
+                nextBtnIcon.setAttribute('data-lucide', 'chevron-right');
+            }
+            
+            // 重新渲染圖標
+            lucide.createIcons();
+        }
+
+        // 下一題 / 提交
+        function handleNext() {
+            // 儲存當前答案 (防呆，雖然 input 事件已經存了)
+            userAnswers[questions[currentStep].id] = answerInput.value;
+
+            if (currentStep < questions.length - 1) {
+                currentStep++;
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // 上一題
+        function handlePrev() {
+            if (currentStep > 0) {
+                // 儲存當前答案
+                userAnswers[questions[currentStep].id] = answerInput.value;
+                currentStep--;
+                renderQuestion();
+            }
+        }
+
+        // 顯示結果
+        function showResults() {
+            quizContainer.classList.add('hidden');
+            resultContainer.classList.remove('hidden');
+            
+            // 產生結果 HTML
+            resultList.innerHTML = questions.map((q, index) => {
+                const userAnswer = userAnswers[q.id] || "";
+                const hasAnswer = userAnswer.trim().length > 0;
+                
+                return `
+                <div class="border-b border-slate-100 pb-6 last:border-0">
+                    <div class="flex items-start gap-3 mb-3">
+                        <span class="bg-slate-800 text-white text-xs font-bold px-2 py-1 rounded mt-1">
+                            Q${index + 1}
+                        </span>
+                        <h3 class="text-lg font-medium text-slate-800">${q.chinese}</h3>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4 mt-4">
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <p class="text-xs text-slate-500 font-semibold mb-2 uppercase tracking-wide">你的答案</p>
+                            <p class="text-base ${hasAnswer ? 'text-slate-700' : 'text-red-400 italic'}">
+                                ${hasAnswer ? escapeHtml(userAnswer) : "（未作答）"}
+                            </p>
+                        </div>
+                        
+                        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                            <p class="text-xs text-green-600 font-semibold mb-2 uppercase tracking-wide">參考答案</p>
+                            <p class="text-base text-green-800 font-medium">
+                                ${q.answer}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            // 重新渲染結果頁的圖標
+            lucide.createIcons();
+            // 滾動到頂部
+            window.scrollTo(0, 0);
+        }
+
+        // 重新開始
+        function handleRestart() {
+            currentStep = 0;
+            userAnswers = {};
+            resultContainer.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            renderQuestion();
+        }
+
+        // 簡單的 HTML 轉義防止 XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 啟動應用
+        init();
+    </script>
+</body>
+</html>
