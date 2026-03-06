@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每週翻譯練習 | 柏宏</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        dark: { 900: '#0B0E14', 800: '#151923', 700: '#1E2433', 600: '#2A2F3E' },
+                        accent: { blue: '#3B82F6', green: '#10B981', yellow: '#F59E0B', red: '#EF4444', purple: '#8B5CF6' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0B0E14; color: #E2E8F0; font-family: 'Noto Sans TC', sans-serif; }
+        .answer-reveal {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        .answer-reveal.show {
+            max-height: 200px;
+            opacity: 1;
+        }
+        .card-flip {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-flip:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(59,130,246,0.15);
+        }
+        .week-tab.active {
+            background: rgba(59,130,246,0.15);
+            border-color: #3B82F6;
+            color: #60A5FA;
+        }
+        .week-tab {
+            border: 1px solid #2A2F3E;
+            transition: all 0.2s;
+        }
+        .week-tab:hover:not(.active) {
+            border-color: #3B82F6;
+            color: #93C5FD;
+        }
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        .hint-tag {
+            font-size: 0.65rem;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* Quiz mode card */
+        .quiz-card {
+            border: 1px solid #2A2F3E;
+            background: #151923;
+            border-radius: 12px;
+            padding: 24px;
+            transition: border-color 0.3s;
+        }
+        .quiz-card.correct { border-color: #10B981; background: rgba(16,185,129,0.05); }
+        .quiz-card.wrong { border-color: #EF4444; background: rgba(239,68,68,0.05); }
+        .quiz-card.revealed { border-color: #3B82F6; }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: fadeSlideIn 0.3s ease forwards; }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0B0E14; }
+        ::-webkit-scrollbar-thumb { background: #2A2F3E; border-radius: 3px; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+<div class="max-w-3xl mx-auto px-4 py-8">
+
+    <!-- Header -->
+    <div class="mb-8">
+        <div class="text-xs font-mono text-blue-400 opacity-60 uppercase tracking-widest mb-1">WEEKLY DRILL</div>
+        <h1 class="text-3xl font-black text-white flex items-center gap-3">
+            <span class="text-accent-blue font-mono text-2xl">///</span>
+            每週英文翻譯
+        </h1>
+        <p class="text-gray-500 text-sm mt-2 font-mono">中 → 英 ／ 每週五題 ／ 自我檢測</p>
+    </div>
+
+    <!-- Mode Toggle -->
+    <div class="flex gap-2 mb-6">
+        <button id="btn-review" onclick="setMode('review')"
+            class="mode-btn px-4 py-2 rounded-lg text-sm font-bold bg-blue-600 text-white transition-all">
+            複習模式
+        </button>
+        <button id="btn-quiz" onclick="setMode('quiz')"
+            class="mode-btn px-4 py-2 rounded-lg text-sm font-bold bg-dark-700 text-gray-400 border border-dark-600 transition-all hover:text-white">
+            測驗模式
+        </button>
+    </div>
+
+    <!-- Week Selector -->
+    <div id="week-tabs" class="flex gap-2 mb-6 flex-wrap"></div>
+
+    <!-- Stats Bar -->
+    <div id="stats-bar" class="hidden bg-dark-800 rounded-lg p-3 mb-6 flex items-center gap-4 text-xs font-mono">
+        <span class="text-gray-500">進度</span>
+        <div class="flex-1 bg-dark-700 rounded-full h-2">
+            <div id="progress-fill" class="progress-bar bg-accent-green h-2 rounded-full" style="width:0%"></div>
+        </div>
+        <span id="progress-text" class="text-gray-400">0 / 5</span>
+        <span id="score-text" class="text-green-400 font-bold hidden"></span>
+    </div>
+
+    <!-- Content Area -->
+    <div id="content-area"></div>
+
+    <!-- Quiz Navigation (hidden in review mode) -->
+    <div id="quiz-nav" class="hidden mt-6 flex gap-3 justify-between items-center">
+        <button onclick="prevCard()" id="btn-prev"
+            class="px-4 py-2 rounded-lg text-sm font-mono bg-dark-700 text-gray-400 border border-dark-600 hover:text-white transition-all disabled:opacity-30">
+            ← 上一題
+        </button>
+        <div id="card-indicator" class="text-xs font-mono text-gray-500"></div>
+        <button onclick="nextCard()" id="btn-next"
+            class="px-4 py-2 rounded-lg text-sm font-mono bg-dark-700 text-gray-400 border border-dark-600 hover:text-white transition-all">
+            下一題 →
+        </button>
+    </div>
+
+    <!-- Reset button (quiz mode) -->
+    <div id="quiz-reset" class="hidden mt-4 text-center">
+        <button onclick="resetQuiz()"
+            class="text-xs font-mono text-gray-500 hover:text-gray-300 underline transition-all">
+            重新練習
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-16 border-t border-dark-700 pt-6 text-center text-xs text-gray-600 font-mono">
+        TRANSLATION DRILL SYSTEM v1.0 ／ 柏宏
+    </div>
+</div>
+
+<script>
+// =====================================================
+// 題目資料庫 — 老師每週在這裡新增一個 week 物件即可
+// =====================================================
+const WEEKS = [
+    {
+        id: 1,
+        label: 'Week 1',
+        date: '第一週',
+        questions: [
+            {
+                cn: 'Anna說這家咖啡廳的咖啡比城裡其他的都好。',
+                en: 'Anna says that the coffee at this café is superior to any other coffee in town.',
+                hint: 'superior to'
+            },
+            {
+                cn: '任何參與這項烹飪比賽的人將需要自行攜帶料理的食材。',
+                en: 'Anyone who participates in the cooking contest will have to bring their own ingredients for their dishes.',
+                hint: 'Anyone who... / their own'
+            },
+            {
+                cn: '因為我這個月沒賺很多錢，所以我每周花費限制在1000元以內。',
+                en: "Since I didn't make a lot of money this month, I'm restricting my spending to NT$1000 a week.",
+                hint: 'restrict A to B'
+            },
+            {
+                cn: '政府因新法而遭受抨擊，公民要求總統下台。',
+                en: 'The government has come under criticism for the new law, and citizens have called upon the president to step down.',
+                hint: 'come under criticism / call upon sb to V'
+            },
+            {
+                cn: '身為地球村的成員，我們不該把自己局限在這個小島上。',
+                en: 'As members of the global community, we should not limit ourselves to this small island.',
+                hint: 'limit oneself to'
+            }
+        ]
+    },
+    {
+        id: 2,
+        label: 'Week 2',
+        date: '第二週',
+        questions: [
+            {
+                cn: '今天的溫度估計會達到40度，所以請多喝水並待在陰涼處。',
+                en: 'The temperature for today is estimated to reach 40 degrees Celsius, so please drink lots of water and stay in the shade.',
+                hint: 'be estimated to V'
+            },
+            {
+                cn: 'Tom對於他朋友剛說的話感到困惑，他要求朋友重講。',
+                en: 'Confused about what his friend had just said, Tom asked him to repeat himself.',
+                hint: '分詞構句 Confused about...'
+            },
+            {
+                cn: '今年的學生科展將在台北小巨蛋舉行。（台北小巨蛋：Taipei Arena）',
+                en: "This year's student science fair will take place at Taipei Arena.",
+                hint: 'take place'
+            },
+            {
+                cn: '在我等待離開上海的航班時，我利用時間去參觀一些觀光景點。',
+                en: 'While waiting for my flight out of Shanghai, I took advantage of the time to visit some sightseeing spots.',
+                hint: 'take advantage of / sightseeing spots'
+            },
+            {
+                cn: '如果數以百計的人響應環保，我們所做的小規模行動能累積成巨大的成果。',
+                en: 'If millions of people go green, the small-scale actions we do can add up to big results.',
+                hint: 'go green / add up to'
+            }
+        ]
+    },
+    {
+        id: 3,
+        label: 'Week 3',
+        date: '第三週',
+        questions: [
+            {
+                cn: '電影團隊在這部電影中用了最先進的動畫技術來使角色變得生動有趣。',
+                en: 'The film crew used cutting-edge animation techniques in this movie to bring its characters to life.',
+                hint: 'cutting-edge / bring... to life'
+            },
+            {
+                cn: '世界地球日是一個大規模的國際性環保運動，每年於4月22日舉辦。（世界地球日：Earth Day）',
+                en: 'Earth Day is a large-scale, international environmental protection movement, held annually on April 22.',
+                hint: 'large-scale / held annually on'
+            },
+            {
+                cn: '2020年是世界地球日的50週年，因此估計將有成千上萬的人參與各式各樣的活動來響應環保。',
+                en: 'The year 2020 is the 50th anniversary of Earth Day, so it is estimated that thousands of people will participate in a wide variety of activities to go green.',
+                hint: 'anniversary / a wide variety of / go green'
+            },
+            {
+                cn: '利用尖端技術，Google的網站World Wonders Project成功在網路上使世界文化遺產變得生動有趣。',
+                en: "Using cutting-edge technology, Google's website World Wonders Project has successfully brought world cultural heritage sites to life online.",
+                hint: 'Using... (分詞構句) / bring... to life'
+            },
+            {
+                cn: '這個網站的使用者可以透過街景服務來仔細觀察一些著名景點，這提供身歷其境的經驗。',
+                en: 'Users of this website can take a closer look at some famous tourist attractions through the street view service, which provides an immersive experience.',
+                hint: 'take a closer look at / immersive experience'
+            }
+        ]
+    }
+    // ── 老師新增週次的格式 ──
+    // {
+    //     id: 4,
+    //     label: 'Week 4',
+    //     date: '第四週',
+    //     questions: [
+    //         { cn: '中文題目', en: '英文答案', hint: '關鍵字提示' },
+    //         ...
+    //     ]
+    // }
+];
+
+// =====================================================
+// App State
+// =====================================================
+let currentMode = 'review';   // 'review' | 'quiz'
+let currentWeekIdx = 0;
+let currentCardIdx = 0;
+let revealed = {};            // { cardIdx: true/false }
+let graded = {};              // { cardIdx: 'correct' | 'wrong' }
+
+function setMode(mode) {
+    currentMode = mode;
+    revealed = {};
+    graded = {};
+    currentCardIdx = 0;
+    document.getElementById('btn-review').className =
+        mode === 'review'
+            ? 'mode-btn px-4 py-2 rounded-lg text-sm font-bold bg-blue-600 text-white transition-all'
+            : 'mode-btn px-4 py-2 rounded-lg text-sm font-bold bg-dark-700 text-gray-400 border border-dark-600 transition-all hover:text-white';
+    document.getElementById('btn-quiz').className =
+        mode === 'quiz'
+            ? 'mode-btn px-4 py-2 rounded-lg text-sm font-bold bg-blue-600 text-white transition-all'
+            : 'mode-btn px-4 py-2 rounded-lg text-sm font-bold bg-dark-700 text-gray-400 border border-dark-600 transition-all hover:text-white';
+    renderAll();
+}
+
+function selectWeek(idx) {
+    currentWeekIdx = idx;
+    revealed = {};
+    graded = {};
+    currentCardIdx = 0;
+    renderTabs();
+    renderAll();
+}
+
+function renderTabs() {
+    const container = document.getElementById('week-tabs');
+    container.innerHTML = WEEKS.map((w, i) => `
+        <button onclick="selectWeek(${i})"
+            class="week-tab px-4 py-2 rounded-lg text-sm font-bold font-mono transition-all ${i === currentWeekIdx ? 'active' : 'text-gray-500'}">
+            ${w.label}
+            <span class="ml-1 text-xs opacity-50">${w.date}</span>
+        </button>
+    `).join('');
+}
+
+function renderAll() {
+    if (currentMode === 'review') renderReview();
+    else renderQuiz();
+}
+
+// ── Review Mode ──
+function renderReview() {
+    const week = WEEKS[currentWeekIdx];
+    document.getElementById('stats-bar').classList.add('hidden');
+    document.getElementById('quiz-nav').classList.add('hidden');
+    document.getElementById('quiz-reset').classList.add('hidden');
+
+    const html = `
+        <div class="space-y-4 animate-in">
+            ${week.questions.map((q, i) => `
+                <div class="quiz-card card-flip cursor-pointer ${revealed[i] ? 'revealed' : ''}"
+                     onclick="toggleReveal(${i})">
+                    <div class="flex items-start gap-3">
+                        <span class="font-mono text-xs text-gray-600 mt-1 w-6 shrink-0">${String(i+1).padStart(2,'0')}</span>
+                        <div class="flex-1">
+                            <p class="text-gray-200 text-base leading-relaxed mb-2">${q.cn}</p>
+                            <div class="answer-reveal ${revealed[i] ? 'show' : ''}">
+                                <div class="border-t border-dark-600 pt-3 mt-2">
+                                    <p class="text-blue-300 font-medium leading-relaxed">${q.en}</p>
+                                    <span class="hint-tag bg-dark-700 text-yellow-400 border border-yellow-900/40 mt-2 inline-block">${q.hint}</span>
+                                </div>
+                            </div>
+                            <div class="mt-2 text-xs font-mono ${revealed[i] ? 'text-blue-500' : 'text-gray-600'}">
+                                ${revealed[i] ? '▲ 收合' : '▼ 點擊查看答案'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+        <div class="mt-4 text-center">
+            <button onclick="revealAll()" class="text-xs font-mono text-gray-500 hover:text-gray-300 underline mr-4 transition-all">全部展開</button>
+            <button onclick="collapseAll()" class="text-xs font-mono text-gray-500 hover:text-gray-300 underline transition-all">全部收合</button>
+        </div>
+    `;
+    document.getElementById('content-area').innerHTML = html;
+}
+
+function toggleReveal(i) {
+    revealed[i] = !revealed[i];
+    renderReview();
+}
+function revealAll() {
+    WEEKS[currentWeekIdx].questions.forEach((_, i) => revealed[i] = true);
+    renderReview();
+}
+function collapseAll() {
+    revealed = {};
+    renderReview();
+}
+
+// ── Quiz Mode ──
+function renderQuiz() {
+    const week = WEEKS[currentWeekIdx];
+    const q = week.questions[currentCardIdx];
+    const total = week.questions.length;
+    const answeredCount = Object.keys(graded).length;
+
+    // Stats bar
+    const statsBar = document.getElementById('stats-bar');
+    statsBar.classList.remove('hidden');
+    statsBar.classList.add('flex');
+    const pct = (answeredCount / total) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = `${answeredCount} / ${total}`;
+
+    // Score
+    const scoreEl = document.getElementById('score-text');
+    if (answeredCount === total) {
+        const correct = Object.values(graded).filter(v => v === 'correct').length;
+        scoreEl.textContent = `得分 ${correct}/${total}`;
+        scoreEl.classList.remove('hidden');
+    } else {
+        scoreEl.classList.add('hidden');
+    }
+
+    // Nav
+    document.getElementById('quiz-nav').classList.remove('hidden');
+    document.getElementById('quiz-reset').classList.remove('hidden');
+    document.getElementById('card-indicator').textContent = `${currentCardIdx + 1} / ${total}`;
+    document.getElementById('btn-prev').disabled = currentCardIdx === 0;
+    document.getElementById('btn-next').textContent = currentCardIdx === total - 1 ? '完成 ✓' : '下一題 →';
+
+    const cardState = graded[currentCardIdx];
+    const isRevealed = revealed[currentCardIdx];
+
+    const cardHtml = `
+        <div class="quiz-card animate-in ${cardState || (isRevealed ? 'revealed' : '')}">
+            <!-- Number + Week label -->
+            <div class="flex items-center justify-between mb-4">
+                <span class="font-mono text-xs text-gray-600">Q${String(currentCardIdx+1).padStart(2,'0')} / WEEK ${week.id}</span>
+                ${cardState === 'correct' ? '<span class="text-green-400 font-mono text-xs">✓ 答對了</span>' : ''}
+                ${cardState === 'wrong'   ? '<span class="text-red-400 font-mono text-xs">✗ 再加油</span>' : ''}
+            </div>
+
+            <!-- Chinese Question -->
+            <p class="text-white text-lg leading-relaxed font-medium mb-6">${q.cn}</p>
+
+            <!-- Hint -->
+            <div class="mb-4">
+                <span class="hint-tag bg-dark-700 text-yellow-400 border border-yellow-900/40">KEY: ${q.hint}</span>
+            </div>
+
+            <!-- Answer Area -->
+            <div class="answer-reveal ${isRevealed ? 'show' : ''}">
+                <div class="bg-dark-900 rounded-lg p-4 border border-dark-600 mb-4">
+                    <div class="text-xs font-mono text-gray-500 mb-2">ANSWER</div>
+                    <p class="text-blue-300 leading-relaxed">${q.en}</p>
+                </div>
+                ${!cardState ? `
+                <div class="flex gap-3">
+                    <button onclick="grade('correct')"
+                        class="flex-1 py-2 rounded-lg text-sm font-bold bg-green-900/30 text-green-400 border border-green-900/50 hover:bg-green-900/50 transition-all">
+                        ✓ 我答對了
+                    </button>
+                    <button onclick="grade('wrong')"
+                        class="flex-1 py-2 rounded-lg text-sm font-bold bg-red-900/20 text-red-400 border border-red-900/40 hover:bg-red-900/40 transition-all">
+                        ✗ 還沒背熟
+                    </button>
+                </div>
+                ` : ''}
+            </div>
+
+            ${!isRevealed ? `
+            <button onclick="revealCurrent()"
+                class="w-full py-3 rounded-lg text-sm font-bold bg-blue-600/20 text-blue-400 border border-blue-600/40 hover:bg-blue-600/30 transition-all mt-2">
+                查看答案
+            </button>
+            ` : ''}
+        </div>
+    `;
+    document.getElementById('content-area').innerHTML = cardHtml;
+}
+
+function revealCurrent() {
+    revealed[currentCardIdx] = true;
+    renderQuiz();
+}
+function grade(result) {
+    graded[currentCardIdx] = result;
+    renderQuiz();
+    // Auto advance after grading
+    if (currentCardIdx < WEEKS[currentWeekIdx].questions.length - 1) {
+        setTimeout(() => nextCard(), 600);
+    }
+}
+function nextCard() {
+    const total = WEEKS[currentWeekIdx].questions.length;
+    if (currentCardIdx < total - 1) {
+        currentCardIdx++;
+        renderQuiz();
+    }
+}
+function prevCard() {
+    if (currentCardIdx > 0) {
+        currentCardIdx--;
+        renderQuiz();
+    }
+}
+function resetQuiz() {
+    revealed = {};
+    graded = {};
+    currentCardIdx = 0;
+    renderQuiz();
+}
+
+// ── Init ──
+renderTabs();
+renderAll();
+</script>
+</body>
+</html>
