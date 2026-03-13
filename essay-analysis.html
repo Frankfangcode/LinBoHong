@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>學測英文作文範文逐步剖析</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --accent: #f59e0b;
+    --accent-light: #fef3c7;
+    --success: #10b981;
+    --success-light: #d1fae5;
+    --danger: #ef4444;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    color: white;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,.15);
+  }
+  nav h1 { font-size: 1.4rem; }
+  nav .subtitle { font-size: .85rem; opacity: .8; margin-top: .2rem; }
+
+  .tab-bar {
+    display: flex;
+    gap: .5rem;
+    margin-top: .8rem;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.25);
+    color: white;
+    padding: .4rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: .85rem;
+    transition: all .2s;
+  }
+  .tab-btn:hover { background: rgba(255,255,255,.25); }
+  .tab-btn.active { background: white; color: var(--primary); font-weight: 600; }
+
+  /* MAIN */
+  main { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    border: 1px solid var(--border);
+  }
+  .card h2 {
+    font-size: 1.2rem;
+    margin-bottom: .8rem;
+    color: var(--primary);
+  }
+  .card h3 {
+    font-size: 1.05rem;
+    margin: 1rem 0 .5rem;
+    color: #334155;
+  }
+
+  /* STEP SYSTEM */
+  .step-container { position: relative; }
+
+  .step-progress {
+    display: flex;
+    gap: .5rem;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .step-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .3s;
+    border: 2px solid var(--border);
+    background: white;
+    color: var(--muted);
+  }
+  .step-dot.completed { background: var(--success); color: white; border-color: var(--success); }
+  .step-dot.current { background: var(--primary); color: white; border-color: var(--primary); transform: scale(1.15); }
+
+  .step-content {
+    display: none;
+    animation: fadeSlideIn .4s ease;
+  }
+  .step-content.active { display: block; }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+  }
+
+  .btn {
+    padding: .55rem 1.4rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: .9rem;
+    font-weight: 600;
+    transition: all .2s;
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: #1d4ed8; }
+  .btn-outline { background: white; color: var(--primary); border: 2px solid var(--primary); }
+  .btn-outline:hover { background: var(--primary-light); }
+  .btn:disabled { opacity: .4; cursor: not-allowed; }
+
+  /* HIGHLIGHTS */
+  .highlight-box {
+    border-left: 4px solid var(--accent);
+    background: var(--accent-light);
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: .8rem 0;
+  }
+  .structure-box {
+    border-left: 4px solid var(--primary);
+    background: var(--primary-light);
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: .8rem 0;
+  }
+  .example-box {
+    border-left: 4px solid var(--success);
+    background: var(--success-light);
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: .8rem 0;
+  }
+  .warning-box {
+    border-left: 4px solid var(--danger);
+    background: #fef2f2;
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: .8rem 0;
+  }
+
+  /* REVEAL */
+  .reveal-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), #d97706);
+    color: white;
+    padding: .5rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: .85rem;
+    font-weight: 600;
+    margin: .5rem 0;
+    transition: all .2s;
+  }
+  .reveal-btn:hover { transform: translateY(-1px); box-shadow: 0 3px 8px rgba(245,158,11,.3); }
+  .hidden-content {
+    display: none;
+    animation: fadeSlideIn .4s ease;
+  }
+  .hidden-content.show { display: block; }
+
+  /* ESSAY TEXT */
+  .essay-text {
+    background: #f1f5f9;
+    padding: 1.2rem;
+    border-radius: 8px;
+    font-size: .95rem;
+    line-height: 1.9;
+    margin: .6rem 0;
+  }
+  .essay-text .hl-open { background: #bfdbfe; padding: 1px 3px; border-radius: 3px; }
+  .essay-text .hl-reason { background: #bbf7d0; padding: 1px 3px; border-radius: 3px; }
+  .essay-text .hl-transit { background: #fde68a; padding: 1px 3px; border-radius: 3px; }
+  .essay-text .hl-example { background: #fbcfe8; padding: 1px 3px; border-radius: 3px; }
+  .essay-text .hl-solution { background: #c4b5fd; padding: 1px 3px; border-radius: 3px; }
+  .essay-text .hl-conclude { background: #fed7aa; padding: 1px 3px; border-radius: 3px; }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin: .8rem 0;
+    font-size: .82rem;
+  }
+  .legend span {
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  /* ACCORDION */
+  .accordion-header {
+    background: #f1f5f9;
+    padding: .8rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .4rem;
+    transition: background .2s;
+  }
+  .accordion-header:hover { background: #e2e8f0; }
+  .accordion-header::after { content: '+'; font-size: 1.3rem; color: var(--muted); transition: transform .2s; }
+  .accordion-header.open::after { content: '-'; }
+  .accordion-body {
+    display: none;
+    padding: .8rem 1.2rem;
+    animation: fadeSlideIn .3s ease;
+  }
+  .accordion-body.open { display: block; }
+
+  /* SENTENCE BANK */
+  .sentence-category {
+    margin-bottom: 1rem;
+  }
+  .sentence-category h4 {
+    font-size: .95rem;
+    color: var(--primary);
+    margin-bottom: .4rem;
+    cursor: pointer;
+    padding: .5rem .8rem;
+    background: var(--primary-light);
+    border-radius: 6px;
+  }
+  .sentence-list {
+    display: none;
+    padding: .5rem .8rem;
+  }
+  .sentence-list.open { display: block; }
+  .sentence-item {
+    padding: .4rem 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: .9rem;
+  }
+  .sentence-item:last-child { border-bottom: none; }
+  .sentence-item .zh { color: var(--muted); font-size: .82rem; }
+
+  /* EMOJI IMAGES */
+  .emoji-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+  }
+  .emoji-card {
+    text-align: center;
+    font-size: .85rem;
+    color: var(--muted);
+  }
+  .emoji-card .emoji-icon { font-size: 2.5rem; }
+
+  /* PRINT */
+  @media print {
+    nav { position: static; }
+    .tab-bar, .step-nav, .reveal-btn { display: none; }
+    .hidden-content { display: block !important; }
+    .step-content { display: block !important; }
+    .section { display: block !important; }
+  }
+
+  @media (max-width: 640px) {
+    main { padding: 1rem; }
+    .card { padding: 1rem; }
+    nav { padding: .8rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <h1>學測英文作文 -- 範文逐步剖析教學工具</h1>
+  <div class="subtitle">Emoji 主題 | 佳作分析 + 句型寶庫 + 架構教學</div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('topic')">題目剖析</button>
+    <button class="tab-btn" onclick="switchTab('structure')">寫作架構</button>
+    <button class="tab-btn" onclick="switchTab('essay1')">原卷 1 逐段分析</button>
+    <button class="tab-btn" onclick="switchTab('essay2')">原卷 2 逐段分析</button>
+    <button class="tab-btn" onclick="switchTab('patterns')">高分句型寶庫</button>
+    <button class="tab-btn" onclick="switchTab('narrative')">記敘文技巧</button>
+    <button class="tab-btn" onclick="switchTab('expository')">論說文技巧</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ==================== TAB: 題目剖析 ==================== -->
+<div id="topic" class="section active">
+  <div class="step-container" data-group="topic">
+    <div class="step-progress">
+      <div class="step-dot current" data-step="0" onclick="goToStep('topic',0)">1</div>
+      <div class="step-dot" data-step="1" onclick="goToStep('topic',1)">2</div>
+      <div class="step-dot" data-step="2" onclick="goToStep('topic',2)">3</div>
+      <div class="step-dot" data-step="3" onclick="goToStep('topic',3)">4</div>
+    </div>
+
+    <!-- Step 1: 看題目 -->
+    <div class="step-content active" data-step="0">
+      <div class="card">
+        <h2>Step 1: 審題 -- 讀懂題目要求</h2>
+        <p>學測英文作文的第一步，永遠是<strong>仔細閱讀提示</strong>。我們來逐句拆解這道題目。</p>
+
+        <div class="highlight-box">
+          <strong>提示原文：</strong><br>
+          隨著社群媒體的普及，表情符號（emoji）的使用也極為普遍。請參考下列表情符號，寫一篇英文作文，文分兩段。
+        </div>
+
+        <p>首先注意關鍵指令：</p>
+
+        <button class="reveal-btn" onclick="reveal(this)">揭示題目拆解</button>
+        <div class="hidden-content">
+          <div class="structure-box">
+            <strong>關鍵要素拆解：</strong>
+            <ol style="margin-top:.5rem; padding-left:1.2rem;">
+              <li><strong>主題：</strong>表情符號（emoji）在溝通中的角色</li>
+              <li><strong>段落數：</strong>兩段（不可多不可少）</li>
+              <li><strong>字數：</strong>至少 120 字</li>
+              <li><strong>素材：</strong>必須參考提供的四張表情符號圖片</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: 段落要求 -->
+    <div class="step-content" data-step="1">
+      <div class="card">
+        <h2>Step 2: 段落任務 -- 每段要寫什麼？</h2>
+        <p>題目明確告訴你每一段的任務。</p>
+
+        <div class="highlight-box">
+          <strong>第一段：</strong>說明人們何以喜歡使用表情符號，並從下列的表情符號中舉一至二例，說明表情符號在溝通上有何功能。
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">拆解第一段任務</button>
+        <div class="hidden-content">
+          <div class="structure-box">
+            <strong>第一段需要完成：</strong>
+            <ol style="margin-top:.5rem; padding-left:1.2rem;">
+              <li>說明<strong>為什麼</strong>人們喜歡用 emoji（原因/優點）</li>
+              <li>從四張圖中<strong>舉 1~2 個例子</strong>來說明功能</li>
+            </ol>
+            <p style="margin-top:.5rem; color:#b45309;"><strong>陷阱提醒：</strong>不能只空談，一定要結合圖片舉例！</p>
+          </div>
+        </div>
+
+        <div class="highlight-box" style="margin-top:1rem;">
+          <strong>第二段：</strong>以個人或親友的經驗為例，討論表情符號在訊息表達或解讀上可能造成的誤會或困擾，並提出可以化解的方法。
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">拆解第二段任務</button>
+        <div class="hidden-content">
+          <div class="structure-box">
+            <strong>第二段需要完成三件事：</strong>
+            <ol style="margin-top:.5rem; padding-left:1.2rem;">
+              <li>用<strong>個人/親友經驗</strong>舉例（必須是故事）</li>
+              <li>討論 emoji 造成的<strong>誤解或困擾</strong></li>
+              <li>提出<strong>化解方法</strong>（解決方案）</li>
+            </ol>
+            <p style="margin-top:.5rem; color:#b45309;"><strong>陷阱提醒：</strong>三個子任務缺一不可，很多考生忘記提出解決方案！</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: 表情符號解讀 -->
+    <div class="step-content" data-step="2">
+      <div class="card">
+        <h2>Step 3: 看懂素材 -- 四張 Emoji 分別代表什麼？</h2>
+        <p>在動筆之前，你要清楚每張圖的含義，才能在文中正確引用。</p>
+
+        <div class="emoji-row">
+          <div class="emoji-card"><div class="emoji-icon">😆</div>圖 1: 大笑</div>
+          <div class="emoji-card"><div class="emoji-icon">😠</div>圖 2: 生氣</div>
+          <div class="emoji-card"><div class="emoji-icon">😢</div>圖 3: 哭泣/感動</div>
+          <div class="emoji-card"><div class="emoji-icon">😍</div>圖 4: 愛心眼</div>
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">看範文怎麼使用這些圖</button>
+        <div class="hidden-content">
+          <div class="example-box">
+            <strong>原卷 1 的用法：</strong><br>
+            引用圖 4（愛心眼）說明表達親密感比打字 "luv" 更好；引用圖 3（哭泣）說明比打 "LMAO" 更生動。
+          </div>
+          <div class="example-box">
+            <strong>原卷 2 的用法：</strong><br>
+            引用圖 1（大笑）對應喜悅和狂喜；引用圖 2（生氣）對應憤怒和不滿。
+          </div>
+          <p style="margin-top:.8rem;"><strong>技巧：</strong>選擇你最有把握描述的 1~2 張圖即可，不需要全部用到。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: 總覽策略 -->
+    <div class="step-content" data-step="3">
+      <div class="card">
+        <h2>Step 4: 擬定寫作策略</h2>
+        <p>綜合前三步，你的寫作藍圖已經成形。</p>
+
+        <div class="structure-box">
+          <strong>第一段架構（約 60~80 字）：</strong>
+          <ol style="margin-top:.5rem; padding-left:1.2rem;">
+            <li>開場引言（帶出 emoji 話題）</li>
+            <li>原因一 + 舉例（引用圖片）</li>
+            <li>原因二 + 舉例</li>
+            <li>（可選）原因三</li>
+            <li>小結</li>
+          </ol>
+        </div>
+
+        <div class="structure-box">
+          <strong>第二段架構（約 60~80 字）：</strong>
+          <ol style="margin-top:.5rem; padding-left:1.2rem;">
+            <li>轉折句（帶出缺點/問題）</li>
+            <li>個人/親友經歷描述</li>
+            <li>解釋誤會如何發生</li>
+            <li>提出解決方法</li>
+            <li>總結句</li>
+          </ol>
+        </div>
+
+        <div class="warning-box">
+          <strong>常見扣分陷阱：</strong> 忘記舉具體圖片例子、第二段沒有講個人經驗只是泛泛而談、忘記提出解決方法、兩段嚴重失衡（一段太長一段太短）。
+        </div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <button class="btn btn-outline" onclick="prevStep('topic')" id="topic-prev" disabled>上一步</button>
+      <button class="btn btn-primary" onclick="nextStep('topic')" id="topic-next">下一步</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB: 寫作架構 ==================== -->
+<div id="structure" class="section">
+  <div class="step-container" data-group="structure">
+    <div class="step-progress">
+      <div class="step-dot current" data-step="0" onclick="goToStep('structure',0)">1</div>
+      <div class="step-dot" data-step="1" onclick="goToStep('structure',1)">2</div>
+      <div class="step-dot" data-step="2" onclick="goToStep('structure',2)">3</div>
+      <div class="step-dot" data-step="3" onclick="goToStep('structure',3)">4</div>
+      <div class="step-dot" data-step="4" onclick="goToStep('structure',4)">5</div>
+    </div>
+
+    <div class="step-content active" data-step="0">
+      <div class="card">
+        <h2>架構總覽：九篇佳作的共同骨架</h2>
+        <p>分析完所有佳作後，我們發現一個驚人的共通模式：</p>
+        <div class="structure-box">
+          <strong>佳作通用結構：</strong><br>
+          第一段：提出優點 (Why people love emoji)<br>
+          第二段前半：轉折 + 點出問題 + 個人經歷<br>
+          第二段後半：提出解決方案 + 總結反思
+        </div>
+        <p style="margin-top:.8rem;">接下來我們逐一看每個部分該怎麼寫。</p>
+      </div>
+    </div>
+
+    <div class="step-content" data-step="1">
+      <div class="card">
+        <h2>Part 1: 開場引言怎麼寫？</h2>
+        <p>開場要做到兩件事：<strong>引起興趣</strong>和<strong>切入主題</strong>。</p>
+
+        <h3>方法一：用「隨著...的發展」句型</h3>
+        <div class="example-box">
+          "With the rapid development of social media, the use of emoji has become increasingly common."
+        </div>
+
+        <h3>方法二：用諺語/名言</h3>
+        <div class="example-box">
+          "As the saying goes, 'A picture beats a thousand words.' Modern people are realizing this statement by incorporating emojis into their texts every day." <span style="color:var(--muted);">-- 原卷 1</span>
+        </div>
+
+        <h3>方法三：用「在這個時代」</h3>
+        <div class="example-box">
+          "In this time and age, with social media taking the world by storm, 'emoji' gradually becomes an indispensable part of our everyday lives." <span style="color:var(--muted);">-- 原卷 2</span>
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">教學提醒</button>
+        <div class="hidden-content">
+          <div class="warning-box">
+            不管哪種方法，開場<strong>不宜超過兩句話</strong>。快速切入，不要繞圈子。用諺語時，一定要確保諺語和主題有關聯。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-content" data-step="2">
+      <div class="card">
+        <h2>Part 2: 闡述優點 -- 用排列式論點</h2>
+        <p>開場之後，用<strong>分點敘述</strong>列出 2~3 個優點。</p>
+
+        <div class="structure-box">
+          <strong>框架模板：</strong><br>
+          <span style="color:var(--primary);">總述句</span> + <span style="color:var(--success);">理由一</span> + <span style="color:var(--success);">理由二</span> + <span style="color:var(--success);">理由三</span>
+        </div>
+
+        <h3>連接詞選擇</h3>
+        <div class="example-box">
+          <strong>組合 A：</strong>First of all, ... Secondly, ... And last but not least, ...<br>
+          <strong>組合 B：</strong>To start with, ... On top of that, ... Last but not least, ...<br>
+          <strong>組合 C：</strong>First and foremost, ... Furthermore, ... Moreover, ...
+        </div>
+
+        <h3>常見優點可以怎麼寫？</h3>
+        <button class="reveal-btn" onclick="reveal(this)">展開具體寫法</button>
+        <div class="hidden-content">
+          <div class="highlight-box">
+            <strong>優點 1 -- 方便快速：</strong><br>
+            "Replying with emojis is very convenient. It takes much less time compared to typing." (原卷 1)<br><br>
+            <strong>優點 2 -- 生動可愛：</strong><br>
+            "Sending a miniature face with hearts as eyes (Picture 4) definitely feels more intimate than typing 'luv'." (原卷 1)<br><br>
+            <strong>優點 3 -- 精準表達情緒：</strong><br>
+            "When elation and ecstasy become the veins in my feelings, Picture 1 would be the best choice to visualize what I feel." (原卷 2)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-content" data-step="3">
+      <div class="card">
+        <h2>Part 3: 轉折 + 個人經驗</h2>
+        <p>這是第二段的核心，也是拉開分數的關鍵。</p>
+
+        <h3>轉折句怎麼寫？</h3>
+        <div class="example-box">
+          <strong>簡潔有力：</strong>"Still, emojis aren't without defects." (原卷 1)<br>
+          <strong>高級句型：</strong>"However convenient emojis may be, the simplicity in its nature brews misinterpretations." (原卷 3)<br>
+          <strong>標準型：</strong>"Despite so many advantages, emoji sometimes still brings about some problems." (原卷 8)
+        </div>
+
+        <h3>個人經驗怎麼講？</h3>
+        <button class="reveal-btn" onclick="reveal(this)">展開故事架構</button>
+        <div class="hidden-content">
+          <div class="structure-box">
+            <strong>經驗故事四要素：</strong>
+            <ol style="padding-left:1.2rem; margin-top:.5rem;">
+              <li><strong>背景：</strong>什麼情境下發生的？</li>
+              <li><strong>行動：</strong>誰傳了什麼 emoji？</li>
+              <li><strong>誤解：</strong>對方怎麼理解錯了？</li>
+              <li><strong>結果：</strong>造成什麼後果？</li>
+            </ol>
+          </div>
+          <div class="example-box" style="margin-top:.8rem;">
+            <strong>原卷 1 的故事：</strong><br>
+            背景：朋友考試考差了 &rarr; 行動：訊息結尾放了微笑表情 &rarr; 誤解：以為他不在乎，就拿成績開玩笑 &rarr; 結果：隔天才知道朋友其實很難過，深感愧疚。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-content" data-step="4">
+      <div class="card">
+        <h2>Part 4: 提出解決方案 + 總結</h2>
+
+        <h3>解決方案怎麼寫？</h3>
+        <div class="example-box">
+          <strong>方案模板：</strong><br>
+          "In order to avoid this sort of situation, we should... First, ... Second, ... Last but not least, ..."
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">看範文的解決方案</button>
+        <div class="hidden-content">
+          <div class="highlight-box">
+            <strong>原卷 1：</strong>把 emoji 當作文字的輔助，文字本身要清楚。<br>
+            <strong>原卷 2：</strong>附上文字說明、對容易誤解的人改用文字、傳送前三思。<br>
+            <strong>原卷 4：</strong>選意義明確的 emoji、無法精確表達就改用文字、重要對話改打電話。
+          </div>
+        </div>
+
+        <h3>結尾怎麼收？</h3>
+        <div class="example-box">
+          <strong>有條件的正面期許（推薦）：</strong><br>
+          "If we take the aforementioned preventive measures, it is possible to convey our moods with emoji without false interpretations." (原卷 2)<br><br>
+          <strong>簡潔重申：</strong><br>
+          "With proper usage of emojis, not only can we ensure the message is delivered, but also make every text a more colorful one." (原卷 1)
+        </div>
+
+        <div class="warning-box">
+          <strong>注意：</strong>結尾第二句用了 <em>not only... but also...</em> 倒裝句，是加分亮點！
+        </div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <button class="btn btn-outline" onclick="prevStep('structure')" id="structure-prev" disabled>上一步</button>
+      <button class="btn btn-primary" onclick="nextStep('structure')" id="structure-next">下一步</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB: 原卷 1 ==================== -->
+<div id="essay1" class="section">
+  <div class="step-container" data-group="essay1">
+    <div class="step-progress">
+      <div class="step-dot current" data-step="0" onclick="goToStep('essay1',0)">1</div>
+      <div class="step-dot" data-step="1" onclick="goToStep('essay1',1)">2</div>
+      <div class="step-dot" data-step="2" onclick="goToStep('essay1',2)">3</div>
+      <div class="step-dot" data-step="3" onclick="goToStep('essay1',3)">4</div>
+      <div class="step-dot" data-step="4" onclick="goToStep('essay1',4)">5</div>
+      <div class="step-dot" data-step="5" onclick="goToStep('essay1',5)">6</div>
+    </div>
+
+    <!-- E1 Step 0: overview -->
+    <div class="step-content active" data-step="0">
+      <div class="card">
+        <h2>原卷 1 -- 全文架構一覽</h2>
+        <p>在逐段細看之前，先掌握這篇文章的骨架。</p>
+        <div class="structure-box">
+          <strong>第一段：</strong>諺語開場 &rarr; 定義 emoji &rarr; 原因一（可愛/親密）&rarr; 原因二（生動表達）&rarr; 原因三（方便）&rarr; 段落小結<br><br>
+          <strong>第二段：</strong>轉折 &rarr; 問題一（含義不明 + 個人經驗）&rarr; 問題二（過度使用）&rarr; 解決方案 &rarr; 結論
+        </div>
+        <p style="margin-top:.8rem; color:var(--muted);">點擊「下一步」開始逐段分析。</p>
+      </div>
+    </div>
+
+    <!-- E1 Step 1: 開場 -->
+    <div class="step-content" data-step="1">
+      <div class="card">
+        <h2>第一段 -- 開場與定義（前 3 句）</h2>
+        <div class="essay-text">
+          <span class="hl-open">As the saying goes, "A picture beats a thousand words." Modern people are realizing this statement by incorporating emojis into their text every day.</span> An emoji is a small picture such as a smiley face, at the size of text margins, often used when sending messages online. <span class="hl-open">Seemingly appearing out of the blue, the usage of emojis boomed in recent years, and they have become an indispensable asset for chatting online.</span>
+        </div>
+
+        <div class="legend">
+          <span class="hl-open">引言/開場</span>
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">分析這段的寫作技巧</button>
+        <div class="hidden-content">
+          <div class="highlight-box">
+            <strong>技巧拆解：</strong>
+            <ol style="padding-left:1.2rem; margin-top:.5rem;">
+              <li><strong>諺語開場：</strong>"As the saying goes..." 用名言快速吸引注意力。</li>
+              <li><strong>補充定義：</strong>第二句用簡單英文解釋 emoji 是什麼，展現基礎表達力。</li>
+              <li><strong>過渡到論點：</strong>"have become an indispensable asset" 帶出重要性，為接下來的原因鋪路。</li>
+            </ol>
+          </div>
+          <div class="warning-box">
+            <strong>學習重點：</strong>"indispensable" 是高頻亮點詞彙，意思是「不可或缺的」。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- E1 Step 2: 理由 -->
+    <div class="step-content" data-step="2">
+      <div class="card">
+        <h2>第一段 -- 三個理由（中段）</h2>
+        <div class="essay-text">
+          The reasons behind this trend are actually quite obvious. <span class="hl-reason">First of all, emojis look cute, sending a miniature face with hearts as eyes, as in picture 4, definitely feels more intimate than typing "luv".</span> <span class="hl-reason">Secondly, emojis give people a more vivid expression of what the sender thinks. Instead of repeatedly typing "LMAO" in response to jokes, the laughing face in picture 3 may better represent how I'm feeling.</span> <span class="hl-reason">And last but not least, replying with emojis is VERY convenient. It takes much less time compared to typing, and the wide variety of little pictures you can send serves to show replacement for nearly every emotion.</span>
+        </div>
+
+        <div class="legend">
+          <span class="hl-reason">理由/優點</span>
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">分析論點展開技巧</button>
+        <div class="hidden-content">
+          <div class="highlight-box">
+            <strong>每個理由的內部結構：</strong>
+            <ol style="padding-left:1.2rem; margin-top:.5rem;">
+              <li><strong>理由一：</strong>論點（cute）+ 引用圖片舉例（picture 4）+ 對比（比打 "luv" 更好）</li>
+              <li><strong>理由二：</strong>論點（vivid）+ 對比引用（"LMAO" vs picture 3）</li>
+              <li><strong>理由三：</strong>論點（convenient）+ 補充說明（省時、選擇多）</li>
+            </ol>
+          </div>
+          <div class="example-box">
+            <strong>可複製的模式：</strong>論點 + 具體例子/對比 = 有說服力的段落。每個理由不用很長，2~3 句即可。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- E1 Step 3: 段尾小結 + 轉折 -->
+    <div class="step-content" data-step="3">
+      <div class="card">
+        <h2>第一段結尾 + 第二段轉折</h2>
+
+        <div class="essay-text">
+          <span class="hl-conclude">It is really no wonder that emojis are changing our messages all the way to the core.</span>
+        </div>
+        <p style="margin:.5rem 0; font-weight:600; text-align:center;">--- 段落分隔 ---</p>
+        <div class="essay-text">
+          <span class="hl-transit">Still, emojis aren't without defects.</span> As a diver deeply submerged in social media networks I myself have come across quite a few issues regarding the usage of them.
+        </div>
+
+        <div class="legend">
+          <span class="hl-conclude">總結</span>
+          <span class="hl-transit">轉折</span>
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">分析轉折技巧</button>
+        <div class="hidden-content">
+          <div class="highlight-box">
+            <strong>兩個亮點：</strong>
+            <ol style="padding-left:1.2rem; margin-top:.5rem;">
+              <li><strong>"aren't without defects"</strong> -- 雙重否定（litotes），是高級修辭。比直接說 "have defects" 更委婉優雅。</li>
+              <li><strong>"As a diver deeply submerged in social media"</strong> -- 用比喻帶出個人身份，為接下來的經驗鋪路，同時展現字彙量（diver, submerged）。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- E1 Step 4: 個人經驗 -->
+    <div class="step-content" data-step="4">
+      <div class="card">
+        <h2>第二段 -- 問題一：個人經驗故事</h2>
+        <div class="essay-text">
+          <span class="hl-example">To begin with, some emojis bear unclear meanings. Once a friend told me that he completely flunked a test. The message ended with a smiley face, so I thought he didn't care that much about the result and made some cruel japes at his score. It wasn't until the next morning did I find out he was genuinely sad and the smiley face was just a joke. The event left me traumatized and deeply regretful of the things I said.</span>
+        </div>
+
+        <div class="legend">
+          <span class="hl-example">個人經驗</span>
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">拆解故事結構</button>
+        <div class="hidden-content">
+          <div class="structure-box">
+            <strong>四步驟故事法：</strong>
+            <ol style="padding-left:1.2rem; margin-top:.5rem;">
+              <li><strong>背景：</strong>朋友考試考差了</li>
+              <li><strong>行動：</strong>他的訊息結尾帶了笑臉</li>
+              <li><strong>誤解：</strong>「我」以為他不在乎，就嘲笑他的分數</li>
+              <li><strong>後果：</strong>隔天才發現他其實很難過，深感愧疚</li>
+            </ol>
+          </div>
+          <div class="warning-box">
+            <strong>高分句型：</strong>"It wasn't until... did I find out..." 這是 <em>not until</em> 倒裝句，是學測超加分句型！正確語法為 "It was not until... that I found out..."，但考場上小瑕疵不影響高分。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- E1 Step 5: 解決方案 + 結論 -->
+    <div class="step-content" data-step="5">
+      <div class="card">
+        <h2>第二段 -- 解決方案與結論</h2>
+        <div class="essay-text">
+          <span class="hl-solution">For the problems above, I believe the best solution is to look upon emojis only as a complement to our speech. After all, the message should be clear by text, and emojis are only the cherry on the top.</span> <span class="hl-conclude">With proper usage of emojis, not only can we ensure the message is delivered, but also make every text a more colorful one.</span>
+        </div>
+
+        <div class="legend">
+          <span class="hl-solution">解決方案</span>
+          <span class="hl-conclude">結論</span>
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">分析結尾亮點</button>
+        <div class="hidden-content">
+          <div class="highlight-box">
+            <strong>亮點一：</strong>"the cherry on the top" -- 使用慣用語（idiom），加分！<br><br>
+            <strong>亮點二：</strong>"not only can we... but also..." -- 用 <em>not only... but also</em> 倒裝句收尾，讓結論鏗鏘有力。<br><br>
+            <strong>策略：</strong>解決方案只提一個核心觀念（emoji 是輔助不是主角），簡潔有力，不贅述。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <button class="btn btn-outline" onclick="prevStep('essay1')" id="essay1-prev" disabled>上一步</button>
+      <button class="btn btn-primary" onclick="nextStep('essay1')" id="essay1-next">下一步</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB: 原卷 2 ==================== -->
+<div id="essay2" class="section">
+  <div class="step-container" data-group="essay2">
+    <div class="step-progress">
+      <div class="step-dot current" data-step="0" onclick="goToStep('essay2',0)">1</div>
+      <div class="step-dot" data-step="1" onclick="goToStep('essay2',1)">2</div>
+      <div class="step-dot" data-step="2" onclick="goToStep('essay2',2)">3</div>
+      <div class="step-dot" data-step="3" onclick="goToStep('essay2',3)">4</div>
+      <div class="step-dot" data-step="4" onclick="goToStep('essay2',4)">5</div>
+    </div>
+
+    <div class="step-content active" data-step="0">
+      <div class="card">
+        <h2>原卷 2 -- 全文架構一覽</h2>
+        <div class="structure-box">
+          <strong>特色：</strong>這篇只有一段（沒分段），但內容架構完整。考試時建議還是分兩段為佳。<br><br>
+          <strong>架構：</strong>時代背景開場 &rarr; 優點一（節省時間）&rarr; 優點二（生動表達 + 圖片引用）&rarr; 轉折 &rarr; 個人經歷 &rarr; 三個解決方案 &rarr; 結論
+        </div>
+      </div>
+    </div>
+
+    <div class="step-content" data-step="1">
+      <div class="card">
+        <h2>開場 + 優點</h2>
+        <div class="essay-text">
+          <span class="hl-open">In this time and age, with the social media taking the world by storm, "emoji" gradually becomes an indispensable part of our everyday lives.</span> When it comes to the phenomenon, there are several reasons that contribute to the love for emoji. <span class="hl-reason">First and foremost, people nowadays lead a packed life with heavy workloads. Therefore, emoji makes it possible for the users to directly convey their thoughts and feelings without spending a great amount of time.</span> <span class="hl-reason">Furthermore, emoji is capable of delivering people's messages simple but vivid.</span>
+        </div>
+        <div class="legend">
+          <span class="hl-open">引言</span> <span class="hl-reason">理由</span>
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">分析寫作特色</button>
+        <div class="hidden-content">
+          <div class="highlight-box">
+            <strong>亮點詞彙：</strong>
+            <ul style="padding-left:1.2rem; margin-top:.4rem;">
+              <li>"taking the world by storm" -- 慣用語，意為「風靡全球」</li>
+              <li>"lead a packed life" -- 生動描述忙碌生活</li>
+              <li>"is capable of delivering" -- 比 "can deliver" 更正式</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-content" data-step="2">
+      <div class="card">
+        <h2>圖片引用段</h2>
+        <div class="essay-text">
+          <span class="hl-reason">For instance, when elation and ecstasy become the veins in my feelings, Picture 1 would be the best choice to visualize what I feel. Moreover, when I have a conflict with my friends, with waves of indignation and wrath attacking me one after another, Picture 2 would function greatly to display what I feel.</span>
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">分析圖片引用技巧</button>
+        <div class="hidden-content">
+          <div class="highlight-box">
+            <strong>進階用字：</strong>
+            <ul style="padding-left:1.2rem; margin-top:.4rem;">
+              <li>"elation and ecstasy" -- 不只說 happy，用高階同義詞展現字彙深度</li>
+              <li>"indignation and wrath" -- 不只說 angry，用 indignation（義憤）和 wrath（盛怒）</li>
+              <li>"waves of... attacking me one after another" -- 用比喻將情緒具象化</li>
+            </ul>
+          </div>
+          <div class="warning-box">
+            <strong>提醒：</strong>用進階詞彙是加分項，但必須用對。如果沒把握，用簡單但正確的詞更安全。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-content" data-step="3">
+      <div class="card">
+        <h2>轉折 + 個人經歷</h2>
+        <div class="essay-text">
+          <span class="hl-transit">On the whole, the use of emoji brings convenience to our lives and people may therefore consider it flawless when communicating. However, there is more to it than meets the eyes.</span> <span class="hl-example">I had a pertinent experience in the past. It was the day in which I partook in a speech contest and got a good grade after months of training and toil. The moment I got informed of the fascinating news, Picture 3 was what I delivered immediately to my friend. Nevertheless, he didn't respond to me. He told me on the subsequent day that when receiving the smiling face with tears welling in the eyes, he could not determine whether I was choked to tears in melancholy or smiling with tears.</span>
+        </div>
+        <div class="legend">
+          <span class="hl-transit">轉折</span> <span class="hl-example">個人經驗</span>
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">分析轉折與故事</button>
+        <div class="hidden-content">
+          <div class="highlight-box">
+            <strong>轉折亮點：</strong>"there is more to it than meets the eyes" -- 慣用語，意為「事情不只表面那麼簡單」，是非常優雅的轉折。<br><br>
+            <strong>故事結構：</strong>
+            <ol style="padding-left:1.2rem; margin-top:.4rem;">
+              <li>背景：參加演講比賽得獎</li>
+              <li>行動：傳了圖 3（含淚笑臉）給朋友</li>
+              <li>誤解：朋友無法判斷是喜極而泣還是難過哭泣</li>
+              <li>後果：朋友沒回應，隔天才說明原因</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-content" data-step="4">
+      <div class="card">
+        <h2>解決方案與結論</h2>
+        <div class="essay-text">
+          <span class="hl-solution">In order to wrestle with the problem, the following are the solutions. First, it is advised to attach some explanatory words to the emoji to clearly shed light on the meaning. Second, if the receiver has mistaken the meaning in the past many times, words might be a better option. Last but not least, it is essential that we should think twice before sending them and ensure that the facial expression can match our messages well.</span> <span class="hl-conclude">In conclusion, if we take the aforementioned preventive measures, it is possible to convey our moods with emoji without false interpretations.</span>
+        </div>
+        <div class="legend">
+          <span class="hl-solution">解決方案</span> <span class="hl-conclude">結論</span>
+        </div>
+
+        <button class="reveal-btn" onclick="reveal(this)">分析解方架構</button>
+        <div class="hidden-content">
+          <div class="highlight-box">
+            <strong>三段式解方：</strong>
+            <ol style="padding-left:1.2rem; margin-top:.4rem;">
+              <li>"attach some explanatory words" -- 加文字註解</li>
+              <li>"words might be a better option" -- 乾脆用文字</li>
+              <li>"think twice before sending" -- 三思而後行</li>
+            </ol>
+            <br>
+            <strong>結尾句型：</strong>"if we take... it is possible to..." -- 有條件的期許，不過度樂觀也不悲觀，語氣恰到好處。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <button class="btn btn-outline" onclick="prevStep('essay2')" id="essay2-prev" disabled>上一步</button>
+      <button class="btn btn-primary" onclick="nextStep('essay2')" id="essay2-next">下一步</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB: 高分句型寶庫 ==================== -->
+<div id="patterns" class="section">
+  <div class="card">
+    <h2>高分句型寶庫 -- 分類速查</h2>
+    <p>點擊各類別展開句型。這些句型從九篇佳作及教材中整理而來，可靈活套用到各種主題。</p>
+  </div>
+
+  <!-- Category: 開場 -->
+  <div class="card">
+    <div class="sentence-category">
+      <h4 onclick="toggleSentences(this)">一、破題與引言 (Opening)</h4>
+      <div class="sentence-list">
+        <div class="sentence-item">1. With the rapid development of..., ...<br><span class="zh">隨著...的快速發展，...</span></div>
+        <div class="sentence-item">2. Ever since the invention of..., people have been enjoying...<br><span class="zh">自從...的發明以來，人們一直享受著...</span></div>
+        <div class="sentence-item">3. As the saying goes, "..."<br><span class="zh">俗話說，「...」</span></div>
+        <div class="sentence-item">4. In this time and age, with... taking the world by storm, ...<br><span class="zh">在這個時代，隨著...風靡全球，...</span></div>
+        <div class="sentence-item">5. ...plays an essential/indispensable part in our daily lives.<br><span class="zh">...在我們日常生活中扮演不可或缺的角色。</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: 闡述理由 -->
+  <div class="card">
+    <div class="sentence-category">
+      <h4 onclick="toggleSentences(this)">二、闡述優點與原因 (Reasons)</h4>
+      <div class="sentence-list">
+        <div class="sentence-item">1. There are several reasons why... / This can be attributed to several factors.<br><span class="zh">這有幾個原因。/ 這可以歸因於幾個因素。</span></div>
+        <div class="sentence-item">2. First of all, ... Secondly, ... And last but not least, ...</div>
+        <div class="sentence-item">3. To start with, ... On top of that, ... Last but not least, ...</div>
+        <div class="sentence-item">4. First and foremost, ... Furthermore, ... Moreover, ...</div>
+        <div class="sentence-item">5. ...makes it possible for... to...<br><span class="zh">...使得...能夠...</span></div>
+        <div class="sentence-item">6. ...is capable of + V-ing<br><span class="zh">...有能力/有辦法...</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: 轉折 -->
+  <div class="card">
+    <div class="sentence-category">
+      <h4 onclick="toggleSentences(this)">三、轉折與點出問題 (Transition)</h4>
+      <div class="sentence-list">
+        <div class="sentence-item">1. Still, ...aren't without defects.<br><span class="zh">然而，...並非沒有缺陷。</span></div>
+        <div class="sentence-item">2. Despite so many advantages, ... sometimes still brings about some problems.<br><span class="zh">儘管有許多優點，...有時仍會帶來一些問題。</span></div>
+        <div class="sentence-item">3. However + adj. + S + may be, ...<br><span class="zh">無論...有多麼...，... (高級句型)</span></div>
+        <div class="sentence-item">4. There is more to it than meets the eyes.<br><span class="zh">事情不只表面看起來那麼簡單。</span></div>
+        <div class="sentence-item">5. Nonetheless, despite the advantages, they do come with some disadvantages.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: 舉例 -->
+  <div class="card">
+    <div class="sentence-category">
+      <h4 onclick="toggleSentences(this)">四、舉例說明 (Examples)</h4>
+      <div class="sentence-list">
+        <div class="sentence-item">1. Take myself for example.</div>
+        <div class="sentence-item">2. My past experience best exemplifies this situation.</div>
+        <div class="sentence-item">3. I had a pertinent experience in the past.</div>
+        <div class="sentence-item">4. For instance, / For example, ...</div>
+        <div class="sentence-item">5. It wasn't until... that I realized/found out...<br><span class="zh">直到...我才意識到/發現... (倒裝加分句)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: 解決方案 -->
+  <div class="card">
+    <div class="sentence-category">
+      <h4 onclick="toggleSentences(this)">五、解決方案與建議 (Solutions)</h4>
+      <div class="sentence-list">
+        <div class="sentence-item">1. In order to avoid this sort of situation, we should...</div>
+        <div class="sentence-item">2. I am deeply convinced that all of us should...</div>
+        <div class="sentence-item">3. It is advised to... / It is essential that we should...</div>
+        <div class="sentence-item">4. We should raise public awareness of such an issue.</div>
+        <div class="sentence-item">5. The following are the ways to solve it. First, ... Second, ... Last but not least, ...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: 結論 -->
+  <div class="card">
+    <div class="sentence-category">
+      <h4 onclick="toggleSentences(this)">六、結論 (Conclusion)</h4>
+      <div class="sentence-list">
+        <div class="sentence-item">1. In a nutshell, / In conclusion, / To sum up, ...</div>
+        <div class="sentence-item">2. If we take the aforementioned measures, it is possible to...<br><span class="zh">如果我們採取上述措施，就有可能...</span></div>
+        <div class="sentence-item">3. Not only can we..., but also...<br><span class="zh">我們不僅能...，還能... (倒裝句)</span></div>
+        <div class="sentence-item">4. ...left a lasting impression on me.</div>
+        <div class="sentence-item">5. It was not until... that I realized the importance of...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB: 記敘文技巧 ==================== -->
+<div id="narrative" class="section">
+  <div class="card">
+    <h2>記敘文寫作技巧速查</h2>
+    <p>學測作文第二段常需要講故事，以下是記敘文中最實用的句型。點擊展開。</p>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">A) 破題萬用句</div>
+    <div class="accordion-body">
+      <div class="sentence-item">1. I still have vivid memories of... <span class="zh">我對...仍然記憶猶新。</span></div>
+      <div class="sentence-item">2. The memories of... often recur to me. <span class="zh">...的回憶經常浮現。</span></div>
+      <div class="sentence-item">3. ...remains firmly in my memory. <span class="zh">...牢牢留在我的記憶中。</span></div>
+      <div class="sentence-item">4. Looking back on..., I have a feeling of... <span class="zh">回顧...，我覺得...</span></div>
+      <div class="sentence-item">5. Whenever recalling..., I cannot but feel... <span class="zh">每次回想...，我不禁感到...</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">B) 時間轉折語</div>
+    <div class="accordion-body">
+      <div class="sentence-item"><strong>有一回：</strong>on one occasion</div>
+      <div class="sentence-item"><strong>起初：</strong>at first / in the beginning</div>
+      <div class="sentence-item"><strong>後來：</strong>later on / afterwards / and then</div>
+      <div class="sentence-item"><strong>同時：</strong>at the same time / meanwhile / simultaneously</div>
+      <div class="sentence-item"><strong>不久：</strong>before long / soon after</div>
+      <div class="sentence-item"><strong>立刻：</strong>at once / immediately / right away / without delay</div>
+      <div class="sentence-item"><strong>最後：</strong>at last / eventually / finally / in the end</div>
+      <div class="sentence-item"><strong>從那時起：</strong>from then on / from that time on</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">C) 強烈轉折句</div>
+    <div class="accordion-body">
+      <div class="sentence-item">1. For the first time in my life, I experienced... <span class="zh">我生平第一次體驗...</span></div>
+      <div class="sentence-item">2. Against/Contrary to all expectations, ... <span class="zh">出乎意料地，...</span></div>
+      <div class="sentence-item">3. Much to my surprise/disappointment, ... <span class="zh">令我十分驚訝/失望地，...</span></div>
+      <div class="sentence-item">4. It was a bolt from the blue. <span class="zh">有如晴天霹靂。</span></div>
+      <div class="sentence-item">5. Instead of feeling delighted, I was tortured by... <span class="zh">並非感到高興，...卻折磨著我。</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">D) 描述心情的形容詞</div>
+    <div class="accordion-body">
+      <p style="line-height:2;">
+        amazed, annoyed, anxious, astonished, astounded, awkward, blessed, calm, cheerful, confused, delighted, depressed, discouraged, ecstatic, embarrassed, excited, fearful, frightened, frustrated, furious, grievous, hesitant, horrified, humiliated, indifferent, indignant, joyful, moody, nervous, passionate, perplexed, pleased, ashamed, arrogant, relieved, satisfied, scared, stunned, surprised, terrified, thrilled, uncomfortable, upset, vexed, worried
+      </p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">E) 描述情緒反應佳句 (精選)</div>
+    <div class="accordion-body">
+      <div class="sentence-item">1. My face lights up with joy. <span class="zh">我的臉上綻放喜悅。</span></div>
+      <div class="sentence-item">2. I am overwhelmed with joy/grief. <span class="zh">我被喜悅/悲傷淹沒。</span></div>
+      <div class="sentence-item">3. Tears stream down my cheeks. <span class="zh">淚水沿著臉頰流下。</span></div>
+      <div class="sentence-item">4. I am trembling with rage. <span class="zh">我氣得發抖。</span></div>
+      <div class="sentence-item">5. The thought... sends a shiver down my spine. <span class="zh">一想到...就讓我不寒而慄。</span></div>
+      <div class="sentence-item">6. I blush with embarrassment. <span class="zh">我尷尬得滿臉通紅。</span></div>
+      <div class="sentence-item">7. ...throws me into despair. <span class="zh">...使我陷入絕望。</span></div>
+      <div class="sentence-item">8. I sigh with relief. <span class="zh">我鬆了一口氣。</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">G) 記敘文結論句</div>
+    <div class="accordion-body">
+      <div class="sentence-item">1. ...left a lasting impression on me. <span class="zh">...給我留下了深刻的印象。</span></div>
+      <div class="sentence-item">2. This made me perfectly aware that... <span class="zh">這讓我完全意識到...</span></div>
+      <div class="sentence-item">3. It was not until... that I realized the importance of... <span class="zh">直到...我才意識到...的重要性。</span></div>
+      <div class="sentence-item">4. This... opened my mind and broadened my horizon. <span class="zh">這...開闊了我的視野。</span></div>
+      <div class="sentence-item">5. From..., I learned a lesson that... <span class="zh">從...中，我學到了一個教訓...</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB: 論說文技巧 ==================== -->
+<div id="expository" class="section">
+  <div class="card">
+    <h2>說明文及論說文寫作技巧</h2>
+    <p>學測作文第一段通常帶有論說文性質，以下句型可靈活運用。</p>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">A) 說明影響的萬用句</div>
+    <div class="accordion-body">
+      <div class="sentence-item">1. ...always has a great effect/influence/impact on me.</div>
+      <div class="sentence-item">2. ...lets me have a good insight into...</div>
+      <div class="sentence-item">3. ...made a radical change to my life.</div>
+      <div class="sentence-item">4. ...inspires me to greater efforts.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">B) 說明重要性的萬用句</div>
+    <div class="accordion-body">
+      <div class="sentence-item">1. ...plays an essential/indispensable role in our daily lives.</div>
+      <div class="sentence-item">2. Nothing is so [adj.] as...</div>
+      <div class="sentence-item">3. Without..., we would feel that there is something lacking in life.</div>
+      <div class="sentence-item">4. Were it not for..., we could not lead a life full of pleasure.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">C) 說明益處的萬用句 (精選)</div>
+    <div class="accordion-body">
+      <div class="sentence-item">1. ...is beneficial to good health.</div>
+      <div class="sentence-item">2. ...broadens the mind. / ...broadens our horizons.</div>
+      <div class="sentence-item">3. ...gives me great pleasure and satisfaction.</div>
+      <div class="sentence-item">4. ...gives me a sense of achievement.</div>
+      <div class="sentence-item">5. ...is educational as well as entertaining.</div>
+      <div class="sentence-item">6. ...adds spice to our lives.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">D) 闡述人生觀的萬用句 (精選)</div>
+    <div class="accordion-body">
+      <div class="sentence-item">1. I am convinced that a bright future awaits me as long as I persevere.</div>
+      <div class="sentence-item">2. I always look on the bright side of things.</div>
+      <div class="sentence-item">3. Life is compared to a voyage full of unpredictable challenges.</div>
+      <div class="sentence-item">4. Nothing important can be achieved without perseverance.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">E) 論說文常用句 -- 引出觀點</div>
+    <div class="accordion-body">
+      <div class="sentence-item">1. In my opinion/view, ...</div>
+      <div class="sentence-item">2. I am firmly of the opinion that...</div>
+      <div class="sentence-item">3. From my perspective/viewpoint, ...</div>
+      <div class="sentence-item">4. It is my belief that...</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">F) 論說文常用句 -- 陳述問題</div>
+    <div class="accordion-body">
+      <div class="sentence-item">1. This problem has been a common phenomenon.</div>
+      <div class="sentence-item">2. It is a thorny problem that requires urgent attention.</div>
+      <div class="sentence-item">3. This problem constitutes/poses a threat to our society.</div>
+      <div class="sentence-item">4. The situation will soon reach crisis proportions.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">G) 論說文常用句 -- 提出解決之道</div>
+    <div class="accordion-body">
+      <div class="sentence-item">1. The authorities must take effective measures to solve this problem.</div>
+      <div class="sentence-item">2. We should seek a solution to this problem.</div>
+      <div class="sentence-item">3. We should raise public awareness of such an issue.</div>
+      <div class="sentence-item">4. We should launch more campaigns to capture public attention.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ---- TAB SWITCHING ----
+function switchTab(tabId) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ---- STEP SYSTEM ----
+const stepState = {};
+
+function getStepState(group) {
+  if (!stepState[group]) {
+    const container = document.querySelector(`[data-group="${group}"]`);
+    const total = container.querySelectorAll('.step-content').length;
+    stepState[group] = { current: 0, total };
+  }
+  return stepState[group];
+}
+
+function updateStepUI(group) {
+  const state = getStepState(group);
+  const container = document.querySelector(`[data-group="${group}"]`);
+
+  container.querySelectorAll('.step-content').forEach((el, i) => {
+    el.classList.toggle('active', i === state.current);
+  });
+
+  container.querySelectorAll('.step-dot').forEach((dot, i) => {
+    dot.classList.remove('current', 'completed');
+    if (i < state.current) dot.classList.add('completed');
+    if (i === state.current) dot.classList.add('current');
+  });
+
+  const prev = document.getElementById(`${group}-prev`);
+  const next = document.getElementById(`${group}-next`);
+  if (prev) prev.disabled = state.current === 0;
+  if (next) {
+    next.disabled = state.current === state.total - 1;
+    next.textContent = state.current === state.total - 1 ? '已完成' : '下一步';
+  }
+}
+
+function nextStep(group) {
+  const state = getStepState(group);
+  if (state.current < state.total - 1) {
+    state.current++;
+    updateStepUI(group);
+  }
+}
+
+function prevStep(group) {
+  const state = getStepState(group);
+  if (state.current > 0) {
+    state.current--;
+    updateStepUI(group);
+  }
+}
+
+function goToStep(group, step) {
+  const state = getStepState(group);
+  state.current = step;
+  updateStepUI(group);
+}
+
+// ---- REVEAL ----
+function reveal(btn) {
+  const content = btn.nextElementSibling;
+  content.classList.toggle('show');
+  btn.textContent = content.classList.contains('show') ? '收起' : btn.dataset.originalText || '展開';
+  if (!btn.dataset.originalText) btn.dataset.originalText = '展開';
+}
+
+// store original text
+document.querySelectorAll('.reveal-btn').forEach(btn => {
+  btn.dataset.originalText = btn.textContent;
+});
+
+// ---- ACCORDION ----
+function toggleAccordion(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ---- SENTENCE LIST TOGGLE ----
+function toggleSentences(h4) {
+  const list = h4.nextElementSibling;
+  list.classList.toggle('open');
+}
+
+// ---- INIT ----
+['topic','structure','essay1','essay2'].forEach(g => updateStepUI(g));
+</script>
+
+</body>
+</html>
