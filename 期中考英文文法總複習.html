@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高二期中考英文文法總複習</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+
+  :root {
+    --primary: #6C5CE7;
+    --primary-light: #a29bfe;
+    --secondary: #00b894;
+    --accent: #fdcb6e;
+    --danger: #d63031;
+    --bg: #f8f9ff;
+    --card: #ffffff;
+    --text: #2d3436;
+    --text-light: #636e72;
+    --correct: #00b894;
+    --wrong: #d63031;
+    --border-radius: 16px;
+    --shadow: 0 4px 24px rgba(108,92,231,0.10);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #6C5CE7 0%, #a29bfe 50%, #74b9ff 100%);
+    color: white;
+    text-align: center;
+    padding: 60px 20px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0; right: 0;
+    height: 60px;
+    background: var(--bg);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .hero h1 { font-size: 2.6em; font-weight: 900; margin-bottom: 8px; letter-spacing: 2px; }
+  .hero p { font-size: 1.15em; opacity: .9; }
+
+  /* ── Progress Bar ── */
+  .progress-bar-container {
+    position: sticky; top: 0; z-index: 100;
+    background: white; padding: 10px 20px 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .progress-info { display: flex; justify-content: space-between; font-size: .85em; color: var(--text-light); margin-bottom: 4px; }
+  .progress-track { height: 8px; background: #dfe6e9; border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 99px; transition: width .5s ease; }
+
+  /* ── Navigation ── */
+  .nav-pills {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center;
+    max-width: 900px; margin: 0 auto 30px; padding: 20px 20px 0;
+    position: relative; z-index: 2;
+  }
+  .nav-pill {
+    padding: 10px 20px; border-radius: 99px;
+    background: white; color: var(--primary);
+    border: 2px solid var(--primary-light);
+    font-weight: 600; font-size: .9em; cursor: pointer;
+    transition: all .2s;
+    text-decoration: none;
+  }
+  .nav-pill:hover, .nav-pill.active {
+    background: var(--primary); color: white;
+    transform: translateY(-2px); box-shadow: var(--shadow);
+  }
+
+  /* ── Container ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
+
+  /* ── Section ── */
+  .section {
+    background: var(--card);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 36px 32px;
+    margin-bottom: 32px;
+    border-left: 5px solid var(--primary);
+    scroll-margin-top: 80px;
+  }
+  .section h2 {
+    font-size: 1.5em; font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section h3 {
+    font-size: 1.15em; font-weight: 700;
+    color: var(--text);
+    margin: 24px 0 12px;
+    padding-left: 12px;
+    border-left: 4px solid var(--accent);
+  }
+
+  /* ── Concept Card ── */
+  .concept-card {
+    background: #f0edff;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 12px 0;
+  }
+  .concept-card.green { background: #e6fff7; }
+  .concept-card.yellow { background: #fff9e6; }
+  .concept-card.red { background: #fff0f0; }
+
+  .concept-card strong { color: var(--primary); }
+  .concept-card.green strong { color: var(--secondary); }
+  .concept-card.red strong { color: var(--danger); }
+
+  /* ── Comparison Table ── */
+  .compare-table {
+    width: 100%; border-collapse: separate;
+    border-spacing: 0; margin: 16px 0;
+    border-radius: 12px; overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  }
+  .compare-table th {
+    background: var(--primary); color: white;
+    padding: 14px 16px; font-weight: 700; font-size: .95em;
+    text-align: left;
+  }
+  .compare-table td {
+    padding: 12px 16px; border-bottom: 1px solid #eee;
+    font-size: .93em;
+  }
+  .compare-table tr:nth-child(even) td { background: #fafafe; }
+  .compare-table tr:last-child td { border-bottom: none; }
+
+  /* ── Vocab Tags ── */
+  .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .tag {
+    padding: 6px 16px; border-radius: 99px;
+    font-size: .88em; font-weight: 600;
+    background: #e8e4ff; color: var(--primary);
+    transition: transform .15s;
+  }
+  .tag:hover { transform: scale(1.06); }
+  .tag.green { background: #d4f5e9; color: #00856a; }
+
+  /* ── Flashcard ── */
+  .flashcard-deck { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin: 16px 0; }
+  .flashcard {
+    perspective: 800px; height: 180px; cursor: pointer;
+  }
+  .flashcard-inner {
+    width: 100%; height: 100%;
+    transition: transform .5s;
+    transform-style: preserve-3d;
+    position: relative;
+  }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+  .flashcard-front, .flashcard-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 14px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 18px; text-align: center;
+    font-weight: 600;
+  }
+  .flashcard-front {
+    background: linear-gradient(135deg, #6C5CE7, #a29bfe);
+    color: white; font-size: 1.15em;
+  }
+  .flashcard-front small { font-weight: 400; opacity: .8; font-size: .7em; margin-top: 8px; }
+  .flashcard-back {
+    background: white; border: 2px solid var(--primary-light);
+    transform: rotateY(180deg);
+    font-size: .95em; color: var(--text);
+  }
+
+  /* ── Quiz ── */
+  .quiz-box {
+    background: linear-gradient(135deg, #f8f7ff 0%, #eef7f2 100%);
+    border: 2px solid var(--primary-light);
+    border-radius: var(--border-radius);
+    padding: 28px;
+    margin: 24px 0;
+  }
+  .quiz-box h4 {
+    font-size: 1.1em; color: var(--primary); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .quiz-q {
+    margin-bottom: 20px; padding: 16px;
+    background: white; border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.04);
+  }
+  .quiz-q p { font-weight: 600; margin-bottom: 10px; }
+  .quiz-q .blank { color: var(--primary); font-weight: 800; text-decoration: underline; }
+  .quiz-options { display: flex; flex-direction: column; gap: 6px; }
+  .quiz-opt {
+    padding: 10px 16px; border-radius: 10px;
+    border: 2px solid #ddd; background: white;
+    cursor: pointer; font-size: .93em;
+    transition: all .2s; display: flex; align-items: center; gap: 8px;
+  }
+  .quiz-opt:hover { border-color: var(--primary-light); background: #f5f3ff; }
+  .quiz-opt.selected { border-color: var(--primary); background: #ede9ff; font-weight: 600; }
+  .quiz-opt.correct { border-color: var(--correct); background: #e6fff7; color: var(--correct); font-weight: 600; }
+  .quiz-opt.wrong { border-color: var(--wrong); background: #fff0f0; color: var(--wrong); }
+  .quiz-opt .opt-letter {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: #eee; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: .8em; flex-shrink: 0;
+  }
+  .quiz-opt.correct .opt-letter { background: var(--correct); color: white; }
+  .quiz-opt.wrong .opt-letter { background: var(--wrong); color: white; }
+
+  .explanation {
+    display: none; margin-top: 10px; padding: 12px 16px;
+    border-radius: 10px; font-size: .9em;
+    background: #f0f9f4; border-left: 4px solid var(--correct);
+    color: #2d6a4f;
+  }
+  .explanation.show { display: block; }
+
+  /* ── Buttons ── */
+  .btn {
+    padding: 12px 28px; border-radius: 99px;
+    border: none; cursor: pointer;
+    font-size: .95em; font-weight: 700;
+    transition: all .2s;
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: #5a4bd1; transform: translateY(-2px); box-shadow: var(--shadow); }
+  .btn-success { background: var(--secondary); color: white; }
+  .btn-success:hover { background: #009d7e; }
+  .btn-danger { background: var(--danger); color: white; }
+
+  .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+  /* ── Score Banner ── */
+  .score-banner {
+    display: none; text-align: center; padding: 24px;
+    border-radius: var(--border-radius); margin: 20px 0;
+    font-size: 1.2em; font-weight: 700;
+  }
+  .score-banner.show { display: block; }
+  .score-banner.great { background: #d4f5e9; color: #00856a; }
+  .score-banner.ok { background: #fff3cd; color: #856404; }
+  .score-banner.bad { background: #fde8e8; color: #c0392b; }
+
+  /* ── Fill-in-blank ── */
+  .fill-blank-input {
+    border: none; border-bottom: 3px solid var(--primary);
+    background: transparent; font-size: 1em;
+    font-weight: 600; color: var(--primary);
+    width: 140px; text-align: center;
+    outline: none; padding: 4px 0;
+    font-family: inherit;
+  }
+  .fill-blank-input.correct-input { border-color: var(--correct); color: var(--correct); }
+  .fill-blank-input.wrong-input { border-color: var(--wrong); color: var(--wrong); }
+
+  /* ── Matching Game ── */
+  .match-game { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+  .match-item {
+    padding: 14px; border-radius: 12px; text-align: center;
+    font-weight: 600; font-size: .9em; cursor: pointer;
+    transition: all .2s; border: 2px solid transparent;
+  }
+  .match-left { background: #ede9ff; color: var(--primary); }
+  .match-right { background: #fff3e0; color: #e17055; }
+  .match-item.match-selected { border-color: var(--primary); transform: scale(1.04); box-shadow: 0 4px 16px rgba(108,92,231,.2); }
+  .match-item.match-correct { background: #d4f5e9 !important; color: var(--correct) !important; border-color: var(--correct); pointer-events: none; }
+  .match-item.match-wrong { animation: shake .4s; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%,60% { transform: translateX(-6px); }
+    40%,80% { transform: translateX(6px); }
+  }
+
+  /* ── Tabs ── */
+  .tab-header { display: flex; gap: 4px; margin-bottom: 0; }
+  .tab-btn {
+    padding: 10px 22px; border-radius: 12px 12px 0 0;
+    border: 2px solid #ddd; border-bottom: none;
+    background: #f0f0f0; cursor: pointer;
+    font-weight: 600; font-size: .9em;
+    transition: all .2s;
+  }
+  .tab-btn.active { background: white; border-color: var(--primary-light); color: var(--primary); }
+  .tab-content { border: 2px solid var(--primary-light); border-radius: 0 12px 12px 12px; padding: 20px; background: white; }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* ── Tooltip ── */
+  .tip {
+    display: inline-block; position: relative;
+    color: var(--primary); font-weight: 700;
+    border-bottom: 2px dashed var(--primary-light);
+    cursor: help;
+  }
+  .tip .tip-text {
+    visibility: hidden; opacity: 0;
+    position: absolute; bottom: 130%; left: 50%;
+    transform: translateX(-50%);
+    background: var(--text); color: white;
+    padding: 8px 14px; border-radius: 8px;
+    font-size: .82em; font-weight: 400;
+    white-space: nowrap; z-index: 10;
+    transition: opacity .2s;
+  }
+  .tip:hover .tip-text { visibility: visible; opacity: 1; }
+
+  /* ── Final Exam Section ── */
+  .final-exam {
+    border-left-color: var(--danger);
+    background: linear-gradient(135deg, #fff 0%, #fff5f5 100%);
+  }
+  .final-exam h2 { color: var(--danger); }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.8em; }
+    .section { padding: 24px 18px; }
+    .quiz-box { padding: 18px; }
+    .flashcard-deck { grid-template-columns: 1fr; }
+    .match-game { grid-template-columns: 1fr; }
+    .compare-table { font-size: .85em; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero">
+  <h1>📖 高二期中考英文總複習</h1>
+  <p>動名詞 vs 不定詞 ╱ 名詞子句 ╱ 倒裝句 — 全考點互動教材</p>
+</div>
+
+<!-- ═══════════ PROGRESS ═══════════ -->
+<div class="progress-bar-container">
+  <div class="progress-info">
+    <span id="progressLabel">學習進度</span>
+    <span id="progressPct">0%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<!-- ═══════════ NAV ═══════════ -->
+<div class="nav-pills">
+  <a class="nav-pill" href="#sec1">Part 1 · V-ing vs to VR</a>
+  <a class="nav-pill" href="#sec2">Part 2 · 動名詞句型</a>
+  <a class="nav-pill" href="#sec3">Part 3 · 不定詞進階</a>
+  <a class="nav-pill" href="#sec4">Part 4 · 名詞子句&amp;句型</a>
+  <a class="nav-pill" href="#sec5">Part 5 · 魔王考點</a>
+  <a class="nav-pill" href="#quiz-zone">模擬測驗區</a>
+</div>
+
+<div class="container">
+
+<!-- ╔═══════════════════════════════════════╗ -->
+<!-- ║  PART 1  V-ing vs. to VR             ║ -->
+<!-- ╚═══════════════════════════════════════╝ -->
+<div class="section" id="sec1">
+  <h2>🔥 Part 1：動名詞 (V-ing) vs. 不定詞 (to VR)</h2>
+
+  <h3>1-1 意思大不同的「雙面人動詞」</h3>
+  <p>這些動詞後面接 <code>to VR</code> 和 <code>V-ing</code> 意思完全相反，考試超愛考！</p>
+
+  <table class="compare-table">
+    <thead><tr><th>動詞</th><th>+ to VR（未來 / 還沒做）</th><th>+ V-ing（過去 / 已經做）</th></tr></thead>
+    <tbody>
+      <tr><td><strong>remember</strong></td><td>記得<em>要去</em>做 ✉️</td><td>記得<em>已經</em>做過 ✅</td></tr>
+      <tr><td><strong>forget</strong></td><td>忘記<em>要去</em>做</td><td>忘記<em>曾經</em>做過</td></tr>
+      <tr><td><strong>stop</strong></td><td>停下來<em>去做</em>另一件事</td><td>停止<em>正在做</em>的事</td></tr>
+      <tr><td><strong>try</strong></td><td>努力嘗試去做</td><td>試著做做看（實驗性質）</td></tr>
+      <tr><td><strong>regret</strong></td><td>遺憾即將做…（常接 tell/inform）</td><td>後悔做了…</td></tr>
+      <tr><td><strong>mean</strong></td><td>打算要…</td><td>意味著…</td></tr>
+    </tbody>
+  </table>
+
+  <div class="concept-card yellow">
+    <strong>💡 記憶秘訣：</strong><br>
+    <code>to VR</code> → 箭頭指向「未來」→ 還沒做的事<br>
+    <code>V-ing</code> → 動作進行中的畫面 → 已經發生過的事
+  </div>
+
+  <!-- 翻牌練習 -->
+  <h3>🃏 翻牌速記（點擊翻面）</h3>
+  <div class="flashcard-deck">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">remember to VR<small>點我翻面</small></div>
+        <div class="flashcard-back">記得「要去」做（還沒做）<br><em>Remember <u>to lock</u> the door.</em></div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">remember V-ing<small>點我翻面</small></div>
+        <div class="flashcard-back">記得「曾經」做過<br><em>I remember <u>locking</u> the door.</em></div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">stop to VR<small>點我翻面</small></div>
+        <div class="flashcard-back">停下來「去做」另一件事<br><em>He stopped <u>to smoke</u>.</em></div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">stop V-ing<small>點我翻面</small></div>
+        <div class="flashcard-back">停止「正在做」的事<br><em>He stopped <u>smoking</u>.</em></div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">try to VR<small>點我翻面</small></div>
+        <div class="flashcard-back">努力嘗試去做<br><em>I tried <u>to open</u> the jar.</em></div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">try V-ing<small>點我翻面</small></div>
+        <div class="flashcard-back">試試看做…（看看效果）<br><em>Try <u>adding</u> some salt.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>1-2 只能接 V-ing 的動詞（必背！）</h3>
+  <div class="tag-list">
+    <span class="tag">consider 考慮</span>
+    <span class="tag">enjoy 喜愛</span>
+    <span class="tag">mind 介意</span>
+    <span class="tag">admit 承認</span>
+    <span class="tag">avoid 避免</span>
+    <span class="tag">practice 練習</span>
+    <span class="tag">quit 放棄</span>
+    <span class="tag">risk 冒險</span>
+    <span class="tag">deny 否認</span>
+    <span class="tag green">can't help 忍不住</span>
+    <span class="tag green">feel like 想要</span>
+    <span class="tag green">give up 放棄</span>
+  </div>
+
+  <div class="concept-card">
+    <strong>📌 口訣記法：</strong>「考（consider）完（enjoy）心（mind）裡承（admit）認避（avoid）免練（practice）習，放（quit）棄冒（risk）險否（deny）認到底」
+  </div>
+
+  <h3>1-3 need / want 的被動用法</h3>
+  <div class="concept-card green">
+    <strong>主詞是「物」+ need / want + V-ing = to be p.p.</strong><br>
+    The car <strong>needs washing</strong>. = The car needs <strong>to be washed</strong>.<br>
+    <em>（車子需要被洗 → 車子需要洗）</em>
+  </div>
+
+  <!-- QUIZ 1 -->
+  <div class="quiz-box" id="quiz1">
+    <h4>✏️ 即時測驗：雙面人動詞</h4>
+    <div class="quiz-q" data-answer="1">
+      <p>1. I'll never forget ______ the Great Wall for the first time. It was amazing!</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> to visit</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> visiting</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> visit</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> visited</div>
+      </div>
+      <div class="explanation">「It was amazing」表示已經做過了 → forget + V-ing = 忘記做過的事。答案是 <strong>(B) visiting</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p>2. Don't forget ______ the door before you leave.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> to lock</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> locking</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> lock</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> locked</div>
+      </div>
+      <div class="explanation">「before you leave」表示事情還沒做 → forget + to VR = 忘記要去做。答案是 <strong>(A) to lock</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p>3. He stopped ______ because his doctor told him to.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> to smoke</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> smoking</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> smoke</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> to smoking</div>
+      </div>
+      <div class="explanation">醫生叫他戒菸 → 「停止」抽菸 → stop + V-ing = 停止正在做的事。答案是 <strong>(B) smoking</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p>4. We tried ______ the window, but it was stuck.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> to open</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> opening</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> open</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> opened</div>
+      </div>
+      <div class="explanation">窗戶卡住打不開 → 「努力嘗試」去打開 → try + to VR。答案是 <strong>(A) to open</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p>5. The garden needs ______.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> to water</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> watering</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> water</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> watered</div>
+      </div>
+      <div class="explanation">主詞是「物」(garden) + need + V-ing = need to be watered（被動）。答案是 <strong>(B) watering</strong>。</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="checkQuiz('quiz1')">送出答案</button>
+      <button class="btn btn-success" onclick="resetQuiz('quiz1')">重新作答</button>
+    </div>
+    <div class="score-banner" id="quiz1-score"></div>
+  </div>
+</div>
+
+<!-- ╔═══════════════════════════════════════╗ -->
+<!-- ║  PART 2  動名詞句型                  ║ -->
+<!-- ╚═══════════════════════════════════════╝ -->
+<div class="section" id="sec2">
+  <h2>🎯 Part 2：動名詞 (V-ing) 必背句型與陷阱</h2>
+
+  <h3>2-1 ⚠️ 最大陷阱：介系詞 to + V-ing</h3>
+  <div class="concept-card red">
+    <strong>看到以下片語的 <code>to</code>，是「介系詞」不是「不定詞」→ 後面一定接 V-ing！</strong>
+  </div>
+
+  <table class="compare-table">
+    <thead><tr><th>片語</th><th>中文</th><th>例句</th></tr></thead>
+    <tbody>
+      <tr><td>look forward to</td><td>期待</td><td>I look forward to <strong>hearing</strong> from you.</td></tr>
+      <tr><td>when it comes to</td><td>談到；說起</td><td>When it comes to <strong>cooking</strong>, she's the best.</td></tr>
+      <tr><td>be used to</td><td>習慣於</td><td>He is used to <strong>getting</strong> up early.</td></tr>
+      <tr><td>be accustomed to</td><td>習慣於</td><td>She is accustomed to <strong>living</strong> alone.</td></tr>
+      <tr><td>object to</td><td>反對</td><td>They objected to <strong>changing</strong> the plan.</td></tr>
+      <tr><td>be opposed to</td><td>反對</td><td>We are opposed to <strong>building</strong> the factory.</td></tr>
+      <tr><td>devote oneself to</td><td>致力於</td><td>She devoted herself to <strong>teaching</strong>.</td></tr>
+      <tr><td>with a view to</td><td>為了要...</td><td>He studied hard with a view to <strong>passing</strong> the exam.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="concept-card yellow">
+    <strong>⚡ 易混淆比較：</strong><br>
+    <code>be used to + V-ing</code> = 習慣於做…<br>
+    <code>used to + VR</code> = 過去常常做…（現在不做了）<br>
+    <code>be used to + VR</code> = 被用來做…
+  </div>
+
+  <h3>2-2 動名詞黃金句型</h3>
+  <div class="concept-card">
+    <strong>have difficulty / trouble / fun + (in) + V-ing</strong><br>
+    做...有困難 / 很愉快<br>
+    <em>I had difficulty (in) <strong>finding</strong> the place.</em>
+  </div>
+  <div class="concept-card green">
+    <strong>prevent / stop / keep / forbid / ban + O + from + V-ing</strong><br>
+    阻止某人做...<br>
+    <em>The rain prevented us from <strong>going</strong> out.</em>
+  </div>
+  <div class="concept-card">
+    <strong>There is no + V-ing</strong> = It is impossible to VR<br>
+    <em>There is no <strong>telling</strong> what will happen. = It is impossible to tell...</em>
+  </div>
+  <div class="concept-card green">
+    <strong>It is no use + V-ing</strong> = 做...是沒有用的<br>
+    <em>It is no use <strong>crying</strong> over spilt milk.</em>
+  </div>
+  <div class="concept-card">
+    <strong>be worth + V-ing</strong> = 值得做...<br>
+    <em>The movie is worth <strong>watching</strong>.</em>
+  </div>
+
+  <!-- QUIZ 2 -->
+  <div class="quiz-box" id="quiz2">
+    <h4>✏️ 即時測驗：介系詞 to 陷阱 &amp; 句型</h4>
+    <div class="quiz-q" data-answer="1">
+      <p>1. I look forward to ______ you at the party.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> see</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> seeing</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> to see</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> seen</div>
+      </div>
+      <div class="explanation">look forward to 的 to 是「介系詞」→ 後面接 V-ing。答案是 <strong>(B) seeing</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p>2. He is used to ______ up early every morning.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> getting</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> get</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> to get</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> got</div>
+      </div>
+      <div class="explanation">be used to 的 to 是介系詞 → 接 V-ing = 習慣於做…。答案是 <strong>(A) getting</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p>3. The heavy rain prevented the students ______ going on the field trip.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> to</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> of</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> from</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> for</div>
+      </div>
+      <div class="explanation">prevent + O + <strong>from</strong> + V-ing 是固定句型。答案是 <strong>(C) from</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p>4. It is no use ______ about the past.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> worry</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> worrying</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> to worry</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> worried</div>
+      </div>
+      <div class="explanation">It is no use + V-ing 是固定句型 = 做…是沒有用的。答案是 <strong>(B) worrying</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p>5. She devoted herself to ______ the rights of children.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> protecting</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> protect</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> to protect</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> protected</div>
+      </div>
+      <div class="explanation">devote oneself to 的 to 是介系詞 → 後面接 V-ing。答案是 <strong>(A) protecting</strong>。</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="checkQuiz('quiz2')">送出答案</button>
+      <button class="btn btn-success" onclick="resetQuiz('quiz2')">重新作答</button>
+    </div>
+    <div class="score-banner" id="quiz2-score"></div>
+  </div>
+</div>
+
+<!-- ╔═══════════════════════════════════════╗ -->
+<!-- ║  PART 3  不定詞進階                  ║ -->
+<!-- ╚═══════════════════════════════════════╝ -->
+<div class="section" id="sec3">
+  <h2>🚀 Part 3：不定詞 (to VR) 的進階變化</h2>
+
+  <h3>3-1 不定詞修飾名詞（不及物動詞 + 介系詞）</h3>
+  <div class="concept-card">
+    <strong>不及物動詞當形容詞修飾名詞時，別忘了加介系詞！</strong><br>
+    ✅ I need a pen <strong>to write with</strong>. （write 是 Vi，需要加 with）<br>
+    ✅ She has no chair <strong>to sit on</strong>. （sit 是 Vi，需要加 on）<br>
+    ❌ I need a pen to write. ← 少了介系詞！
+  </div>
+
+  <h3>3-2 表目的 &amp; 結果的不定詞</h3>
+  <table class="compare-table">
+    <thead><tr><th>用途</th><th>句型</th><th>例句</th></tr></thead>
+    <tbody>
+      <tr><td>表目的</td><td>in order (not) to + VR<br>so as (not) to + VR</td><td>He left early <strong>in order to</strong> catch the train.</td></tr>
+      <tr><td>表結果</td><td>so + adj/adv + as to VR</td><td>She was <strong>so kind as to</strong> help me.</td></tr>
+      <tr><td>出乎意料的結果</td><td>only to + VR</td><td>He hurried there, <strong>only to find</strong> nobody home.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3-3 虛主詞 &amp; 虛受詞：for vs. of</h3>
+  <div class="concept-card yellow">
+    <strong>虛主詞公式：It is + adj + for / of + 人 + to VR</strong><br><br>
+    用 <strong>for</strong>：形容詞修飾「事情」的難易度<br>
+    → easy, hard, difficult, important, necessary, possible...<br>
+    <em>It is <strong>hard for</strong> me <strong>to</strong> understand.</em><br><br>
+    用 <strong>of</strong>：形容詞修飾「人」的品格特質<br>
+    → kind, nice, foolish, stupid, brave, rude, generous...<br>
+    <em>It is <strong>kind of</strong> you <strong>to</strong> help me.</em>
+  </div>
+
+  <div class="concept-card green">
+    <strong>虛受詞公式：S + find / think / consider / make + it + adj + to VR</strong><br>
+    <em>I <strong>find it</strong> difficult <strong>to</strong> memorize all the rules.</em><br>
+    <em>Technology <strong>makes it</strong> possible <strong>to</strong> connect with people worldwide.</em>
+  </div>
+
+  <h3>3-4 seem 的時間差用法</h3>
+  <div class="concept-card">
+    <strong>同時發生：</strong>S + seem / appear + <strong>to VR</strong><br>
+    <em>He <strong>seems to know</strong> the answer.</em>（他似乎知道答案）<br><br>
+    <strong>較早發生：</strong>S + seem / appear + <strong>to have p.p.</strong><br>
+    <em>He <strong>seems to have known</strong> the answer.</em>（他似乎早就知道了）
+  </div>
+
+  <!-- QUIZ 3 -->
+  <div class="quiz-box" id="quiz3">
+    <h4>✏️ 即時測驗：不定詞進階</h4>
+    <div class="quiz-q" data-answer="2">
+      <p>1. I need a piece of paper to write ______.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> (不需要)</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> with</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> on</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> for</div>
+      </div>
+      <div class="explanation">write on paper（在紙上寫），write 是 Vi → 需要加介系詞 on。答案是 <strong>(C) on</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p>2. It is very generous ______ him to donate so much money.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> for</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> of</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> to</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> with</div>
+      </div>
+      <div class="explanation">generous（慷慨的）是形容「人」的品格特質 → 用 of。答案是 <strong>(B) of</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p>3. It is important ______ students to develop good study habits.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> for</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> of</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> to</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> with</div>
+      </div>
+      <div class="explanation">important（重要的）是形容「事情」的性質 → 用 for。答案是 <strong>(A) for</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p>4. He rushed to the station, only ______ that the train had left.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> finding</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> found</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> to find</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> find</div>
+      </div>
+      <div class="explanation">only to VR 表示「出乎意料的結果」= 結果卻發現…。答案是 <strong>(C) to find</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p>5. The teacher seems ______ about the incident already.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> to know</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> to have known</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> knowing</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> known</div>
+      </div>
+      <div class="explanation">「already」暗示較早發生 → seem + to have p.p.。答案是 <strong>(B) to have known</strong>。</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="checkQuiz('quiz3')">送出答案</button>
+      <button class="btn btn-success" onclick="resetQuiz('quiz3')">重新作答</button>
+    </div>
+    <div class="score-banner" id="quiz3-score"></div>
+  </div>
+</div>
+
+<!-- ╔═══════════════════════════════════════╗ -->
+<!-- ║  PART 4  名詞子句 & 句型             ║ -->
+<!-- ╚═══════════════════════════════════════╝ -->
+<div class="section" id="sec4">
+  <h2>📚 Part 4：名詞子句與重要句型</h2>
+
+  <h3>4-1 同位語名詞子句 vs. 關係代名詞 that</h3>
+
+  <table class="compare-table">
+    <thead><tr><th></th><th>同位語名詞子句</th><th>關係代名詞子句</th></tr></thead>
+    <tbody>
+      <tr><td><strong>功能</strong></td><td>補充說明名詞「內容」</td><td>修飾/限定名詞</td></tr>
+      <tr><td><strong>that 後面</strong></td><td>句子<strong>完整</strong>（不缺成分）</td><td>句子<strong>不完整</strong>（缺主詞或受詞）</td></tr>
+      <tr><td><strong>that 可否省略</strong></td><td>通常不省略</td><td>作受詞時可省略</td></tr>
+      <tr><td><strong>前面常見名詞</strong></td><td>fact, news, idea, rumor, belief, suggestion, theory</td><td>任何名詞</td></tr>
+    </tbody>
+  </table>
+
+  <div class="concept-card yellow">
+    <strong>🔍 判斷技巧：看 that 後面的句子完不完整！</strong><br><br>
+    ✅ The <strong>fact</strong> that <em>he is honest</em> is known to all.<br>
+    → that 後面句子完整（he is honest）→ <strong>同位語</strong><br><br>
+    ✅ The <strong>man</strong> that <em>_____ came yesterday</em> is my uncle.<br>
+    → that 後面句子缺主詞 → <strong>關係代名詞</strong>
+  </div>
+
+  <h3>4-2 關代與數量詞的結合</h3>
+  <div class="concept-card">
+    <strong>數量詞 + of + whom（人）/ which（物）</strong><br>
+    → 這是<strong>補述用法</strong>，一定要有<strong>逗號</strong>！<strong>不可以用 that 或 who！</strong><br><br>
+    <em>He has three sons, <strong>all of whom</strong> are doctors.</em><br>
+    <em>She bought ten books, <strong>most of which</strong> are novels.</em><br><br>
+    常見數量詞：both, all, some, most, many, neither, none, several, each, one...
+  </div>
+
+  <h3>4-3 忍不住的兩種說法</h3>
+  <div class="concept-card green">
+    <strong>can't help + V-ing</strong> = <strong>can't help but + VR</strong><br>
+    <em>I <strong>can't help laughing</strong>.</em> = <em>I <strong>can't help but laugh</strong>.</em>
+  </div>
+
+  <h3>4-4 假設語氣：是時候該...</h3>
+  <div class="concept-card red">
+    <strong>It is (high / about) time + that + S + V-ed / should VR</strong><br>
+    → 強調某事「早該發生卻還沒做」<br><br>
+    <em>It is <strong>high time</strong> that you <strong>studied</strong> harder.</em><br>
+    <em>It is <strong>about time</strong> that we <strong>left</strong>.</em><br>
+    <em>= It is about time that we <strong>should leave</strong>.</em>
+  </div>
+
+  <h3>4-5 否定字放句首的倒裝句</h3>
+  <div class="concept-card">
+    <strong>否定副詞放句首 → 後面要倒裝！</strong><br>
+    否定副詞：never, seldom, rarely, hardly, barely, scarcely, not until, no sooner...than<br><br>
+    <strong>倒裝規則：</strong><br>
+    ① 有 be 動詞 → be 動詞移到主詞前面<br>
+    ② 有助動詞 → 助動詞移到主詞前面<br>
+    ③ 一般動詞 → 用 do/does/did + S + VR<br><br>
+    <em><strong>Never have I</strong> seen such a beautiful sunset.</em><br>
+    <em><strong>Seldom does she</strong> complain about anything.</em><br>
+    <em><strong>Hardly had</strong> he arrived <strong>when</strong> it started raining.</em>
+  </div>
+
+  <!-- QUIZ 4 -->
+  <div class="quiz-box" id="quiz4">
+    <h4>✏️ 即時測驗：名詞子句 &amp; 重要句型</h4>
+    <div class="quiz-q" data-answer="0">
+      <p>1. The news that the president ______ was shocking. (同位語)</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> had resigned</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> had resigned it</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> who resigned</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> which resigned</div>
+      </div>
+      <div class="explanation">同位語名詞子句：that 後面需要完整句子。the president had resigned 是完整的。答案是 <strong>(A)</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p>2. He has two daughters, both of ______ are teachers.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> who</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> that</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> whom</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> which</div>
+      </div>
+      <div class="explanation">數量詞 + of + whom（人）。有逗號 = 補述用法，不可用 that。答案是 <strong>(C) whom</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p>3. It is high time that you ______ your homework.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> finish</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> finished</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> finishing</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> to finish</div>
+      </div>
+      <div class="explanation">It is high time that + S + V-<strong>ed</strong>（過去式）。答案是 <strong>(B) finished</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p>4. Never ______ such a delicious meal.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> have I eaten</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> I have eaten</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> I ate</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> did I ate</div>
+      </div>
+      <div class="explanation">Never 放句首 → 倒裝：助動詞 have 移到主詞 I 前面。答案是 <strong>(A) have I eaten</strong>。</div>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p>5. She couldn't help but ______ when she heard the news.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> crying</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> cry</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> to cry</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> cried</div>
+      </div>
+      <div class="explanation">can't help <strong>but</strong> + VR（原形動詞）。注意：can't help + V-ing 才是接動名詞。答案是 <strong>(B) cry</strong>。</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="checkQuiz('quiz4')">送出答案</button>
+      <button class="btn btn-success" onclick="resetQuiz('quiz4')">重新作答</button>
+    </div>
+    <div class="score-banner" id="quiz4-score"></div>
+  </div>
+</div>
+
+<!-- ╔═══════════════════════════════════════╗ -->
+<!-- ║  PART 5  三大魔王考點                ║ -->
+<!-- ╚═══════════════════════════════════════╝ -->
+<div class="section" id="sec5" style="border-left-color: #d63031;">
+  <h2 style="color: #d63031;">👹 Part 5：三大魔王考點總整理</h2>
+  <p>這三個是最容易扣分的地方，搞懂它們就穩了！</p>
+
+  <h3>魔王 ① — 介系詞 to vs. 不定詞 to</h3>
+  <div class="concept-card red">
+    <strong>判斷方法：</strong>看 to 前面是什麼！<br>
+    如果前面是「動詞 / 形容詞 + to」的固定搭配 → 通常是介系詞 to → 接 V-ing<br>
+    如果 to 是單獨出現在動詞後面表達「目的」→ 通常是不定詞 → 接 VR
+  </div>
+
+  <!-- Matching Game -->
+  <h4>🎮 配對遊戲：判斷 to 的身份！</h4>
+  <p style="font-size:.88em;color:var(--text-light);">點選左邊片語，再點右邊正確的搭配</p>
+  <div class="match-game" id="matchGame1">
+    <div class="match-item match-left" data-pair="1" onclick="matchClick(this,'matchGame1')">look forward to ___</div>
+    <div class="match-item match-right" data-pair="3" onclick="matchClick(this,'matchGame1')">+ VR（原形）</div>
+    <div class="match-item match-left" data-pair="2" onclick="matchClick(this,'matchGame1')">be used to ___</div>
+    <div class="match-item match-right" data-pair="2" onclick="matchClick(this,'matchGame1')">+ V-ing（動名詞）<br><small>習慣於</small></div>
+    <div class="match-item match-left" data-pair="3" onclick="matchClick(this,'matchGame1')">used to ___</div>
+    <div class="match-item match-right" data-pair="1" onclick="matchClick(this,'matchGame1')">+ V-ing（動名詞）<br><small>期待</small></div>
+  </div>
+
+  <h3>魔王 ② — 雙面人動詞總對決</h3>
+  <div class="concept-card yellow">
+    <strong>核心判斷原則：</strong><br>
+    看語境裡的事情是「還沒做」還是「已經做了」！<br>
+    ✦ 還沒做 → to VR（向前看）<br>
+    ✦ 做過了 → V-ing（回頭看）
+  </div>
+
+  <h3>魔王 ③ — that 同位語 vs. 關代</h3>
+  <div class="concept-card red">
+    <strong>唯一判斷標準：that 後面的句子「完不完整」</strong><br><br>
+    ① 完整 → 同位語名詞子句（補充說明名詞是什麼）<br>
+    ② 不完整（缺主詞/受詞）→ 關係代名詞子句（修飾名詞）<br><br>
+    前面的名詞也能幫助判斷：<br>
+    fact, news, idea, belief, rumor, suggestion → 高機率是同位語！
+  </div>
+</div>
+
+<!-- ╔═══════════════════════════════════════╗ -->
+<!-- ║  FINAL EXAM 模擬測驗                 ║ -->
+<!-- ╚═══════════════════════════════════════╝ -->
+<div class="section final-exam" id="quiz-zone">
+  <h2>🏆 模擬期中考測驗（20 題）</h2>
+  <p>涵蓋所有考點，完成後會顯示成績和弱項分析！</p>
+
+  <div class="quiz-box" id="finalQuiz">
+    <div class="quiz-q" data-answer="1" data-topic="雙面人動詞">
+      <p><strong>Q1.</strong> I clearly remember ______ the letter yesterday.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> to post</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> posting</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> post</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> posted</div>
+      </div>
+      <div class="explanation">yesterday 表示已經做過 → remember + V-ing。答案：<strong>(B)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="0" data-topic="介系詞to">
+      <p><strong>Q2.</strong> When it comes to ______ English, practice is the key.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> learning</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> learn</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> to learn</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> learned</div>
+      </div>
+      <div class="explanation">when it comes to 的 to 是介系詞 → 接 V-ing。答案：<strong>(A)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="2" data-topic="虛主詞for/of">
+      <p><strong>Q3.</strong> It was careless ______ you to make so many mistakes.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> for</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> to</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> of</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> with</div>
+      </div>
+      <div class="explanation">careless 是形容「人」的特質 → 用 of。答案：<strong>(C)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="1" data-topic="倒裝句">
+      <p><strong>Q4.</strong> Seldom ______ late for school.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> she is</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> is she</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> she does</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> does she is</div>
+      </div>
+      <div class="explanation">Seldom 放句首 → 倒裝。有 be 動詞 → is 移到 she 前。答案：<strong>(B)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="0" data-topic="同位語">
+      <p><strong>Q5.</strong> The rumor that he ______ abroad turned out to be true.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> had gone</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> which had gone</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> who had gone</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> where had gone</div>
+      </div>
+      <div class="explanation">rumor 後接同位語 that 子句，that 後面需完整句子。答案：<strong>(A)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="2" data-topic="only接V-ing動詞">
+      <p><strong>Q6.</strong> Would you mind ______ the window? It's too hot in here.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> to open</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> open</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> opening</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> opened</div>
+      </div>
+      <div class="explanation">mind 只能接 V-ing。答案：<strong>(C)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="1" data-topic="數量詞關代">
+      <p><strong>Q7.</strong> She has five cats, none of ______ are the same color.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> that</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> which</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> who</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> them</div>
+      </div>
+      <div class="explanation">數量詞 + of + which（物）。有逗號不能用 that。答案：<strong>(B)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="0" data-topic="假設語氣">
+      <p><strong>Q8.</strong> It's about time you ______ a decision.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> made</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> make</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> making</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> to make</div>
+      </div>
+      <div class="explanation">It is about time that + S + V-ed（過去式）。答案：<strong>(A)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="3" data-topic="不定詞結果">
+      <p><strong>Q9.</strong> She worked hard, only ______ that she failed the exam.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> finding</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> found</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> find</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> to find</div>
+      </div>
+      <div class="explanation">only to VR 表示出乎意料的結果。答案：<strong>(D)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="1" data-topic="介系詞to">
+      <p><strong>Q10.</strong> He objected to ______ treated unfairly.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> be</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> being</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> been</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> to be</div>
+      </div>
+      <div class="explanation">object to 的 to 是介系詞 → 接 V-ing，被動 → being p.p.。答案：<strong>(B)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="2" data-topic="動名詞句型">
+      <p><strong>Q11.</strong> There is no ______ what will happen next.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> tell</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> to tell</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> telling</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> told</div>
+      </div>
+      <div class="explanation">There is no + V-ing = It is impossible to VR。答案：<strong>(C)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="0" data-topic="虛受詞">
+      <p><strong>Q12.</strong> We find ______ necessary to practice every day.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> it</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> that</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> this</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> what</div>
+      </div>
+      <div class="explanation">find + it（虛受詞）+ adj + to VR。答案：<strong>(A)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="0" data-topic="不定詞Vi+介系詞">
+      <p><strong>Q13.</strong> She needs a house to live ______.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> in</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> at</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> (不需要)</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> on</div>
+      </div>
+      <div class="explanation">live in a house → live 是 Vi → 需要加 in。答案：<strong>(A)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="2" data-topic="雙面人動詞">
+      <p><strong>Q14.</strong> I regret ______ you that your application has been rejected.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> telling</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> tell</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> to tell</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> told</div>
+      </div>
+      <div class="explanation">regret to tell/inform = 遺憾即將要告訴你…（還沒說出口）。答案：<strong>(C)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="1" data-topic="動名詞句型">
+      <p><strong>Q15.</strong> The movie is well worth ______.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> to watch</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> watching</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> watch</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> watched</div>
+      </div>
+      <div class="explanation">be worth + V-ing 是固定句型。答案：<strong>(B)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="0" data-topic="忍不住">
+      <p><strong>Q16.</strong> The children couldn't help ______ when the clown appeared.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> laughing</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> to laugh</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> laugh</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> laughed</div>
+      </div>
+      <div class="explanation">can't help + V-ing = 忍不住做…。答案：<strong>(A)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="3" data-topic="seem時間差">
+      <p><strong>Q17.</strong> He seems ______ the truth before we told him.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> to know</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> knowing</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> known</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> to have known</div>
+      </div>
+      <div class="explanation">before we told him → 較早發生 → seem + to have p.p.。答案：<strong>(D)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="2" data-topic="動名詞句型">
+      <p><strong>Q18.</strong> The bad weather kept us ______ going out.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> to</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> of</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> from</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> for</div>
+      </div>
+      <div class="explanation">keep + O + from + V-ing = 阻止…。答案：<strong>(C)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="1" data-topic="need被動">
+      <p><strong>Q19.</strong> This old building needs ______ immediately.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> repair</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> repairing</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> repaired</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> to repair</div>
+      </div>
+      <div class="explanation">主詞是「物」+ need + V-ing = need to be repaired（被動）。答案：<strong>(B)</strong></div>
+    </div>
+
+    <div class="quiz-q" data-answer="1" data-topic="倒裝句">
+      <p><strong>Q20.</strong> Hardly ______ home when it started to rain.</p>
+      <div class="quiz-options">
+        <div class="quiz-opt" data-idx="0" onclick="selectOpt(this)"><span class="opt-letter">A</span> I had reached</div>
+        <div class="quiz-opt" data-idx="1" onclick="selectOpt(this)"><span class="opt-letter">B</span> had I reached</div>
+        <div class="quiz-opt" data-idx="2" onclick="selectOpt(this)"><span class="opt-letter">C</span> did I reached</div>
+        <div class="quiz-opt" data-idx="3" onclick="selectOpt(this)"><span class="opt-letter">D</span> I reached</div>
+      </div>
+      <div class="explanation">Hardly 放句首 → 倒裝，用過去完成式 had + S + p.p.。搭配 when。答案：<strong>(B)</strong></div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="checkFinal()">🏆 提交模擬考</button>
+      <button class="btn btn-success" onclick="resetQuiz('finalQuiz')">重新作答</button>
+    </div>
+    <div class="score-banner" id="finalQuiz-score"></div>
+    <div id="weakAnalysis" style="display:none; margin-top:20px; padding:20px; background:#fff5f5; border-radius:12px; border:2px solid #ffc9c9;"></div>
+  </div>
+</div>
+
+<!-- ═══════════ STUDY TIPS ═══════════ -->
+<div class="section" style="border-left-color: var(--secondary);">
+  <h2 style="color: var(--secondary);">💪 考前衝刺策略</h2>
+  <div class="concept-card green">
+    <strong>1. 先把三大魔王練到 100% 正確率</strong> — 這三題型占分最多，投報率最高。
+  </div>
+  <div class="concept-card yellow">
+    <strong>2. 每天翻牌複習「雙面人動詞」</strong> — 把 6 組動詞的兩種意思背到滾瓜爛熟。
+  </div>
+  <div class="concept-card">
+    <strong>3. 「介系詞 to」的片語用抄的最有效</strong> — 抄 3 遍比看 10 遍更記得住。
+  </div>
+  <div class="concept-card red">
+    <strong>4. 模擬測驗做 3 遍</strong> — 第一遍找出弱點，第二遍補強，第三遍確認 100%。
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<div style="text-align:center; padding:30px; color:var(--text-light); font-size:.85em;">
+  高二期中考英文文法總複習 ✦ 祝你考試順利拿高分！
+</div>
+
+<script>
+// ── Quiz Logic ──
+function selectOpt(el) {
+  const q = el.closest('.quiz-q');
+  if (q.classList.contains('answered')) return;
+  q.querySelectorAll('.quiz-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function checkQuiz(quizId) {
+  const box = document.getElementById(quizId);
+  const questions = box.querySelectorAll('.quiz-q');
+  let correct = 0, total = questions.length;
+
+  questions.forEach(q => {
+    q.classList.add('answered');
+    const answer = parseInt(q.dataset.answer);
+    const selected = q.querySelector('.quiz-opt.selected');
+    if (selected) {
+      const idx = parseInt(selected.dataset.idx);
+      if (idx === answer) {
+        selected.classList.add('correct');
+        correct++;
+      } else {
+        selected.classList.add('wrong');
+        q.querySelectorAll('.quiz-opt')[answer].classList.add('correct');
+      }
+    } else {
+      q.querySelectorAll('.quiz-opt')[answer].classList.add('correct');
+    }
+    q.querySelector('.explanation').classList.add('show');
+  });
+
+  const pct = Math.round(correct / total * 100);
+  const banner = document.getElementById(quizId + '-score');
+  banner.className = 'score-banner show ' + (pct >= 80 ? 'great' : pct >= 60 ? 'ok' : 'bad');
+  banner.innerHTML = `得分：${correct} / ${total}（${pct}%）` +
+    (pct >= 80 ? ' 🎉 太棒了！' : pct >= 60 ? ' 💪 加油，再練一次！' : ' 📖 建議回去複習這個單元！');
+  updateProgress();
+}
+
+function resetQuiz(quizId) {
+  const box = document.getElementById(quizId);
+  box.querySelectorAll('.quiz-q').forEach(q => {
+    q.classList.remove('answered');
+    q.querySelectorAll('.quiz-opt').forEach(o => {
+      o.classList.remove('selected', 'correct', 'wrong');
+    });
+    q.querySelector('.explanation').classList.remove('show');
+  });
+  const banner = document.getElementById(quizId + '-score');
+  if (banner) { banner.className = 'score-banner'; banner.innerHTML = ''; }
+  const weak = document.getElementById('weakAnalysis');
+  if (weak) weak.style.display = 'none';
+}
+
+// ── Final Exam ──
+function checkFinal() {
+  checkQuiz('finalQuiz');
+  // Weakness analysis
+  const box = document.getElementById('finalQuiz');
+  const questions = box.querySelectorAll('.quiz-q');
+  const topicErrors = {};
+  questions.forEach(q => {
+    const topic = q.dataset.topic || '其他';
+    const answer = parseInt(q.dataset.answer);
+    const sel = q.querySelector('.quiz-opt.selected');
+    if (!sel || parseInt(sel.dataset.idx) !== answer) {
+      topicErrors[topic] = (topicErrors[topic] || 0) + 1;
+    }
+  });
+
+  const weak = document.getElementById('weakAnalysis');
+  const errorEntries = Object.entries(topicErrors).sort((a,b) => b[1] - a[1]);
+  if (errorEntries.length > 0) {
+    let html = '<h4 style="color:#d63031;margin-bottom:12px;">📊 弱項分析</h4>';
+    html += '<p style="margin-bottom:10px;">你在以下考點需要加強：</p>';
+    errorEntries.forEach(([topic, count]) => {
+      html += `<div style="display:flex;align-items:center;gap:8px;margin:6px 0;">
+        <span style="background:#ff6b6b;color:white;padding:3px 10px;border-radius:99px;font-size:.82em;font-weight:700;">${count} 題錯</span>
+        <span style="font-weight:600;">${topic}</span>
+      </div>`;
+    });
+    html += '<p style="margin-top:14px;font-size:.9em;color:#636e72;">建議回到對應單元重新閱讀＋練習！</p>';
+    weak.innerHTML = html;
+    weak.style.display = 'block';
+  } else {
+    weak.innerHTML = '<h4 style="color:#00b894;">🎉 滿分！你已經完全掌握所有考點了！</h4>';
+    weak.style.display = 'block';
+  }
+}
+
+// ── Matching Game ──
+let matchState = {};
+function matchClick(el, gameId) {
+  if (el.classList.contains('match-correct')) return;
+  if (!matchState[gameId]) matchState[gameId] = { selected: null };
+
+  const state = matchState[gameId];
+  const isLeft = el.classList.contains('match-left');
+  const isRight = el.classList.contains('match-right');
+
+  if (!state.selected) {
+    el.classList.add('match-selected');
+    state.selected = el;
+  } else {
+    const prevIsLeft = state.selected.classList.contains('match-left');
+    if ((isLeft && prevIsLeft) || (isRight && !prevIsLeft)) {
+      state.selected.classList.remove('match-selected');
+      el.classList.add('match-selected');
+      state.selected = el;
+    } else {
+      // Check match
+      const pair1 = state.selected.dataset.pair;
+      const pair2 = el.dataset.pair;
+      if (pair1 === pair2) {
+        state.selected.classList.remove('match-selected');
+        state.selected.classList.add('match-correct');
+        el.classList.add('match-correct');
+      } else {
+        el.classList.add('match-wrong');
+        state.selected.classList.add('match-wrong');
+        setTimeout(() => {
+          el.classList.remove('match-wrong');
+          state.selected.classList.remove('match-wrong', 'match-selected');
+          state.selected = null;
+        }, 500);
+        return;
+      }
+      state.selected = null;
+    }
+  }
+}
+
+// ── Progress Tracking ──
+function updateProgress() {
+  const allQ = document.querySelectorAll('.quiz-q');
+  const answered = document.querySelectorAll('.quiz-q.answered');
+  const pct = Math.round(answered.length / allQ.length * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressLabel').textContent =
+    pct === 100 ? '全部完成！' : `已完成 ${answered.length} / ${allQ.length} 題`;
+}
+
+// ── Smooth scroll for nav ──
+document.querySelectorAll('.nav-pill').forEach(pill => {
+  pill.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Init progress
+updateProgress();
+</script>
+</body>
+</html>
