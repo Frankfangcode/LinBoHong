@@ -99,6 +99,92 @@
         <p class="text-gray-500 text-sm mt-2 font-mono">中 → 英 ／ 每週五題 ／ 自我檢測</p>
     </div>
 
+    <!-- Tips Panel Toggle -->
+    <div class="mb-5">
+        <button onclick="toggleTips()" id="tips-toggle-btn"
+            class="w-full flex items-center justify-between px-4 py-3 rounded-xl border border-dark-600 bg-dark-800 hover:border-yellow-600/50 hover:bg-yellow-900/10 transition-all group">
+            <div class="flex items-center gap-3">
+                <span class="text-yellow-400 text-base">💡</span>
+                <span class="text-sm font-bold text-gray-300 group-hover:text-yellow-300 transition-colors">翻譯提醒 & 訣竅</span>
+                <span class="hint-tag bg-yellow-900/30 text-yellow-500 border border-yellow-800/40">老師筆記</span>
+            </div>
+            <span id="tips-chevron" class="text-gray-500 font-mono text-xs transition-transform duration-300">▼ 展開</span>
+        </button>
+
+        <div id="tips-panel" class="overflow-hidden transition-all duration-400" style="max-height:0; opacity:0;">
+            <div class="mt-2 rounded-xl border border-dark-600 bg-dark-800 p-5 space-y-6 text-sm">
+
+                <!-- 提醒 Section -->
+                <div>
+                    <div class="text-xs font-mono text-yellow-500 uppercase tracking-widest mb-3 border-b border-dark-600 pb-2">📌 練習講義時的提醒</div>
+                    <ol class="space-y-2 text-gray-300 leading-relaxed list-none">
+                        <li class="flex gap-2"><span class="text-yellow-500 font-mono shrink-0">1.</span> 先不看解答，自行嘗試翻翻看。</li>
+                        <li class="flex gap-2"><span class="text-yellow-500 font-mono shrink-0">2.</span> 將有困難部分做記號。</li>
+                        <li class="flex gap-2"><span class="text-yellow-500 font-mono shrink-0">3.</span> 對答案時，你的翻法也對，但解答可能翻更好。</li>
+                        <li class="flex gap-2"><span class="text-yellow-500 font-mono shrink-0">4.</span> 注意自己有困難的部分，並比照中英語言的表達法，有些可以應用在作文上。</li>
+                        <li class="flex gap-2"><span class="text-yellow-500 font-mono shrink-0">5.</span> <span>抓零碎時間，每次練幾題就好。<span class="text-orange-400 font-bold"> 一次練太多題，會捉狂。</span></span></li>
+                    </ol>
+                </div>
+
+                <!-- 訣竅 1 -->
+                <div>
+                    <div class="text-xs font-mono text-blue-400 uppercase tracking-widest mb-3 border-b border-dark-600 pb-2">🔑 英文翻譯題的訣竅</div>
+                    <div class="space-y-4">
+
+                        <div class="bg-dark-900 rounded-lg p-4 border-l-2 border-blue-500">
+                            <div class="font-bold text-blue-300 mb-2">&lt;1&gt; 先抓主詞 + 動詞</div>
+                            <p class="text-gray-300 leading-relaxed">拿到題目時，第一步是分析題目，<span class="text-white font-medium">把主詞、動詞抓出</span>。只要把主動詞抓到，句子就不會大錯，其他再考慮用副詞片語／子句、名詞片語／子句或關係詞子句來表達。</p>
+                            <div class="mt-3 bg-dark-800 rounded p-3 border border-dark-600">
+                                <div class="text-xs text-gray-500 font-mono mb-1">例：</div>
+                                <p class="text-gray-400 text-xs mb-1">當感染病毒的人打噴嚏或咳嗽時，他們的<span class="text-white font-bold underline decoration-blue-400">飛沫</span>會<span class="text-white font-bold underline decoration-blue-400">傳播</span>冠狀病毒。</p>
+                                <p class="text-blue-300 text-xs">→ <em>Droplets</em> from infected people when they sneeze or cough <em>can transmit</em> the coronavirus.</p>
+                                <p class="text-gray-500 text-xs mt-1">或 When an infected person sneezes or coughs, his droplets can transmit the coronavirus.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-900 rounded-lg p-4 border-l-2 border-purple-500">
+                            <div class="font-bold text-purple-300 mb-2">&lt;2&gt; 注意「的」字 → 用關係子句</div>
+                            <p class="text-gray-300 leading-relaxed">「的」字之前都是形容後面的詞。若不能想出形容詞的說法，就用<span class="text-purple-300 font-medium">關係子句</span>來形容。</p>
+                            <div class="mt-3 space-y-2">
+                                <div class="bg-dark-800 rounded p-3 border border-dark-600">
+                                    <div class="text-xs text-gray-500 font-mono mb-1">例 1：</div>
+                                    <p class="text-gray-400 text-xs mb-1">曾經感染 covid-19 並復原<span class="text-purple-300 font-bold">的</span>人可能有再度感染的風險。</p>
+                                    <p class="text-blue-300 text-xs">→ Those <em>who have been infected with Covid-19 and recovered from it</em> may face the risk of reinfection.</p>
+                                    <p class="text-gray-500 text-xs mt-1">或 There is a risk that recovered Covid-19 patients may get the virus again.</p>
+                                </div>
+                                <div class="bg-dark-800 rounded p-3 border border-dark-600">
+                                    <div class="text-xs text-gray-500 font-mono mb-1">例 2：</div>
+                                    <p class="text-gray-400 text-xs mb-1">我們必須停止任何犧牲大自然平衡來賺錢<span class="text-purple-300 font-bold">的</span>活動。</p>
+                                    <p class="text-blue-300 text-xs">→ We have to stop any activity <em>that brings money at the cost/expense of the balance of nature.</em></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-900 rounded-lg p-4 border-l-2 border-green-500">
+                            <div class="font-bold text-green-300 mb-2">&lt;3&gt; 注意中文相同字 ≠ 英文相同字</div>
+                            <p class="text-gray-300 leading-relaxed">同一個中文字在不同語境下，英文翻法可能完全不同。</p>
+                            <div class="mt-3 bg-dark-800 rounded p-3 border border-dark-600">
+                                <div class="text-xs text-gray-500 font-mono mb-2">例：「避免」</div>
+                                <div class="space-y-2 text-xs">
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-gray-500 shrink-0">→</span>
+                                        <div><span class="text-gray-400">戴口罩可<span class="text-green-300 font-bold">避免</span>感染</span> <span class="text-green-400 font-mono ml-2">= prevent</span></div>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-gray-500 shrink-0">→</span>
+                                        <div><span class="text-gray-400">我們應<span class="text-green-300 font-bold">避免</span>與人近距離接觸時無任何防護</span> <span class="text-green-400 font-mono ml-2">= avoid</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <!-- Mode Toggle -->
     <div class="flex gap-2 mb-6">
         <button id="btn-review" onclick="setMode('review')"
@@ -503,6 +589,23 @@ function resetQuiz() {
     graded = {};
     currentCardIdx = 0;
     renderQuiz();
+}
+
+// ── Tips Panel ──
+let tipsOpen = false;
+function toggleTips() {
+    tipsOpen = !tipsOpen;
+    const panel = document.getElementById('tips-panel');
+    const chevron = document.getElementById('tips-chevron');
+    if (tipsOpen) {
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        panel.style.opacity = '1';
+        chevron.textContent = '▲ 收合';
+    } else {
+        panel.style.maxHeight = '0';
+        panel.style.opacity = '0';
+        chevron.textContent = '▼ 展開';
+    }
 }
 
 // ── Init ──
