@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英文文法教材 L1–L3</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Playfair+Display:wght@700;900&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --paper: #faf8f3;
+    --accent: #c0392b;
+    --gold: #d4a017;
+    --teal: #16a085;
+    --muted: #7f8c8d;
+    --highlight: #fff3cd;
+    --card-bg: #ffffff;
+    --border: #e0ddd5;
+    --correct: #27ae60;
+    --wrong: #e74c3c;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Serif TC', serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.8;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    color: #fff;
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(255,255,255,0.03) 20px,
+      rgba(255,255,255,0.03) 40px
+    );
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    letter-spacing: 0.05em;
+    position: relative;
+  }
+  header p {
+    color: #aaa;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    position: relative;
+  }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    background: #fff;
+    border-bottom: 3px solid var(--ink);
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .nav-tab {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    border-bottom: 4px solid transparent;
+    transition: all 0.2s;
+    color: var(--muted);
+    background: none;
+    border: none;
+    font-family: 'Noto Serif TC', serif;
+  }
+  .nav-tab:hover { background: #f5f5f5; color: var(--ink); }
+  .nav-tab.active {
+    color: var(--accent);
+    border-bottom: 4px solid var(--accent);
+    background: #fff;
+  }
+
+  /* SECTIONS */
+  .section {
+    display: none;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    animation: fadeIn 0.3s ease;
+  }
+  .section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* LESSON HEADER */
+  .lesson-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px double var(--ink);
+  }
+  .lesson-badge {
+    background: var(--ink);
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    padding: 0.5rem 1rem;
+    min-width: 80px;
+    text-align: center;
+  }
+  .lesson-title {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 900;
+  }
+
+  /* CONCEPT CARD */
+  .concept-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-left: 6px solid var(--teal);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .concept-card h3 {
+    color: var(--teal);
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .concept-card h3::before {
+    content: '♪';
+    font-size: 1.2rem;
+  }
+
+  /* RULE BOX */
+  .rule-box {
+    background: var(--highlight);
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+  .rule-box strong { color: var(--accent); }
+
+  /* FORMULA */
+  .formula {
+    font-family: 'Source Code Pro', monospace;
+    background: var(--ink);
+    color: #98f5a0;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    margin: 0.8rem 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    word-break: break-word;
+  }
+
+  /* EXAMPLE */
+  .example {
+    background: #f0f7ff;
+    border-left: 4px solid #3498db;
+    padding: 0.8rem 1.2rem;
+    margin: 0.5rem 0;
+    font-style: italic;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.95rem;
+  }
+  .example .arrow {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 700;
+    margin: 0 0.3rem;
+  }
+
+  /* VOCAB TABLE */
+  .vocab-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  .vocab-table th {
+    background: var(--ink);
+    color: #fff;
+    padding: 0.7rem 1rem;
+    text-align: left;
+  }
+  .vocab-table td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .vocab-table tr:nth-child(even) td { background: #f9f9f9; }
+
+  /* QUIZ SECTION */
+  .quiz-section {
+    margin: 2rem 0;
+    background: #fff;
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .quiz-header {
+    background: var(--ink);
+    color: #fff;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .quiz-header::before { content: '✏️'; }
+  .quiz-body { padding: 1.5rem; }
+
+  .question {
+    margin: 1.2rem 0;
+    padding: 1rem;
+    background: #fafafa;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: box-shadow 0.2s;
+  }
+  .question:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .question-text {
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: var(--ink);
+    font-size: 0.95rem;
+  }
+  .question-num {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+    font-weight: 900;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 0.5rem; }
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.6rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    background: #fff;
+  }
+  .option:hover { border-color: var(--teal); background: #f0fdf9; }
+  .option input[type="radio"] { display: none; }
+  .option-label {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .option.selected .option-label { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .option.correct { background: #e8f8f0; border-color: var(--correct); }
+  .option.correct .option-label { background: var(--correct); border-color: var(--correct); color: #fff; }
+  .option.wrong { background: #fdf0f0; border-color: var(--wrong); }
+  .option.wrong .option-label { background: var(--wrong); border-color: var(--wrong); color: #fff; }
+
+  /* Fill-in-the-blank */
+  .fill-input {
+    border: none;
+    border-bottom: 2px solid var(--ink);
+    background: transparent;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.95rem;
+    padding: 0.2rem 0.5rem;
+    min-width: 120px;
+    outline: none;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .fill-input:focus { border-color: var(--teal); }
+  .fill-input.correct-fill { border-color: var(--correct); color: var(--correct); }
+  .fill-input.wrong-fill { border-color: var(--wrong); color: var(--wrong); }
+
+  /* FEEDBACK */
+  .feedback {
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct-msg { background: #e8f8f0; color: var(--correct); }
+  .feedback.wrong-msg { background: #fdf0f0; color: var(--wrong); }
+
+  /* QUIZ BUTTONS */
+  .quiz-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 2rem;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .quiz-btn:hover { background: var(--accent); transform: translateY(-1px); }
+  .quiz-btn.reset-btn { background: var(--muted); margin-left: 0.5rem; }
+  .quiz-btn.reset-btn:hover { background: #5d6d7e; }
+
+  /* SCORE */
+  .score-display {
+    display: none;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .score-display.show { display: block; }
+
+  /* NOTE BOX */
+  .note-box {
+    background: #fff9e6;
+    border: 1px dashed var(--gold);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  .note-box::before { content: '⚠️ 特別注意：'; font-weight: 700; }
+
+  /* TAG */
+  .tag {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 20px;
+    margin: 0.1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .tag.red { background: var(--accent); }
+  .tag.gold { background: var(--gold); }
+
+  /* PROGRESS */
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--teal);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  /* HIGHLIGHT TEXT */
+  .hl { background: #fffacc; padding: 0 3px; border-radius: 3px; }
+  .hl-red { background: #ffe0e0; padding: 0 3px; border-radius: 3px; }
+  .hl-teal { background: #d0f0eb; padding: 0 3px; border-radius: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .nav-tab { padding: 0.8rem 1rem; font-size: 0.82rem; }
+    .section { padding: 1.5rem 1rem 3rem; }
+    .options { gap: 0.4rem; }
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 2px dashed var(--border);
+    margin: 2rem 0;
+  }
+
+  /* SUMMARY BOX */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .summary-item {
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .summary-item .big { font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .summary-item p { font-size: 0.85rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>英文文法教材</h1>
+  <p>L1 建(賤)命要堅 ／ L2 虛主詞 ＆ 假設語氣 ／ L3 名詞子句－間接問句</p>
+</header>
+
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="showSection('l1a')">L1-1 建命要堅</button>
+  <button class="nav-tab" onclick="showSection('l1b')">L1-2 Adj/Adv倒裝</button>
+  <button class="nav-tab" onclick="showSection('l2a')">L2-1 假設語氣</button>
+  <button class="nav-tab" onclick="showSection('l2b')">L2-2 虛主詞受詞</button>
+  <button class="nav-tab" onclick="showSection('l3a')">L3-1 重要形容詞</button>
+  <button class="nav-tab" onclick="showSection('l3b')">L3-2 間接問句</button>
+  <button class="nav-tab" onclick="showSection('l3c')">L3-3/4/5 名詞子句</button>
+</div>
+
+<!-- ==================== L1-1 ==================== -->
+<div id="l1a" class="section active">
+  <div class="lesson-header">
+    <div class="lesson-badge">L1-1</div>
+    <div class="lesson-title">建(賤)命要堅 — 動詞原形句型</div>
+  </div>
+
+  <div class="concept-card">
+    <h3>核心概念</h3>
+    <p>這四類動詞後面接 <strong>that 帶出的名詞子句</strong>時，語意上有一個 <span class="hl-red">should（應該）被省略了</span>，所以後面動詞都會<strong>變回原形</strong>！</p>
+    <div class="formula">S + 建/命/要/堅 動詞 + that + S + (should) + <strong>原形動詞</strong></div>
+  </div>
+
+  <table class="vocab-table">
+    <tr><th>類別</th><th>動詞</th></tr>
+    <tr><td><span class="tag">建議</span></td><td>suggest, advise, recommend, propose</td></tr>
+    <tr><td><span class="tag red">命令</span></td><td>order, command</td></tr>
+    <tr><td><span class="tag gold">要求</span></td><td>ask, request, require, demand（語氣弱→強）</td></tr>
+    <tr><td><span class="tag">堅持</span></td><td>insist</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <strong>否定句型：</strong>否定 not 會留在原 v. 前面<br>
+    <span class="hl">It is essential that drivers (should) <strong>not drink</strong> before they drive.</span>
+  </div>
+
+  <div class="rule-box">
+    <strong>被動句型：</strong>原形 → <strong>be + p.p.</strong><br>
+    <span class="hl">The doctor commanded that I (should) <strong>be sent</strong> to the hospital.</span>
+  </div>
+
+  <div class="example">The doctor <strong>commanded</strong> that I (should) <strong>go</strong> home immediately.</div>
+  <div class="example">Peter <strong>suggested</strong> that Katie (should) <strong>go</strong> on a diet and <strong>work</strong> out three times a week.</div>
+  <div class="example">The school <strong>requested</strong> that students (should) <strong>inform</strong> their teachers before taking a sick leave.</div>
+
+  <div class="quiz-section" id="quiz-l1a">
+    <div class="quiz-header">練習題組 — L1-1 建命要堅</div>
+    <div class="quiz-body">
+
+      <!-- Q1 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">1</span>Our boss <strong>ordered</strong> that the next meeting ________ held on a Monday.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'q1','A')"><input type="radio"><span class="option-label">A</span> be</label>
+          <label class="option" onclick="selectOption(this,'q1','B')"><input type="radio"><span class="option-label">B</span> is</label>
+          <label class="option" onclick="selectOption(this,'q1','C')"><input type="radio"><span class="option-label">C</span> was</label>
+          <label class="option" onclick="selectOption(this,'q1','D')"><input type="radio"><span class="option-label">D</span> were</label>
+        </div>
+        <div class="feedback" id="fb-q1"></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">2</span>The rule <strong>requires</strong> that visitors ________ their hat when they enter the temple.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'q2','A')"><input type="radio"><span class="option-label">A</span> to take off</label>
+          <label class="option" onclick="selectOption(this,'q2','B')"><input type="radio"><span class="option-label">B</span> taking off</label>
+          <label class="option" onclick="selectOption(this,'q2','C')"><input type="radio"><span class="option-label">C</span> take off</label>
+          <label class="option" onclick="selectOption(this,'q2','D')"><input type="radio"><span class="option-label">D</span> took off</label>
+        </div>
+        <div class="feedback" id="fb-q2"></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">3</span>Some people <strong>requested</strong> that the outdoor concert ________ owing to the typhoon.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'q3','A')"><input type="radio"><span class="option-label">A</span> being put off</label>
+          <label class="option" onclick="selectOption(this,'q3','B')"><input type="radio"><span class="option-label">B</span> was put off</label>
+          <label class="option" onclick="selectOption(this,'q3','C')"><input type="radio"><span class="option-label">C</span> be put off</label>
+          <label class="option" onclick="selectOption(this,'q3','D')"><input type="radio"><span class="option-label">D</span> to be put off</label>
+        </div>
+        <div class="feedback" id="fb-q3"></div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">4</span>Ben's father <strong>demanded</strong> that he ________ up his room at once.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'q4','A')"><input type="radio"><span class="option-label">A</span> cleaning</label>
+          <label class="option" onclick="selectOption(this,'q4','B')"><input type="radio"><span class="option-label">B</span> cleaned</label>
+          <label class="option" onclick="selectOption(this,'q4','C')"><input type="radio"><span class="option-label">C</span> cleans</label>
+          <label class="option" onclick="selectOption(this,'q4','D')"><input type="radio"><span class="option-label">D</span> clean</label>
+        </div>
+        <div class="feedback" id="fb-q4"></div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">5</span>John's friend <strong>recommended</strong> that he ________ a more powerful computer.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'q5','A')"><input type="radio"><span class="option-label">A</span> buy</label>
+          <label class="option" onclick="selectOption(this,'q5','B')"><input type="radio"><span class="option-label">B</span> buys</label>
+          <label class="option" onclick="selectOption(this,'q5','C')"><input type="radio"><span class="option-label">C</span> bought</label>
+          <label class="option" onclick="selectOption(this,'q5','D')"><input type="radio"><span class="option-label">D</span> to buy</label>
+        </div>
+        <div class="feedback" id="fb-q5"></div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">6</span>Darren's teacher <strong>advised</strong> that he ________ too much time playing online games.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'q6','A')"><input type="radio"><span class="option-label">A</span> spending not</label>
+          <label class="option" onclick="selectOption(this,'q6','B')"><input type="radio"><span class="option-label">B</span> not spending</label>
+          <label class="option" onclick="selectOption(this,'q6','C')"><input type="radio"><span class="option-label">C</span> not spend</label>
+          <label class="option" onclick="selectOption(this,'q6','D')"><input type="radio"><span class="option-label">D</span> spend not</label>
+        </div>
+        <div class="feedback" id="fb-q6"></div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">7</span>The local people <strong>insisted</strong> that the murderer ________ to prison as soon as possible.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'q7','A')"><input type="radio"><span class="option-label">A</span> be sent</label>
+          <label class="option" onclick="selectOption(this,'q7','B')"><input type="radio"><span class="option-label">B</span> being sent</label>
+          <label class="option" onclick="selectOption(this,'q7','C')"><input type="radio"><span class="option-label">C</span> to be sent</label>
+          <label class="option" onclick="selectOption(this,'q7','D')"><input type="radio"><span class="option-label">D</span> been sent</label>
+        </div>
+        <div class="feedback" id="fb-q7"></div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">8</span>The doctor <strong>advised</strong> that my father ________ up smoking for the sake of his health.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'q8','A')"><input type="radio"><span class="option-label">A</span> gave</label>
+          <label class="option" onclick="selectOption(this,'q8','B')"><input type="radio"><span class="option-label">B</span> has given</label>
+          <label class="option" onclick="selectOption(this,'q8','C')"><input type="radio"><span class="option-label">C</span> give</label>
+          <label class="option" onclick="selectOption(this,'q8','D')"><input type="radio"><span class="option-label">D</span> has to give</label>
+        </div>
+        <div class="feedback" id="fb-q8"></div>
+      </div>
+
+      <!-- Q9 填空 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">9</span>【填空】My English teacher ordered that everyone ________ (be) quiet in class.</div>
+        <input class="fill-input" id="fill-l1a-1" placeholder="填入答案" oninput="checkFill('fill-l1a-1','be','fb-fill-l1a-1')">
+        <div class="feedback" id="fb-fill-l1a-1"></div>
+      </div>
+
+      <!-- Q10 填空 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">10</span>【填空】I insist that you ________ (stay) for dinner.</div>
+        <input class="fill-input" id="fill-l1a-2" placeholder="填入答案" oninput="checkFill('fill-l1a-2','stay','fb-fill-l1a-2')">
+        <div class="feedback" id="fb-fill-l1a-2"></div>
+      </div>
+
+      <!-- Q11 填空 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">11</span>【填空】Before the show, the host requested that all smartphones ________ (turn) off.</div>
+        <input class="fill-input" id="fill-l1a-3" placeholder="填入答案" oninput="checkFill('fill-l1a-3','be turned','fb-fill-l1a-3')">
+        <div class="feedback" id="fb-fill-l1a-3"></div>
+      </div>
+
+      <!-- Q12 改寫 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">12</span>【改寫】Tom had better not go to the concert because the exam is coming.<br><em>→ Tom's father advised that he ________ (not go) to the concert.</em></div>
+        <input class="fill-input" id="fill-l1a-4" placeholder="填入答案" oninput="checkFill('fill-l1a-4','not go','fb-fill-l1a-4')">
+        <div class="feedback" id="fb-fill-l1a-4"></div>
+      </div>
+
+      <button class="quiz-btn" onclick="checkAll('quiz-l1a')">批改所有選擇題</button>
+      <button class="quiz-btn reset-btn" onclick="resetQuiz('quiz-l1a')">重設</button>
+      <div class="score-display" id="score-quiz-l1a"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== L1-2 ==================== -->
+<div id="l1b" class="section">
+  <div class="lesson-header">
+    <div class="lesson-badge">L1-2</div>
+    <div class="lesson-title">強調 Adj. 跟 Adv. 的倒裝句</div>
+  </div>
+
+  <div class="concept-card">
+    <h3>核心公式</h3>
+    <div class="formula">Although/Though + S + V + [Adj./Adv.], S + V...</div>
+    <div style="text-align:center;margin:0.5rem 0;font-size:1.2rem">⇩ 改寫成倒裝</div>
+    <div class="formula">(As) [Adj./Adv.] + as + S + V, S + V...</div>
+    <p style="margin-top:0.8rem;font-size:0.9rem;color:var(--muted)">📌 英文習慣把想要<strong>強調的東西放最左邊</strong>！</p>
+  </div>
+
+  <div class="rule-box">
+    <strong>注意：</strong>although/though 常跟 still 連用！<br>
+    <span class="hl">Tired as I am, I <strong>still</strong> don't want to give up.</span>
+  </div>
+
+  <div class="example">Although I am <strong>tired</strong>, I don't want to give up.</div>
+  <div class="example" style="background:#f0ffe8;border-color:#27ae60">
+    <span class="arrow">→</span> <strong>Tired</strong> as I am, I don't want to give up.<br>
+    <span class="arrow">→</span> As <strong>tired</strong> as I am, I don't want to give up.
+  </div>
+
+  <div class="example">Although Katie walked <strong>fast</strong>, she missed the train.</div>
+  <div class="example" style="background:#f0ffe8;border-color:#27ae60">
+    <span class="arrow">→</span> <strong>Fast</strong> as Katie walked, she missed the train.<br>
+    <span class="arrow">→</span> As <strong>fast</strong> as Katie walked, she missed the train.
+  </div>
+
+  <div class="note-box">選擇題時，看到「雖然」語意，就想起這個倒裝句型！</div>
+
+  <div class="quiz-section" id="quiz-l1b">
+    <div class="quiz-header">練習題組 — L1-2 倒裝句</div>
+    <div class="quiz-body">
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">1</span>________, he still lost the road race.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'lb1','B')"><input type="radio"><span class="option-label">A</span> Run as fast as Albert could</label>
+          <label class="option" onclick="selectOption(this,'lb1','B')"><input type="radio"><span class="option-label">B</span> Fast as Albert ran</label>
+          <label class="option" onclick="selectOption(this,'lb1','C')"><input type="radio"><span class="option-label">C</span> As fast as Albert ran</label>
+          <label class="option" onclick="selectOption(this,'lb1','D')"><input type="radio"><span class="option-label">D</span> Fast Albert ran</label>
+        </div>
+        <div class="feedback" id="fb-lb1"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">2</span>Quiet ________ it was, I still didn't feel at peace out in the country.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'lb2','A')"><input type="radio"><span class="option-label">A</span> as</label>
+          <label class="option" onclick="selectOption(this,'lb2','B')"><input type="radio"><span class="option-label">B</span> yet</label>
+          <label class="option" onclick="selectOption(this,'lb2','C')"><input type="radio"><span class="option-label">C</span> although</label>
+          <label class="option" onclick="selectOption(this,'lb2','D')"><input type="radio"><span class="option-label">D</span> even if</label>
+        </div>
+        <div class="feedback" id="fb-lb2"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">3</span>________, he is not a good basketball player.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'lb3','A')"><input type="radio"><span class="option-label">A</span> As Jacky is tall</label>
+          <label class="option" onclick="selectOption(this,'lb3','B')"><input type="radio"><span class="option-label">B</span> Jacky is as tall</label>
+          <label class="option" onclick="selectOption(this,'lb3','C')"><input type="radio"><span class="option-label">C</span> Tall as Jacky is</label>
+          <label class="option" onclick="selectOption(this,'lb3','D')"><input type="radio"><span class="option-label">D</span> As tall is Jacky</label>
+        </div>
+        <div class="feedback" id="fb-lb3"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">4</span>Slowly ________, I still couldn't understand what the speaker was talking about.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'lb4','A')"><input type="radio"><span class="option-label">A</span> as though she spoke</label>
+          <label class="option" onclick="selectOption(this,'lb4','B')"><input type="radio"><span class="option-label">B</span> she spoke</label>
+          <label class="option" onclick="selectOption(this,'lb4','C')"><input type="radio"><span class="option-label">C</span> as she spoke</label>
+          <label class="option" onclick="selectOption(this,'lb4','D')"><input type="radio"><span class="option-label">D</span> although she spoke</label>
+        </div>
+        <div class="feedback" id="fb-lb4"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">5</span>________, they are not brothers by birth.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'lb5','A')"><input type="radio"><span class="option-label">A</span> Similarly as Alex and Mason look</label>
+          <label class="option" onclick="selectOption(this,'lb5','B')"><input type="radio"><span class="option-label">B</span> Similar as Alex and Mason look</label>
+          <label class="option" onclick="selectOption(this,'lb5','C')"><input type="radio"><span class="option-label">C</span> As Alex and Mason look similarly</label>
+          <label class="option" onclick="selectOption(this,'lb5','D')"><input type="radio"><span class="option-label">D</span> As Alex and Mason look similar</label>
+        </div>
+        <div class="feedback" id="fb-lb5"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">6</span>________, he isn't happy with his life.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'lb6','A')"><input type="radio"><span class="option-label">A</span> Successfully as Terry is</label>
+          <label class="option" onclick="selectOption(this,'lb6','B')"><input type="radio"><span class="option-label">B</span> As rich as Terry is</label>
+          <label class="option" onclick="selectOption(this,'lb6','C')"><input type="radio"><span class="option-label">C</span> Though successful Terry is</label>
+          <label class="option" onclick="selectOption(this,'lb6','D')"><input type="radio"><span class="option-label">D</span> Rich although Terry is</label>
+        </div>
+        <div class="feedback" id="fb-lb6"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">7</span>Hard ________ Jessica studied, she still failed the math exam.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'lb7','A')"><input type="radio"><span class="option-label">A</span> thus</label>
+          <label class="option" onclick="selectOption(this,'lb7','B')"><input type="radio"><span class="option-label">B</span> since</label>
+          <label class="option" onclick="selectOption(this,'lb7','C')"><input type="radio"><span class="option-label">C</span> when</label>
+          <label class="option" onclick="selectOption(this,'lb7','D')"><input type="radio"><span class="option-label">D</span> as</label>
+        </div>
+        <div class="feedback" id="fb-lb7"></div>
+      </div>
+
+      <!-- 填空改寫 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">8</span>【改寫】Though Peter was clever, he couldn't solve the problem.<br><em>→ ________ as Peter was, he couldn't solve the problem.</em></div>
+        <input class="fill-input" id="fill-l1b-1" placeholder="填入答案" oninput="checkFill('fill-l1b-1','clever','fb-fill-l1b-1')">
+        <div class="feedback" id="fb-fill-l1b-1"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">9</span>【改寫】Although he worked hard, he failed.<br><em>→ ________ as he worked, he failed.</em></div>
+        <input class="fill-input" id="fill-l1b-2" placeholder="填入答案" oninput="checkFill('fill-l1b-2','hard','fb-fill-l1b-2')">
+        <div class="feedback" id="fb-fill-l1b-2"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">10</span>【還原】Difficult as the puzzle looked, it was a piece of cake for Jacky.<br><em>→ Although the puzzle looked ________, it was a piece of cake for Jacky.</em></div>
+        <input class="fill-input" id="fill-l1b-3" placeholder="填入答案" oninput="checkFill('fill-l1b-3','difficult','fb-fill-l1b-3')">
+        <div class="feedback" id="fb-fill-l1b-3"></div>
+      </div>
+
+      <button class="quiz-btn" onclick="checkAll('quiz-l1b')">批改選擇題</button>
+      <button class="quiz-btn reset-btn" onclick="resetQuiz('quiz-l1b')">重設</button>
+      <div class="score-display" id="score-quiz-l1b"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== L2-1 假設語氣 ==================== -->
+<div id="l2a" class="section">
+  <div class="lesson-header">
+    <div class="lesson-badge">L2-1</div>
+    <div class="lesson-title">假設語氣 — 與現在事實相反</div>
+  </div>
+
+  <div class="concept-card">
+    <h3>與現在事實相反</h3>
+    <p>用來表達<strong>與現在事實不符</strong>或<strong>難以實現</strong>的情況。時態往前推一個，if 子句用過去式，且 Be V. 一律使用 <span class="hl-red">were</span>。</p>
+    <div class="formula">If + S + 過去式動詞(were), S + would/could/should/might + VR</div>
+  </div>
+
+  <table class="vocab-table">
+    <tr><th>助動詞</th><th>語意</th></tr>
+    <tr><td>would</td><td>會（最常用）</td></tr>
+    <tr><td>could</td><td>可以</td></tr>
+    <tr><td>should</td><td>應該</td></tr>
+    <tr><td>might</td><td>可能</td></tr>
+  </table>
+
+  <div class="example">If I <strong>had</strong> a time machine, I <strong>would go</strong> back to my childhood.</div>
+  <div class="example">If Katie <strong>were</strong> younger, she <strong>would quit</strong> the job and <strong>would go</strong> abroad.</div>
+  <div class="example">If I <strong>were</strong> you, I <strong>would go</strong> to bed right now.</div>
+
+  <div class="rule-box">
+    <strong>條件句 vs 假設語氣比較：</strong><br>
+    <span class="hl">If it <strong>rains</strong> tomorrow, we <strong>will stay</strong> at home.</span>（條件句：真實可能）<br>
+    <span class="hl-red">If I <strong>won</strong> the lottery, I <strong>would stop</strong> working.</span>（假設語氣：與現在相反）
+  </div>
+
+  <div class="quiz-section" id="quiz-l2a">
+    <div class="quiz-header">練習題組 — L2-1 假設語氣</div>
+    <div class="quiz-body">
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">1</span>If I ________ the time and the money, I'd travel around the world.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2a1','A')"><input type="radio"><span class="option-label">A</span> had</label>
+          <label class="option" onclick="selectOption(this,'l2a1','B')"><input type="radio"><span class="option-label">B</span> have</label>
+          <label class="option" onclick="selectOption(this,'l2a1','C')"><input type="radio"><span class="option-label">C</span> having</label>
+          <label class="option" onclick="selectOption(this,'l2a1','D')"><input type="radio"><span class="option-label">D</span> to have</label>
+        </div>
+        <div class="feedback" id="fb-l2a1"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">2</span>If I ________ the time and the money, I'll travel around the world. (條件句)</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2a2','B')"><input type="radio"><span class="option-label">A</span> had</label>
+          <label class="option" onclick="selectOption(this,'l2a2','B')"><input type="radio"><span class="option-label">B</span> have</label>
+          <label class="option" onclick="selectOption(this,'l2a2','C')"><input type="radio"><span class="option-label">C</span> having</label>
+          <label class="option" onclick="selectOption(this,'l2a2','D')"><input type="radio"><span class="option-label">D</span> to have</label>
+        </div>
+        <div class="feedback" id="fb-l2a2"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">3</span>It's a pity that I cannot go to the concert. If I ________ busy, I could go with my friends.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2a3','A')"><input type="radio"><span class="option-label">A</span> were</label>
+          <label class="option" onclick="selectOption(this,'l2a3','B')"><input type="radio"><span class="option-label">B</span> am not</label>
+          <label class="option" onclick="selectOption(this,'l2a3','C')"><input type="radio"><span class="option-label">C</span> were not</label>
+          <label class="option" onclick="selectOption(this,'l2a3','D')"><input type="radio"><span class="option-label">D</span> did not</label>
+        </div>
+        <div class="feedback" id="fb-l2a3"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">4</span>If you ________ the teacher's advice, you wouldn't fail the math exam.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2a4','A')"><input type="radio"><span class="option-label">A</span> take</label>
+          <label class="option" onclick="selectOption(this,'l2a4','B')"><input type="radio"><span class="option-label">B</span> took</label>
+          <label class="option" onclick="selectOption(this,'l2a4','C')"><input type="radio"><span class="option-label">C</span> will take</label>
+          <label class="option" onclick="selectOption(this,'l2a4','D')"><input type="radio"><span class="option-label">D</span> have taken</label>
+        </div>
+        <div class="feedback" id="fb-l2a4"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">5</span>If my dad exercised every day, he ________ so overweight now.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2a5','A')"><input type="radio"><span class="option-label">A</span> will</label>
+          <label class="option" onclick="selectOption(this,'l2a5','B')"><input type="radio"><span class="option-label">B</span> would not be</label>
+          <label class="option" onclick="selectOption(this,'l2a5','C')"><input type="radio"><span class="option-label">C</span> would not</label>
+          <label class="option" onclick="selectOption(this,'l2a5','D')"><input type="radio"><span class="option-label">D</span> will not be</label>
+        </div>
+        <div class="feedback" id="fb-l2a5"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">6</span>If you ________ an early bird, you could see the sunrise every day.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2a6','A')"><input type="radio"><span class="option-label">A</span> are</label>
+          <label class="option" onclick="selectOption(this,'l2a6','B')"><input type="radio"><span class="option-label">B</span> be</label>
+          <label class="option" onclick="selectOption(this,'l2a6','C')"><input type="radio"><span class="option-label">C</span> was</label>
+          <label class="option" onclick="selectOption(this,'l2a6','D')"><input type="radio"><span class="option-label">D</span> were</label>
+        </div>
+        <div class="feedback" id="fb-l2a6"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">7</span>If I ________ you, I would not put myself in such an awkward situation.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2a7','A')"><input type="radio"><span class="option-label">A</span> were not</label>
+          <label class="option" onclick="selectOption(this,'l2a7','B')"><input type="radio"><span class="option-label">B</span> am not</label>
+          <label class="option" onclick="selectOption(this,'l2a7','C')"><input type="radio"><span class="option-label">C</span> am</label>
+          <label class="option" onclick="selectOption(this,'l2a7','D')"><input type="radio"><span class="option-label">D</span> were</label>
+        </div>
+        <div class="feedback" id="fb-l2a7"></div>
+      </div>
+
+      <!-- 填空 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">8</span>【填空】如果我是你，我會現在去睡覺。<br><em>If I ________ you, I would go to bed right now.</em></div>
+        <input class="fill-input" id="fill-l2a-1" placeholder="填入答案" oninput="checkFill('fill-l2a-1','were','fb-fill-l2a-1')">
+        <div class="feedback" id="fb-fill-l2a-1"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">9</span>【填空】If I ________ (can fly), I would travel around the world for free.</div>
+        <input class="fill-input" id="fill-l2a-2" placeholder="填入答案" oninput="checkFill('fill-l2a-2','could fly','fb-fill-l2a-2')">
+        <div class="feedback" id="fb-fill-l2a-2"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">10</span>I ________ (will) visit my best friend Becky more often if she lived closer to me.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2a10','A')"><input type="radio"><span class="option-label">A</span> would</label>
+          <label class="option" onclick="selectOption(this,'l2a10','B')"><input type="radio"><span class="option-label">B</span> will not</label>
+          <label class="option" onclick="selectOption(this,'l2a10','C')"><input type="radio"><span class="option-label">C</span> would not</label>
+          <label class="option" onclick="selectOption(this,'l2a10','D')"><input type="radio"><span class="option-label">D</span> will</label>
+        </div>
+        <div class="feedback" id="fb-l2a10"></div>
+      </div>
+
+      <button class="quiz-btn" onclick="checkAll('quiz-l2a')">批改選擇題</button>
+      <button class="quiz-btn reset-btn" onclick="resetQuiz('quiz-l2a')">重設</button>
+      <div class="score-display" id="score-quiz-l2a"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== L2-2 虛主詞受詞 ==================== -->
+<div id="l2b" class="section">
+  <div class="lesson-header">
+    <div class="lesson-badge">L2-2</div>
+    <div class="lesson-title">虛主詞 &amp; 虛受詞 it</div>
+  </div>
+
+  <div class="concept-card">
+    <h3>虛主詞 It（代替 that 名詞子句）</h3>
+    <p>為了避免名詞子句當<strong>主詞</strong>太長，句子頭重腳輕，故用虛主詞替代。</p>
+    <div class="formula">That S V... + V + Adj./N.<br>⇩<br>It + V + Adj./N. + that S V...</div>
+  </div>
+
+  <div class="example">That she was unable to continue her study <strong>disappointed</strong> Katie.</div>
+  <div class="example" style="background:#f0ffe8;border-color:#27ae60">
+    <span class="arrow">→</span> <strong>It</strong> disappointed Katie <strong>that</strong> she was unable to continue her study.
+  </div>
+
+  <div class="concept-card">
+    <h3>虛主詞 It（代替不定詞片語）</h3>
+    <div class="formula">To V... + V + Adj./N.<br>⇩<br>It + V + Adj./N. + (for sb.) + to V...</div>
+  </div>
+
+  <div class="example">To pay attention to teachers in class is <strong>important</strong> (for students).</div>
+  <div class="example" style="background:#f0ffe8;border-color:#27ae60">
+    <span class="arrow">→</span> <strong>It</strong> is important (for students) <strong>to pay</strong> attention to teachers in class.
+  </div>
+
+  <div class="concept-card">
+    <h3>虛受詞 it（代替 that/to VR 當受詞）</h3>
+    <p>consider / think / find / feel 當<strong>不完全及物動詞</strong>時，受詞太長用 it 替代。</p>
+    <div class="formula">S + find/consider/think/feel + it + Adj./N. + that S V / to VR</div>
+  </div>
+
+  <div class="example">Many people find <strong>that an eight-year-old boy can be so smart</strong> incredible.</div>
+  <div class="example" style="background:#f0ffe8;border-color:#27ae60">
+    <span class="arrow">→</span> Many people find <strong>it</strong> incredible <strong>that</strong> an eight-year-old boy can be so smart.
+  </div>
+
+  <div class="quiz-section" id="quiz-l2b">
+    <div class="quiz-header">練習題組 — L2-2 虛主詞受詞</div>
+    <div class="quiz-body">
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">1</span>We considered ________ an honor to be able to do something nice for the teacher.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2b1','A')"><input type="radio"><span class="option-label">A</span> is</label>
+          <label class="option" onclick="selectOption(this,'l2b1','B')"><input type="radio"><span class="option-label">B</span> be</label>
+          <label class="option" onclick="selectOption(this,'l2b1','C')"><input type="radio"><span class="option-label">C</span> to be</label>
+          <label class="option" onclick="selectOption(this,'l2b1','D')"><input type="radio"><span class="option-label">D</span> to being</label>
+        </div>
+        <div class="feedback" id="fb-l2b1"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">2</span>I highly recommend this novel; you will ________ it inspiring to read.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2b2','A')"><input type="radio"><span class="option-label">A</span> find</label>
+          <label class="option" onclick="selectOption(this,'l2b2','B')"><input type="radio"><span class="option-label">B</span> like</label>
+          <label class="option" onclick="selectOption(this,'l2b2','C')"><input type="radio"><span class="option-label">C</span> keep</label>
+          <label class="option" onclick="selectOption(this,'l2b2','D')"><input type="radio"><span class="option-label">D</span> have</label>
+        </div>
+        <div class="feedback" id="fb-l2b2"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">3</span>Most people consider ________ necessary to learn English.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2b3','A')"><input type="radio"><span class="option-label">A</span> they are</label>
+          <label class="option" onclick="selectOption(this,'l2b3','B')"><input type="radio"><span class="option-label">B</span> that is</label>
+          <label class="option" onclick="selectOption(this,'l2b3','C')"><input type="radio"><span class="option-label">C</span> it</label>
+          <label class="option" onclick="selectOption(this,'l2b3','D')"><input type="radio"><span class="option-label">D</span> it as</label>
+        </div>
+        <div class="feedback" id="fb-l2b3"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">4</span>The students found ________ finish a sixty-page report in a week.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2b4','A')"><input type="radio"><span class="option-label">A</span> hard it to</label>
+          <label class="option" onclick="selectOption(this,'l2b4','B')"><input type="radio"><span class="option-label">B</span> it was hard that</label>
+          <label class="option" onclick="selectOption(this,'l2b4','C')"><input type="radio"><span class="option-label">C</span> it hard to</label>
+          <label class="option" onclick="selectOption(this,'l2b4','D')"><input type="radio"><span class="option-label">D</span> that it hard to</label>
+        </div>
+        <div class="feedback" id="fb-l2b4"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">5</span>Many teenagers find ________ exciting to play video games with their friends.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2b5','A')"><input type="radio"><span class="option-label">A</span> that</label>
+          <label class="option" onclick="selectOption(this,'l2b5','B')"><input type="radio"><span class="option-label">B</span> this</label>
+          <label class="option" onclick="selectOption(this,'l2b5','C')"><input type="radio"><span class="option-label">C</span> them</label>
+          <label class="option" onclick="selectOption(this,'l2b5','D')"><input type="radio"><span class="option-label">D</span> it</label>
+        </div>
+        <div class="feedback" id="fb-l2b5"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">6</span>________ is a waste of time ________ for the whole weekend.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2b6','A')"><input type="radio"><span class="option-label">A</span> That; to play computer games</label>
+          <label class="option" onclick="selectOption(this,'l2b6','B')"><input type="radio"><span class="option-label">B</span> That; that plays computer games</label>
+          <label class="option" onclick="selectOption(this,'l2b6','C')"><input type="radio"><span class="option-label">C</span> It; to play computer games</label>
+          <label class="option" onclick="selectOption(this,'l2b6','D')"><input type="radio"><span class="option-label">D</span> It; that plays computer games</label>
+        </div>
+        <div class="feedback" id="fb-l2b6"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">7</span>As a care center staff member, Mike considers ________ an honor ________ the residents.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l2b7','A')"><input type="radio"><span class="option-label">A</span> it; to help</label>
+          <label class="option" onclick="selectOption(this,'l2b7','B')"><input type="radio"><span class="option-label">B</span> that; helping</label>
+          <label class="option" onclick="selectOption(this,'l2b7','C')"><input type="radio"><span class="option-label">C</span> that; to help</label>
+          <label class="option" onclick="selectOption(this,'l2b7','D')"><input type="radio"><span class="option-label">D</span> it; helping</label>
+        </div>
+        <div class="feedback" id="fb-l2b7"></div>
+      </div>
+
+      <!-- 填空 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">8</span>【改寫】Playing video games for long periods without taking breaks is bad for children.<br><em>→ It is ________ for children to play video games for long periods without taking breaks.</em></div>
+        <input class="fill-input" id="fill-l2b-1" placeholder="填入答案" oninput="checkFill('fill-l2b-1','bad','fb-fill-l2b-1')">
+        <div class="feedback" id="fb-fill-l2b-1"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">9</span>【改寫】Robert thinks that reviewing his notes before an exam is necessary.<br><em>→ Robert thinks it ________ (reviewing...) is necessary.</em><br>（填 necessary 後接受詞子句的正確形式）</div>
+        <input class="fill-input" id="fill-l2b-2" placeholder="填入答案" oninput="checkFill('fill-l2b-2','necessary','fb-fill-l2b-2')">
+        <div class="feedback" id="fb-fill-l2b-2"></div>
+      </div>
+
+      <button class="quiz-btn" onclick="checkAll('quiz-l2b')">批改選擇題</button>
+      <button class="quiz-btn reset-btn" onclick="resetQuiz('quiz-l2b')">重設</button>
+      <div class="score-display" id="score-quiz-l2b"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== L3-1 重要形容詞 ==================== -->
+<div id="l3a" class="section">
+  <div class="lesson-header">
+    <div class="lesson-badge">L3-1</div>
+    <div class="lesson-title">重要形容詞與虛主詞 it — important 句型</div>
+  </div>
+
+  <div class="concept-card">
+    <h3>核心句型</h3>
+    <p>因為某件事情非常重要，"應該"要立刻去完成或執行，用<strong>虛主詞</strong>強調重要性，真正主詞為 <span class="hl-red">that 帶出來的名詞子句</span>。</p>
+    <p>語意上有一個 <span class="hl">should（應該）被省略了</span>，所以後面動詞都會<strong>變回原形</strong>！</p>
+    <div class="formula">It is + [重要形容詞] + that + S + (should) + 原形動詞</div>
+    <p style="margin-top:0.5rem;font-size:0.9rem">也可改寫：<span class="hl-teal">It is + Adj + (for sb.) + to V...</span></p>
+  </div>
+
+  <table class="vocab-table">
+    <tr><th>類別</th><th>形容詞</th></tr>
+    <tr><td><span class="tag">必要的</span></td><td>necessary, essential</td></tr>
+    <tr><td><span class="tag red">重要的</span></td><td>important, crucial, vital, critical（關鍵的）</td></tr>
+    <tr><td><span class="tag gold">緊急的</span></td><td>urgent（迫切的）, *imperative（重要緊急的）</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <strong>否定句型：</strong>否定 not 會留在原 v. 前面<br>
+    <span class="hl">It is essential that drivers (should) <strong>not drink</strong> before they drive.</span>
+  </div>
+
+  <div class="rule-box">
+    <strong>被動句型：</strong>原形 → <strong>be + p.p.</strong><br>
+    <span class="hl">It is urgent that the patient (should) <strong>be sent</strong> to the hospital.</span>
+  </div>
+
+  <div class="example">It is <strong>vital</strong> that students (should) <strong>be attentive</strong> in class.</div>
+  <div class="example">It is <strong>necessary</strong> that everybody (should) <strong>be informed</strong> of the news.</div>
+  <div class="example">It is <strong>essential</strong> that everyone (should) <strong>study hard</strong> before the exam.<br>
+    <span class="arrow">→</span> It is essential (for everyone) <strong>to study hard</strong> before the exam.</div>
+
+  <div class="quiz-section" id="quiz-l3a">
+    <div class="quiz-header">練習題組 — L3-1 重要形容詞</div>
+    <div class="quiz-body">
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">1</span>It is necessary ________ (that all users follow the instructions)</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3a1','A')"><input type="radio"><span class="option-label">A</span> that all users follows the instructions</label>
+          <label class="option" onclick="selectOption(this,'l3a1','B')"><input type="radio"><span class="option-label">B</span> that all users follow the instructions</label>
+          <label class="option" onclick="selectOption(this,'l3a1','C')"><input type="radio"><span class="option-label">C</span> for all users follows the instructions</label>
+          <label class="option" onclick="selectOption(this,'l3a1','D')"><input type="radio"><span class="option-label">D</span> for all users should follow the instructions</label>
+        </div>
+        <div class="feedback" id="fb-l3a1"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">2</span>________ is not necessary that May bring an umbrella.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3a2','A')"><input type="radio"><span class="option-label">A</span> It</label>
+          <label class="option" onclick="selectOption(this,'l3a2','B')"><input type="radio"><span class="option-label">B</span> She</label>
+          <label class="option" onclick="selectOption(this,'l3a2','C')"><input type="radio"><span class="option-label">C</span> That</label>
+          <label class="option" onclick="selectOption(this,'l3a2','D')"><input type="radio"><span class="option-label">D</span> Which</label>
+        </div>
+        <div class="feedback" id="fb-l3a2"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">3</span>It is urgent that food and clothing ________ to the victims.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3a3','A')"><input type="radio"><span class="option-label">A</span> send</label>
+          <label class="option" onclick="selectOption(this,'l3a3','B')"><input type="radio"><span class="option-label">B</span> be sent</label>
+          <label class="option" onclick="selectOption(this,'l3a3','C')"><input type="radio"><span class="option-label">C</span> sending</label>
+          <label class="option" onclick="selectOption(this,'l3a3','D')"><input type="radio"><span class="option-label">D</span> must be sent</label>
+        </div>
+        <div class="feedback" id="fb-l3a3"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">4</span>It is crucial that the project ________ quickly and correctly.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3a4','A')"><input type="radio"><span class="option-label">A</span> do</label>
+          <label class="option" onclick="selectOption(this,'l3a4','B')"><input type="radio"><span class="option-label">B</span> did</label>
+          <label class="option" onclick="selectOption(this,'l3a4','C')"><input type="radio"><span class="option-label">C</span> done</label>
+          <label class="option" onclick="selectOption(this,'l3a4','D')"><input type="radio"><span class="option-label">D</span> be done</label>
+        </div>
+        <div class="feedback" id="fb-l3a4"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">5</span>It is critical that Jane ________ action to realize her dream.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3a5','A')"><input type="radio"><span class="option-label">A</span> taking</label>
+          <label class="option" onclick="selectOption(this,'l3a5','B')"><input type="radio"><span class="option-label">B</span> takes</label>
+          <label class="option" onclick="selectOption(this,'l3a5','C')"><input type="radio"><span class="option-label">C</span> took</label>
+          <label class="option" onclick="selectOption(this,'l3a5','D')"><input type="radio"><span class="option-label">D</span> take</label>
+        </div>
+        <div class="feedback" id="fb-l3a5"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">6</span>It is not ________ you wear a heavy coat when the weather is hot.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3a6','A')"><input type="radio"><span class="option-label">A</span> vital for</label>
+          <label class="option" onclick="selectOption(this,'l3a6','B')"><input type="radio"><span class="option-label">B</span> significantly for</label>
+          <label class="option" onclick="selectOption(this,'l3a6','C')"><input type="radio"><span class="option-label">C</span> surely that</label>
+          <label class="option" onclick="selectOption(this,'l3a6','D')"><input type="radio"><span class="option-label">D</span> necessary that</label>
+        </div>
+        <div class="feedback" id="fb-l3a6"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">7</span>It is important that a swimmer ________ some warm-ups before jumping into a pool.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3a7','A')"><input type="radio"><span class="option-label">A</span> do</label>
+          <label class="option" onclick="selectOption(this,'l3a7','B')"><input type="radio"><span class="option-label">B</span> does</label>
+          <label class="option" onclick="selectOption(this,'l3a7','C')"><input type="radio"><span class="option-label">C</span> has done</label>
+          <label class="option" onclick="selectOption(this,'l3a7','D')"><input type="radio"><span class="option-label">D</span> will do</label>
+        </div>
+        <div class="feedback" id="fb-l3a7"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">8</span>It is crucial that you ________ your voice when entering the library.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3a8','A')"><input type="radio"><span class="option-label">A</span> lower</label>
+          <label class="option" onclick="selectOption(this,'l3a8','B')"><input type="radio"><span class="option-label">B</span> lowered</label>
+          <label class="option" onclick="selectOption(this,'l3a8','C')"><input type="radio"><span class="option-label">C</span> be lowered</label>
+          <label class="option" onclick="selectOption(this,'l3a8','D')"><input type="radio"><span class="option-label">D</span> should be lowered</label>
+        </div>
+        <div class="feedback" id="fb-l3a8"></div>
+      </div>
+
+      <!-- 填空 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">9</span>【填空】It is absolutely imperative that Katherine ________ (finish) her homework by next week.</div>
+        <input class="fill-input" id="fill-l3a-1" placeholder="填入答案" oninput="checkFill('fill-l3a-1','finish','fb-fill-l3a-1')">
+        <div class="feedback" id="fb-fill-l3a-1"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">10</span>【填空】It is vital that parents ________ (not expose) their children to too much violent content on TV.</div>
+        <input class="fill-input" id="fill-l3a-2" placeholder="填入答案" oninput="checkFill('fill-l3a-2','not expose','fb-fill-l3a-2')">
+        <div class="feedback" id="fb-fill-l3a-2"></div>
+      </div>
+
+      <button class="quiz-btn" onclick="checkAll('quiz-l3a')">批改選擇題</button>
+      <button class="quiz-btn reset-btn" onclick="resetQuiz('quiz-l3a')">重設</button>
+      <div class="score-display" id="score-quiz-l3a"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== L3-2 間接問句 ==================== -->
+<div id="l3b" class="section">
+  <div class="lesson-header">
+    <div class="lesson-badge">L3-2</div>
+    <div class="lesson-title">名詞子句 — 間接問句 Review</div>
+  </div>
+
+  <div class="concept-card">
+    <h3>名詞子句是什麼？</h3>
+    <p>名詞子句（Noun Clauses）是<strong>依附在主句中執行名詞功能</strong>的子句。名詞子句可以用 <span class="hl">that</span>、疑問詞（<span class="hl-teal">question words</span>）或 <span class="hl-red">whether / if</span> 引導。</p>
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-item"><div class="big">當受詞</div><p>I don't know <strong>what time it is</strong>.</p></div>
+    <div class="summary-item"><div class="big">當主詞</div><p><strong>What you told me</strong> is important.</p></div>
+    <div class="summary-item"><div class="big">當補語</div><p>The problem is <strong>when you will come</strong>.</p></div>
+  </div>
+
+  <div class="quiz-section" id="quiz-l3b">
+    <div class="quiz-header">練習題組 — L3-2 間接問句綜合</div>
+    <div class="quiz-body">
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">1</span>Luke is worrying ________ his two cats will get along.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3b1','A')"><input type="radio"><span class="option-label">A</span> that</label>
+          <label class="option" onclick="selectOption(this,'l3b1','B')"><input type="radio"><span class="option-label">B</span> about</label>
+          <label class="option" onclick="selectOption(this,'l3b1','C')"><input type="radio"><span class="option-label">C</span> which</label>
+          <label class="option" onclick="selectOption(this,'l3b1','D')"><input type="radio"><span class="option-label">D</span> whether</label>
+        </div>
+        <div class="feedback" id="fb-l3b1"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">2</span>________ the necklace Anne bought in the market is genuine remains unknown.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3b2','A')"><input type="radio"><span class="option-label">A</span> If</label>
+          <label class="option" onclick="selectOption(this,'l3b2','B')"><input type="radio"><span class="option-label">B</span> That</label>
+          <label class="option" onclick="selectOption(this,'l3b2','C')"><input type="radio"><span class="option-label">C</span> What</label>
+          <label class="option" onclick="selectOption(this,'l3b2','D')"><input type="radio"><span class="option-label">D</span> Whether</label>
+        </div>
+        <div class="feedback" id="fb-l3b2"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">3</span>If you are wondering ________, you can always check out the instruction manual.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3b3','A')"><input type="radio"><span class="option-label">A</span> how should you do next</label>
+          <label class="option" onclick="selectOption(this,'l3b3','B')"><input type="radio"><span class="option-label">B</span> how you should do next</label>
+          <label class="option" onclick="selectOption(this,'l3b3','C')"><input type="radio"><span class="option-label">C</span> what should you do next</label>
+          <label class="option" onclick="selectOption(this,'l3b3','D')"><input type="radio"><span class="option-label">D</span> what you should do next</label>
+        </div>
+        <div class="feedback" id="fb-l3b3"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">4</span>Darren is very curious about ________.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3b4','A')"><input type="radio"><span class="option-label">A</span> how could that happen</label>
+          <label class="option" onclick="selectOption(this,'l3b4','B')"><input type="radio"><span class="option-label">B</span> how that could happen</label>
+          <label class="option" onclick="selectOption(this,'l3b4','C')"><input type="radio"><span class="option-label">C</span> could that happen</label>
+          <label class="option" onclick="selectOption(this,'l3b4','D')"><input type="radio"><span class="option-label">D</span> that happened</label>
+        </div>
+        <div class="feedback" id="fb-l3b4"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">5</span>When I asked Amy if ________ to the party, she didn't answer but just walked away.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3b5','A')"><input type="radio"><span class="option-label">A</span> would she go</label>
+          <label class="option" onclick="selectOption(this,'l3b5','B')"><input type="radio"><span class="option-label">B</span> she would go</label>
+          <label class="option" onclick="selectOption(this,'l3b5','C')"><input type="radio"><span class="option-label">C</span> would go</label>
+          <label class="option" onclick="selectOption(this,'l3b5','D')"><input type="radio"><span class="option-label">D</span> her to go</label>
+        </div>
+        <div class="feedback" id="fb-l3b5"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">6</span>Even with the most advanced technology, scientists still can't predict ________.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3b6','A')"><input type="radio"><span class="option-label">A</span> when will an earthquake happen</label>
+          <label class="option" onclick="selectOption(this,'l3b6','B')"><input type="radio"><span class="option-label">B</span> when an earthquake might strike</label>
+          <label class="option" onclick="selectOption(this,'l3b6','C')"><input type="radio"><span class="option-label">C</span> when an earthquake is happening</label>
+          <label class="option" onclick="selectOption(this,'l3b6','D')"><input type="radio"><span class="option-label">D</span> when is an earthquake happening</label>
+        </div>
+        <div class="feedback" id="fb-l3b6"></div>
+      </div>
+
+      <!-- 填空 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">7</span>【合併句子】Who is the girl in a pink dress? / I want to know.<br><em>→ I want to know ________ the girl in a pink dress ________.</em></div>
+        <input class="fill-input" id="fill-l3b-1" placeholder="第一格" oninput="checkFill('fill-l3b-1','who','fb-fill-l3b-1')" style="width:80px">
+        <span> ... </span>
+        <input class="fill-input" id="fill-l3b-2" placeholder="第二格" oninput="checkFill('fill-l3b-2','is','fb-fill-l3b-2')" style="width:60px">
+        <div class="feedback" id="fb-fill-l3b-1"></div>
+        <div class="feedback" id="fb-fill-l3b-2"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">8</span>【合併句子】I wonder that. / Did you study last night?<br><em>→ I wonder ________ you studied last night.</em></div>
+        <input class="fill-input" id="fill-l3b-3" placeholder="if 或 whether" oninput="checkFill('fill-l3b-3','if','fb-fill-l3b-3')">
+        <div class="feedback" id="fb-fill-l3b-3"></div>
+      </div>
+
+      <button class="quiz-btn" onclick="checkAll('quiz-l3b')">批改選擇題</button>
+      <button class="quiz-btn reset-btn" onclick="resetQuiz('quiz-l3b')">重設</button>
+      <div class="score-display" id="score-quiz-l3b"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== L3-3/4/5 ==================== -->
+<div id="l3c" class="section">
+  <div class="lesson-header">
+    <div class="lesson-badge">L3-3~5</div>
+    <div class="lesson-title">WH-word 間接問句 ／ whether/if ／ WH-word 簡化</div>
+  </div>
+
+  <div class="concept-card">
+    <h3>WH-word 間接問句（L3-3）</h3>
+    <p>直接問句變成 know 的受詞後，<span class="hl-red">既然不再是問句，be 動詞就不需要倒裝</span>。請注意標點符號改為句點。</p>
+    <div class="formula">WH-word + S + V（陳述句語序）</div>
+  </div>
+
+  <div class="example">Who <strong>are</strong> they? → Tell me <strong>who they are</strong>.</div>
+  <div class="example">How should I do it? → I don't know <strong>how I should do it</strong>.</div>
+  <div class="example">Where is Katie? → Peter knows <strong>where Katie is</strong>.</div>
+
+  <div class="concept-card">
+    <h3>whether/if 間接問句（L3-4）</h3>
+    <p>yes-no 疑問句變成間接問句時，用 <span class="hl">if / whether</span> 引導，表示「是否」。</p>
+    <div class="rule-box">
+      <strong>重要：</strong>if 引導名詞子句通常不放句首當主詞使用。<br>
+      whether 常跟 or not 連用，or not 可放在 whether 後面或句尾。<br>
+      <span class="hl">Whether you love me (or not) is important.</span>（當主詞接<strong>單數</strong>動詞）
+    </div>
+  </div>
+
+  <div class="example">Are you okay? → I don't know <strong>if/whether you are okay</strong>.</div>
+  <div class="example">Did you study last night? → I wonder <strong>if/whether you studied last night</strong>.</div>
+
+  <div class="concept-card">
+    <h3>WH-word 名詞子句簡化成名詞片語（L3-5）</h3>
+    <p>當間接問句的<strong>主詞與主要子句的執行動作者相同</strong>，且有 can、could、should 語意時，可將 wh-子句簡化成 <span class="hl-teal">wh- + to VR</span>。</p>
+    <div class="formula">wh-word + S + can/could/should + V<br>⇩<br>wh-word + to V</div>
+  </div>
+
+  <div class="example">I don't know what <strong>I can</strong> do. → I don't know what <strong>to</strong> do.</div>
+  <div class="example">Can you tell me who <strong>I should</strong> ask? → Can you tell me who <strong>to</strong> ask?</div>
+
+  <div class="note-box">
+    what/who 為代名詞 → 後接動詞<br>
+    how/when/where 為副詞 → 後面還有受詞/補語<br>
+    例：I know <strong>where to go</strong>. / I don't know <strong>how to do it</strong>.
+  </div>
+
+  <div class="quiz-section" id="quiz-l3c">
+    <div class="quiz-header">練習題組 — L3-3/4/5 間接問句</div>
+    <div class="quiz-body">
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">1</span>Whenever Edward is not sure ________, he turns to his parents for advice.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3c1','A')"><input type="radio"><span class="option-label">A</span> what to do</label>
+          <label class="option" onclick="selectOption(this,'l3c1','B')"><input type="radio"><span class="option-label">B</span> how to do</label>
+          <label class="option" onclick="selectOption(this,'l3c1','C')"><input type="radio"><span class="option-label">C</span> what can he do</label>
+          <label class="option" onclick="selectOption(this,'l3c1','D')"><input type="radio"><span class="option-label">D</span> how he can do</label>
+        </div>
+        <div class="feedback" id="fb-l3c1"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">2</span>【間接問句練習】Tell me ________ (Who are they?)</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3c2','A')"><input type="radio"><span class="option-label">A</span> who are they</label>
+          <label class="option" onclick="selectOption(this,'l3c2','B')"><input type="radio"><span class="option-label">B</span> who they are</label>
+          <label class="option" onclick="selectOption(this,'l3c2','C')"><input type="radio"><span class="option-label">C</span> that who they are</label>
+          <label class="option" onclick="selectOption(this,'l3c2','D')"><input type="radio"><span class="option-label">D</span> that are they</label>
+        </div>
+        <div class="feedback" id="fb-l3c2"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">3</span>Do you know ________ (When will Katie come?)</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3c3','A')"><input type="radio"><span class="option-label">A</span> when will Katie come</label>
+          <label class="option" onclick="selectOption(this,'l3c3','B')"><input type="radio"><span class="option-label">B</span> when Katie will come</label>
+          <label class="option" onclick="selectOption(this,'l3c3','C')"><input type="radio"><span class="option-label">C</span> that Katie will come</label>
+          <label class="option" onclick="selectOption(this,'l3c3','D')"><input type="radio"><span class="option-label">D</span> when come Katie</label>
+        </div>
+        <div class="feedback" id="fb-l3c3"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">4</span>________ you love me (or not) is important.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3c4','A')"><input type="radio"><span class="option-label">A</span> If</label>
+          <label class="option" onclick="selectOption(this,'l3c4','B')"><input type="radio"><span class="option-label">B</span> Whether</label>
+          <label class="option" onclick="selectOption(this,'l3c4','C')"><input type="radio"><span class="option-label">C</span> That</label>
+          <label class="option" onclick="selectOption(this,'l3c4','D')"><input type="radio"><span class="option-label">D</span> What</label>
+        </div>
+        <div class="feedback" id="fb-l3c4"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">5</span>I don't know ________ do next. (what I should)</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3c5','A')"><input type="radio"><span class="option-label">A</span> what should I</label>
+          <label class="option" onclick="selectOption(this,'l3c5','B')"><input type="radio"><span class="option-label">B</span> what I should</label>
+          <label class="option" onclick="selectOption(this,'l3c5','C')"><input type="radio"><span class="option-label">C</span> what to</label>
+          <label class="option" onclick="selectOption(this,'l3c5','D')"><input type="radio"><span class="option-label">D</span> what I to</label>
+        </div>
+        <div class="feedback" id="fb-l3c5"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">6</span>Can you tell me who ________ ask? (簡化句型)</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3c6','A')"><input type="radio"><span class="option-label">A</span> should I</label>
+          <label class="option" onclick="selectOption(this,'l3c6','B')"><input type="radio"><span class="option-label">B</span> I should</label>
+          <label class="option" onclick="selectOption(this,'l3c6','C')"><input type="radio"><span class="option-label">C</span> to</label>
+          <label class="option" onclick="selectOption(this,'l3c6','D')"><input type="radio"><span class="option-label">D</span> for to</label>
+        </div>
+        <div class="feedback" id="fb-l3c6"></div>
+      </div>
+
+      <!-- 填空練習 -->
+      <div class="question">
+        <div class="question-text"><span class="question-num">7</span>【填空】Why didn't you come to the party? → Tell me ________ you didn't come to the party.</div>
+        <input class="fill-input" id="fill-l3c-1" placeholder="填入答案" oninput="checkFill('fill-l3c-1','why','fb-fill-l3c-1')">
+        <div class="feedback" id="fb-fill-l3c-1"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">8</span>【填空】How long have you been here? → I'd like to know ________ you have been here.</div>
+        <input class="fill-input" id="fill-l3c-2" placeholder="填入答案" oninput="checkFill('fill-l3c-2','how long','fb-fill-l3c-2')">
+        <div class="feedback" id="fb-fill-l3c-2"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">9</span>【簡化】I don't know how I should do it.<br><em>→ I don't know how ________ it.</em></div>
+        <input class="fill-input" id="fill-l3c-3" placeholder="填入答案" oninput="checkFill('fill-l3c-3','to do','fb-fill-l3c-3')">
+        <div class="feedback" id="fb-fill-l3c-3"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">10</span>【是否題合併】Are you ready? / I want to know.<br><em>→ I want to know ________ you are ready.</em></div>
+        <input class="fill-input" id="fill-l3c-4" placeholder="if 或 whether" oninput="checkFill('fill-l3c-4','if','fb-fill-l3c-4')">
+        <div class="feedback" id="fb-fill-l3c-4"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">11</span>________ you eat healthy food matters a lot to your body.</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3c11','A')"><input type="radio"><span class="option-label">A</span> If</label>
+          <label class="option" onclick="selectOption(this,'l3c11','B')"><input type="radio"><span class="option-label">B</span> Whether</label>
+          <label class="option" onclick="selectOption(this,'l3c11','C')"><input type="radio"><span class="option-label">C</span> That</label>
+          <label class="option" onclick="selectOption(this,'l3c11','D')"><input type="radio"><span class="option-label">D</span> Which</label>
+        </div>
+        <div class="feedback" id="fb-l3c11"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-text"><span class="question-num">12</span>I'm not sure ________ you like the cake. (補語)</div>
+        <div class="options">
+          <label class="option" onclick="selectOption(this,'l3c12','A')"><input type="radio"><span class="option-label">A</span> that</label>
+          <label class="option" onclick="selectOption(this,'l3c12','B')"><input type="radio"><span class="option-label">B</span> what</label>
+          <label class="option" onclick="selectOption(this,'l3c12','C')"><input type="radio"><span class="option-label">C</span> whether/if</label>
+          <label class="option" onclick="selectOption(this,'l3c12','D')"><input type="radio"><span class="option-label">D</span> who</label>
+        </div>
+        <div class="feedback" id="fb-l3c12"></div>
+      </div>
+
+      <button class="quiz-btn" onclick="checkAll('quiz-l3c')">批改選擇題</button>
+      <button class="quiz-btn reset-btn" onclick="resetQuiz('quiz-l3c')">重設</button>
+      <div class="score-display" id="score-quiz-l3c"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== ANSWER KEY =====
+const answers = {
+  // L1-1
+  'q1':'A','q2':'C','q3':'C','q4':'D','q5':'A','q6':'C','q7':'A','q8':'C',
+  // L1-2
+  'lb1':'C','lb2':'A','lb3':'C','lb4':'C','lb5':'D','lb6':'B','lb7':'D',
+  // L2-1
+  'l2a1':'A','l2a2':'B','l2a3':'C','l2a4':'B','l2a5':'B','l2a6':'D','l2a7':'D','l2a10':'A',
+  // L2-2
+  'l2b1':'C','l2b2':'A','l2b3':'C','l2b4':'C','l2b5':'D','l2b6':'C','l2b7':'A',
+  // L3-1
+  'l3a1':'B','l3a2':'A','l3a3':'B','l3a4':'D','l3a5':'D','l3a6':'D','l3a7':'A','l3a8':'A',
+  // L3-2
+  'l3b1':'D','l3b2':'D','l3b3':'D','l3b4':'B','l3b5':'B','l3b6':'B',
+  // L3-3/4/5
+  'l3c1':'A','l3c2':'B','l3c3':'B','l3c4':'B','l3c5':'C','l3c6':'C','l3c11':'B','l3c12':'C',
+};
+
+const explanations = {
+  'q1':'order 是命令動詞，that 後面動詞用原形。被動原形 = be p.p. → be held',
+  'q2':'require 是要求動詞，that 後面動詞用原形 → take off',
+  'q3':'request 是要求動詞，被動原形 → be put off',
+  'q4':'demand 是要求動詞，原形 → clean',
+  'q5':'recommend 是建議動詞，原形 → buy',
+  'q6':'advise 是建議動詞，否定原形 → not spend',
+  'q7':'insist 是堅持動詞，被動原形 → be sent',
+  'q8':'advise 是建議動詞，原形 → give',
+  'lb1':'Fast as Albert ran（副詞倒裝）= Although Albert ran fast',
+  'lb2':'Quiet as it was = Although it was quiet，用 as 連接',
+  'lb3':'Tall as Jacky is = Although Jacky is tall',
+  'lb4':'Slowly as she spoke = Although she spoke slowly',
+  'lb5':'As Alex and Mason look similar（形容詞倒裝）',
+  'lb6':'As rich as Terry is = Although Terry is rich',
+  'lb7':'Hard as Jessica studied = Although Jessica studied hard，用 as',
+  'l2a1':'與現在相反 → if + 過去式 had，主句 would travel',
+  'l2a2':'I\'ll = I will，這是條件句（真實可能），if + 現在式 have',
+  'l2a3':'與現在相反（我現在很忙），if + were not busy',
+  'l2a4':'與現在相反 → if + 過去式 took',
+  'l2a5':'與現在相反 → would not be overweight',
+  'l2a6':'與現在相反 → if + were（be動詞一律用were）',
+  'l2a7':'If I were you 是固定句型',
+  'l2a10':'與現在相反（she doesn\'t live close）→ would visit',
+  'l2b1':'consider it + N（虛受詞）→ to be an honor',
+  'l2b2':'find it + Adj.（虛受詞）→ find it inspiring',
+  'l2b3':'consider it necessary，虛受詞用 it',
+  'l2b4':'find it hard to finish，虛受詞 it + Adj. + to V',
+  'l2b5':'find it exciting to V，虛受詞 it',
+  'l2b6':'It is a waste of time to play，虛主詞 It',
+  'l2b7':'consider it an honor to help，虛受詞 it',
+  'l3a1':'necessary that 後面動詞原形 follow（三單不加s）',
+  'l3a2':'It is + Adj. + that... 句型中 It 為虛主詞',
+  'l3a3':'urgent that + 被動原形 → be sent',
+  'l3a4':'crucial that + 被動原形 → be done',
+  'l3a5':'critical that + 原形 → take',
+  'l3a6':'not necessary that... 後接原形',
+  'l3a7':'important that + 原形 → do',
+  'l3a8':'crucial that + 原形 → lower（主動）',
+  'l3b1':'worry about whether...（是否）',
+  'l3b2':'Whether... remains unknown 當主詞，不能用 If',
+  'l3b3':'間接問句用陳述語序 what you should do next',
+  'l3b4':'介係詞後面 about + 間接問句，陳述語序 how that could happen',
+  'l3b5':'if 引導間接問句，陳述語序 she would go',
+  'l3b6':'間接問句陳述語序 when an earthquake might strike',
+  'l3c1':'what to do = what I can/should do（簡化）',
+  'l3c2':'間接問句不倒裝 → who they are',
+  'l3c3':'間接問句不倒裝 → when Katie will come',
+  'l3c4':'句首不用 if，用 Whether 當主詞',
+  'l3c5':'wh + to VR 簡化 → what to do',
+  'l3c6':'wh + to VR 簡化 → who to ask',
+  'l3c11':'句首不用 if，用 Whether 當主詞',
+  'l3c12':'是否不確定 → whether/if you like the cake',
+};
+
+let selectedAnswers = {};
+
+function selectOption(el, qId, val) {
+  const container = el.closest('.question');
+  container.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedAnswers[qId] = val;
+}
+
+function checkAll(quizId) {
+  const quiz = document.getElementById(quizId);
+  const questions = quiz.querySelectorAll('.question');
+  let correct = 0, total = 0;
+
+  questions.forEach(q => {
+    const options = q.querySelectorAll('.option');
+    if (!options.length) return;
+    total++;
+
+    // find qId
+    let qId = null;
+    options.forEach(o => {
+      const onclick = o.getAttribute('onclick');
+      if (onclick) {
+        const match = onclick.match(/selectOption\(this,'([^']+)'/);
+        if (match) qId = match[1];
+      }
+    });
+    if (!qId) return;
+
+    const correctAns = answers[qId];
+    const selected = selectedAnswers[qId];
+    const fb = document.getElementById('fb-' + qId);
+
+    options.forEach(o => {
+      const onclick = o.getAttribute('onclick');
+      if (!onclick) return;
+      const match = onclick.match(/,'([A-Z])'[^)]*\)/);
+      if (!match) return;
+      const optVal = match[1];
+      o.classList.remove('correct','wrong');
+      if (optVal === correctAns) o.classList.add('correct');
+      else if (optVal === selected && selected !== correctAns) o.classList.add('wrong');
+    });
+
+    if (fb) {
+      fb.classList.add('show');
+      if (selected === correctAns) {
+        correct++;
+        fb.className = 'feedback show correct-msg';
+        fb.textContent = '✓ 正確！' + (explanations[qId] ? ' ' + explanations[qId] : '');
+      } else {
+        fb.className = 'feedback show wrong-msg';
+        fb.textContent = '✗ 答案是 ' + correctAns + '。' + (explanations[qId] ? ' ' + explanations[qId] : '');
+      }
+    }
+  });
+
+  const scoreEl = document.getElementById('score-' + quizId);
+  if (scoreEl) {
+    scoreEl.classList.add('show');
+    const pct = total ? Math.round(correct/total*100) : 0;
+    scoreEl.style.background = pct >= 80 ? '#e8f8f0' : pct >= 60 ? '#fff9e6' : '#fdf0f0';
+    scoreEl.style.color = pct >= 80 ? '#27ae60' : pct >= 60 ? '#d4a017' : '#e74c3c';
+    scoreEl.textContent = `選擇題得分：${correct} / ${total}（${pct}%）`;
+  }
+}
+
+function resetQuiz(quizId) {
+  const quiz = document.getElementById(quizId);
+  quiz.querySelectorAll('.option').forEach(o => o.classList.remove('selected','correct','wrong'));
+  quiz.querySelectorAll('.feedback').forEach(f => { f.classList.remove('show'); f.textContent=''; f.className='feedback'; });
+  quiz.querySelectorAll('.fill-input').forEach(i => { i.value=''; i.className='fill-input'; });
+  const scoreEl = document.getElementById('score-' + quizId);
+  if (scoreEl) scoreEl.classList.remove('show');
+  selectedAnswers = {};
+}
+
+function checkFill(inputId, correctVal, fbId) {
+  const input = document.getElementById(inputId);
+  const fb = document.getElementById(fbId);
+  if (!input || !fb) return;
+  const val = input.value.trim().toLowerCase();
+  const correct = correctVal.toLowerCase();
+  fb.classList.add('show');
+  if (val === correct) {
+    input.className = 'fill-input correct-fill';
+    fb.className = 'feedback show correct-msg';
+    fb.textContent = '✓ 正確！';
+  } else if (val.length > 0) {
+    input.className = 'fill-input wrong-fill';
+    fb.className = 'feedback show wrong-msg';
+    fb.textContent = '✗ 提示：答案為 ' + correctVal;
+  } else {
+    input.className = 'fill-input';
+    fb.classList.remove('show');
+  }
+}
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
