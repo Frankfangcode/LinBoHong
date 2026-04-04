@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英文家教詳細教案 — 模組 3–6</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1814;
+    --ink2: #4a453e;
+    --ink3: #8a8278;
+    --paper: #faf8f3;
+    --cream: #f0ece0;
+    --warm: #e8e0cc;
+    --accent: #c4622d;
+    --accent2: #2d7c6e;
+    --accent3: #5a4fbf;
+    --accent4: #b85c8a;
+    --gold: #d4960a;
+    --line: rgba(26,24,20,0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 60px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 420px; height: 420px;
+    border: 1px solid rgba(250,248,243,0.08);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: 40px; top: 40px;
+    width: 260px; height: 260px;
+    border: 1px solid rgba(250,248,243,0.05);
+    border-radius: 50%;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.1;
+    font-weight: 400;
+    max-width: 640px;
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(250,248,243,0.55);
+    max-width: 480px;
+  }
+  .hero-modules {
+    display: flex;
+    gap: 10px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 5px 14px;
+    border: 1px solid rgba(250,248,243,0.2);
+    border-radius: 20px;
+    color: rgba(250,248,243,0.7);
+  }
+
+  /* ── Nav ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    background: rgba(250,248,243,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    z-index: 100;
+    padding: 0 60px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .nav-item {
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--ink3);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .nav-item:hover { color: var(--ink); }
+  .nav-item.active { color: var(--ink); border-bottom-color: var(--ink); }
+
+  /* ── Sections ── */
+  .section {
+    display: none;
+    animation: fadein 0.3s ease;
+  }
+  .section.active { display: block; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── Module header ── */
+  .mod-header {
+    padding: 60px 60px 40px;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 40px;
+  }
+  .mod-num {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .mod-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .mod-header p {
+    font-size: 15px;
+    color: var(--ink2);
+    max-width: 560px;
+  }
+  .mod-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: right;
+    min-width: 140px;
+  }
+  .mod-meta-item { font-size: 12px; color: var(--ink3); }
+  .mod-meta-val { font-size: 13px; color: var(--ink); font-weight: 500; }
+
+  /* ── Content blocks ── */
+  .content {
+    padding: 40px 60px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* ── Block: goal ── */
+  .goal-block {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .goal-cell {
+    background: var(--paper);
+    padding: 28px 24px;
+  }
+  .goal-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 10px;
+  }
+  .goal-val {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ── Block: section title ── */
+  .block-title {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 4px;
+  }
+
+  /* ── Story cards ── */
+  .story-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .story-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .story-card-top {
+    padding: 20px 20px 16px;
+  }
+  .story-card-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+  .story-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 6px;
+  }
+  .story-card .story-sub {
+    font-size: 12px;
+    color: var(--ink3);
+    margin-bottom: 12px;
+  }
+  .story-card .story-desc {
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+  .story-card-bottom {
+    border-top: 1px solid var(--line);
+    padding: 16px 20px;
+    background: var(--cream);
+  }
+  .story-card-bottom p {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+  .story-steps {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .story-step {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 12px;
+    color: var(--ink2);
+  }
+  .step-num {
+    font-size: 10px;
+    font-weight: 500;
+    min-width: 18px;
+    height: 18px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── Sentence template ── */
+  .template-box {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 28px 32px;
+    border-left: 3px solid var(--accent);
+  }
+  .template-box h4 {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .template-sentences {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .template-sentence {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .ts-num {
+    font-size: 11px;
+    color: var(--ink3);
+    font-weight: 500;
+    padding-top: 2px;
+  }
+  .ts-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .ts-note {
+    font-size: 11px;
+    color: var(--ink3);
+    font-style: normal;
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 2px;
+  }
+
+  /* ── Homework box ── */
+  .hw-box {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .hw-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 24px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .hw-list {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .hw-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+  .hw-check {
+    width: 16px; height: 16px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  /* ── Vocab system ── */
+  .vocab-flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .vf-cell {
+    background: var(--paper);
+    padding: 24px 20px;
+    position: relative;
+  }
+  .vf-cell::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink3);
+    font-size: 14px;
+    z-index: 1;
+  }
+  .vf-cell:last-child::after { display: none; }
+  .vf-step {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 8px;
+  }
+  .vf-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .vf-desc {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+
+  /* ── Word card ── */
+  .word-example {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .we-left {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .we-word {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    font-weight: 400;
+  }
+  .we-pos {
+    font-size: 11px;
+    color: rgba(250,248,243,0.4);
+    letter-spacing: 0.08em;
+  }
+  .we-level {
+    display: inline-block;
+    font-size: 10px;
+    padding: 3px 8px;
+    background: var(--gold);
+    color: var(--ink);
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 500;
+  }
+  .we-right {
+    background: var(--paper);
+    padding: 20px 24px;
+  }
+  .we-def { font-size: 13px; color: var(--ink2); margin-bottom: 14px; }
+  .we-sentences { display: flex; flex-direction: column; gap: 8px; }
+  .we-sent {
+    font-size: 13px;
+    color: var(--ink);
+    font-style: italic;
+    font-family: 'DM Serif Display', serif;
+    line-height: 1.5;
+    padding-left: 12px;
+    border-left: 2px solid var(--accent2);
+  }
+  .we-sent-note {
+    font-size: 11px;
+    color: var(--ink3);
+    font-style: normal;
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 2px;
+  }
+
+  /* ── Weekly schedule ── */
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+  .day-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+  }
+  .day-header {
+    padding: 8px 4px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .day-body {
+    padding: 10px 8px;
+    font-size: 11px;
+    color: var(--ink2);
+    line-height: 1.5;
+    background: var(--paper);
+    min-height: 70px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  /* ── Tool cards ── */
+  .tool-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .tool-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .tool-card-head {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .tool-logo {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .tool-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .tool-tagline { font-size: 12px; color: var(--ink3); }
+  .tool-card-body {
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tool-method {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .tm-icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .tm-content .tm-title { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .tm-content .tm-desc { font-size: 12px; color: var(--ink2); line-height: 1.5; }
+
+  /* ── DET practice schedule ── */
+  .det-weeks {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--line);
+  }
+  .det-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr 120px;
+    gap: 1px;
+    background: var(--line);
+  }
+  .det-cell {
+    background: var(--paper);
+    padding: 14px 18px;
+    font-size: 13px;
+  }
+  .det-cell.header {
+    background: var(--cream);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 400;
+    padding: 10px 18px;
+  }
+  .det-week { font-weight: 500; color: var(--ink); }
+  .det-focus { color: var(--ink2); }
+  .det-task { color: var(--ink2); }
+  .det-target { font-weight: 500; }
+
+  /* ── AI usage grid ── */
+  .ai-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .ai-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .ai-card-head {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ai-badge {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .ai-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    font-weight: 400;
+    flex: 1;
+  }
+  .ai-card-body {
+    padding: 16px 20px;
+  }
+  .prompt-box {
+    background: var(--ink);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .prompt-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(250,248,243,0.35);
+    margin-bottom: 6px;
+  }
+  .prompt-text {
+    font-size: 12px;
+    color: var(--paper);
+    line-height: 1.7;
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+  }
+  .ai-tips {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .ai-tip {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.5;
+    padding-left: 12px;
+    border-left: 1px solid var(--line);
+  }
+
+  /* ── Warning / note boxes ── */
+  .note-box {
+    border-radius: 10px;
+    padding: 18px 22px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .note-box.warning { background: #fff8ec; border: 1px solid #edd69a; }
+  .note-box.info { background: #edf4f2; border: 1px solid #8ec5ba; }
+  .note-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .note-text { font-size: 13px; color: var(--ink2); line-height: 1.6; }
+  .note-text strong { font-weight: 500; color: var(--ink); }
+
+  /* ── Rubric table ── */
+  .rubric {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .rubric table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .rubric th {
+    background: var(--cream);
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 400;
+    border-bottom: 1px solid var(--line);
+  }
+  .rubric td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink2);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .rubric tr:last-child td { border-bottom: none; }
+  .rubric td:first-child { font-weight: 500; color: var(--ink); }
+  .score-badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    background: var(--cream);
+    color: var(--ink2);
+  }
+
+  @media (max-width: 768px) {
+    .hero { padding: 48px 24px 40px; }
+    .nav { padding: 0 20px; }
+    .mod-header { grid-template-columns: 1fr; padding: 40px 24px 28px; }
+    .mod-meta { text-align: left; }
+    .content { padding: 28px 24px 60px; }
+    .story-grid, .tool-2col, .ai-grid { grid-template-columns: 1fr; }
+    .vocab-flow { grid-template-columns: 1fr 1fr; }
+    .week-grid { grid-template-columns: repeat(4, 1fr); }
+    .goal-block { grid-template-columns: 1fr; }
+    .word-example { grid-template-columns: 1fr; }
+    .det-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <p class="hero-eyebrow">英文家教課程 · 詳細教案</p>
+  <h1>四大模組<br><em>完整展開</em></h1>
+  <p class="hero-sub">從個人故事素材庫到 AI 輔助學習法，系統性幫助學生從 B2 邁向 C1</p>
+  <div class="hero-modules">
+    <span class="hero-tag">模組 3 · 三個專屬故事</span>
+    <span class="hero-tag">模組 4 · 單字全面升級</span>
+    <span class="hero-tag">模組 5 · 工具使用方法論</span>
+    <span class="hero-tag">模組 6 · AI 輔助學習法</span>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="nav" id="mainNav">
+  <div class="nav-item active" onclick="switchTab('m3')">模組 3 · 個人故事</div>
+  <div class="nav-item" onclick="switchTab('m4')">模組 4 · 單字升級</div>
+  <div class="nav-item" onclick="switchTab('m5')">模組 5 · 工具訓練</div>
+  <div class="nav-item" onclick="switchTab('m6')">模組 6 · AI 學習法</div>
+</nav>
+
+<!-- ══════════════ MODULE 3 ══════════════ -->
+<section class="section active" id="m3">
+  <div class="mod-header">
+    <div>
+      <p class="mod-num" style="color: var(--accent);">模組 3 · Story Bank</p>
+      <h2>培養三個專屬故事<br>個人寫作素材庫</h2>
+      <p>多數學生寫作空洞，因為他們沒有「備用素材」。這個模組幫助學生挖掘自身經歷，鍛鑄成可靈活套用於任何作文題目的精準故事。</p>
+    </div>
+    <div class="mod-meta">
+      <div><div class="mod-meta-item">建議課時</div><div class="mod-meta-val">4–6 堂</div></div>
+      <div><div class="mod-meta-item">難度</div><div class="mod-meta-val">B2 → C1</div></div>
+      <div><div class="mod-meta-item">核心技能</div><div class="mod-meta-val">敘事 · 具象化</div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Goals -->
+    <div>
+      <p class="block-title">學習目標</p>
+      <div class="goal-block">
+        <div class="goal-cell">
+          <p class="goal-label">核心能力</p>
+          <p class="goal-val">能在 30 分鐘內從三個故事中挑選一個，套用於任意作文題目，並寫出有說服力的段落。</p>
+        </div>
+        <div class="goal-cell">
+          <p class="goal-label">語言目標</p>
+          <p class="goal-val">掌握「場景設定→衝突→反應→結果→反思」的英文敘事結構，使用 C1 級情感與反思詞彙。</p>
+        </div>
+        <div class="goal-cell">
+          <p class="goal-label">測量指標</p>
+          <p class="goal-val">每個故事能流暢口說 60 秒，書寫版本至少 5 句、200 字，且自然融入目標詞彙 3 個以上。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three stories -->
+    <div>
+      <p class="block-title">三個故事框架 — 深度設計</p>
+      <div class="story-grid">
+
+        <!-- Story 1 -->
+        <div class="story-card">
+          <div class="story-card-top">
+            <div class="story-card-icon" style="background: #fde8e0;">⚡</div>
+            <h3>挑戰故事</h3>
+            <p class="story-sub">Challenge Story · 適用最廣</p>
+            <p class="story-desc">描述一個你曾經面對的困難或挫折，以及你如何克服它。這是最萬用的故事類型，幾乎可以套用於「成長」「失敗」「毅力」等所有相關題目。</p>
+          </div>
+          <div class="story-card-bottom">
+            <p><strong>挖掘問題：</strong></p>
+            <div class="story-steps">
+              <div class="story-step"><span class="step-num">1</span>你曾經在什麼事情上徹底失敗過？</div>
+              <div class="story-step"><span class="step-num">2</span>當時你的第一反應是什麼？</div>
+              <div class="story-step"><span class="step-num">3</span>你採取了什麼行動？結果如何？</div>
+              <div class="story-step"><span class="step-num">4</span>現在回頭看，那件事改變了你什麼？</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Story 2 -->
+        <div class="story-card">
+          <div class="story-card-top">
+            <div class="story-card-icon" style="background: #e0f4ee;">🌱</div>
+            <h3>熱情故事</h3>
+            <p class="story-sub">Passion Story · 展現個性</p>
+            <p class="story-desc">描述一個你真正在乎、願意投入時間與精力的事物。不一定要「正確」，要真實。這個故事讓考官或讀者感受到你是有靈魂的人。</p>
+          </div>
+          <div class="story-card-bottom">
+            <p><strong>挖掘問題：</strong></p>
+            <div class="story-steps">
+              <div class="story-step"><span class="step-num">1</span>你會在什麼事情上忘記時間流逝？</div>
+              <div class="story-step"><span class="step-num">2</span>你為什麼開始做這件事？</div>
+              <div class="story-step"><span class="step-num">3</span>它給你帶來了什麼具體的改變？</div>
+              <div class="story-step"><span class="step-num">4</span>如果要向陌生人解釋它的意義，你會怎麼說？</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Story 3 -->
+        <div class="story-card">
+          <div class="story-card-top">
+            <div class="story-card-icon" style="background: #edeafc;">💡</div>
+            <h3>改變故事</h3>
+            <p class="story-sub">Shift Story · 展現深度</p>
+            <p class="story-desc">描述一個讓你的想法、價值觀或行為發生根本改變的事件。這種故事展現批判性思考，在議論文與申論題中特別有說服力。</p>
+          </div>
+          <div class="story-card-bottom">
+            <p><strong>挖掘問題：</strong></p>
+            <div class="story-steps">
+              <div class="story-step"><span class="step-num">1</span>你曾經對某件事的看法完全改變過嗎？</div>
+              <div class="story-step"><span class="step-num">2</span>是什麼事件或人讓你改變的？</div>
+              <div class="story-step"><span class="step-num">3</span>改變前後你的行動有什麼不同？</div>
+              <div class="story-step"><span class="step-num">4</span>這個改變帶給你什麼洞見？</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Sentence template -->
+    <div>
+      <p class="block-title">五句話故事公式 — Star Method 變形</p>
+      <div class="template-box">
+        <h4>每個故事精煉為以下 5 句結構，口說 60 秒、寫作 200 字皆適用</h4>
+        <div class="template-sentences">
+          <div class="template-sentence">
+            <span class="ts-num">S1</span>
+            <div>
+              <p class="ts-text">"When I was [age/period], I encountered a situation where [context + initial problem]."</p>
+              <p class="ts-note">場景設定。具體時間、地點、人物，讓讀者瞬間入戲。</p>
+            </div>
+          </div>
+          <div class="template-sentence">
+            <span class="ts-num">S2</span>
+            <div>
+              <p class="ts-text">"At the time, I felt [emotion], primarily because [reason for the challenge]."</p>
+              <p class="ts-note">情緒誠實。這句展現自我意識，是 C1 級寫作的關鍵。</p>
+            </div>
+          </div>
+          <div class="template-sentence">
+            <span class="ts-num">S3</span>
+            <div>
+              <p class="ts-text">"Rather than [passive reaction], I decided to [specific action taken]."</p>
+              <p class="ts-note">主動轉折。「Rather than」句型展現對比，分數立刻提升。</p>
+            </div>
+          </div>
+          <div class="template-sentence">
+            <span class="ts-num">S4</span>
+            <div>
+              <p class="ts-text">"As a result, [concrete outcome] — not what I had initially expected, but [nuanced result]."</p>
+              <p class="ts-note">結果具體化。加上「不如預期但有價值」的層次，展現深度。</p>
+            </div>
+          </div>
+          <div class="template-sentence">
+            <span class="ts-num">S5</span>
+            <div>
+              <p class="ts-text">"Looking back, this experience taught me that [universal insight relevant to the essay topic]."</p>
+              <p class="ts-note">連結題目。最後一句直接回應作文題目，讓故事不只是故事。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Application table -->
+    <div>
+      <p class="block-title">故事 × 題目對應表 — 如何靈活套用</p>
+      <div class="rubric">
+        <table>
+          <tr>
+            <th>作文題目類型</th>
+            <th>優先使用故事</th>
+            <th>套用方式</th>
+          </tr>
+          <tr>
+            <td>描述一次失敗的經歷</td>
+            <td><span class="score-badge">挑戰故事</span></td>
+            <td>直接套用，S3 強調從失敗中學到的策略</td>
+          </tr>
+          <tr>
+            <td>What motivates you?</td>
+            <td><span class="score-badge">熱情故事</span></td>
+            <td>S2 重點放在「為什麼這件事讓我有動力」</td>
+          </tr>
+          <tr>
+            <td>Discuss a time you changed your mind</td>
+            <td><span class="score-badge">改變故事</span></td>
+            <td>直接套用，S3 強調「我原本以為 vs 後來理解」</td>
+          </tr>
+          <tr>
+            <td>The importance of resilience</td>
+            <td><span class="score-badge">挑戰故事</span></td>
+            <td>作為 body paragraph 的佐證例子，S5 連結 resilience 定義</td>
+          </tr>
+          <tr>
+            <td>Technology / Society / 議論題</td>
+            <td><span class="score-badge">改變故事</span></td>
+            <td>S4-S5 轉化為「個人經驗支持我的論點」</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Homework -->
+    <div>
+      <p class="block-title">課後作業設計</p>
+      <div class="hw-box">
+        <div class="hw-header">第一週作業 — 建立故事草稿</div>
+        <div class="hw-list">
+          <div class="hw-item"><span class="hw-check"></span>用中文回答三個故事各自的「挖掘問題」，每題至少寫 50 字（不用英文，先把故事找出來）</div>
+          <div class="hw-item"><span class="hw-check"></span>選一個故事，嘗試用英文寫出五句話版本（套用公式即可，不用完美）</div>
+          <div class="hw-item"><span class="hw-check"></span>查出你英文版中覺得「寫得不夠好」的 3 個表達，帶來課堂討論</div>
+        </div>
+      </div>
+      <div class="hw-box" style="margin-top: 8px;">
+        <div class="hw-header">第二週作業 — 口說練習</div>
+        <div class="hw-list">
+          <div class="hw-item"><span class="hw-check"></span>錄音：用英文口說三個故事，各 60 秒，上課前傳給老師</div>
+          <div class="hw-item"><span class="hw-check"></span>每個故事找到 2 個 C1 級詞彙替換原本平淡的詞</div>
+          <div class="hw-item"><span class="hw-check"></span>用任一故事回應這個題目並寫成 200 字段落："Describe an experience that shaped who you are today."</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════ MODULE 4 ══════════════ -->
+<section class="section" id="m4">
+  <div class="mod-header">
+    <div>
+      <p class="mod-num" style="color: var(--accent2);">模組 4 · Vocabulary</p>
+      <h2>單字全面升級<br>從 B2 邁向 C1</h2>
+      <p>C1 單字不是「更多單字」，而是「更精準的單字」。這個模組建立一套可持續的主動詞彙學習系統，讓每個單字真正進入長期記憶。</p>
+    </div>
+    <div class="mod-meta">
+      <div><div class="mod-meta-item">週目標</div><div class="mod-meta-val">20 個新詞</div></div>
+      <div><div class="mod-meta-item">來源</div><div class="mod-meta-val">AWL + 閱讀語料</div></div>
+      <div><div class="mod-meta-item">留存率目標</div><div class="mod-meta-val">≥ 80% (月複習)</div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Goals -->
+    <div>
+      <p class="block-title">學習目標</p>
+      <div class="goal-block">
+        <div class="goal-cell">
+          <p class="goal-label">量化目標</p>
+          <p class="goal-val">三個月累積掌握 200+ 個 C1 級詞彙，能在寫作中自然使用，不再靠「重複用 good/bad/important」撐篇幅。</p>
+        </div>
+        <div class="goal-cell">
+          <p class="goal-label">質化目標</p>
+          <p class="goal-val">理解詞彙的「語域」（register）——知道哪個詞用於學術、哪個用於口語，以及如何在不同情境中切換。</p>
+        </div>
+        <div class="goal-cell">
+          <p class="goal-label">本質轉變</p>
+          <p class="goal-val">從「被動辨認」轉為「主動產出」：不只是看到單字知道意思，而是能在說話和寫作時自動調用。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning flow -->
+    <div>
+      <p class="block-title">四步學習循環</p>
+      <div class="vocab-flow">
+        <div class="vf-cell">
+          <p class="vf-step">Day 1–2</p>
+          <p class="vf-title">輸入</p>
+          <p class="vf-desc">閱讀真實語料圈出目標詞，查詞根、詞性變化、例句（Oxford / Longman）</p>
+        </div>
+        <div class="vf-cell">
+          <p class="vf-step">Day 3–4</p>
+          <p class="vf-title">造句</p>
+          <p class="vf-desc">每個新詞用自己的生活造一個真實例句，寫在「單字本」裡</p>
+        </div>
+        <div class="vf-cell">
+          <p class="vf-step">Day 5–6</p>
+          <p class="vf-title">應用</p>
+          <p class="vf-desc">在本週翻譯練習或作文中刻意使用至少 5 個本週單字</p>
+        </div>
+        <div class="vf-cell">
+          <p class="vf-step">Day 7 & 月複習</p>
+          <p class="vf-title">鞏固</p>
+          <p class="vf-desc">隔週小測 + 每月復盤：錯了的單字進入「紅名單」重點複習</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Word card example -->
+    <div>
+      <p class="block-title">單字卡範本 — C1 級詞彙學習示例</p>
+      <div class="word-example">
+        <div class="we-left">
+          <p class="we-word">tenacious</p>
+          <p class="we-pos">adjective</p>
+          <span class="we-level">C1 · AWL</span>
+        </div>
+        <div class="we-right">
+          <p class="we-def">持續不放棄的；堅韌的。比 "persistent" 更強調「咬緊不放」的意志力。形容詞詞根：tenere（拉丁文，to hold）→ 同族：retain, maintain, tenant</p>
+          <div class="we-sentences">
+            <div>
+              <p class="we-sent">"Her tenacious pursuit of excellence transformed a once-struggling startup into a market leader."</p>
+              <p class="we-sent-note">✓ 學術/正式語境 · 搭配 pursuit / commitment / effort</p>
+            </div>
+            <div>
+              <p class="we-sent">"Despite repeated setbacks, his tenacious spirit refused to yield to discouragement."</p>
+              <p class="we-sent-note">✓ 敘事語境 · 適合用於挑戰故事 S3</p>
+            </div>
+            <div>
+              <p class="we-sent">"學生自造句：I was tenacious about improving my swimming time, training every morning even when I felt exhausted."</p>
+              <p class="we-sent-note">✓ 個人真實造句 · 記憶最深刻</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weekly plan -->
+    <div>
+      <p class="block-title">每日單字作息 — 7 天循環計畫</p>
+      <div class="week-grid">
+        <div class="day-card">
+          <div class="day-header" style="background: #fde8e0; color: var(--accent);">Mon</div>
+          <div class="day-body" style="font-size: 11px; flex-direction: column;">接收本週 20 個新詞清單，閱讀例句，標出覺得最難的 5 個</div>
+        </div>
+        <div class="day-card">
+          <div class="day-header" style="background: #fff8ec; color: #8a6500;">Tue</div>
+          <div class="day-body" style="font-size: 11px; flex-direction: column;">查詞根 + 詞族（名詞/動詞/副詞變化），Monkeytype 打新詞 10 分鐘</div>
+        </div>
+        <div class="day-card">
+          <div class="day-header" style="background: #edf4f2; color: var(--accent2);">Wed</div>
+          <div class="day-body" style="font-size: 11px; flex-direction: column;">為每個新詞寫一個自造句，越個人化越好</div>
+        </div>
+        <div class="day-card">
+          <div class="day-header" style="background: #edeafc; color: var(--accent3);">Thu</div>
+          <div class="day-body" style="font-size: 11px; flex-direction: column;">閱讀一篇 The Economist / BBC 文章，圈出本週詞彙出現的段落</div>
+        </div>
+        <div class="day-card">
+          <div class="day-header" style="background: #fde8e0; color: var(--accent);">Fri</div>
+          <div class="day-body" style="font-size: 11px; flex-direction: column;">在本週翻譯練習或作文中刻意使用至少 5 個本週詞</div>
+        </div>
+        <div class="day-card">
+          <div class="day-header" style="background: #fff8ec; color: #8a6500;">Sat</div>
+          <div class="day-body" style="font-size: 11px; flex-direction: column;">DET / Monkeytype 練習，注意是否能在「壓力下」使用新詞</div>
+        </div>
+        <div class="day-card">
+          <div class="day-header" style="background: #f0f0f0; color: var(--ink2);">Sun</div>
+          <div class="day-body" style="font-size: 11px; flex-direction: column;">自我默寫測試：看中文意思，能否拼出英文並造句？</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C1 vocab categories -->
+    <div>
+      <p class="block-title">C1 詞彙分類 — 優先掌握這四類</p>
+      <div class="rubric">
+        <table>
+          <tr>
+            <th>類別</th>
+            <th>功能</th>
+            <th>示例詞彙</th>
+            <th>適用情境</th>
+          </tr>
+          <tr>
+            <td>情感精確詞</td>
+            <td>取代 happy / sad / scared 等基礎詞</td>
+            <td>elated, melancholic, apprehensive, exhilarated</td>
+            <td>個人故事 S2、口說題</td>
+          </tr>
+          <tr>
+            <td>學術轉折詞</td>
+            <td>連接論點，展示邏輯能力</td>
+            <td>consequently, notwithstanding, albeit, henceforth</td>
+            <td>議論文、DET 寫作</td>
+          </tr>
+          <tr>
+            <td>動詞精準化</td>
+            <td>取代 do / make / say 等萬用詞</td>
+            <td>articulate, cultivate, epitomize, spearhead</td>
+            <td>所有寫作類型</td>
+          </tr>
+          <tr>
+            <td>反思評價詞</td>
+            <td>展現批判思考深度</td>
+            <td>profound, paradoxical, revelatory, nuanced</td>
+            <td>個人故事 S5、改變故事</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="note-box warning">
+      <span class="note-icon">⚠️</span>
+      <p class="note-text"><strong>常見錯誤：</strong>學生在寫作時用了「太難」的詞但用錯了語境，反而扣分。記住：C1 不是用最難的詞，而是用「最精準的詞」。每個詞要查搭配詞（collocations），例如 make a decision ✓ 但 do a decision ✗。</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════ MODULE 5 ══════════════ -->
+<section class="section" id="m5">
+  <div class="mod-header">
+    <div>
+      <p class="mod-num" style="color: var(--accent3);">模組 5 · Tools</p>
+      <h2>工具訓練<br>Monkeytype × DET 方法論</h2>
+      <p>工具本身不是目的，正確的使用方式才是。這個模組教你如何把 Monkeytype 和 DET 練習整合成一套每日可執行的系統，而不是漫無目的地滑手機。</p>
+    </div>
+    <div class="mod-meta">
+      <div><div class="mod-meta-item">每日時間</div><div class="mod-meta-val">20–30 分鐘</div></div>
+      <div><div class="mod-meta-item">工具數量</div><div class="mod-meta-val">2 個核心工具</div></div>
+      <div><div class="mod-meta-item">目標測驗</div><div class="mod-meta-val">DET 130+</div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Goals -->
+    <div>
+      <p class="block-title">模組目標</p>
+      <div class="goal-block">
+        <div class="goal-cell">
+          <p class="goal-label">Monkeytype 目標</p>
+          <p class="goal-val">打字速度穩定達到 50 WPM、正確率 95%+，並將打字練習轉化為單字複習的機會。</p>
+        </div>
+        <div class="goal-cell">
+          <p class="goal-label">DET 目標</p>
+          <p class="goal-val">熟悉 DET 所有題型格式（尤其是 Interactive Writing 和 Interactive Listening），掌握各題型的高分策略。</p>
+        </div>
+        <div class="goal-cell">
+          <p class="goal-label">整合目標</p>
+          <p class="goal-val">兩個工具互相配合——Monkeytype 強化輸入速度，DET 練習在時間壓力下的輸出品質。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Two tools -->
+    <div>
+      <p class="block-title">兩個工具的正確使用方式</p>
+      <div class="tool-2col">
+
+        <!-- Monkeytype -->
+        <div class="tool-card">
+          <div class="tool-card-head">
+            <div class="tool-logo">⌨️</div>
+            <h3>Monkeytype</h3>
+            <p class="tool-tagline">monkeytype.com · 免費 · 每日 10–15 分鐘</p>
+          </div>
+          <div class="tool-card-body">
+            <div class="tool-method">
+              <div class="tm-icon">📝</div>
+              <div class="tm-content">
+                <p class="tm-title">使用本週單字作為練習素材</p>
+                <p class="tm-desc">在 Custom Text 模式中貼入本週 20 個新詞及其例句。打字同時強迫眼球接觸這些詞，比死背更有效。</p>
+              </div>
+            </div>
+            <div class="tool-method">
+              <div class="tm-icon">🎯</div>
+              <div class="tm-content">
+                <p class="tm-title">設定可測量的進步指標</p>
+                <p class="tm-desc">每週同一設定（English 1000 常見詞，30 秒測驗）記錄一次 WPM，追蹤打字速度是否隨單字量增加而提升。</p>
+              </div>
+            </div>
+            <div class="tool-method">
+              <div class="tm-icon">🔁</div>
+              <div class="tm-content">
+                <p class="tm-title">錯字即是學習信號</p>
+                <p class="tm-desc">打錯的詞往往是你「以為會」但其實不確定拼法的詞。把它們記下來，帶到課堂討論拼寫規則。</p>
+              </div>
+            </div>
+            <div class="tool-method">
+              <div class="tm-icon">⏱️</div>
+              <div class="tm-content">
+                <p class="tm-title">不要超過 15 分鐘</p>
+                <p class="tm-desc">打字練習邊際效益遞減很快。15 分鐘後轉去做 DET 或閱讀，避免「假裝在讀書」的低效循環。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DET -->
+        <div class="tool-card">
+          <div class="tool-card-head">
+            <div class="tool-logo">📱</div>
+            <h3>Duolingo English Test</h3>
+            <p class="tool-tagline">englishtest.duolingo.com · 每週 1–2 次練習</p>
+          </div>
+          <div class="tool-card-body">
+            <div class="tool-method">
+              <div class="tm-icon">✍️</div>
+              <div class="tm-content">
+                <p class="tm-title">Interactive Writing — 關鍵題型</p>
+                <p class="tm-desc">這是 DET 中最能展現 C1 能力的題型。練習策略：先用 60 秒打草稿，剩下時間修改詞彙精準度，不要一直寫新的句子。</p>
+              </div>
+            </div>
+            <div class="tool-method">
+              <div class="tm-icon">🎧</div>
+              <div class="tm-content">
+                <p class="tm-title">Interactive Listening — 主動筆記法</p>
+                <p class="tm-desc">聽的時候同時記關鍵詞，而不是等聽完才回答。練習在 10 秒內抓住「主題詞 + 一個具體細節」。</p>
+              </div>
+            </div>
+            <div class="tool-method">
+              <div class="tm-icon">🗣️</div>
+              <div class="tm-content">
+                <p class="tm-title">Speaking — 45 秒黃金策略</p>
+                <p class="tm-desc">前 5 秒說主題句，中間 35 秒給一個具體例子或理由，最後 5 秒重申。結構清晰比詞彙豐富更重要。</p>
+              </div>
+            </div>
+            <div class="tool-method">
+              <div class="tm-icon">📊</div>
+              <div class="tm-content">
+                <p class="tm-title">記錄每次練習分項分數</p>
+                <p class="tm-desc">DET 會回傳 Literacy / Comprehension / Conversation / Production 四個分項。哪個最低就重點練那個。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DET Schedule -->
+    <div>
+      <p class="block-title">12 週 DET 備考進度表</p>
+      <div class="det-weeks">
+        <div class="det-row">
+          <div class="det-cell header">階段</div>
+          <div class="det-cell header">重點能力</div>
+          <div class="det-cell header">每週任務</div>
+          <div class="det-cell header">目標分數</div>
+        </div>
+        <div class="det-row">
+          <div class="det-cell det-week">Week 1–3<br><small style="color:var(--ink3);font-weight:300">摸底期</small></div>
+          <div class="det-cell det-focus">了解全部題型，找出個人弱點</div>
+          <div class="det-cell det-task">完整做 2 份官方練習題；分析錯誤原因分類</div>
+          <div class="det-cell det-target" style="color: var(--ink3);">基準分數</div>
+        </div>
+        <div class="det-row">
+          <div class="det-cell det-week">Week 4–6<br><small style="color:var(--ink3);font-weight:300">強化期</small></div>
+          <div class="det-cell det-focus">集中練最弱的 1–2 個分項</div>
+          <div class="det-cell det-task">Monkeytype + 目標單字；每天 1 個 Speaking 題</div>
+          <div class="det-cell det-target" style="color: var(--accent);">目標 +10 分</div>
+        </div>
+        <div class="det-row">
+          <div class="det-cell det-week">Week 7–9<br><small style="color:var(--ink3);font-weight:300">衝刺期</small></div>
+          <div class="det-cell det-focus">四技均衡練習，強化時間感</div>
+          <div class="det-cell det-task">計時模擬；AI 批改 Interactive Writing 草稿</div>
+          <div class="det-cell det-target" style="color: var(--accent2);">目標 120+</div>
+        </div>
+        <div class="det-row">
+          <div class="det-cell det-week">Week 10–12<br><small style="color:var(--ink3);font-weight:300">穩固期</small></div>
+          <div class="det-cell det-focus">維持水準，消除緊張感</div>
+          <div class="det-cell det-task">每週全真模擬一份；複習三個故事口說版本</div>
+          <div class="det-cell det-target" style="color: var(--accent3); font-size: 14px;">🎯 130+</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box info">
+      <span class="note-icon">💡</span>
+      <p class="note-text"><strong>Monkeytype + DET 的整合邏輯：</strong>Monkeytype 解決「手腦跟不上」的問題（在 DET 計時壓力下打字太慢導致思路中斷）；DET 練習解決「在壓力下能否輸出好英文」的問題。兩者一起練，才能在考試當天既想得清楚，又寫得夠快。</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════ MODULE 6 ══════════════ -->
+<section class="section" id="m6">
+  <div class="mod-header">
+    <div>
+      <p class="mod-num" style="color: var(--accent4);">模組 6 · AI-Assisted Learning</p>
+      <h2>AI 輔助學習法<br>讓 AI 成為練習夥伴</h2>
+      <p>AI 是目前最好的 24/7 練習對象——但前提是你知道怎麼問。這個模組教你用對的 Prompt 讓 AI 真正幫你進步，而不是幫你作弊。</p>
+    </div>
+    <div class="mod-meta">
+      <div><div class="mod-meta-item">工具</div><div class="mod-meta-val">Claude / ChatGPT</div></div>
+      <div><div class="mod-meta-item">核心原則</div><div class="mod-meta-val">練習夥伴，非代寫</div></div>
+      <div><div class="mod-meta-item">適用所有模組</div><div class="mod-meta-val">貫穿全課程</div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Core principle -->
+    <div class="note-box warning">
+      <span class="note-icon">🧠</span>
+      <p class="note-text"><strong>核心原則：</strong>讓 AI 做「給你反饋」的工作，不要讓它做「替你思考」的工作。你的大腦必須先產出，AI 再回應。順序錯了，你就什麼都沒學到——但又以為自己學了。</p>
+    </div>
+
+    <!-- Four use cases -->
+    <div>
+      <p class="block-title">四大使用情境 — 附完整 Prompt 範本</p>
+      <div class="ai-grid">
+
+        <!-- Writing feedback -->
+        <div class="ai-card">
+          <div class="ai-card-head">
+            <span class="ai-badge" style="background: #fde8e0; color: var(--accent);">作文批改</span>
+            <h3>精準反饋，不代寫</h3>
+          </div>
+          <div class="ai-card-body">
+            <div class="prompt-box">
+              <p class="prompt-label">Prompt 範本</p>
+              <p class="prompt-text">"I am a B2 English learner targeting C1. Please review my paragraph below. Do NOT rewrite it for me. Instead: (1) identify 2–3 specific grammar or word choice errors and explain why they are errors, (2) suggest one C1-level vocabulary upgrade for a word I used, (3) ask me one follow-up question to help me expand my idea. My paragraph: [貼上你的段落]"</p>
+            </div>
+            <div class="ai-tips">
+              <p class="ai-tip">加上「Do NOT rewrite」是關鍵。否則 AI 會直接給你完美版本，你一字不改地繳出去，等於什麼都沒練。</p>
+              <p class="ai-tip">讓 AI 問你問題，而不只是給你答案——這樣你還要繼續思考和寫作。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speaking practice -->
+        <div class="ai-card">
+          <div class="ai-card-head">
+            <span class="ai-badge" style="background: #edf4f2; color: var(--accent2);">口說模擬</span>
+            <h3>DET 考官角色扮演</h3>
+          </div>
+          <div class="ai-card-body">
+            <div class="prompt-box">
+              <p class="prompt-label">Prompt 範本</p>
+              <p class="prompt-text">"Please act as a DET (Duolingo English Test) speaking examiner. Give me one speaking prompt (30–45 second response expected). After I respond, evaluate my response on: fluency (was it natural?), vocabulary range (any C1 words?), structure (did I have a clear point?). Be specific and strict—I want real feedback, not encouragement."</p>
+            </div>
+            <div class="ai-tips">
+              <p class="ai-tip">用文字描述你的口說回答也可以——重點是先讓自己產出，再讓 AI 評分。</p>
+              <p class="ai-tip">每次練習結束後，請 AI 給你一個「本次最應該改進的一件事」，聚焦比分散更重要。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vocabulary -->
+        <div class="ai-card">
+          <div class="ai-card-head">
+            <span class="ai-badge" style="background: #edeafc; color: var(--accent3);">單字學習</span>
+            <h3>情境例句生成器</h3>
+          </div>
+          <div class="ai-card-body">
+            <div class="prompt-box">
+              <p class="prompt-label">Prompt 範本</p>
+              <p class="prompt-text">"For the word [word], please: (1) give me the C1 definition and its register (formal/informal/academic), (2) show me 3 example sentences from different contexts—one academic, one narrative, one conversational, (3) list 3 common collocations, (4) give me one word that B2 learners often confuse with this word and explain the difference."</p>
+            </div>
+            <div class="ai-tips">
+              <p class="ai-tip">學完之後，關掉 AI，嘗試自己造一個句子，再請 AI 評價這個句子是否正確使用了這個詞。</p>
+              <p class="ai-tip">問 AI「這個詞在 DET 的 Interactive Writing 中怎麼用最自然」，它會給你非常實用的建議。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grammar debug -->
+        <div class="ai-card">
+          <div class="ai-card-head">
+            <span class="ai-badge" style="background: #fff8ec; color: var(--gold);">語法解析</span>
+            <h3>句子結構拆解</h3>
+          </div>
+          <div class="ai-card-body">
+            <div class="prompt-box">
+              <p class="prompt-label">Prompt 範本</p>
+              <p class="prompt-text">"Please analyze this sentence grammatically: [貼上難句]. Break it down into: subject, main verb, object/complement, and any subordinate clauses. Then explain what grammatical structures make this sentence feel 'C1 level' rather than 'B2 level'. Finally, give me a simpler B2 version of the same sentence so I can see the difference."</p>
+            </div>
+            <div class="ai-tips">
+              <p class="ai-tip">這個 prompt 特別適合在讀 The Economist 時遇到看不懂的複雜句，讓 AI 逐成分拆解。</p>
+              <p class="ai-tip">「給我 B2 版本」這個要求讓你看到差異，比只看 C1 版本更能學到結構升級的邏輯。</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- What NOT to do -->
+    <div>
+      <p class="block-title">AI 使用紅線 — 這樣用等於自毀學習</p>
+      <div class="rubric">
+        <table>
+          <tr>
+            <th>❌ 錯誤用法</th>
+            <th>為什麼有害</th>
+            <th>✓ 正確替代做法</th>
+          </tr>
+          <tr>
+            <td>"幫我寫一篇關於 X 的作文"</td>
+            <td>你的大腦完全沒有參與，看了也沒有任何學習</td>
+            <td>先自己寫草稿，再請 AI 批改具體問題</td>
+          </tr>
+          <tr>
+            <td>"幫我翻譯這段中文"</td>
+            <td>繞過了你最需要練習的翻譯思維訓練</td>
+            <td>先自己翻，再請 AI 指出翻譯中的 2 個問題</td>
+          </tr>
+          <tr>
+            <td>"這篇作文有沒有錯誤？" (沒有具體說明)</td>
+            <td>AI 會一次給你十個問題，你不知道從哪裡開始改</td>
+            <td>指定範圍："只看我的詞彙選擇，找出 2 個可以升級的詞"</td>
+          </tr>
+          <tr>
+            <td>把 AI 的回覆直接貼進作業</td>
+            <td>這是作弊，且考試時你會完全不會</td>
+            <td>讀 AI 的建議，關掉視窗，自己重新寫一遍</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Weekly AI schedule -->
+    <div>
+      <p class="block-title">AI 使用建議節奏 — 整合進每週課程</p>
+      <div class="hw-box">
+        <div class="hw-header">課前（每次上課前 30 分鐘）</div>
+        <div class="hw-list">
+          <div class="hw-item"><span class="hw-check"></span>用「作文批改 Prompt」請 AI 看你的作業草稿，把它的建議帶來課堂討論</div>
+          <div class="hw-item"><span class="hw-check"></span>用「口說模擬 Prompt」做一題 DET Speaking，截圖 AI 的評語</div>
+        </div>
+      </div>
+      <div class="hw-box" style="margin-top: 8px;">
+        <div class="hw-header">課後（複習與強化）</div>
+        <div class="hw-list">
+          <div class="hw-item"><span class="hw-check"></span>把課堂中老師標記的錯誤，用「語法解析 Prompt」深入理解原因</div>
+          <div class="hw-item"><span class="hw-check"></span>本週新單字各用「情境例句 Prompt」查一遍，補充到個人單字本</div>
+          <div class="hw-item"><span class="hw-check"></span>關掉 AI，用剛學到的東西重新寫一次。這一步最重要，絕對不能跳過。</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = ['m3','m4','m5','m6'].indexOf(id);
+  document.querySelectorAll('.nav-item')[idx].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>

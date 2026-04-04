@@ -1,0 +1,239 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.wrap{padding:1rem 0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem}
+.tab{padding:6px 14px;border-radius:20px;border:0.5px solid var(--color-border-secondary);font-size:13px;cursor:pointer;background:var(--color-background-secondary);color:var(--color-text-secondary);font-weight:400}
+.tab.active{background:#534AB7;color:#EEEDFE;border-color:#534AB7}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:12px}
+.card-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.badge{font-size:11px;padding:3px 10px;border-radius:12px;font-weight:500}
+.b-a1{background:#F1EFE8;color:#444441}.b-b1{background:#E6F1FB;color:#0C447C}.b-b2{background:#EAF3DE;color:#3B6D11}.b-c1{background:#EEEDFE;color:#3C3489}.b-c2{background:#FAEEDA;color:#854F0B}
+.old-word{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.arrow{font-size:18px;color:var(--color-text-tertiary);margin:0 4px}
+.upgrades{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.up-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border:0.5px solid var(--color-border-tertiary)}
+.up-word{font-size:16px;font-weight:500;color:#3C3489}
+.up-level{font-size:11px;color:#534AB7;margin-bottom:4px}
+.collocations{margin-top:8px}
+.col-title{font-size:11px;color:var(--color-text-tertiary);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em}
+.col-tag{display:inline-block;font-size:12px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:6px;padding:2px 8px;margin:2px 3px 2px 0;color:var(--color-text-secondary)}
+.example{margin-top:10px;padding:10px;background:var(--color-background-secondary);border-left:2px solid #534AB7;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.example b{color:var(--color-text-primary);font-weight:500}
+.danger{font-size:12px;color:#993C1D;background:#FAECE7;border-radius:6px;padding:4px 10px;margin-top:8px;display:inline-block}
+.section-title{font-size:13px;font-weight:500;color:var(--color-text-secondary);margin:1.5rem 0 0.75rem}
+</style>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <button class="tab active" onclick="filter('all')">全部</button>
+  <button class="tab" onclick="filter('verb')">動詞</button>
+  <button class="tab" onclick="filter('adj')">形容詞</button>
+  <button class="tab" onclick="filter('adv')">副詞</button>
+  <button class="tab" onclick="filter('noun')">名詞</button>
+</div>
+<div id="cards"></div>
+</div>
+
+<script>
+const data = [
+  {
+    cat:'verb',
+    old:'affect',oldLevel:'B1',
+    upgrades:[
+      {word:'influence',level:'B2',cols:['significantly influence','directly influence','profoundly influence']},
+      {word:'shape',level:'B2',cols:['shape one\'s perspective','shape the outcome','shape behavior']},
+      {word:'impact',level:'B2',cols:['impact performance','impact decisions','impact society']},
+      {word:'reinforce',level:'C1',cols:['reinforce the idea','reinforce a belief','reinforce learning']}
+    ],
+    example:'Digital literacy has profoundly <b>shaped</b> the way I approach academic tasks.',
+    danger:'❌ "affects enormously to" → 介係詞錯誤，改用 "has an enormous impact on"'
+  },
+  {
+    cat:'verb',
+    old:'use / utilize',oldLevel:'A1/B2',
+    upgrades:[
+      {word:'leverage',level:'C1',cols:['leverage resources','leverage technology','leverage data']},
+      {word:'harness',level:'C1',cols:['harness the power of','harness potential','harness AI']},
+      {word:'deploy',level:'C1',cols:['deploy strategies','deploy tools','deploy skills']},
+      {word:'apply',level:'B1',cols:['apply critical thinking','apply skills','apply knowledge']}
+    ],
+    example:'I learned to <b>leverage</b> available online platforms to <b>harness</b> the full potential of digital tools.',
+    danger:'❌ "utilize" 雖是 B2 但過度使用顯得刻意，先用 "leverage / harness" 取代'
+  },
+  {
+    cat:'verb',
+    old:'learn',oldLevel:'A1',
+    upgrades:[
+      {word:'acquire',level:'B2',cols:['acquire knowledge','acquire skills','acquire proficiency']},
+      {word:'grasp',level:'B2',cols:['grasp the concept','grasp the logic','grasp implications']},
+      {word:'cultivate',level:'C1',cols:['cultivate understanding','cultivate awareness','cultivate expertise']},
+      {word:'internalize',level:'C2',cols:['internalize concepts','internalize values','internalize feedback']}
+    ],
+    example:'Through this project, I <b>acquired</b> technical proficiency and <b>cultivated</b> a deeper understanding of system design.',
+    danger:'❌ "I learn about" (時態錯誤) → "I learned" / "I came to grasp"'
+  },
+  {
+    cat:'verb',
+    old:'understand / know',oldLevel:'A1',
+    upgrades:[
+      {word:'comprehend',level:'B2',cols:['fully comprehend','comprehend the scope','comprehend implications']},
+      {word:'discern',level:'C1',cols:['discern patterns','discern differences','discern meaning']},
+      {word:'appreciate',level:'B2',cols:['appreciate the complexity','appreciate the value','appreciate nuance']},
+      {word:'recognize',level:'B1',cols:['recognize the importance','recognize a pattern','recognize limitations']}
+    ],
+    example:'Only after collaborating with peers did I truly <b>appreciate</b> the complexity of the problem.',
+    danger:null
+  },
+  {
+    cat:'verb',
+    old:'make / create',oldLevel:'A1',
+    upgrades:[
+      {word:'develop',level:'B1',cols:['develop a solution','develop skills','develop a framework']},
+      {word:'devise',level:'C1',cols:['devise a strategy','devise a method','devise a plan']},
+      {word:'construct',level:'B2',cols:['construct an argument','construct a model','construct logic']},
+      {word:'generate',level:'B2',cols:['generate ideas','generate output','generate insights']}
+    ],
+    example:'I <b>devised</b> a systematic approach to <b>construct</b> the algorithm from scratch.',
+    danger:null
+  },
+  {
+    cat:'adj',
+    old:'important',oldLevel:'A1',
+    upgrades:[
+      {word:'crucial',level:'B2',cols:['crucial role','crucial skill','crucial factor']},
+      {word:'paramount',level:'C1',cols:['of paramount importance','paramount concern','paramount priority']},
+      {word:'indispensable',level:'C1',cols:['indispensable tool','indispensable skill','indispensable resource']},
+      {word:'pivotal',level:'C1',cols:['pivotal moment','pivotal role','pivotal decision']}
+    ],
+    example:'Digital literacy plays a <b>pivotal</b> role in modern education, making it an <b>indispensable</b> skill for students.',
+    danger:'❌ "indispensible" (拼錯) → 正確拼法 "indispensable"'
+  },
+  {
+    cat:'adj',
+    old:'big / giant / very big',oldLevel:'A1',
+    upgrades:[
+      {word:'substantial',level:'C1',cols:['substantial impact','substantial improvement','substantial difference']},
+      {word:'considerable',level:'C1',cols:['considerable effort','considerable progress','considerable challenge']},
+      {word:'immense',level:'C1',cols:['immense potential','immense pressure','immense value']},
+      {word:'colossal',level:'C2',cols:['colossal structure','colossal scale','colossal achievement']}
+    ],
+    example:'The space shuttle\'s <b>colossal</b> frame created a <b>considerable</b> challenge for the marine transport team.',
+    danger:'❌ "ginatic" (拼錯) → 正確拼法 "gigantic"，但更自然的替換是 "massive / immense"'
+  },
+  {
+    cat:'adj',
+    old:'unique / special',oldLevel:'B1',
+    upgrades:[
+      {word:'distinctive',level:'C1',cols:['distinctive approach','distinctive feature','distinctive style']},
+      {word:'innovative',level:'B2',cols:['innovative solution','innovative design','innovative method']},
+      {word:'groundbreaking',level:'C1',cols:['groundbreaking research','groundbreaking approach','groundbreaking work']},
+      {word:'novel',level:'C1',cols:['novel approach','novel concept','novel application']}
+    ],
+    example:'Our team\'s <b>distinctive</b> use of AI integration made the project truly <b>novel</b> in its field.',
+    danger:'❌ "innovational" 不是真正的英文詞 → 用 "innovative"'
+  },
+  {
+    cat:'adj',
+    old:'hard / difficult',oldLevel:'A1/B1',
+    upgrades:[
+      {word:'demanding',level:'C1',cols:['demanding task','demanding environment','demanding schedule']},
+      {word:'challenging',level:'B2',cols:['challenging assignment','challenging problem','challenging situation']},
+      {word:'complex',level:'B2',cols:['complex logic','complex system','complex relationship']},
+      {word:'intricate',level:'C1',cols:['intricate design','intricate process','intricate network']}
+    ],
+    example:'The most <b>demanding</b> aspect was navigating the <b>intricate</b> logic behind the algorithm.',
+    danger:null
+  },
+  {
+    cat:'adv',
+    old:'very / really',oldLevel:'A1',
+    upgrades:[
+      {word:'significantly',level:'B2',cols:['significantly improve','significantly affect','significantly reduce']},
+      {word:'substantially',level:'C1',cols:['substantially better','substantially increase','substantially impact']},
+      {word:'profoundly',level:'C1',cols:['profoundly shaped','profoundly affected','profoundly changed']},
+      {word:'considerably',level:'C1',cols:['considerably more','considerably faster','considerably improve']}
+    ],
+    example:'This experience <b>profoundly</b> changed my perspective and <b>significantly</b> improved my problem-solving skills.',
+    danger:'❌ 永遠不要用 "very + 普通形容詞"，直接升級形容詞本身'
+  },
+  {
+    cat:'noun',
+    old:'problem',oldLevel:'A1',
+    upgrades:[
+      {word:'challenge',level:'B1',cols:['overcome a challenge','face a challenge','address a challenge']},
+      {word:'obstacle',level:'B2',cols:['overcome an obstacle','remove an obstacle','encounter an obstacle']},
+      {word:'complication',level:'C1',cols:['arise complications','unexpected complication','technical complication']},
+      {word:'impediment',level:'C2',cols:['remove an impediment','significant impediment','pose an impediment']}
+    ],
+    example:'Rather than viewing it as a <b>complication</b>, I reframed the <b>obstacle</b> as an opportunity to grow.',
+    danger:null
+  },
+  {
+    cat:'noun',
+    old:'way / method',oldLevel:'A1',
+    upgrades:[
+      {word:'approach',level:'B2',cols:['adopt an approach','systematic approach','innovative approach']},
+      {word:'strategy',level:'B2',cols:['devise a strategy','implement a strategy','effective strategy']},
+      {word:'methodology',level:'C1',cols:['research methodology','structured methodology','apply a methodology']},
+      {word:'framework',level:'C1',cols:['conceptual framework','analytical framework','provide a framework']}
+    ],
+    example:'I <b>adopted</b> a structured <b>methodology</b> and developed a clear <b>framework</b> for solving the issue.',
+    danger:null
+  },
+  {
+    cat:'noun',
+    old:'things / stuff',oldLevel:'A1',
+    upgrades:[
+      {word:'aspects',level:'B2',cols:['key aspects','various aspects','fundamental aspects']},
+      {word:'elements',level:'B2',cols:['core elements','essential elements','integrate elements']},
+      {word:'components',level:'B2',cols:['critical components','main components','integrate components']},
+      {word:'dimensions',level:'C1',cols:['multiple dimensions','consider dimensions','explore dimensions']}
+    ],
+    example:'Digital literacy encompasses several <b>dimensions</b>, including the ability to evaluate and integrate digital <b>components</b> effectively.',
+    danger:'❌ "fetch all the things" → "leverage all available resources / utilize relevant tools"'
+  }
+];
+
+let current = 'all';
+
+function filter(cat){
+  current = cat;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+  render();
+}
+
+function render(){
+  const filtered = current==='all' ? data : data.filter(d=>d.cat===current);
+  const catLabel = {verb:'動詞',adj:'形容詞',adv:'副詞',noun:'名詞'};
+  const html = filtered.map(d=>`
+    <div class="card">
+      <div class="card-header">
+        <span class="old-word">${d.old}</span>
+        <span class="badge b-${d.oldLevel.toLowerCase()}">${d.oldLevel}</span>
+        <span class="arrow">→ 升級至</span>
+        <span style="font-size:12px;color:var(--color-text-tertiary)">${catLabel[d.cat]}</span>
+      </div>
+      <div class="upgrades">
+        ${d.upgrades.map(u=>`
+          <div class="up-card">
+            <div class="up-level">${u.level}</div>
+            <div class="up-word">${u.word}</div>
+            <div class="collocations">
+              <div class="col-title">常見搭配</div>
+              ${u.cols.map(c=>`<span class="col-tag">${c}</span>`).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="example">💡 例句：${d.example}</div>
+      ${d.danger ? `<div class="danger">${d.danger}</div>` : ''}
+    </div>
+  `).join('');
+  document.getElementById('cards').innerHTML = html;
+}
+
+render();
+</script>

@@ -1,0 +1,289 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0;font-family:var(--font-sans)}
+.scene-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.stab{padding:5px 13px;border-radius:20px;border:0.5px solid var(--color-border-secondary);font-size:12px;cursor:pointer;background:transparent;color:var(--color-text-secondary)}
+.stab.on{background:#0F6E56;color:#E1F5EE;border-color:#0F6E56}
+.section{margin-bottom:1.5rem}
+.sec-label{font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;padding-left:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.chip{padding:5px 11px;border-radius:8px;font-size:13px;cursor:pointer;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);color:var(--color-text-primary);transition:background 0.15s}
+.chip:hover{background:var(--color-background-secondary)}
+.chip.sel{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489}
+.chip .lv{font-size:10px;margin-left:4px;opacity:0.7}
+.preview-box{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:1rem 1.25rem;min-height:80px;margin-bottom:1rem}
+.preview-label{font-size:11px;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em}
+.preview-text{font-size:15px;color:var(--color-text-primary);line-height:1.8;min-height:40px}
+.preview-text .hw{background:#EEEDFE;color:#3C3489;border-radius:4px;padding:1px 4px;font-weight:500}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tip-box{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-left:2px solid #0F6E56;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:10px 14px;font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-top:6px}
+.tip-box b{color:var(--color-text-primary);font-weight:500}
+.phrase-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.phrase-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 12px}
+.phrase-en{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.phrase-zh{font-size:12px;color:var(--color-text-secondary)}
+.phrase-ex{font-size:12px;color:var(--color-text-tertiary);margin-top:4px;font-style:italic}
+.lv-badge{font-size:10px;padding:1px 6px;border-radius:4px;display:inline-block;margin-left:4px}
+.lv-b2{background:#EAF3DE;color:#3B6D11}.lv-c1{background:#EEEDFE;color:#3C3489}.lv-c2{background:#FAEEDA;color:#854F0B}
+</style>
+
+<div class="wrap">
+
+<div class="scene-tabs" id="sceneTabs">
+  <button class="stab on" onclick="setScene('opener')">開場句</button>
+  <button class="stab" onclick="setScene('people')">人物描述</button>
+  <button class="stab" onclick="setScene('place')">地點環境</button>
+  <button class="stab" onclick="setScene('action')">動作活動</button>
+  <button class="stab" onclick="setScene('mood')">氛圍情緒</button>
+  <button class="stab" onclick="setScene('speculate')">推測語氣</button>
+  <button class="stab" onclick="setScene('builder')">句子組裝</button>
+</div>
+
+<div id="content"></div>
+</div>
+
+<script>
+const scenes = {
+  opener:{
+    title:'開場句模板（最關鍵！）',
+    tip:'<b>不要再用 "This is a picture of..."</b>（A1等級）。下面每個模板都是可以直接替換主詞的高分開場句。',
+    groups:[
+      {label:'描述畫面主體（C1-C2 動詞）',chips:[
+        {w:'depicts',zh:'描繪',lv:'C2',ex:'The image depicts a crowded urban street.'},
+        {w:'captures',zh:'捕捉/呈現',lv:'C1',ex:'This photograph captures a moment of quiet solitude.'},
+        {w:'portrays',zh:'刻畫',lv:'C1',ex:'The image portrays an elderly man deep in thought.'},
+        {w:'illustrates',zh:'展示/說明',lv:'B2',ex:'The scene illustrates the aftermath of a heavy storm.'},
+        {w:'showcases',zh:'展現',lv:'C1',ex:'The photograph showcases the grandeur of the landscape.'},
+        {w:'presents',zh:'呈現',lv:'B2',ex:'The image presents a striking contrast between old and new.'},
+      ]},
+      {label:'帶有氛圍感的開場（直接拿分）',chips:[
+        {w:'A striking image of...',zh:'一張引人注目的畫面',lv:'C1',ex:'A striking image of two children playing in the rain.'},
+        {w:'Bathed in natural light...',zh:'沐浴在自然光中',lv:'C2',ex:'Bathed in natural light, the woman appears to be reading.'},
+        {w:'Set against a backdrop of...',zh:'以...為背景',lv:'C1',ex:'Set against a backdrop of mountains, the cabin looks serene.'},
+        {w:'Framed by...',zh:'以...為框架',lv:'C1',ex:'Framed by tall trees, the path leads into the distance.'},
+      ]}
+    ]
+  },
+  people:{
+    title:'人物描述詞彙',
+    tip:'描述人物時，先說 <b>外貌→動作→表情→推測情緒</b>，這樣自然不會腦袋空白。',
+    groups:[
+      {label:'外貌（年齡/體型）',chips:[
+        {w:'elderly',zh:'年長的',lv:'B2',ex:'an elderly gentleman in a suit'},
+        {w:'middle-aged',zh:'中年的',lv:'B2',ex:'a middle-aged woman with a briefcase'},
+        {w:'adolescent',zh:'青少年的',lv:'C1',ex:'an adolescent boy on a bicycle'},
+        {w:'slender',zh:'纖細的',lv:'C1',ex:'a slender figure in the background'},
+        {w:'stocky',zh:'矮壯的',lv:'C2',ex:'a stocky man carrying heavy equipment'},
+      ]},
+      {label:'表情情緒',chips:[
+        {w:'contemplative',zh:'沉思的',lv:'C2',ex:'She has a contemplative expression.'},
+        {w:'animated',zh:'生動活潑的',lv:'C1',ex:'The children look animated and excited.'},
+        {w:'pensive',zh:'若有所思的',lv:'C2',ex:'He appears pensive, staring into the distance.'},
+        {w:'composed',zh:'鎮定的',lv:'C1',ex:'Despite the chaos, she looks composed.'},
+        {w:'engrossed',zh:'全神貫注的',lv:'C1',ex:'She is engrossed in whatever she is reading.'},
+        {w:'distressed',zh:'痛苦/焦慮的',lv:'C1',ex:'The child appears visibly distressed.'},
+      ]},
+      {label:'動作描述',chips:[
+        {w:'appears to be',zh:'看起來在...',lv:'B2',ex:'He appears to be negotiating with someone.'},
+        {w:'is engaged in',zh:'正在從事...',lv:'C1',ex:'She is engaged in a lively conversation.'},
+        {w:'is crouched over',zh:'俯身於...',lv:'C1',ex:'The technician is crouched over the equipment.'},
+        {w:'gestures toward',zh:'指向/示意',lv:'C1',ex:'He gestures toward the horizon.'},
+      ]}
+    ]
+  },
+  place:{
+    title:'地點與環境描述',
+    tip:'描述地點的順序：<b>大環境（室內/室外）→ 具體場所 → 背景細節</b>。記住「Set against a backdrop of...」這個萬能句型。',
+    groups:[
+      {label:'地點定位',chips:[
+        {w:'urban setting',zh:'城市環境',lv:'C1',ex:'The photo is set in a bustling urban setting.'},
+        {w:'rural landscape',zh:'鄉村景色',lv:'B2',ex:'The couple walks through a scenic rural landscape.'},
+        {w:'industrial facility',zh:'工業設施',lv:'C1',ex:'Workers are visible inside an industrial facility.'},
+        {w:'waterfront',zh:'水岸邊',lv:'B2',ex:'The vessel navigates along a busy waterfront.'},
+        {w:'open-plan office',zh:'開放式辦公室',lv:'C1',ex:'The team meets in a modern open-plan office.'},
+        {w:'makeshift',zh:'臨時搭建的',lv:'C2',ex:'A makeshift shelter stands at the edge of the road.'},
+      ]},
+      {label:'光線與天氣',chips:[
+        {w:'overcast sky',zh:'陰天',lv:'C1',ex:'The overcast sky gives the scene a sombre tone.'},
+        {w:'dappled light',zh:'光影斑駁',lv:'C2',ex:'Dappled light filters through the canopy.'},
+        {w:'harsh sunlight',zh:'強烈陽光',lv:'C1',ex:'The subjects squint under harsh sunlight.'},
+        {w:'dimly lit',zh:'光線昏暗',lv:'C1',ex:'The room is dimly lit, creating a mysterious ambience.'},
+        {w:'bathed in golden light',zh:'沐浴金光中',lv:'C2',ex:'The valley is bathed in golden evening light.'},
+      ]},
+      {label:'空間感',chips:[
+        {w:'in the foreground',zh:'在前景',lv:'C1',ex:'In the foreground, a child plays alone.'},
+        {w:'in the background',zh:'在背景',lv:'B2',ex:'Tall buildings loom in the background.'},
+        {w:'to the left/right of the frame',zh:'畫面左/右側',lv:'C1',ex:'To the left of the frame, a figure stands motionless.'},
+        {w:'sprawling',zh:'延伸廣闊的',lv:'C1',ex:'A sprawling marketplace fills the square.'},
+      ]}
+    ]
+  },
+  action:{
+    title:'動作與活動描述',
+    tip:'DET 圖片常出現<b>工作、運動、日常活動</b>三大場景。記住用「進行式 + 副詞」增加細節，例如：carefully examining / actively collaborating。',
+    groups:[
+      {label:'工作/專業場景',chips:[
+        {w:'examining',zh:'仔細檢視',lv:'B2',ex:'A doctor is carefully examining the X-ray.'},
+        {w:'collaborating on',zh:'合作進行',lv:'C1',ex:'The team is actively collaborating on a project.'},
+        {w:'operating',zh:'操作',lv:'B2',ex:'The engineer is operating heavy machinery.'},
+        {w:'constructing',zh:'建造/構建',lv:'B2',ex:'Workers are constructing a new bridge.'},
+        {w:'navigating',zh:'導航/穿越',lv:'C1',ex:'The vessel is navigating through a narrow channel.'},
+        {w:'assembling',zh:'組裝',lv:'C1',ex:'Technicians are assembling the components.'},
+      ]},
+      {label:'日常/休閒場景',chips:[
+        {w:'strolling',zh:'漫步',lv:'C1',ex:'A couple is strolling along the riverbank.'},
+        {w:'browsing',zh:'瀏覽/逛',lv:'B2',ex:'She is browsing items at an outdoor market.'},
+        {w:'conversing',zh:'交談',lv:'C1',ex:'The two men are conversing animatedly.'},
+        {w:'gazing at',zh:'凝視著',lv:'B2',ex:'The child is gazing at the display in wonder.'},
+        {w:'perched on',zh:'棲息/坐在',lv:'C1',ex:'A bird is perched on the railing.'},
+      ]}
+    ]
+  },
+  mood:{
+    title:'氛圍與整體感描述',
+    tip:'這是最多人忘記說的部分，卻是最能拿分的！用一句話描述整張圖的<b>氛圍/感覺</b>，立刻顯得更高級。',
+    groups:[
+      {label:'正面氛圍',chips:[
+        {w:'vibrant',zh:'充滿活力的',lv:'C1',ex:'The market scene feels vibrant and lively.'},
+        {w:'serene',zh:'寧靜祥和的',lv:'C1',ex:'The landscape exudes a serene, peaceful quality.'},
+        {w:'jubilant',zh:'歡欣鼓舞的',lv:'C2',ex:'The crowd appears jubilant after the victory.'},
+        {w:'wholesome',zh:'健康正向的',lv:'C1',ex:'The family portrait conveys a wholesome atmosphere.'},
+        {w:'bustling',zh:'熙熙攘攘的',lv:'C1',ex:'The station is bustling with commuters.'},
+      ]},
+      {label:'負面/緊張氛圍',chips:[
+        {w:'sombre',zh:'陰鬱的',lv:'C2',ex:'The image carries a sombre, reflective tone.'},
+        {w:'tense',zh:'緊張的',lv:'B2',ex:'The atmosphere between them appears tense.'},
+        {w:'chaotic',zh:'混亂的',lv:'C1',ex:'The scene is chaotic, with debris scattered everywhere.'},
+        {w:'desolate',zh:'荒涼的',lv:'C2',ex:'The abandoned building looks desolate and eerie.'},
+        {w:'ominous',zh:'不祥的',lv:'C2',ex:'The dark clouds create an ominous backdrop.'},
+      ]},
+      {label:'中性氛圍',chips:[
+        {w:'candid',zh:'自然不做作的',lv:'C1',ex:'The photo has a candid, documentary quality.'},
+        {w:'contemplative',zh:'沉思的',lv:'C2',ex:'The overall mood is quiet and contemplative.'},
+        {w:'dynamic',zh:'充滿動感的',lv:'C1',ex:'The composition feels dynamic and energetic.'},
+        {w:'intimate',zh:'親密的/私人的',lv:'C1',ex:'The close framing creates an intimate feel.'},
+      ]}
+    ]
+  },
+  speculate:{
+    title:'推測語氣（最加分的句型）',
+    tip:'DET 圖片描述的高分關鍵：<b>不只描述你「看到的」，還要推測「為什麼」</b>。用這些句型，讓你的描述從 B2 跳到 C1。',
+    groups:[
+      {label:'推測動詞片語',chips:[
+        {w:'appears to be',zh:'看起來似乎',lv:'B2',ex:'The individual appears to be in a hurry.'},
+        {w:'seems to suggest',zh:'似乎暗示',lv:'C1',ex:'The body language seems to suggest frustration.'},
+        {w:'is likely',zh:'很可能是',lv:'B2',ex:'This is likely taken during a public event.'},
+        {w:'one might infer',zh:'人們可以推斷',lv:'C2',ex:'One might infer that the two are colleagues.'},
+        {w:'judging by',zh:'從...來判斷',lv:'C1',ex:'Judging by their attire, this appears to be a formal occasion.'},
+        {w:'presumably',zh:'推測應該是',lv:'C1',ex:'The child is presumably waiting for a parent.'},
+      ]},
+      {label:'萬用推測句型（直接套用）',chips:[
+        {w:'which suggests that...',zh:'這表明了...',lv:'C1',ex:'She is smiling broadly, which suggests that she is pleased with the outcome.'},
+        {w:'This may indicate...',zh:'這可能說明...',lv:'C1',ex:'The empty streets may indicate that the photo was taken early in the morning.'},
+        {w:'It is conceivable that...',zh:'可以想像...',lv:'C2',ex:'It is conceivable that this was captured during a significant event.'},
+        {w:'reminiscent of',zh:'令人聯想到...',lv:'C2',ex:'The setting is reminiscent of a traditional fishing village.'},
+      ]}
+    ]
+  },
+  builder:{
+    title:'句子組裝器',
+    tip:'點選詞彙，自動組合成一段完整的圖片描述。練習用不同組合造句！',
+    groups:[
+      {label:'第一句：開場',chips:[
+        {w:'The image depicts',zh:'',lv:'C2',ex:''},
+        {w:'This photograph captures',zh:'',lv:'C1',ex:''},
+        {w:'Set against a backdrop of',zh:'',lv:'C1',ex:''},
+        {w:'Framed by',zh:'',lv:'C1',ex:''},
+      ]},
+      {label:'第二句：主體細節',chips:[
+        {w:'In the foreground,',zh:'',lv:'C1',ex:''},
+        {w:'A figure appears to be',zh:'',lv:'C1',ex:''},
+        {w:'Several individuals are engaged in',zh:'',lv:'C1',ex:''},
+        {w:'The subject, who appears',zh:'',lv:'C1',ex:''},
+      ]},
+      {label:'第三句：氛圍推測',chips:[
+        {w:'The overall atmosphere is',zh:'',lv:'C1',ex:''},
+        {w:'Judging by their expressions,',zh:'',lv:'C1',ex:''},
+        {w:'This may indicate that',zh:'',lv:'C1',ex:''},
+        {w:'which suggests a sense of',zh:'',lv:'C1',ex:''},
+      ]}
+    ],
+    isBuilder: true
+  }
+};
+
+let currentScene = 'opener';
+let selected = [];
+
+function setScene(s){
+  currentScene = s;
+  selected = [];
+  document.querySelectorAll('.stab').forEach(t=>t.classList.remove('on'));
+  event.target.classList.add('on');
+  render();
+}
+
+function toggleChip(word, el){
+  if(currentScene !== 'builder') return;
+  const idx = selected.indexOf(word);
+  if(idx>=0){selected.splice(idx,1);el.classList.remove('sel');}
+  else{selected.push(word);el.classList.add('sel');}
+  updateBuilder();
+}
+
+function updateBuilder(){
+  const el = document.getElementById('builderPreview');
+  if(!el) return;
+  if(selected.length===0){el.innerHTML='<span style="color:var(--color-text-tertiary)">點選上方詞彙，組合成一段描述...</span>';return;}
+  el.innerHTML = selected.map(w=>`<span class="hw">${w}</span>`).join(' ') + ' ...';
+}
+
+function render(){
+  const d = scenes[currentScene];
+  if(!d){return;}
+
+  let html = '';
+
+  if(d.tip){
+    html += `<div class="tip-box">${d.tip}</div>`;
+  }
+  html += '<div style="margin-top:1rem">';
+
+  if(d.isBuilder){
+    html += `<div class="preview-box"><div class="preview-label">你組合的句子</div><div class="preview-text" id="builderPreview"><span style="color:var(--color-text-tertiary)">點選上方詞彙，組合成一段描述...</span></div></div>`;
+    d.groups.forEach(g=>{
+      html += `<div class="section"><div class="sec-label">${g.label}</div><div class="chips">`;
+      g.chips.forEach(c=>{
+        html += `<button class="chip" onclick="toggleChip('${c.w}', this)">${c.w}</button>`;
+      });
+      html += `</div></div>`;
+    });
+    html += `<button onclick="sendPrompt('請用我選的這些開場詞幫我寫一段完整的圖片描述示範，並告訴我每個詞的使用要點')" style="margin-top:8px;font-size:13px;padding:6px 14px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;color:var(--color-text-secondary)">請 AI 幫我示範完整段落 ↗</button>`;
+  } else {
+    d.groups.forEach(g=>{
+      html += `<div class="section"><div class="sec-label">${g.label}</div><div class="phrase-grid">`;
+      g.chips.forEach(c=>{
+        const lvClass = c.lv==='C2'?'lv-c2':c.lv==='C1'?'lv-c1':'lv-b2';
+        html += `<div class="phrase-card">
+          <div class="phrase-en">${c.w} <span class="lv-badge ${lvClass}">${c.lv}</span></div>
+          ${c.zh?`<div class="phrase-zh">${c.zh}</div>`:''}
+          ${c.ex?`<div class="phrase-ex">${c.ex}</div>`:''}
+        </div>`;
+      });
+      html += `</div></div>`;
+    });
+  }
+
+  html += '</div>';
+
+  const btns = `<div class="btn-row">
+    <button onclick="sendPrompt('現在給我一張 DET 模擬圖片，讓我用今天學的詞做 1 分鐘限時寫作練習')" style="font-size:13px;padding:6px 14px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;color:var(--color-text-secondary)">開始限時練習 ↗</button>
+    <button onclick="sendPrompt('幫我分析這些圖片描述詞彙，哪幾個最適合 DET 考試，以及怎麼在 1 分鐘內快速套用')" style="font-size:13px;padding:6px 14px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;color:var(--color-text-secondary)">問考官策略 ↗</button>
+  </div>`;
+
+  document.getElementById('content').innerHTML = html + btns;
+}
+
+render();
+</script>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Hard / Difficult → C1 升級詞</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f9f9f7;color:#1a1a18;padding:1rem;max-width:720px;margin:0 auto}
+.subtitle{font-size:13px;color:#888;margin-bottom:1.25rem}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.tab{padding:5px 14px;border-radius:20px;border:0.5px solid #ccc;font-size:12px;cursor:pointer;background:transparent;color:#666}
+.tab.on{background:#534AB7;color:#fff;border-color:#534AB7}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:#fff;border:0.5px solid #e0ded7;border-radius:12px;padding:1.25rem}
+.card-top{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
+.word{font-size:20px;font-weight:500;color:#1a1a18}
+.lv{font-size:10px;padding:2px 7px;border-radius:4px}
+.c1{background:#EEEDFE;color:#3C3489}
+.c2{background:#FAEEDA;color:#854F0B}
+.pron{font-size:12px;color:#aaa;font-family:monospace;margin-bottom:6px}
+.zh{font-size:13px;color:#534AB7;font-weight:500;margin-bottom:8px}
+.scene-tag{font-size:11px;background:#f1efe8;color:#666;border-radius:4px;padding:2px 8px;display:inline-block;margin-bottom:8px}
+.collocations{margin-bottom:8px}
+.col-label{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.col-chip{display:inline-block;font-size:12px;background:#f1efe8;border-radius:5px;padding:2px 8px;margin:2px 3px 2px 0;color:#444}
+.col-chip b{color:#1a1a18;font-weight:500}
+.example{font-size:13px;color:#444;line-height:1.7;border-left:2px solid #534AB7;padding-left:8px;border-radius:0;margin-bottom:8px}
+.example b{color:#534AB7;font-weight:500}
+.dont{font-size:12px;background:#FCEBEB;color:#791F1F;border-radius:5px;padding:4px 10px;margin-top:4px;display:inline-block}
+.do{font-size:12px;background:#E1F5EE;color:#085041;border-radius:5px;padding:4px 10px;margin-top:4px;display:inline-block}
+.tip{font-size:12px;background:#FAEEDA;color:#633806;border-radius:5px;padding:5px 10px;margin-top:6px;line-height:1.6}
+.diff-badge{font-size:10px;padding:2px 7px;border-radius:4px;margin-left:4px}
+.diff-hard{background:#FCEBEB;color:#A32D2D}
+.empty{text-align:center;padding:2rem;color:#aaa;font-size:14px}
+</style>
+</head>
+<body>
+
+<p class="subtitle">不同場景用不同的詞 — 點分類標籤切換</p>
+
+<div class="tabs">
+  <button class="tab on" onclick="filter('all',this)">全部</button>
+  <button class="tab" onclick="filter('task',this)">困難的任務/工作</button>
+  <button class="tab" onclick="filter('situation',this)">艱難的處境</button>
+  <button class="tab" onclick="filter('problem',this)">複雜的問題</button>
+  <button class="tab" onclick="filter('person',this)">形容人</button>
+  <button class="tab" onclick="filter('writing',this)">寫作文用</button>
+  <button class="tab" onclick="filter('speaking',this)">口說用</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const words = [
+  {
+    word:'demanding',lv:'C1',pron:'/dɪˈmɑːndɪŋ/',
+    zh:'費力的、要求高的（強調過程需要大量努力）',
+    scenes:['task','writing','speaking'],
+    cols:['demanding task','demanding schedule','demanding environment','demanding role','demanding course'],
+    example:'The most <b>demanding</b> aspect of the project was coordinating across multiple time zones.',
+    dont:'a very hard job',
+    do:'a highly demanding role',
+    tip:'用在「任務/工作/課程」需要大量時間精力時。比 difficult 更強調「對人的要求很高」'
+  },
+  {
+    word:'arduous',lv:'C2',pron:'/ˈɑːdjuəs/',
+    zh:'艱辛的、費力漫長的（強調過程很辛苦）',
+    scenes:['task','situation','writing'],
+    cols:['arduous journey','arduous process','arduous task','arduous climb','arduous effort'],
+    example:'The refugees undertook an <b>arduous</b> journey across three countries to reach safety.',
+    dont:'a very hard journey',
+    do:'an arduous journey',
+    tip:'語氣比 demanding 更強，帶有「耗盡體力/精神」的含義，常用於旅途、過程類描述'
+  },
+  {
+    word:'formidable',lv:'C1',pron:'/ˈfɔːmɪdəbl/',
+    zh:'艱鉅的、令人敬畏的（強調規模或強度讓人望而生畏）',
+    scenes:['task','situation','writing'],
+    cols:['formidable challenge','formidable obstacle','formidable task','formidable opponent','formidable barrier'],
+    example:'Addressing climate change represents a <b>formidable</b> challenge that requires global cooperation.',
+    dont:'a very big challenge',
+    do:'a formidable challenge',
+    tip:'formidable 帶有「令人畏懼」的意味，非常適合學術/口說中描述重大挑戰'
+  },
+  {
+    word:'gruelling',lv:'C1',pron:'/ˈɡruːəlɪŋ/',
+    zh:'極度累人的、艱苦的（強調體力或精神上的消耗）',
+    scenes:['task','situation'],
+    cols:['gruelling schedule','gruelling race','gruelling training','gruelling process','gruelling hours'],
+    example:'After a <b>gruelling</b> 12-hour shift, the nurses could barely stand.',
+    dont:'a very tiring schedule',
+    do:'a gruelling schedule',
+    tip:'比 exhausting 更強，帶有「累到極限」的感覺，口說/寫作都很自然'
+  },
+  {
+    word:'strenuous',lv:'C1',pron:'/ˈstrenjuəs/',
+    zh:'費力的、需要大力氣的（強調體力投入）',
+    scenes:['task','writing'],
+    cols:['strenuous exercise','strenuous effort','strenuous activity','strenuous work','strenuous opposition'],
+    example:'Despite <b>strenuous</b> efforts by medical staff, the patient did not recover.',
+    dont:'a very hard workout',
+    do:'strenuous exercise / strenuous effort',
+    tip:'常用於體力活動，但「strenuous effort/opposition」在學術文章也很自然'
+  },
+  {
+    word:'dire',lv:'C1',pron:'/daɪə/',
+    zh:'嚴峻的、極其惡劣的（描述困境/後果）',
+    scenes:['situation','writing'],
+    cols:['dire consequences','dire situation','dire circumstances','dire need','dire warning'],
+    example:'The <b>dire</b> consequences of inaction on climate change are already becoming visible.',
+    dont:'very bad consequences',
+    do:'dire consequences',
+    tip:'dire 帶有「危急、災難性」的語氣，用於描述後果或處境極其嚴重時'
+  },
+  {
+    word:'precarious',lv:'C1',pron:'/prɪˈkeəriəs/',
+    zh:'岌岌可危的、不穩定的（強調隨時可能惡化）',
+    scenes:['situation','writing','speaking'],
+    cols:['precarious situation','precarious position','precarious balance','precarious existence','precarious state'],
+    example:'Many gig workers find themselves in a <b>precarious</b> financial situation with no job security.',
+    dont:'a very unstable situation',
+    do:'a precarious situation',
+    tip:'precarious 比 unstable 更強，暗示「快要崩潰」，口說中用來描述社會/個人困境非常有力'
+  },
+  {
+    word:'intricate',lv:'C1',pron:'/ˈɪntrɪkət/',
+    zh:'複雜精細的、錯綜複雜的（強調細節多、難以理解）',
+    scenes:['problem','writing'],
+    cols:['intricate process','intricate design','intricate network','intricate relationship','intricate system'],
+    example:'The <b>intricate</b> relationship between climate and biodiversity is still not fully understood.',
+    dont:'a very complex system',
+    do:'an intricate system / intricate network',
+    tip:'intricate 比 complex 更強調「精細、錯綜」，用於描述系統、關係、設計'
+  },
+  {
+    word:'convoluted',lv:'C1',pron:'/ˈkɒnvəluːtɪd/',
+    zh:'過於複雜的、迂迴繞遠的（帶有負面含義）',
+    scenes:['problem','writing'],
+    cols:['convoluted process','convoluted explanation','convoluted argument','convoluted system','convoluted logic'],
+    example:'The application process was so <b>convoluted</b> that many eligible candidates gave up.',
+    dont:'a very complicated process',
+    do:'a convoluted process',
+    tip:'convoluted 有「不必要地複雜」的負面語氣，暗示本可以更簡單但故意弄複雜'
+  },
+  {
+    word:'elusive',lv:'C1',pron:'/ɪˈluːsɪv/',
+    zh:'難以捉摸的、難以實現的（強調很難抓住或達到）',
+    scenes:['problem','writing','speaking'],
+    cols:['elusive goal','elusive solution','elusive answer','elusive peace','elusive concept'],
+    example:'Despite decades of research, a definitive cure for Alzheimer\'s remains <b>elusive</b>.',
+    dont:'a very hard goal to achieve',
+    do:'an elusive goal / the answer proved elusive',
+    tip:'elusive 帶有「抓不住、一直逃脫」的感覺，非常適合口說/寫作描述難以實現的目標'
+  },
+  {
+    word:'exacting',lv:'C1',pron:'/ɪɡˈzæktɪŋ/',
+    zh:'嚴格的、要求精確的（強調標準非常高）',
+    scenes:['task','person','writing'],
+    cols:['exacting standards','exacting work','exacting process','exacting boss','exacting criteria'],
+    example:'Becoming a surgeon requires meeting <b>exacting</b> standards of both knowledge and manual dexterity.',
+    dont:'very strict standards',
+    do:'exacting standards / exacting criteria',
+    tip:'exacting 比 strict 更強調「對細節/精確度要求極高」，常用於專業場景'
+  },
+  {
+    word:'stringent',lv:'C1',pron:'/ˈstrɪndʒənt/',
+    zh:'嚴格的、嚴厲的（規定/標準/要求）',
+    scenes:['task','situation','writing'],
+    cols:['stringent regulations','stringent requirements','stringent measures','stringent controls','stringent criteria'],
+    example:'The food industry is subject to <b>stringent</b> safety regulations to protect public health.',
+    dont:'very strict rules',
+    do:'stringent regulations / stringent requirements',
+    tip:'stringent 幾乎專門用於「規定/標準/法規」場景，是政策類寫作必備詞'
+  },
+  {
+    word:'daunting',lv:'C1',pron:'/ˈdɔːntɪŋ/',
+    zh:'令人生畏的、讓人覺得壓力很大的',
+    scenes:['task','situation','speaking'],
+    cols:['daunting task','daunting prospect','daunting challenge','daunting experience','daunting feat'],
+    example:'For many first-generation students, applying to elite universities can feel like a <b>daunting</b> prospect.',
+    dont:'a very scary challenge',
+    do:'a daunting challenge / a daunting prospect',
+    tip:'口說中最好用的詞之一！"It was daunting at first, but..." 這個句型非常自然，像母語者說話'
+  },
+  {
+    word:'taxing',lv:'C1',pron:'/ˈtæksɪŋ/',
+    zh:'費神的、費力的（強調精力上的消耗）',
+    scenes:['task','situation','speaking'],
+    cols:['mentally taxing','taxing work','emotionally taxing','physically taxing','taxing experience'],
+    example:'Working in a hospital emergency room is both physically and emotionally <b>taxing</b>.',
+    dont:'very tiring work',
+    do:'mentally taxing / emotionally taxing',
+    tip:'"mentally/emotionally/physically taxing" 三個搭配直接背起來，口說中說起來非常流暢'
+  },
+  {
+    word:'painstaking',lv:'C1',pron:'/ˈpeɪnzteɪkɪŋ/',
+    zh:'費盡心力的、一絲不苟的（強調細心和努力）',
+    scenes:['task','writing'],
+    cols:['painstaking research','painstaking process','painstaking attention','painstaking effort','painstaking work'],
+    example:'The restoration of the ancient manuscript required <b>painstaking</b> attention to detail.',
+    dont:'very careful work',
+    do:'painstaking research / painstaking effort',
+    tip:'painstaking 帶有正面語氣，強調「付出了大量細心的努力」，不是單純的「困難」'
+  },
+  {
+    word:'onerous',lv:'C2',pron:'/ˈɒnərəs/',
+    zh:'繁重的、麻煩的（強調負擔沉重）',
+    scenes:['task','situation','writing'],
+    cols:['onerous task','onerous regulations','onerous burden','onerous responsibility','onerous process'],
+    example:'Small businesses often struggle under the weight of <b>onerous</b> regulatory requirements.',
+    dont:'a very heavy burden',
+    do:'an onerous burden / onerous regulations',
+    tip:'onerous 帶有「令人苦惱的負擔」含義，常用於法規、責任、義務類文章'
+  },
+  {
+    word:'turbulent',lv:'C1',pron:'/ˈtɜːbjʊlənt/',
+    zh:'動盪的、混亂的（描述時期或局勢）',
+    scenes:['situation','writing','speaking'],
+    cols:['turbulent times','turbulent period','turbulent relationship','turbulent history','turbulent market'],
+    example:'The company managed to remain profitable even during the most <b>turbulent</b> periods of economic uncertainty.',
+    dont:'a very unstable time',
+    do:'turbulent times / a turbulent period',
+    tip:'口說中描述困難時期最高分的詞之一：「during that turbulent period of my life...」'
+  },
+  {
+    word:'relentless',lv:'C1',pron:'/rɪˈlentləs/',
+    zh:'不間斷的、持續的、毫不留情的',
+    scenes:['situation','writing','speaking'],
+    cols:['relentless pressure','relentless pursuit','relentless pace','relentless competition','relentless effort'],
+    example:'The <b>relentless</b> pressure of academic expectations can take a severe toll on students\' mental health.',
+    dont:'non-stop pressure',
+    do:'relentless pressure / relentless competition',
+    tip:'relentless 強調「不停歇、沒有緩解」，比 constant 或 continuous 更有力道'
+  },
+  {
+    word:'formidable',lv:'C1',pron:'/ˈfɔːmɪdəbl/',
+    zh:'強大的、令人畏懼的（形容人的能力）',
+    scenes:['person'],
+    cols:['formidable opponent','formidable presence','formidable intellect','formidable leader','formidable competitor'],
+    example:'She was a <b>formidable</b> debater who could dismantle any argument with precision and calm.',
+    dont:'a very strong opponent',
+    do:'a formidable opponent / a formidable presence',
+    tip:'形容人時 formidable 強調「令人敬畏的實力」，是很高的讚美'
+  },
+  {
+    word:'tenacious',lv:'C1',pron:'/tɪˈneɪʃəs/',
+    zh:'堅韌不拔的、頑強的（正面描述人）',
+    scenes:['person','speaking'],
+    cols:['tenacious spirit','tenacious effort','tenacious pursuit','remain tenacious','tenacious character'],
+    example:'Despite repeated setbacks, she remained <b>tenacious</b> in her pursuit of a medical degree.',
+    dont:'very determined',
+    do:'tenacious / remain tenacious in',
+    tip:'口說個人故事的神詞！「I had to be tenacious because...」比說 I worked very hard 高級很多'
+  },
+];
+
+let cur = 'all';
+
+function filter(scene, el){
+  cur = scene;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  render();
+}
+
+function render(){
+  const list = cur === 'all' ? words : words.filter(w => w.scenes.includes(cur));
+  // deduplicate by word
+  const seen = new Set();
+  const deduped = list.filter(w => {
+    if(seen.has(w.word+w.zh)) return false;
+    seen.add(w.word+w.zh); return true;
+  });
+  if(!deduped.length){
+    document.getElementById('grid').innerHTML = '<div class="empty">此分類暫無詞彙</div>';
+    return;
+  }
+  document.getElementById('grid').innerHTML = deduped.map(w => {
+    const lvClass = w.lv === 'C2' ? 'c2' : 'c1';
+    const sceneLabels = {task:'困難任務',situation:'艱難處境',problem:'複雜問題',person:'形容人',writing:'寫作',speaking:'口說'};
+    const sceneTags = w.scenes.map(s => `<span class="scene-tag">${sceneLabels[s]||s}</span>`).join(' ');
+    return `<div class="card">
+      <div class="card-top">
+        <span class="word">${w.word}</span>
+        <span class="lv ${lvClass}">${w.lv}</span>
+      </div>
+      <div class="pron">${w.pron}</div>
+      <div class="zh">${w.zh}</div>
+      <div style="margin-bottom:8px">${sceneTags}</div>
+      <div class="collocations">
+        <div class="col-label">常見搭配</div>
+        ${w.cols.map(c => `<span class="col-chip">${c}</span>`).join('')}
+      </div>
+      <div class="example">${w.example}</div>
+      <span class="dont">✗ ${w.dont}</span>
+      <span class="do">✓ ${w.do}</span>
+      ${w.tip ? `<div class="tip">💡 ${w.tip}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+render();
+</script>
+</body>
+</html>
