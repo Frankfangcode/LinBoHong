@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DET Drill — Frank</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #07070e;
+  --s1: #0d0d1a;
+  --s2: #131323;
+  --border: #1e1e35;
+  --a: #5b5ef4;
+  --a2: #8b5cf6;
+  --green: #22d3a0;
+  --gold: #f59e0b;
+  --red: #f43f5e;
+  --blue: #38bdf8;
+  --text: #f0f0fa;
+  --muted: #4a4a6a;
+  --dim: #2a2a45;
+  --mono: 'JetBrains Mono', monospace;
+  --display: 'Syne', sans-serif;
+  --body: 'DM Sans', sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+.nav {
+  display: flex;
+  gap: 8px;
+  padding: 16px 20px;
+  background: rgba(7,7,14,0.95);
+  backdrop-filter: blur(20px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--s1);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.nav-btn.active {
+  background: var(--a);
+  border-color: var(--a);
+  color: white;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; padding: 24px 20px; }
+.screen.active { display: block; }
+
+/* ── CARD DECK ── */
+.deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.deck-title {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.deck-progress {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.progress-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--a), var(--green));
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* Category selector */
+.cat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.cat-btn {
+  padding: 14px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--s1);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.cat-btn:hover { border-color: var(--a); background: rgba(91,94,244,0.1); }
+.cat-btn.selected { border-color: var(--a); background: rgba(91,94,244,0.15); color: var(--blue); }
+
+.cat-sub {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  font-family: var(--mono);
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+.start-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, var(--a), var(--a2));
+  color: white;
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 8px;
+}
+
+.start-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(91,94,244,0.4); }
+.start-btn:active { transform: translateY(0); }
+
+/* ── FLASHCARD ── */
+.card-wrap {
+  perspective: 1200px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  min-height: 240px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 20px;
+}
+
+.card.flipped { transform: rotateY(180deg); }
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  min-height: 240px;
+  backface-visibility: hidden;
+  border-radius: 20px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.card-front {
+  background: var(--s2);
+}
+
+.card-back {
+  background: linear-gradient(135deg, rgba(91,94,244,0.15), rgba(139,92,246,0.1));
+  border-color: rgba(91,94,244,0.3);
+  transform: rotateY(180deg);
+}
+
+.card-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.card-main {
+  font-family: var(--display);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.card-main.basic {
+  font-size: 32px;
+  color: var(--muted);
+}
+
+.card-main.advanced {
+  font-size: 28px;
+  color: var(--green);
+}
+
+.card-main.template {
+  font-size: 16px;
+  color: var(--text);
+  font-weight: 700;
+  font-family: var(--mono);
+  line-height: 1.6;
+}
+
+.card-example {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+  line-height: 1.5;
+  max-width: 90%;
+}
+
+.card-hint {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--dim);
+  margin-top: 20px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.card-alts {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.alt-chip {
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(91,94,244,0.15);
+  border: 1px solid rgba(91,94,244,0.25);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--blue);
+}
+
+.blank {
+  display: inline-block;
+  border-bottom: 2px solid var(--gold);
+  min-width: 120px;
+  color: var(--gold);
+}
+
+/* Action buttons */
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-forgot {
+  background: rgba(244,63,94,0.12);
+  border: 1px solid rgba(244,63,94,0.25);
+  color: var(--red);
+}
+
+.btn-forgot:hover { background: rgba(244,63,94,0.2); transform: scale(1.02); }
+
+.btn-got {
+  background: rgba(34,211,160,0.12);
+  border: 1px solid rgba(34,211,160,0.25);
+  color: var(--green);
+}
+
+.btn-got:hover { background: rgba(34,211,160,0.2); transform: scale(1.02); }
+
+/* Stats row */
+.stats-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.stat-box {
+  flex: 1;
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 3px;
+  font-family: var(--mono);
+}
+
+/* Completion screen */
+.complete-box {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.complete-emoji { font-size: 56px; margin-bottom: 16px; }
+
+.complete-title {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.complete-sub {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+
+.retry-btn {
+  padding: 14px 32px;
+  border-radius: 12px;
+  border: 1px solid var(--a);
+  background: rgba(91,94,244,0.15);
+  color: var(--blue);
+  font-family: var(--mono);
+  font-size: 13px;
+  cursor: pointer;
+  margin: 6px;
+  transition: all 0.2s;
+}
+
+.retry-btn:hover { background: rgba(91,94,244,0.25); }
+
+/* ── TEMPLATES SCREEN ── */
+.tmpl-type-select {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.tmpl-type-btn {
+  padding: 18px 20px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--s1);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+}
+
+.tmpl-type-btn:hover { border-color: var(--a); background: rgba(91,94,244,0.08); }
+
+.tmpl-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(91,94,244,0.2);
+  color: var(--blue);
+  letter-spacing: 1px;
+}
+
+/* Template card */
+.tmpl-card {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px 20px;
+  margin-bottom: 14px;
+}
+
+.tmpl-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.tmpl-name {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.tmpl-time {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  background: rgba(245,158,11,0.1);
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.tmpl-steps { list-style: none; }
+
+.tmpl-step {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 14px;
+  align-items: flex-start;
+}
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--a), var(--a2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-body { flex: 1; }
+
+.step-template {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--green);
+  line-height: 1.6;
+  background: rgba(34,211,160,0.06);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border-left: 2px solid var(--green);
+  margin-bottom: 4px;
+}
+
+.step-note {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.step-time-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--gold);
+  margin-top: 4px;
+  display: block;
+}
+
+.back-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.2s;
+}
+
+.back-btn:hover { border-color: var(--a); color: var(--text); }
+
+/* ── GRAMMAR SCREEN ── */
+.grammar-card {
+  background: var(--s2);
+  border: 1px solid rgba(244,63,94,0.2);
+  border-radius: 20px;
+  padding: 24px 20px;
+  margin-bottom: 14px;
+}
+
+.grammar-rule {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--red);
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+.grammar-wrong {
+  font-size: 18px;
+  color: var(--red);
+  text-decoration: line-through;
+  margin-bottom: 6px;
+  font-family: var(--mono);
+}
+
+.grammar-right {
+  font-size: 18px;
+  color: var(--green);
+  font-weight: 700;
+  font-family: var(--mono);
+  margin-bottom: 12px;
+}
+
+.grammar-why {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(34,211,160,0.05);
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+/* screen title */
+.screen-title {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.screen-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 22px;
+  font-family: var(--mono);
+}
+
+/* type label */
+.type-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--a);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="showScreen('vocab')">VOCAB<br>UPGRADE</button>
+  <button class="nav-btn" onclick="showScreen('templates')">TEMPLATES</button>
+  <button class="nav-btn" onclick="showScreen('grammar')">GRAMMAR</button>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 1: VOCAB FLASHCARDS
+═══════════════════════════════════════ -->
+<div class="screen active" id="screen-vocab">
+
+  <!-- Category select -->
+  <div id="vocab-select">
+    <div class="screen-title">Vocab Upgrade</div>
+    <div class="screen-sub">Basic → C1/C2. Tap to flip. Drill until 100%.</div>
+
+    <div class="cat-grid">
+      <button class="cat-btn selected" data-cat="all" onclick="selectCat(this,'all')">
+        All Words
+        <span class="cat-sub">63 CARDS</span>
+      </button>
+      <button class="cat-btn" data-cat="verbs" onclick="selectCat(this,'verbs')">
+        Action Verbs
+        <span class="cat-sub">16 CARDS</span>
+      </button>
+      <button class="cat-btn" data-cat="adj" onclick="selectCat(this,'adj')">
+        Adjectives
+        <span class="cat-sub">16 CARDS</span>
+      </button>
+      <button class="cat-btn" data-cat="connectors" onclick="selectCat(this,'connectors')">
+        Connectors
+        <span class="cat-sub">14 CARDS</span>
+      </button>
+      <button class="cat-btn" data-cat="opinion" onclick="selectCat(this,'opinion')">
+        Opinion Phrases
+        <span class="cat-sub">10 CARDS</span>
+      </button>
+      <button class="cat-btn" data-cat="nouns" onclick="selectCat(this,'nouns')">
+        Key Nouns
+        <span class="cat-sub">7 CARDS</span>
+      </button>
+    </div>
+    <button class="start-btn" onclick="startVocab()">START DRILL →</button>
+  </div>
+
+  <!-- Card drill -->
+  <div id="vocab-drill" style="display:none">
+    <div class="deck-header">
+      <div class="deck-title" id="drill-cat-label">All Words</div>
+      <div class="deck-progress" id="drill-progress">0 / 0</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num" id="stat-got" style="color:var(--green)">0</div>
+        <div class="stat-label">GOT IT</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-left" style="color:var(--gold)">—</div>
+        <div class="stat-label">LEFT</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-forgot" style="color:var(--red)">0</div>
+        <div class="stat-label">AGAIN</div>
+      </div>
+    </div>
+
+    <div class="card-wrap" onclick="flipCard()">
+      <div class="card" id="flashcard">
+        <div class="card-face card-front">
+          <div class="card-label">BASIC / B1</div>
+          <div class="card-main basic" id="card-basic">—</div>
+          <div class="card-hint">tap to reveal C1 upgrade ↓</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-label">C1 / C2 UPGRADE</div>
+          <div class="card-main advanced" id="card-c1">—</div>
+          <div class="card-alts" id="card-alts"></div>
+          <div class="card-example" id="card-example">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions" id="action-btns" style="display:none">
+      <button class="action-btn btn-forgot" onclick="markForgot()">✗ Again</button>
+      <button class="action-btn btn-got" onclick="markGot()">✓ Got it</button>
+    </div>
+
+    <div style="text-align:center;margin-top:10px">
+      <button class="back-btn" onclick="backToSelect()">← back to categories</button>
+    </div>
+  </div>
+
+  <!-- Complete -->
+  <div id="vocab-complete" style="display:none">
+    <div class="complete-box">
+      <div class="complete-emoji">🔥</div>
+      <div class="complete-title">Round Complete!</div>
+      <div class="complete-sub" id="complete-msg">You nailed it.</div>
+      <button class="retry-btn" onclick="retryForgotten()">Drill Forgotten Cards</button>
+      <button class="retry-btn" onclick="retryAll()">Restart All</button>
+      <button class="retry-btn" onclick="backToSelect()">Change Category</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 2: TEMPLATES
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-templates">
+  <div id="tmpl-list">
+    <div class="screen-title">Templates</div>
+    <div class="screen-sub">Every question type. Internalize the skeleton.</div>
+    <div class="tmpl-type-select">
+      <button class="tmpl-type-btn" onclick="showTemplate('is')">Interactive Speaking<span class="tmpl-badge">35 SEC</span></button>
+      <button class="tmpl-type-btn" onclick="showTemplate('iw')">Interactive Writing<span class="tmpl-badge">5+3 MIN</span></button>
+      <button class="tmpl-type-btn" onclick="showTemplate('sc')">Summarize the Conversation<span class="tmpl-badge">75 SEC</span></button>
+      <button class="tmpl-type-btn" onclick="showTemplate('rts')">Read, Then Speak<span class="tmpl-badge">90 SEC</span></button>
+      <button class="tmpl-type-btn" onclick="showTemplate('photo')">Speak/Write About the Photo<span class="tmpl-badge">90 SEC</span></button>
+      <button class="tmpl-type-btn" onclick="showTemplate('ws')">Writing Sample<span class="tmpl-badge">5 MIN</span></button>
+      <button class="tmpl-type-btn" onclick="showTemplate('ss')">Speaking Sample<span class="tmpl-badge">3 MIN</span></button>
+    </div>
+  </div>
+
+  <div id="tmpl-detail" style="display:none"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 3: GRAMMAR MINES
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-grammar">
+  <div class="screen-title">Grammar Mines ⚠️</div>
+  <div class="screen-sub">Your 5 highest-frequency errors.</div>
+
+  <div class="grammar-card">
+    <div class="grammar-rule">MINE #1 — PERFECT TENSE</div>
+    <div class="grammar-wrong">has went / have complete</div>
+    <div class="grammar-right">has gone / have completed</div>
+    <div class="grammar-why">
+      have / has / had → always followed by past participle (-ed or irregular).<br><br>
+      <span style="color:var(--green)">✓ This experience has <b>taught</b> me a great deal.</span><br>
+      <span style="color:var(--green)">✓ I have <b>developed</b> strong analytical skills.</span>
+    </div>
+  </div>
+
+  <div class="grammar-card">
+    <div class="grammar-rule">MINE #2 — THIRD PERSON -S</div>
+    <div class="grammar-wrong">he demonstrate / technology help</div>
+    <div class="grammar-right">he demonstrates / technology helps</div>
+    <div class="grammar-why">
+      He / She / It / Technology / This → verb must end in -s.<br><br>
+      <span style="color:var(--green)">✓ Technology <b>facilitates</b> collaboration.</span><br>
+      <span style="color:var(--green)">✓ This <b>demonstrates</b> the importance of preparation.</span>
+    </div>
+  </div>
+
+  <div class="grammar-card">
+    <div class="grammar-rule">MINE #3 — PREPOSITIONS</div>
+    <div class="grammar-wrong">adapt in / contribute for / rely to</div>
+    <div class="grammar-right">adapt to / contribute to / rely on</div>
+    <div class="grammar-why">
+      Fixed collocations — memorize the preposition:<br><br>
+      <span style="color:var(--green)">adapt <b>to</b> · contribute <b>to</b> · result <b>in</b></span><br>
+      <span style="color:var(--green)">rely <b>on</b> · participate <b>in</b> · benefit <b>from</b></span><br>
+      <span style="color:var(--green)">engage <b>with</b> · focus <b>on</b> · lead <b>to</b></span>
+    </div>
+  </div>
+
+  <div class="grammar-card">
+    <div class="grammar-rule">MINE #4 — DUE TO vs SINCE/BECAUSE</div>
+    <div class="grammar-wrong">due to I was tired</div>
+    <div class="grammar-right">since I was tired / due to fatigue</div>
+    <div class="grammar-why">
+      due to + NOUN PHRASE only.<br>
+      since / because + full clause (subject + verb).<br><br>
+      <span style="color:var(--green)">✓ Due to <b>time constraints</b>, I prioritized efficiency.</span><br>
+      <span style="color:var(--green)">✓ Since <b>I had limited time</b>, I prioritized efficiency.</span>
+    </div>
+  </div>
+
+  <div class="grammar-card">
+    <div class="grammar-rule">MINE #5 — PROGRESSIVE: BE VERB</div>
+    <div class="grammar-wrong">I working on / they developing</div>
+    <div class="grammar-right">I am working on / they are developing</div>
+    <div class="grammar-why">
+      Progressive = BE VERB + V-ing. Never drop the be verb.<br><br>
+      <span style="color:var(--green)">✓ I <b>am currently working</b> on a project.</span><br>
+      <span style="color:var(--green)">✓ Companies <b>are increasingly adopting</b> AI.</span>
+    </div>
+  </div>
+
+  <div style="background:rgba(91,94,244,0.06); border:1px solid rgba(91,94,244,0.2); border-radius:16px; padding:20px; margin-top:8px;">
+    <div class="grammar-rule">BONUS — HOWEVER PUNCTUATION</div>
+    <div class="grammar-wrong">I agree with X, however Y.</div>
+    <div class="grammar-right">I agree with X. However, Y. &nbsp;/&nbsp; X; however, Y.</div>
+    <div class="grammar-why" style="margin-top:12px">
+      however joins two sentences — needs a period or semicolon before it, comma after it.<br><br>
+      <span style="color:var(--green)">✓ Technology has clear benefits. <b>However,</b> it also poses risks.</span><br>
+      <span style="color:var(--green)">✓ Technology has clear benefits<b>; however,</b> it also poses risks.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DATA
+═══════════════════════════════════════ -->
+<script>
+// ─── VOCAB DATA ───────────────────────────────
+const VOCAB = [
+  // VERBS (16)
+  { cat:'verbs', basic:'show', c1:'demonstrate', alts:['illustrate','reveal','highlight'], ex:'This demonstrates the significance of early preparation.' },
+  { cat:'verbs', basic:'use', c1:'utilize', alts:['leverage','employ','harness'], ex:'Students can leverage technology to enhance their learning.' },
+  { cat:'verbs', basic:'help', c1:'facilitate', alts:['foster','bolster','enhance'], ex:'Collaboration facilitates deeper understanding.' },
+  { cat:'verbs', basic:'improve', c1:'enhance', alts:['refine','optimize','strengthen'], ex:'Regular practice significantly enhances fluency.' },
+  { cat:'verbs', basic:'hurt / make worse', c1:'undermine', alts:['exacerbate','erode','jeopardize'], ex:'Lack of sleep can severely undermine academic performance.' },
+  { cat:'verbs', basic:'make worse (problem)', c1:'exacerbate', alts:['aggravate','intensify'], ex:'Stress exacerbates the difficulty of timed tasks.' },
+  { cat:'verbs', basic:'change completely', c1:'transform', alts:['reshape','revolutionize','redefine'], ex:'Digital tools have transformed the way we communicate.' },
+  { cat:'verbs', basic:'keep', c1:'maintain', alts:['sustain','preserve','uphold'], ex:'It is essential to maintain a consistent study routine.' },
+  { cat:'verbs', basic:'build up', c1:'cultivate', alts:['nurture','develop','foster'], ex:'Universities cultivate critical thinking and creativity.' },
+  { cat:'verbs', basic:'get rid of', c1:'eradicate', alts:['eliminate','abolish','overcome'], ex:'Education can eradicate systemic inequality over time.' },
+  { cat:'verbs', basic:'make easier / reduce', c1:'mitigate', alts:['alleviate','lessen','curb'], ex:'Proactive planning can mitigate the risks of failure.' },
+  { cat:'verbs', basic:'grow fast', c1:'proliferate', alts:['surge','expand rapidly'], ex:'Social media platforms have proliferated in recent years.' },
+  { cat:'verbs', basic:'prove / confirm', c1:'substantiate', alts:['corroborate','validate','verify'], ex:'The data substantiates the argument for early intervention.' },
+  { cat:'verbs', basic:'look at carefully', c1:'scrutinize', alts:['examine','analyze','assess'], ex:'Employers scrutinize candidates\' communication skills.' },
+  { cat:'verbs', basic:'need', c1:'necessitate', alts:['require','demand','warrant'], ex:'This situation necessitates immediate action.' },
+  { cat:'verbs', basic:'support / confirm', c1:'reinforce', alts:['strengthen','consolidate'], ex:'This example reinforces the notion that practice is vital.' },
+
+  // ADJECTIVES (16)
+  { cat:'adj', basic:'important', c1:'crucial', alts:['paramount','pivotal','indispensable'], ex:'It is crucial to develop both technical and soft skills.' },
+  { cat:'adj', basic:'very convincing', c1:'compelling', alts:['persuasive','cogent'], ex:'She made a compelling argument for policy reform.' },
+  { cat:'adj', basic:'big / a lot', c1:'substantial', alts:['considerable','significant','notable'], ex:'There has been a substantial increase in remote work.' },
+  { cat:'adj', basic:'different / various', c1:'diverse', alts:['varied','multifaceted','heterogeneous'], ex:'A diverse workforce drives more creative solutions.' },
+  { cat:'adj', basic:'able to bounce back', c1:'resilient', alts:['adaptable','robust'], ex:'Resilient individuals tend to thrive in uncertain conditions.' },
+  { cat:'adj', basic:'very detailed', c1:'nuanced', alts:['sophisticated','complex'], ex:'The issue requires a nuanced understanding of cultural context.' },
+  { cat:'adj', basic:'completely new', c1:'unprecedented', alts:['unparalleled','novel'], ex:'The pandemic created unprecedented challenges for educators.' },
+  { cat:'adj', basic:'most important', c1:'paramount', alts:['foremost','primary','cardinal'], ex:'Student wellbeing should be of paramount importance.' },
+  { cat:'adj', basic:'covering everything', c1:'holistic', alts:['comprehensive','all-encompassing'], ex:'A holistic approach to education considers emotional growth.' },
+  { cat:'adj', basic:'key / turning point', c1:'pivotal', alts:['critical','decisive','defining'], ex:'This was a pivotal moment in my academic journey.' },
+  { cat:'adj', basic:'natural / built-in', c1:'intrinsic', alts:['inherent','innate'], ex:'Curiosity is intrinsic to the process of learning.' },
+  { cat:'adj', basic:'impossible', c1:'inconceivable', alts:['unfathomable','untenable'], ex:'It would be inconceivable to ignore this trend.' },
+  { cat:'adj', basic:'very detailed / exact', c1:'meticulous', alts:['rigorous','systematic'], ex:'Meticulous preparation is essential for high performance.' },
+  { cat:'adj', basic:'happening everywhere', c1:'pervasive', alts:['ubiquitous','prevalent','widespread'], ex:'Social media has become a pervasive force in modern life.' },
+  { cat:'adj', basic:'hard to find / catch', c1:'elusive', alts:['intangible','hard to define'], ex:'True work-life balance remains elusive for many professionals.' },
+  { cat:'adj', basic:'very busy / full', c1:'hectic', alts:['demanding','intense','fast-paced'], ex:'The hectic pace of university life requires strong time management.' },
+
+  // CONNECTORS (14)
+  { cat:'connectors', basic:'but', c1:'however', alts:['nonetheless','nevertheless','yet'], ex:'Technology offers many benefits. However, it also poses risks.' },
+  { cat:'connectors', basic:'also', c1:'furthermore', alts:['moreover','in addition','additionally'], ex:'Furthermore, this approach fosters independent thinking.' },
+  { cat:'connectors', basic:'because of this', c1:'consequently', alts:['as a result','therefore','thus'], ex:'Consequently, students who read widely tend to write better.' },
+  { cat:'connectors', basic:'even though', c1:'albeit', alts:['despite','notwithstanding'], ex:'The policy was implemented, albeit with significant resistance.' },
+  { cat:'connectors', basic:'to be fair', c1:'admittedly', alts:['granted','to be sure'], ex:'Admittedly, technology can be a distraction. However, the benefits outweigh the drawbacks.' },
+  { cat:'connectors', basic:'in the end', c1:'ultimately', alts:['in the final analysis','fundamentally'], ex:'Ultimately, the responsibility lies with the individual.' },
+  { cat:'connectors', basic:'especially', c1:'particularly', alts:['notably','in particular','especially'], ex:'This is particularly relevant in academic contexts.' },
+  { cat:'connectors', basic:'in conclusion', c1:'to summarize', alts:['in essence','to conclude'], ex:'To summarize, preparation and consistency are the key factors.' },
+  { cat:'connectors', basic:'for example', c1:'to illustrate', alts:['for instance','a case in point is'], ex:'To illustrate, consider the rapid growth of e-learning platforms.' },
+  { cat:'connectors', basic:'it shows that', c1:'this demonstrates that', alts:['this reinforces the notion that','this substantiates the claim that'], ex:'This demonstrates that early intervention yields the best outcomes.' },
+  { cat:'connectors', basic:'on the other hand', c1:'conversely', alts:['by contrast','on the contrary'], ex:'Conversely, those with poor time management often underperform.' },
+  { cat:'connectors', basic:'I agree that, but', c1:'while I acknowledge that...', alts:['although it is true that...'], ex:'While I acknowledge that cost is a factor, the long-term benefits are undeniable.' },
+  { cat:'connectors', basic:'because', c1:'given that', alts:['in light of the fact that','seeing as'], ex:'Given that resources are limited, prioritization is essential.' },
+  { cat:'connectors', basic:'which shows', c1:'thereby indicating', alts:['which reinforces','which underscores'], ex:'She scored top marks, thereby indicating exceptional preparation.' },
+
+  // OPINION (10)
+  { cat:'opinion', basic:'I think', c1:'I contend that', alts:['I argue that','I maintain that','I posit that'], ex:'I contend that university education develops more than just technical skills.' },
+  { cat:'opinion', basic:'I think (perception)', c1:'I perceive X as', alts:['I regard X as','I consider X to be'], ex:'I perceive this challenge as a pivotal opportunity for growth.' },
+  { cat:'opinion', basic:'It is clear that', c1:'It is undeniable that', alts:['It is evident that','It is widely acknowledged that'], ex:'It is undeniable that consistent practice leads to measurable improvement.' },
+  { cat:'opinion', basic:'Many people think', c1:'It is widely contended that', alts:['There is a prevailing view that','Proponents argue that'], ex:'It is widely contended that technology has transformed modern education.' },
+  { cat:'opinion', basic:'This is a problem', c1:'This poses a significant challenge', alts:['This presents a considerable drawback','This raises concerns about'], ex:'This poses a significant challenge for policymakers.' },
+  { cat:'opinion', basic:'I believe strongly', c1:'I firmly contend that', alts:['I am convinced that','I strongly maintain that'], ex:'I firmly contend that collaboration is superior to isolated study.' },
+  { cat:'opinion', basic:'This is interesting', c1:'This warrants careful consideration', alts:['This merits closer examination'], ex:'This perspective warrants careful consideration.' },
+  { cat:'opinion', basic:'Some people say', c1:'Proponents of this view argue that', alts:['Advocates contend that','Critics maintain that'], ex:'Proponents of this view argue that standardized testing is outdated.' },
+  { cat:'opinion', basic:'I disagree', c1:'I take issue with the notion that', alts:['I would challenge the assumption that'], ex:'I take issue with the notion that grades reflect true intelligence.' },
+  { cat:'opinion', basic:'In my experience', c1:'Drawing from personal experience,', alts:['Based on my own experience,','From my perspective,'], ex:'Drawing from personal experience, I can attest that perseverance is critical.' },
+
+  // NOUNS (7)
+  { cat:'nouns', basic:'problem', c1:'challenge', alts:['obstacle','impediment','predicament'], ex:'This presents a significant challenge for educational institutions.' },
+  { cat:'nouns', basic:'idea', c1:'notion', alts:['concept','perspective','paradigm'], ex:'This reinforces the notion that preparation is non-negotiable.' },
+  { cat:'nouns', basic:'result', c1:'outcome', alts:['consequence','implication','ramification'], ex:'The long-term outcomes of this policy remain uncertain.' },
+  { cat:'nouns', basic:'skill / ability', c1:'competency', alts:['proficiency','aptitude','capability'], ex:'Employers value both technical and interpersonal competencies.' },
+  { cat:'nouns', basic:'way / method', c1:'approach', alts:['strategy','methodology','framework'], ex:'A holistic approach yields the most sustainable results.' },
+  { cat:'nouns', basic:'place near here', c1:'vicinity', alts:['proximity','surroundings'], ex:'Several prestigious universities are located in the vicinity.' },
+  { cat:'nouns', basic:'the main point', c1:'crux', alts:['essence','core','fundamental issue'], ex:'The crux of the argument lies in the distribution of resources.' },
+];
+
+// ─── TEMPLATES DATA ────────────────────────────
+const TEMPLATES = {
+  is: {
+    name: 'Interactive Speaking',
+    time: '35 SEC / QUESTION',
+    color: '#5b5ef4',
+    steps: [
+      {
+        label: '① DIRECT ANSWER',
+        time: '~5 sec',
+        templates: [
+          'I believe that ___.',
+          'In my view, ___ is the most important factor.',
+          'I would say that ___.',
+        ],
+        note: 'First word out of your mouth. No "That\'s a great question." No filler.'
+      },
+      {
+        label: '② REASON + EXAMPLE',
+        time: '~20 sec',
+        templates: [
+          'This is primarily because ___. For instance, when I ___, I found that ___.',
+          'A compelling example would be ___. In my experience, ___.',
+          'One key reason is that ___. To illustrate, ___.',
+        ],
+        note: '1–2 reasons max. Plug in a story skeleton if possible.'
+      },
+      {
+        label: '③ IMPACT SENTENCE ⚠️',
+        time: '~10 sec',
+        templates: [
+          'This experience taught me that ___.',
+          'Ultimately, this shaped my understanding of ___.',
+          'As a result, I have come to believe that ___.',
+        ],
+        note: 'Your weakest link. Don\'t trail off — land the sentence.'
+      }
+    ]
+  },
+  iw: {
+    name: 'Interactive Writing',
+    time: 'PART 1: 5 MIN · PART 2: 3 MIN',
+    color: '#22d3a0',
+    steps: [
+      {
+        label: 'I — IDENTIFY (sentence 1)',
+        time: 'Part 1',
+        templates: [
+          'It is widely contended that ___.',
+          'There is considerable debate surrounding ___.',
+          'The question of ___ has become increasingly significant in recent years.',
+        ],
+        note: 'Paraphrase the prompt. Never copy it word for word.'
+      },
+      {
+        label: 'A — ANSWER / STANCE (sentence 2)',
+        time: 'Part 1',
+        templates: [
+          'I firmly contend that ___.',
+          'I maintain that ___, and this view is supported by several compelling reasons.',
+          'While I acknowledge ___, I ultimately argue that ___.',
+        ],
+        note: 'Make your position crystal clear in one sentence.'
+      },
+      {
+        label: 'S — SUPPORT (sentences 3–4)',
+        time: 'Part 1',
+        templates: [
+          'First and foremost, ___. This is particularly evident in ___.',
+          'A pivotal reason for this is that ___. To illustrate, ___.',
+          'Furthermore, ___. A compelling example of this is ___.',
+        ],
+        note: 'Give 2 supporting points. Each point = claim + mini-example.'
+      },
+      {
+        label: 'T — WRAP UP (sentence 5–6)',
+        time: 'Part 1',
+        templates: [
+          'To summarize, it is evident that ___.',
+          'Ultimately, the evidence suggests that ___.',
+          'Admittedly, ___. However, ___ remains the more compelling consideration.',
+        ],
+        note: 'Target 80–100 words total. Last 60 sec: check tense, -s, prepositions only.'
+      },
+      {
+        label: 'PART 2 — FOLLOW-UP (4 sentences)',
+        time: 'Part 2 · 3 min',
+        templates: [
+          'Building on my previous point, I would add that ___.',
+          'To elaborate further, ___ is particularly relevant because ___.',
+          'This is substantiated by the fact that ___. Consequently, ___.',
+          'In light of this, I maintain that ___ remains the most viable approach.',
+        ],
+        note: 'Target 50–60 words. Extend your Part 1 argument. Don\'t contradict yourself.'
+      }
+    ]
+  },
+  sc: {
+    name: 'Summarize the Conversation',
+    time: '75 SEC',
+    color: '#f59e0b',
+    steps: [
+      {
+        label: 'SENTENCE 1 — WHO + TOPIC',
+        time: '~20 sec',
+        templates: [
+          'I spoke with ___ regarding ___.',
+          'In this conversation, I discussed ___ with ___, who was seeking ___.',
+          'I had a conversation with ___ about ___, specifically concerning ___.',
+        ],
+        note: 'Who talked? About what? Don\'t delay — start writing immediately.'
+      },
+      {
+        label: 'SENTENCE 2 — KEY INFORMATION',
+        time: '~30 sec',
+        templates: [
+          'The central issue that emerged was ___, as ___ indicated that ___.',
+          'It became apparent that ___, which presented a challenge because ___.',
+          '___ explained that ___, highlighting the importance of ___.',
+        ],
+        note: 'The main problem, request, or piece of info from the conversation.'
+      },
+      {
+        label: 'SENTENCE 3 — OUTCOME',
+        time: '~25 sec',
+        templates: [
+          'Ultimately, it was decided that ___.',
+          'As a result, ___ agreed to ___ in order to ___.',
+          'The conversation concluded with ___ committing to ___.',
+        ],
+        note: 'What was resolved, decided, or agreed upon? End on the result.'
+      }
+    ]
+  },
+  rts: {
+    name: 'Read, Then Speak',
+    time: '20 SEC PREP · 90 SEC SPEAK',
+    color: '#38bdf8',
+    steps: [
+      {
+        label: 'T — TOPIC (paraphrase)',
+        time: '~15 sec',
+        templates: [
+          'The prompt raises the question of ___.',
+          'This topic invites us to consider ___.',
+          'The central issue here concerns ___.',
+        ],
+        note: 'Rephrase the prompt in your own words. Shows lexical range immediately.'
+      },
+      {
+        label: 'O — OPINION',
+        time: '~30 sec',
+        templates: [
+          'I firmly contend that ___, primarily because ___.',
+          'In my view, ___ is the more compelling position, given that ___.',
+          'I maintain that ___, and this is supported by two key reasons: ___ and ___.',
+        ],
+        note: 'Clear stance + 1–2 reasons. Be decisive.'
+      },
+      {
+        label: 'P — PERSONAL EXAMPLE',
+        time: '~45 sec',
+        templates: [
+          'Drawing from my own experience, I recall that ___. This taught me that ___.',
+          'A compelling example from my own life is when ___. As a result, ___. Ultimately, this experience reinforced the notion that ___.',
+          'To illustrate, when I ___, I discovered that ___. This experience shaped my perspective significantly.',
+        ],
+        note: 'Use a story skeleton. End with the IMPACT SENTENCE. Fill all 45 sec.'
+      }
+    ]
+  },
+  photo: {
+    name: 'Speak / Write About the Photo',
+    time: 'SPEAK: 90 SEC · WRITE: 60 SEC',
+    color: '#8b5cf6',
+    steps: [
+      {
+        label: 'OPENING LINE',
+        time: 'First 5 sec',
+        templates: [
+          'The image depicts a ___ scene in which ___.',
+          'This photograph portrays ___, suggesting ___.',
+          'The vivid image illustrates ___, capturing the essence of ___.',
+        ],
+        note: 'Use "depicts / portrays / illustrates" — all C1. Never "This picture shows..."'
+      },
+      {
+        label: 'WHAT — describe the action',
+        time: 'Seconds 5–30',
+        templates: [
+          'In the foreground, ___ appears to be ___.',
+          'Several ___ can be observed ___, suggesting ___.',
+          'The central figure is ___, who seems to be ___.',
+        ],
+        note: ''
+      },
+      {
+        label: 'WHERE + WHEN',
+        time: 'Seconds 30–50',
+        templates: [
+          'The setting appears to be ___, indicated by ___.',
+          'Based on the ___, this scene likely takes place ___.',
+          'The environment suggests ___, with ___ visible in the background.',
+        ],
+        note: ''
+      },
+      {
+        label: 'WHY — speculate',
+        time: 'Seconds 50–75',
+        templates: [
+          'They appear to be ___, possibly because ___.',
+          'The expressions on their faces suggest that ___.',
+          'One can infer that ___, given that ___.',
+        ],
+        note: 'Use hedging: "appears to," "seems to," "one might infer that."'
+      },
+      {
+        label: '🆘 RESCUE — if you run out',
+        time: 'Anytime',
+        templates: [
+          'This scene reminds me of a time when I ___. Specifically, ___.',
+          'Images like this evoke a sense of ___, which is relevant because ___.',
+        ],
+        note: 'Pivot to personal connection. Buys 20–30 extra seconds.'
+      }
+    ]
+  },
+  ws: {
+    name: 'Writing Sample',
+    time: '30 SEC PREP · 5 MIN WRITE',
+    color: '#22d3a0',
+    steps: [
+      {
+        label: 'SENTENCE 1 — Paraphrase + Context',
+        time: '',
+        templates: [
+          'The question of ___ has become increasingly pertinent in contemporary society.',
+          'It is widely contended that ___; however, this view merits closer examination.',
+          'In an era defined by ___, the issue of ___ has garnered considerable attention.',
+        ],
+        note: 'Set the stage. Paraphrase prompt — never copy it.'
+      },
+      {
+        label: 'SENTENCE 2 — Your Thesis',
+        time: '',
+        templates: [
+          'I firmly contend that ___, as this approach yields the most sustainable outcomes.',
+          'While I acknowledge that ___, I maintain that ___ remains the more compelling position.',
+          'I argue that ___, supported by both empirical evidence and personal experience.',
+        ],
+        note: 'One clear position. Don\'t hedge too much.'
+      },
+      {
+        label: 'SENTENCES 3–5 — Two Arguments',
+        time: '',
+        templates: [
+          'First and foremost, ___. This is substantiated by ___. To illustrate, ___.',
+          'Furthermore, ___. A pivotal example is when ___. This demonstrates that ___.',
+          'Admittedly, ___. However, ___, which ultimately outweighs the drawback.',
+        ],
+        note: 'Argument 1 + mini-example → Argument 2 + mini-example. Aim for 3 sentences here.'
+      },
+      {
+        label: 'SENTENCE 6 — Conclusion',
+        time: '',
+        templates: [
+          'To summarize, it is evident that ___ represents the most viable path forward.',
+          'Ultimately, the evidence compellingly suggests that ___ yields superior outcomes.',
+          'In light of the foregoing, I maintain that ___ is both necessary and beneficial.',
+        ],
+        note: '"To summarize" = C1. Don\'t introduce new ideas. Elevate, don\'t repeat.'
+      }
+    ]
+  },
+  ss: {
+    name: 'Speaking Sample',
+    time: '30 SEC PREP · 3 MIN SPEAK',
+    color: '#f43f5e',
+    steps: [
+      {
+        label: 'OPENING — Restate + Stance',
+        time: '~20 sec',
+        templates: [
+          'The topic of ___ is one I feel strongly about. I contend that ___.',
+          'This is a question I have reflected on considerably. In my view, ___.',
+          'When considering ___, I am reminded of my own experience with ___.',
+        ],
+        note: 'Don\'t waste the first 20 seconds on filler. State your position early.'
+      },
+      {
+        label: 'BODY — Argument + Story',
+        time: '~100 sec',
+        templates: [
+          'One pivotal reason is ___. To illustrate, I recall when I ___. This experience demonstrated that ___.',
+          'Furthermore, ___. A compelling case is ___. Consequently, ___. This reinforces the notion that ___.',
+          'Drawing from personal experience, I found that ___. Specifically, ___. As a result, I came to realize that ___.',
+        ],
+        note: 'Use 1–2 story skeletons. Always land the IMPACT sentence at the end of each story.'
+      },
+      {
+        label: 'CONCLUSION',
+        time: '~20 sec',
+        templates: [
+          'To summarize, I firmly believe that ___, as evidenced by ___ and ___.',
+          'Ultimately, my experiences have reinforced the notion that ___ is paramount.',
+          'In essence, ___ is not merely a preference — it is a necessity.',
+        ],
+        note: 'Natural finish — don\'t just stop mid-sentence. Wrap up deliberately.'
+      }
+    ]
+  }
+};
+
+// ─── STATE ────────────────────────────────────
+let currentDeck = [];
+let forgottenDeck = [];
+let deckIndex = 0;
+let gotCount = 0;
+let forgotCount = 0;
+let flipped = false;
+let selectedCat = 'all';
+
+// ─── NAV ──────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ─── VOCAB ────────────────────────────────────
+function selectCat(btn, cat) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedCat = cat;
+}
+
+function startVocab() {
+  const pool = selectedCat === 'all' ? VOCAB : VOCAB.filter(v => v.cat === selectedCat);
+  currentDeck = shuffle([...pool]);
+  forgottenDeck = [];
+  deckIndex = 0;
+  gotCount = 0;
+  forgotCount = 0;
+  document.getElementById('vocab-select').style.display = 'none';
+  document.getElementById('vocab-complete').style.display = 'none';
+  document.getElementById('vocab-drill').style.display = 'block';
+  document.getElementById('drill-cat-label').textContent = selectedCat === 'all' ? 'All Words' :
+    selectedCat.charAt(0).toUpperCase() + selectedCat.slice(1);
+  showCard();
+}
+
+function showCard() {
+  if (deckIndex >= currentDeck.length) { showComplete(); return; }
+  const card = currentDeck[deckIndex];
+  flipped = false;
+  document.getElementById('flashcard').classList.remove('flipped');
+  document.getElementById('action-btns').style.display = 'none';
+  document.getElementById('card-basic').textContent = card.basic;
+  document.getElementById('card-c1').textContent = card.c1;
+  document.getElementById('card-example').textContent = '"' + card.ex + '"';
+  const altsEl = document.getElementById('card-alts');
+  altsEl.innerHTML = card.alts.map(a => `<span class="alt-chip">${a}</span>`).join('');
+  updateStats();
+}
+
+function flipCard() {
+  if (flipped) return;
+  flipped = true;
+  document.getElementById('flashcard').classList.add('flipped');
+  setTimeout(() => { document.getElementById('action-btns').style.display = 'flex'; }, 300);
+}
+
+function markGot() {
+  gotCount++;
+  deckIndex++;
+  showCard();
+}
+
+function markForgot() {
+  forgotCount++;
+  forgottenDeck.push(currentDeck[deckIndex]);
+  deckIndex++;
+  showCard();
+}
+
+function updateStats() {
+  const total = currentDeck.length;
+  const done = deckIndex;
+  const pct = total ? (done / total * 100) : 0;
+  document.getElementById('drill-progress').textContent = done + ' / ' + total;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('stat-got').textContent = gotCount;
+  document.getElementById('stat-left').textContent = total - done;
+  document.getElementById('stat-forgot').textContent = forgotCount;
+}
+
+function showComplete() {
+  document.getElementById('vocab-drill').style.display = 'none';
+  document.getElementById('vocab-complete').style.display = 'block';
+  const pct = Math.round(gotCount / (gotCount + forgotCount) * 100) || 0;
+  const msgs = pct === 100 ? '100%. Perfect. You\'re ready.' :
+    pct >= 80 ? pct + '% correct. Drill the rest until 100%.' :
+    pct >= 60 ? pct + '% — keep drilling.' : pct + '% — grind again.';
+  document.getElementById('complete-msg').textContent = msgs;
+}
+
+function retryForgotten() {
+  if (!forgottenDeck.length) { retryAll(); return; }
+  currentDeck = shuffle([...forgottenDeck]);
+  forgottenDeck = [];
+  deckIndex = 0;
+  gotCount = 0;
+  forgotCount = 0;
+  document.getElementById('vocab-complete').style.display = 'none';
+  document.getElementById('vocab-drill').style.display = 'block';
+  showCard();
+}
+
+function retryAll() {
+  document.getElementById('vocab-complete').style.display = 'none';
+  startVocab();
+}
+
+function backToSelect() {
+  document.getElementById('vocab-drill').style.display = 'none';
+  document.getElementById('vocab-complete').style.display = 'none';
+  document.getElementById('vocab-select').style.display = 'block';
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ─── TEMPLATES ────────────────────────────────
+function showTemplate(key) {
+  const t = TEMPLATES[key];
+  const accentHex = t.color;
+  let html = `<button class="back-btn" onclick="backToTemplateList()">← all templates</button>`;
+  html += `<div class="type-label">${t.name}</div>`;
+  html += `<div class="deck-title" style="margin-bottom:6px">${t.name}</div>`;
+  html += `<div style="font-family:var(--mono);font-size:10px;color:var(--gold);margin-bottom:20px">${t.time}</div>`;
+
+  t.steps.forEach((step, i) => {
+    html += `<div class="tmpl-card" style="border-color:rgba(${hexToRgb(accentHex)},0.25)">`;
+    html += `<div style="font-family:var(--mono);font-size:10px;color:${accentHex};letter-spacing:2px;margin-bottom:14px">${step.label}${step.time ? ' · ' + step.time : ''}</div>`;
+    step.templates.forEach(tmpl => {
+      html += `<div class="step-template">${tmpl.replace(/___/g, '<span class="blank">___</span>')}</div>`;
+    });
+    if (step.note) {
+      html += `<div class="step-note" style="margin-top:10px">💡 ${step.note}</div>`;
+    }
+    html += `</div>`;
+  });
+
+  document.getElementById('tmpl-list').style.display = 'none';
+  const detail = document.getElementById('tmpl-detail');
+  detail.innerHTML = html;
+  detail.style.display = 'block';
+}
+
+function backToTemplateList() {
+  document.getElementById('tmpl-detail').style.display = 'none';
+  document.getElementById('tmpl-list').style.display = 'block';
+}
+
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `${r},${g},${b}`;
+}
+</script>
+</body>
+</html>
