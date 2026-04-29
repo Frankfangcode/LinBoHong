@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Story Vault — 個人作文素材庫</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --ink: #1a1814;
+    --ink2: #5a5650;
+    --ink3: #9a968f;
+    --accent: #c8432a;
+    --accent2: #2a6ec8;
+    --green: #2e7d5e;
+    --amber: #c87b2a;
+    --rule: #e8e4dc;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ─── HEADER ─── */
+  .site-header {
+    background: var(--ink);
+    color: #f7f5f0;
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(255,255,255,.03) 60px,
+      rgba(255,255,255,.03) 61px
+    );
+    pointer-events: none;
+  }
+  .header-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .75rem;
+  }
+  .header-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: 1.15;
+    margin-bottom: .6rem;
+  }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(247,245,240,.55);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* ─── NAV TABS ─── */
+  .nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: var(--ink);
+    padding: 0 2rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .nav-tab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(247,245,240,.45);
+    padding: .6rem 1.4rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    transition: all .2s;
+  }
+  .nav-tab:hover { color: rgba(247,245,240,.75); }
+  .nav-tab.active { color: #f7f5f0; border-bottom-color: var(--accent); }
+
+  /* ─── MAIN LAYOUT ─── */
+  .main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ─── STORY SECTION ─── */
+  .story-section {
+    margin-bottom: 3.5rem;
+  }
+  .story-label {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: 1.25rem;
+  }
+  .story-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .15em;
+    background: var(--ink);
+    color: #f7f5f0;
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+  .story-type {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    color: var(--ink3);
+  }
+  .story-heading {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 1.5rem;
+    color: var(--ink);
+  }
+
+  /* ─── ORIGINAL + MARKUP ─── */
+  .markup-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 1rem;
+  }
+  .card-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 1rem;
+    padding-bottom: .6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .markup-text {
+    font-size: 14.5px;
+    line-height: 2;
+    color: var(--ink);
+  }
+  .err {
+    background: #fde8e5;
+    color: #8b1c0c;
+    text-decoration: line-through;
+    text-decoration-color: #c8432a;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: 13.5px;
+  }
+  .fix {
+    background: #e6f4ee;
+    color: #1a5c3f;
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-weight: 500;
+    font-size: 13.5px;
+    margin-left: 2px;
+  }
+  .note-tag {
+    display: inline-block;
+    background: #fff8ec;
+    color: #7a4e10;
+    border: 1px solid #f5d9a0;
+    font-size: 10.5px;
+    font-family: var(--mono);
+    padding: 1px 7px;
+    border-radius: 20px;
+    margin-left: 3px;
+    vertical-align: middle;
+    line-height: 1.6;
+    cursor: help;
+  }
+
+  /* ─── ERROR SUMMARY ─── */
+  .errors-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+    margin-top: 1rem;
+  }
+  @media(max-width:600px) { .errors-grid { grid-template-columns: 1fr; } }
+  .error-chip {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: .75rem 1rem;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .error-chip strong {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .35rem;
+    font-weight: 500;
+  }
+
+  /* ─── SCAR FRAMEWORK ─── */
+  .scar-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .6rem;
+    margin-top: 1rem;
+  }
+  @media(max-width:560px) { .scar-row { grid-template-columns: 1fr 1fr; } }
+  .scar-cell {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--ink);
+    border-radius: 4px;
+    padding: .9rem 1rem;
+  }
+  .scar-cell.s { border-top-color: var(--accent2); }
+  .scar-cell.c { border-top-color: var(--accent); }
+  .scar-cell.a { border-top-color: var(--green); }
+  .scar-cell.r { border-top-color: var(--amber); }
+  .scar-letter {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: .3rem;
+  }
+  .scar-cell.s .scar-letter { color: var(--accent2); }
+  .scar-cell.c .scar-letter { color: var(--accent); }
+  .scar-cell.a .scar-letter { color: var(--green); }
+  .scar-cell.r .scar-letter { color: var(--amber); }
+  .scar-name {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: .5rem;
+  }
+  .scar-desc { font-size: 12.5px; color: var(--ink2); line-height: 1.5; }
+
+  /* ─── APPLY TOPICS ─── */
+  .apply-box {
+    background: var(--ink);
+    color: #f7f5f0;
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin-top: .75rem;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .apply-box strong {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: .5rem;
+    font-weight: 500;
+  }
+  .topic-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem .75rem;
+  }
+  .topic-list li::before { content: '→ '; color: var(--accent); font-family: var(--mono); }
+
+  /* ─── POLISHED VERSION ─── */
+  .polished-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  .polished-header {
+    background: var(--ink);
+    color: #f7f5f0;
+    padding: .75rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .polished-header span:last-child { color: rgba(247,245,240,.45); }
+  .polished-body {
+    padding: 1.75rem 2rem;
+    font-size: 15px;
+    line-height: 2.1;
+    color: var(--ink);
+  }
+  .hl-vocab {
+    background: #eeedf8;
+    color: #3a308c;
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  .hl-struct {
+    border-bottom: 2px solid var(--green);
+    padding-bottom: 1px;
+    color: var(--ink);
+  }
+
+  .legend-row {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: 12px;
+    color: var(--ink2);
+  }
+  .legend-swatch {
+    width: 28px;
+    height: 14px;
+    border-radius: 2px;
+  }
+  .swatch-vocab { background: #eeedf8; border: 1px solid #c9c7f0; }
+  .swatch-struct { border-bottom: 2px solid var(--green); background: transparent; height: 16px; width: 28px; }
+
+  /* ─── VOCAB TABLE ─── */
+  .vocab-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  .vocab-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .vocab-table thead {
+    background: #f2f0ea;
+  }
+  .vocab-table th {
+    text-align: left;
+    padding: .7rem 1rem;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 400;
+    border-bottom: 1px solid var(--rule);
+  }
+  .vocab-table td {
+    padding: .7rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .vocab-table tr:last-child td { border-bottom: none; }
+  .vocab-table tr:hover td { background: #faf9f6; }
+  .c1-word {
+    font-weight: 500;
+    color: #3a308c;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .orig-word {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink3);
+    text-decoration: line-through;
+  }
+  .usage-note { color: var(--ink2); font-size: 13px; }
+
+  /* ─── DIVIDER ─── */
+  .story-divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 3rem 0;
+    position: relative;
+  }
+  .story-divider::after {
+    content: '✦';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg);
+    padding: 0 .75rem;
+    color: var(--ink3);
+    font-size: 12px;
+  }
+
+  /* ─── VIEW INTRO ─── */
+  .view-intro {
+    text-align: center;
+    padding: 2rem 0 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .view-intro h2 {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: .4rem;
+  }
+  .view-intro p { font-size: 13.5px; color: var(--ink3); }
+
+  /* ─── MEMORY TIPS ─── */
+  .memory-section { margin-top: 3rem; }
+  .memory-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+  @media(max-width:560px){ .memory-grid{ grid-template-columns:1fr; } }
+  .memory-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 1.25rem;
+  }
+  .memory-card h4 {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .6rem;
+    font-weight: 500;
+  }
+  .memory-card p { font-size: 13.5px; color: var(--ink2); line-height: 1.6; }
+
+  /* ─── FOOTER ─── */
+  .site-footer {
+    text-align: center;
+    padding: 2rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    color: var(--ink3);
+    border-top: 1px solid var(--rule);
+    background: var(--surface);
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <p class="header-eyebrow">模組 3 — 個人作文素材庫</p>
+  <h1 class="header-title">Story Vault</h1>
+  <p class="header-sub">批改 · 精煉 · 背誦 · 套用任何題目</p>
+</header>
+
+<nav class="nav-tabs">
+  <button class="nav-tab active" onclick="switchView('markup')">📝 批改版</button>
+  <button class="nav-tab" onclick="switchView('polished')">✨ 精煉版</button>
+  <button class="nav-tab" onclick="switchView('vocab')">📚 C1 詞彙表</button>
+  <button class="nav-tab" onclick="switchView('scar')">🗂 SCAR 架構</button>
+</nav>
+
+<main class="main">
+
+  <!-- ═══════════════ MARKUP VIEW ═══════════════ -->
+  <div class="view active" id="view-markup">
+    <div class="view-intro">
+      <h2>老師批改</h2>
+      <p>紅色刪除線為原文錯誤，綠色為修正，橘色標籤為文法說明</p>
+    </div>
+
+    <!-- Story 1 -->
+    <div class="story-section">
+      <div class="story-label">
+        <span class="story-num">STORY 01</span>
+        <span class="story-type">Challenge Story</span>
+      </div>
+      <h2 class="story-heading">Basketball — 挑戰故事</h2>
+
+      <div class="markup-card">
+        <div class="card-eyebrow">原文 + 修改標記</div>
+        <p class="markup-text">
+          When I first started <span class="err">playing basketball shooting</span><span class="fix">practicing basketball shooting</span> <span class="note-tag" title="play → practice，shooting 是練習動作，不是比賽">動詞用法</span>, I honestly had no idea what I was doing. My shots were always too short or too <span class="err">strong</span><span class="fix">forceful</span> <span class="note-tag" title="strong 形容人的力量；forceful 形容動作的力道">詞義辨析</span>, and sometimes the ball <span class="err">even didn't touch</span><span class="fix">didn't even touch</span> <span class="note-tag" title="副詞 even 應放在 didn't 之後，動詞之前">副詞位置</span> the rim. Watching my friends shoot so easily made me feel frustrated, and I wondered if I <span class="err">just want to do like him</span><span class="fix">could ever shoot like them</span> <span class="note-tag" title="時態錯(want→could)；friends 是複數(him→them)；句意不清需重構">3 處錯誤</span>. But I <span class="err">don't</span><span class="fix">didn't</span> <span class="note-tag" title="全篇是過去式敘述，don't 應改為 didn't">時態一致</span> want to give up. Every day after school, I stayed on the court and practiced the same motion again and again. My arms were tired, and I kept missing. Still, I told myself that progress takes time. Slowly, things began to change. I learned how to aim better, how to follow through, and how to control my strength. One afternoon, I finally made five shots in a row. It wasn't a big moment for <span class="err">who</span><span class="fix">anyone else</span> <span class="note-tag" title="介系詞 for 後不接 who；應用 anyone else 或 others">介詞搭配</span>, only for me. I realized that becoming good at something starts with believing you can.
+        </p>
+      </div>
+
+      <div class="errors-grid">
+        <div class="error-chip">
+          <strong>主要文法問題 — 5 處</strong>
+          副詞 even 位置錯誤 · 時態混用 don't→didn't · 主代詞一致 him→them · 句意模糊重構 · 介詞搭配 for who→for anyone else
+        </div>
+        <div class="error-chip">
+          <strong>詞彙升級建議</strong>
+          strong → forceful / keep missing → fall short repeatedly / control → regulate / big moment → monumental
+        </div>
+      </div>
+    </div>
+
+    <hr class="story-divider">
+
+    <!-- Story 2 -->
+    <div class="story-section">
+      <div class="story-label">
+        <span class="story-num">STORY 02</span>
+        <span class="story-type">Passion Story</span>
+      </div>
+      <h2 class="story-heading">Yuqi Fan — 熱情故事</h2>
+
+      <div class="markup-card">
+        <div class="card-eyebrow">原文 + 修改標記</div>
+        <p class="markup-text">
+          Being a fan of Yuqi has become one of the things <span class="err">the most happiness</span><span class="fix">that brings the most happiness</span> <span class="note-tag" title="缺少關係子句 that brings；名詞短語結構不完整">關係子句</span> to my life. I didn't expect that following an idol could inspire me so much, but she did. Every time I watch her performances, I feel her confidence, energy, and <span class="err">powerful</span><span class="fix">power</span> <span class="note-tag" title="並列結構需詞性一致：confidence(n.) energy(n.) power(n.)，不可用形容詞">並列詞性</span>. Her smile and personality make me feel warm, like she is someone <span class="err">that who</span><span class="fix">who</span> <span class="note-tag" title="that 和 who 不能同時使用，選一即可">關係代詞重複</span> never <span class="err">give up</span><span class="fix">gives up</span> <span class="note-tag" title="先行詞 someone 是第三人稱單數，動詞需加 -s">主謂一致</span> her dream. I love <span class="err">her work hard on every stage</span><span class="fix">watching her work hard on every stage</span> <span class="note-tag" title="love + V-ing；需加 watching 使受詞完整">動名詞用法</span>. When I watch her <span class="err">video</span><span class="fix">videos</span> <span class="note-tag" title="她有很多影片，應用複數">複數形式</span> on YouTube, I feel happy, <span class="err">just I am right there</span><span class="fix">as if I were right there with her</span> <span class="note-tag" title="假設語氣：as if + 過去式 were，表示想像中的情境">假設語氣</span>. Being her fan also gives me a way to relax and feel joy. Whether I'm watching variety shows, listening to her voice, or cheering for her achievements, she is <span class="err">my spirit holding in my daily life</span><span class="fix">the force that sustains my spirit in daily life</span> <span class="note-tag" title="原句語意不清，holding 使用不當，需完整重構">句意重構</span>. That's why following Yuqi isn't just a hobby — it's something that keeps my heart moving forward.
+        </p>
+      </div>
+
+      <div class="errors-grid">
+        <div class="error-chip">
+          <strong>主要文法問題 — 6 處</strong>
+          關係子句缺失 · 並列詞性不一致 · 關係代詞重複 · 主謂一致 · 動名詞用法 · 假設語氣 as if + were
+        </div>
+        <div class="error-chip">
+          <strong>內容建議</strong>
+          加入一個「具體場景」：某場演出的某個動作讓你印象深刻 → 讓故事更可信、更有說服力，避免空洞的情感宣言。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ POLISHED VIEW ═══════════════ -->
+  <div class="view" id="view-polished">
+    <div class="view-intro">
+      <h2>精煉版</h2>
+      <p>可直接背誦套用任何作文題型 — 紫底為 C1 詞彙，綠底線為高級句型</p>
+    </div>
+
+    <div class="legend-row">
+      <div class="legend-item">
+        <div class="legend-swatch swatch-vocab"></div>
+        <span>C1 升級詞彙</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch swatch-struct"></div>
+        <span>高級句型結構</span>
+      </div>
+    </div>
+
+    <!-- Polished Story 1 -->
+    <div class="story-section">
+      <div class="story-label">
+        <span class="story-num">STORY 01</span>
+        <span class="story-type">Challenge Story — Basketball</span>
+      </div>
+      <div class="polished-card">
+        <div class="polished-header">
+          <span>精煉版 · 可背誦</span>
+          <span>~140 words</span>
+        </div>
+        <div class="polished-body">
+          When I first began <span class="hl-vocab">pursuing</span> basketball shooting, I was <span class="hl-vocab">utterly</span> clueless. My shots consistently fell short or flew too <span class="hl-vocab">forcefully</span>, and there were moments when the ball didn't even graze the rim. <span class="hl-struct">Watching my friends sink shot after shot with ease</span>, I found myself questioning whether I would ever reach their level. Yet I <span class="hl-vocab">refused to surrender</span>. Every day after school, I <span class="hl-vocab">remained on the court</span>, repeating the same motion with <span class="hl-vocab">relentless</span> determination — even when my arms ached and every attempt ended in failure. <span class="hl-struct">Gradually, however, something shifted.</span> I learned to align my aim, follow through consistently, and <span class="hl-vocab">regulate</span> the force behind each shot. One afternoon, I sank five consecutive shots — a moment that meant nothing to anyone passing by, yet felt <span class="hl-vocab">monumental</span> to me. It was then that I understood: <span class="hl-struct">mastery begins not with talent, but with the quiet belief that improvement is possible.</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="story-divider">
+
+    <!-- Polished Story 2 -->
+    <div class="story-section">
+      <div class="story-label">
+        <span class="story-num">STORY 02</span>
+        <span class="story-type">Passion Story — Yuqi</span>
+      </div>
+      <div class="polished-card">
+        <div class="polished-header">
+          <span>精煉版 · 可背誦</span>
+          <span>~145 words</span>
+        </div>
+        <div class="polished-body">
+          Being a fan of Yuqi has become one of the most <span class="hl-vocab">profoundly</span> meaningful parts of my life — something I never anticipated when I first discovered her music. <span class="hl-struct">What strikes me most about her is not merely her talent, but her relentless work ethic.</span> Every time I watch her perform, I am <span class="hl-vocab">struck by</span> the way she channels confidence, energy, and raw power into every movement. I remember watching a live clip where she repeated a choreography section dozens of times — <span class="hl-vocab">utterly undeterred</span> by exhaustion — and thinking: <em>that</em> is the kind of person I want to become. When I watch her videos on YouTube, I feel <span class="hl-vocab">entirely immersed</span>, as if I were standing in the audience myself. <span class="hl-struct">Whether I am catching up on variety shows, listening to her discography, or reading about her dedication,</span> she serves as a <span class="hl-vocab">constant source of motivation</span> that <span class="hl-vocab">sustains</span> me through difficult days. Following Yuqi is not merely a hobby — it is a <span class="hl-vocab">testament</span> to how the right role model can quietly <span class="hl-vocab">reshape</span> the way you see yourself.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ VOCAB VIEW ═══════════════ -->
+  <div class="view" id="view-vocab">
+    <div class="view-intro">
+      <h2>C1 詞彙升級表</h2>
+      <p>記住這些詞彙，讓你的作文從 B2 跳到 C1</p>
+    </div>
+
+    <!-- Story 1 vocab -->
+    <div class="story-section">
+      <div class="story-label">
+        <span class="story-num">STORY 01</span>
+        <span class="story-type">Challenge Story</span>
+      </div>
+      <div class="vocab-card">
+        <table class="vocab-table">
+          <thead>
+            <tr>
+              <th>原文 (B2)</th>
+              <th>升級 C1</th>
+              <th>用法說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="orig-word">strong</span></td>
+              <td><span class="c1-word">forceful</span></td>
+              <td class="usage-note">描述動作力道，不用於形容人的力量</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">didn't give up</span></td>
+              <td><span class="c1-word">refused to surrender</span></td>
+              <td class="usage-note">動詞短語升級，語氣主動且堅定</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">very tired</span></td>
+              <td><span class="c1-word">utterly drained / exhausted</span></td>
+              <td class="usage-note">utterly 比 very 更書面，C1 強化副詞</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">things began to change</span></td>
+              <td><span class="c1-word">something shifted</span></td>
+              <td class="usage-note">shift 更文學性，常見於 C1 反思型文章</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">control</span></td>
+              <td><span class="c1-word">regulate / calibrate</span></td>
+              <td class="usage-note">精準控制，常見於描述技術性動作</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">big moment</span></td>
+              <td><span class="c1-word">monumental / pivotal</span></td>
+              <td class="usage-note">強調重要性，pivotal 強調關鍵轉折點</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">becoming good at</span></td>
+              <td><span class="c1-word">mastery / attaining proficiency</span></td>
+              <td class="usage-note">名詞化寫法，書面語更正式有力</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">again and again</span></td>
+              <td><span class="c1-word">relentlessly / with relentless determination</span></td>
+              <td class="usage-note">副詞/名詞短語，避免重複的兒語表達</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <hr class="story-divider">
+
+    <!-- Story 2 vocab -->
+    <div class="story-section">
+      <div class="story-label">
+        <span class="story-num">STORY 02</span>
+        <span class="story-type">Passion Story</span>
+      </div>
+      <div class="vocab-card">
+        <table class="vocab-table">
+          <thead>
+            <tr>
+              <th>原文 (B2)</th>
+              <th>升級 C1</th>
+              <th>用法說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="orig-word">happy / joy</span></td>
+              <td><span class="c1-word">profoundly meaningful / fulfilling</span></td>
+              <td class="usage-note">避免空洞情感詞，用「有深度」的形容</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">powerful</span></td>
+              <td><span class="c1-word">raw power / compelling presence</span></td>
+              <td class="usage-note">名詞短語，更有描述性和畫面感</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">never give up</span></td>
+              <td><span class="c1-word">utterly undeterred / unwavering</span></td>
+              <td class="usage-note">C1 形容詞，表達更強烈的不動搖</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">feel right there</span></td>
+              <td><span class="c1-word">entirely immersed / as if I were there</span></td>
+              <td class="usage-note">假設語氣 + 副詞強化，書面語必備</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">my spirit holding</span></td>
+              <td><span class="c1-word">sustains me / constant source of motivation</span></td>
+              <td class="usage-note">動詞 sustain 精確，avoid 結構模糊的短語</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">just a hobby</span></td>
+              <td><span class="c1-word">testament to / a reflection of</span></td>
+              <td class="usage-note">名詞短語升級，書面寫作常見的 C1 搭配</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">keeps my heart moving</span></td>
+              <td><span class="c1-word">reshapes the way you see yourself</span></td>
+              <td class="usage-note">深層反思語言，體現 C1 思辨能力</td>
+            </tr>
+            <tr>
+              <td><span class="orig-word">struck by</span></td>
+              <td><span class="c1-word">struck by ✓ (直接使用)</span></td>
+              <td class="usage-note">這是地道的 C1 慣用片語，保留即可</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SCAR VIEW ═══════════════ -->
+  <div class="view" id="view-scar">
+    <div class="view-intro">
+      <h2>SCAR 架構 + 套用題型</h2>
+      <p>Situation → Complication → Action → Result & Reflection</p>
+    </div>
+
+    <!-- SCAR Story 1 -->
+    <div class="story-section">
+      <div class="story-label">
+        <span class="story-num">STORY 01</span>
+        <span class="story-type">Challenge Story — Basketball</span>
+      </div>
+
+      <div class="scar-row">
+        <div class="scar-cell s">
+          <div class="scar-name">Situation</div>
+          <div class="scar-letter">S</div>
+          <div class="scar-desc">開始練習投籃，毫無基礎，球常常連框都碰不到</div>
+        </div>
+        <div class="scar-cell c">
+          <div class="scar-name">Complication</div>
+          <div class="scar-letter">C</div>
+          <div class="scar-desc">看到朋友輕鬆投進，感到挫折，開始懷疑自己能力</div>
+        </div>
+        <div class="scar-cell a">
+          <div class="scar-name">Action</div>
+          <div class="scar-letter">A</div>
+          <div class="scar-desc">每天放學後留在球場，帶著痠痛反覆練習，從不放棄</div>
+        </div>
+        <div class="scar-cell r">
+          <div class="scar-name">Result</div>
+          <div class="scar-letter">R</div>
+          <div class="scar-desc">連進五球；領悟：相信自己是一切進步的起點</div>
+        </div>
+      </div>
+
+      <div class="apply-box">
+        <strong>可套用題型</strong>
+        <ul class="topic-list">
+          <li>Discuss a challenge you overcame</li>
+          <li>What does perseverance mean to you?</li>
+          <li>Describe a time you failed and what you learned</li>
+          <li>Agree/disagree: Talent is more important than effort</li>
+          <li>What motivates you to keep going?</li>
+          <li>Describe a defining moment in your life</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="story-divider">
+
+    <!-- SCAR Story 2 -->
+    <div class="story-section">
+      <div class="story-label">
+        <span class="story-num">STORY 02</span>
+        <span class="story-type">Passion Story — Yuqi</span>
+      </div>
+
+      <div class="scar-row">
+        <div class="scar-cell s">
+          <div class="scar-name">Situation</div>
+          <div class="scar-letter">S</div>
+          <div class="scar-desc">偶然發現 Yuqi，開始追隨她的演出和影片</div>
+        </div>
+        <div class="scar-cell c">
+          <div class="scar-name">Complication</div>
+          <div class="scar-letter">C</div>
+          <div class="scar-desc">意外地，追星不只是娛樂，而開始影響自己的態度和行動力</div>
+        </div>
+        <div class="scar-cell a">
+          <div class="scar-name">Action</div>
+          <div class="scar-letter">A</div>
+          <div class="scar-desc">看她重複練習舞蹈片段、不妥協的態度，讓我反思自己的堅持</div>
+        </div>
+        <div class="scar-cell r">
+          <div class="scar-name">Result</div>
+          <div class="scar-letter">R</div>
+          <div class="scar-desc">她成為日常的動力來源；領悟：對的榜樣能悄悄重塑你看自己的方式</div>
+        </div>
+      </div>
+
+      <div class="apply-box">
+        <strong>可套用題型</strong>
+        <ul class="topic-list">
+          <li>Describe yourself and what motivates you</li>
+          <li>What is the importance of hobbies?</li>
+          <li>Who has influenced you most and why?</li>
+          <li>How does popular culture affect young people?</li>
+          <li>What role does passion play in success?</li>
+          <li>Describe something that brings you joy</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Memory Tips -->
+    <div class="memory-section">
+      <div class="story-label">
+        <span class="story-num">BONUS</span>
+        <span class="story-type">背誦建議</span>
+      </div>
+      <div class="memory-grid">
+        <div class="memory-card">
+          <h4>第一週：結構記憶</h4>
+          <p>先背 SCAR 四格的中文關鍵字，確保你能用中文流暢說出故事邏輯，再對應英文。</p>
+        </div>
+        <div class="memory-card">
+          <h4>第二週：詞彙替換</h4>
+          <p>把 C1 詞彙表背熟，練習把原文 B2 版本替換成 C1 版本，培養「升級反射」。</p>
+        </div>
+        <div class="memory-card">
+          <h4>第三週：口說流暢化</h4>
+          <p>每天不看稿口述其中一個故事 3 分鐘，錄音後回聽，找出停頓和填充詞。</p>
+        </div>
+        <div class="memory-card">
+          <h4>第四週：套用練習</h4>
+          <p>看到任何作文題目，先問自己：Story 1 還是 Story 2？然後在 10 分鐘內寫出 200 字段落。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  Story Vault · NCCU MIS · 模組 3 個人作文素材庫
+</footer>
+
+<script>
+  function switchView(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    event.target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>柏宏英文文法綜合測驗</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1205;
+    --paper: #fdf8f0;
+    --accent: #c0392b;
+    --gold: #b5860d;
+    --green: #1d6340;
+    --blue: #1a4a7a;
+    --light-rule: #e8dfc8;
+    --highlight: #fff3cd;
+    --highlight-green: #d4edda;
+    --highlight-blue: #cce5ff;
+    --highlight-red: #fde8e8;
+    --shadow: rgba(26,18,5,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif TC', serif;
+    line-height: 1.8;
+    font-size: 15px;
+  }
+
+  /* ── TOP NAV ── */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--ink);
+    display: flex; gap: 0; overflow-x: auto;
+    border-bottom: 3px solid var(--gold);
+  }
+  .nav button {
+    background: none; border: none; cursor: pointer;
+    color: #c8b89a;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 13px; font-weight: 600;
+    padding: 12px 18px; white-space: nowrap;
+    transition: all .2s; border-right: 1px solid #333;
+    letter-spacing: .04em;
+  }
+  .nav button:hover, .nav button.active {
+    background: var(--gold); color: #fff;
+  }
+  .nav .timer-wrap {
+    margin-left: auto; display: flex; align-items: center;
+    padding: 0 16px; gap: 8px; border-left: 1px solid #333;
+  }
+  .nav .timer-wrap span { color: #ffd; font-family: 'DM Mono', monospace; font-size: 14px; }
+  .nav .timer-wrap button {
+    border: 1px solid #666; border-right: none;
+    padding: 6px 10px; font-size: 11px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    padding: 40px 48px 32px;
+    border-bottom: 4px solid var(--gold);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg, transparent, transparent 60px, rgba(181,134,13,.06) 60px, rgba(181,134,13,.06) 61px
+    );
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: .15em;
+    color: var(--gold); margin-bottom: 10px; text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px; font-weight: 900; color: #fff;
+    line-height: 1.15; margin-bottom: 12px;
+  }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero-meta { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 16px; }
+  .hero-meta .chip {
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+    border-radius: 4px; padding: 5px 12px;
+    color: #ddd; font-size: 13px;
+  }
+  .hero-meta .chip strong { color: #fff; }
+
+  /* ── SECTION PAGES ── */
+  .page { display: none; padding: 36px 48px 60px; max-width: 960px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  /* ── LESSON HEADER ── */
+  .lesson-header {
+    border-left: 5px solid var(--accent);
+    padding: 8px 0 8px 20px;
+    margin-bottom: 28px;
+  }
+  .lesson-header .lesson-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--accent); letter-spacing: .1em; text-transform: uppercase;
+  }
+  .lesson-header h2 { font-size: 26px; font-weight: 700; line-height: 1.2; }
+  .lesson-header h2 em { color: var(--gold); font-style: normal; }
+  .lesson-header .subtitle { color: #666; font-size: 14px; margin-top: 4px; }
+
+  /* ── PRACTICE SECTION ── */
+  .practice-section {
+    background: #f8f4ee;
+    border: 2px dashed var(--gold);
+    border-radius: 10px; padding: 24px 28px;
+    margin-top: 28px;
+  }
+  .practice-section h3 {
+    font-size: 16px; font-weight: 700; color: var(--accent);
+    margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
+  }
+  .practice-section h3::before { content: '✏️'; }
+
+  .q-block { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--light-rule); }
+  .q-block:last-child { border-bottom: none; margin-bottom: 0; }
+  .q-block .q-text { font-size: 14px; margin-bottom: 8px; line-height: 1.9; }
+  .q-block .q-text strong { color: var(--blue); }
+  .q-block .choices { padding-left: 20px; }
+  .q-block .choices li { margin-bottom: 4px; font-size: 14px; }
+
+  /* ── SCORING ── */
+  .score-bar {
+    background: var(--ink); border-radius: 10px;
+    padding: 20px 28px; margin-bottom: 28px;
+    display: flex; align-items: center; gap: 20px;
+    flex-wrap: wrap;
+  }
+  .score-bar .score-label {
+    color: var(--gold); font-family: 'DM Mono', monospace;
+    font-size: 12px; letter-spacing: .1em;
+  }
+  .score-bar .score-num {
+    font-family: 'Playfair Display', serif;
+    color: #fff; font-size: 32px; font-weight: 700;
+  }
+  .score-bar .score-denom { color: #999; font-size: 18px; }
+  .score-bar .score-pct {
+    color: var(--gold); font-size: 20px; font-weight: 700;
+    margin-left: auto;
+  }
+  .score-bar .score-msg { color: #ccc; font-size: 14px; }
+
+  /* ── ANSWER TOGGLE ── */
+  .answer-toggle {
+    background: none; border: 1.5px solid var(--green);
+    color: var(--green); border-radius: 4px;
+    padding: 5px 14px; font-size: 13px; cursor: pointer;
+    font-family: 'Noto Serif TC', serif;
+    transition: all .2s; margin-top: 8px;
+  }
+  .answer-toggle:hover { background: var(--green); color: #fff; }
+  .answer-box {
+    display: none; margin-top: 10px;
+    background: var(--highlight-green);
+    border: 1px solid #8acc9a; border-radius: 6px;
+    padding: 12px 16px; font-size: 14px;
+  }
+  .answer-box .correct { color: var(--green); font-weight: 700; font-size: 15px; }
+  .answer-box .explain { color: #333; margin-top: 6px; line-height: 1.8; }
+  .answer-box .wrong { color: var(--accent); font-size: 13px; margin-top: 6px; }
+
+  /* ── FILL BLANK ── */
+  .fill-input {
+    border: none; border-bottom: 2px solid var(--blue);
+    background: transparent; font-family: 'DM Mono', monospace;
+    font-size: 14px; color: var(--blue); width: 200px;
+    padding: 2px 4px; outline: none;
+  }
+  .fill-input:focus { border-bottom-color: var(--accent); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 32px 0;
+  }
+  .divider hr { flex: 1; border: none; border-top: 1px solid var(--light-rule); }
+  .divider span { color: #bbb; font-size: 12px; font-family: 'DM Mono', monospace; white-space: nowrap; }
+
+  /* ── SECTION TAG ── */
+  .section-tag {
+    display: inline-block;
+    background: var(--blue); color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: .08em;
+    padding: 4px 12px; border-radius: 3px;
+    margin-bottom: 14px;
+  }
+
+  /* ── NOTE ── */
+  .note {
+    background: var(--highlight); border-left: 4px solid var(--gold);
+    padding: 12px 16px; border-radius: 0 6px 6px 0;
+    margin: 12px 0; font-size: 14px;
+  }
+  .warn {
+    background: #fde8e8; border-left: 4px solid var(--accent);
+    padding: 12px 16px; border-radius: 0 6px 6px 0;
+    margin: 12px 0; font-size: 14px;
+  }
+
+  /* ── OVERVIEW GRID ── */
+  .overview-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px; margin: 24px 0;
+  }
+  .overview-card {
+    background: #fff; border: 1.5px solid var(--light-rule);
+    border-radius: 10px; padding: 18px 20px;
+    box-shadow: 0 2px 8px var(--shadow); cursor: pointer;
+    transition: all .2s;
+  }
+  .overview-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .overview-card .oc-code { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: .1em; }
+  .overview-card h3 { font-size: 16px; margin: 6px 0 6px; }
+  .overview-card p { font-size: 13px; color: #666; line-height: 1.6; }
+  .overview-card .oc-q { margin-top: 10px; font-size: 12px; color: var(--gold); font-weight: 700; }
+
+  /* ── CHECK BUTTON ── */
+  .check-btn {
+    background: var(--accent); color: #fff; border: none;
+    border-radius: 6px; padding: 10px 24px; font-size: 14px;
+    cursor: pointer; font-family: 'Noto Serif TC', serif;
+    font-weight: 700; margin-top: 20px; transition: all .2s;
+  }
+  .check-btn:hover { background: #a93226; }
+
+  /* ── OPTION RADIO ── */
+  .option-label {
+    display: block; padding: 8px 14px; margin: 5px 0;
+    border: 1.5px solid var(--light-rule); border-radius: 6px;
+    cursor: pointer; font-size: 14px; transition: all .2s;
+    background: #fff;
+  }
+  .option-label:hover { border-color: var(--blue); background: var(--highlight-blue); }
+  .option-label input { margin-right: 8px; }
+  .option-label.correct-ans { border-color: var(--green); background: var(--highlight-green); }
+  .option-label.wrong-ans { border-color: var(--accent); background: var(--highlight-red); }
+
+  /* ── PROGRESS STRIP ── */
+  .progress-strip {
+    display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;
+  }
+  .prog-chip {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    padding: 5px 14px; border-radius: 20px;
+    border: 1.5px solid var(--light-rule); background: #fff;
+  }
+  .prog-chip.done { background: var(--highlight-green); border-color: var(--green); color: var(--green); }
+
+  @media (max-width: 680px) {
+    .hero { padding: 24px 20px; }
+    .hero h1 { font-size: 26px; }
+    .page { padding: 20px 16px 48px; }
+    .overview-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <button class="active" onclick="showPage('home')">📋 總覽</button>
+  <button onclick="showPage('p1')">一、單選題</button>
+  <button onclick="showPage('p2')">二、填空題</button>
+  <button onclick="showPage('p3')">三、改寫題</button>
+  <button onclick="showPage('p4')">四-1 克漏字</button>
+  <button onclick="showPage('p5')">四-2 克漏字</button>
+  <button onclick="showPage('p6')">四-3 克漏字</button>
+  <button onclick="showPage('p7')">四-4 克漏字</button>
+  <button onclick="showPage('result')">📊 成績總結</button>
+  <div class="timer-wrap">
+    <span id="timerDisplay">0:00</span>
+    <button onclick="startTimer()" style="color:#ffd" id="timerBtn">▶</button>
+    <button onclick="resetTimer()" style="color:#faa">↺</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Grammar Test · 綜合測驗卷</div>
+  <h1>英文文法<br><em>綜合測驗</em></h1>
+  <div class="hero-meta">
+    <div class="chip"><strong>大題數</strong> 6 大題</div>
+    <div class="chip"><strong>克漏字</strong> 4 篇 · 16 題</div>
+    <div class="chip"><strong>總題數</strong> 33 題</div>
+    <div class="chip"><strong>建議時間</strong> 45 分鐘</div>
+    <div class="chip"><strong>涵蓋</strong> seem/appear · with · 假設語氣 · 分詞構句 · not…until</div>
+  </div>
+</div>
+
+<!-- ═══ HOME ═══ -->
+<div class="page active" id="home-page">
+  <div class="lesson-header" style="border-left-color:var(--gold)">
+    <div class="lesson-code">OVERVIEW · 測驗說明</div>
+    <h2>四大題型 <em>完整模擬</em></h2>
+    <div class="subtitle">涵蓋課本五大文法單元 — 做完後按「📊 成績總結」查看結果</div>
+  </div>
+
+  <div class="note">💡 <strong>建議做法：</strong>先計時作答，做完一大題再對答案。所有選擇題請在頁面上點選後，點「批改」按鈕查看對錯。</div>
+
+  <div class="overview-grid">
+    <div class="overview-card" onclick="showPage('p1')">
+      <div class="oc-code">PART 1</div>
+      <h3>單選題</h3>
+      <p>綜合五大文法單元，選出最正確的答案。</p>
+      <div class="oc-q">✏️ 8 題 · 每題 5 分 · 共 40 分</div>
+    </div>
+    <div class="overview-card" onclick="showPage('p2')">
+      <div class="oc-code">PART 2</div>
+      <h3>填空題</h3>
+      <p>依提示或依語意，在空格填入正確的動詞形式或單字。</p>
+      <div class="oc-q">✏️ 5 題 · 每題 4 分 · 共 20 分</div>
+    </div>
+    <div class="overview-card" onclick="showPage('p3')">
+      <div class="oc-code">PART 3</div>
+      <h3>改寫題</h3>
+      <p>依照指示改寫句子，保持語意不變。</p>
+      <div class="oc-q">✏️ 4 題 · 每題 5 分 · 共 20 分</div>
+    </div>
+    <div class="overview-card" onclick="showPage('p4')">
+      <div class="oc-code">PART 4</div>
+      <h3>克漏字 × 4 篇</h3>
+      <p>四篇不同情境短文，各 4 題，涵蓋所有文法單元。</p>
+      <div class="oc-q">✏️ 16 題 · 每題 5 分 · 共 80 分</div>
+    </div>
+  </div>
+
+  <div class="warn">⚠️ <strong>考試範圍提醒：</strong>seem/appear 改寫 · with + O + OC · 假設語氣（與過去相反）· 分詞構句（主動/被動/否定）· not…until 倒裝（三種動詞類型）</div>
+</div>
+
+<!-- ═══ PART 1：單選題 ═══ -->
+<div class="page" id="p1-page">
+  <div class="lesson-header">
+    <div class="lesson-code">PART 1 · MULTIPLE CHOICE</div>
+    <h2>一、單選題 <em>（共 40 分）</em></h2>
+    <div class="subtitle">每題 5 分，共 8 題 · 選出最正確的答案</div>
+  </div>
+
+  <div class="practice-section">
+    <h3>單選題（混合五大文法）</h3>
+
+    <!-- Q1 -->
+    <div class="q-block" id="q1">
+      <div class="q-text"><strong>1.</strong> The old man _______ in this village for over fifty years. He knows every path and every family here.
+        <br><small style="color:#888">（提示：seem/appear 推測）</small>
+      </div>
+      <label class="option-label"><input type="radio" name="q1" value="A"> (A) seems to live</label>
+      <label class="option-label"><input type="radio" name="q1" value="B"> (B) seems to have lived</label>
+      <label class="option-label"><input type="radio" name="q1" value="C"> (C) seemed living</label>
+      <label class="option-label"><input type="radio" name="q1" value="D"> (D) seems that he lives</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">B — seems to have lived</div>
+        <div class="explain">推測的是「過去一直住在這裡」的事件（早於說話時間），所以用 <strong>seems to have + p.p.</strong>（現在推測更早的過去）。<br>❌ (D) 錯誤：S. 直接接 seem 時，後面不能再接 that 子句。</div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-block" id="q2">
+      <div class="q-text"><strong>2.</strong> The little girl fell asleep on the sofa with her favorite doll _______ tightly in her arms.
+        <br><small style="color:#888">（提示：with + O + OC）</small>
+      </div>
+      <label class="option-label"><input type="radio" name="q2" value="A"> (A) holding</label>
+      <label class="option-label"><input type="radio" name="q2" value="B"> (B) hold</label>
+      <label class="option-label"><input type="radio" name="q2" value="C"> (C) held</label>
+      <label class="option-label"><input type="radio" name="q2" value="D"> (D) to hold</label>
+      <button class="answer-toggle" onclick="ToggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">C — held</div>
+        <div class="explain">受詞 doll 是被「抱著」→ <strong>被動</strong> → 用過去分詞 <strong>held</strong>。<br>❌ (A) holding：doll 無法主動抱東西，方向錯誤。</div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-block" id="q3">
+      <div class="q-text"><strong>3.</strong> If Linda _______ the job interview, she would have gotten her dream job at that company.
+        <br><small style="color:#888">（提示：假設語氣）</small>
+      </div>
+      <label class="option-label"><input type="radio" name="q3" value="A"> (A) hadn't missed</label>
+      <label class="option-label"><input type="radio" name="q3" value="B"> (B) didn't miss</label>
+      <label class="option-label"><input type="radio" name="q3" value="C"> (C) wouldn't miss</label>
+      <label class="option-label"><input type="radio" name="q3" value="D"> (D) has not missed</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">A — hadn't missed</div>
+        <div class="explain">主要子句有 would have gotten → 與過去相反的假設語氣 → If 子句用 <strong>had not + p.p.</strong>（had not missed）。</div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-block" id="q4">
+      <div class="q-text"><strong>4.</strong> _______ by thousands of fans after the concert, the singer smiled and waved at the crowd.
+        <br><small style="color:#888">（提示：分詞構句）</small>
+      </div>
+      <label class="option-label"><input type="radio" name="q4" value="A"> (A) Surrounded</label>
+      <label class="option-label"><input type="radio" name="q4" value="B"> (B) Surrounding</label>
+      <label class="option-label"><input type="radio" name="q4" value="C"> (C) Having surrounded</label>
+      <label class="option-label"><input type="radio" name="q4" value="D"> (D) She surrounded</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">A — Surrounded</div>
+        <div class="explain">主詞 singer 是「被」粉絲包圍 → <strong>被動</strong> → 過去分詞 Surrounded 開頭的分詞構句。<br>❌ (B) Surrounding：singer 不能主動包圍自己。</div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-block" id="q5">
+      <div class="q-text"><strong>5.</strong> Not until the firefighters arrived _______ the residents that the fire was under control.
+        <br><small style="color:#888">（提示：not…until 倒裝）</small>
+      </div>
+      <label class="option-label"><input type="radio" name="q5" value="A"> (A) the residents knew</label>
+      <label class="option-label"><input type="radio" name="q5" value="B"> (B) knew the residents</label>
+      <label class="option-label"><input type="radio" name="q5" value="C"> (C) did the residents know</label>
+      <label class="option-label"><input type="radio" name="q5" value="D"> (D) do the residents know</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">C — did the residents know</div>
+        <div class="explain">Not until 放句首 → 主要子句倒裝。know 是一般動詞，時態為過去式 → 借 <strong>did</strong> → did the residents know。</div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-block" id="q6">
+      <div class="q-text"><strong>6.</strong> My teacher stood at the front of the classroom with her arms _______, waiting for us to be quiet.
+        <br><small style="color:#888">（提示：with + O + OC）</small>
+      </div>
+      <label class="option-label"><input type="radio" name="q6" value="A"> (A) folding</label>
+      <label class="option-label"><input type="radio" name="q6" value="B"> (B) to fold</label>
+      <label class="option-label"><input type="radio" name="q6" value="C"> (C) fold</label>
+      <label class="option-label"><input type="radio" name="q6" value="D"> (D) folded</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">D — folded</div>
+        <div class="explain">受詞 arms 是「被折疊（交叉）」的狀態 → <strong>被動/靜態</strong> → 過去分詞 <strong>folded</strong>（arms folded = 雙臂交叉）。</div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-block" id="q7">
+      <div class="q-text"><strong>7.</strong> _______ what to say in the difficult situation, Amy took a deep breath and stayed silent.
+        <br><small style="color:#888">（提示：分詞構句）</small>
+      </div>
+      <label class="option-label"><input type="radio" name="q7" value="A"> (A) She didn't know</label>
+      <label class="option-label"><input type="radio" name="q7" value="B"> (B) Knowing not</label>
+      <label class="option-label"><input type="radio" name="q7" value="C"> (C) Not knowing</label>
+      <label class="option-label"><input type="radio" name="q7" value="D"> (D) Not known</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">C — Not knowing</div>
+        <div class="explain">否定分詞構句 → <strong>Not + V-ing</strong>（Not knowing）。Amy 是主動「不知道」→ 主動分詞，not 放在 V-ing 前面。<br>❌ (B) Knowing not：否定字必須放在分詞前！</div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-block" id="q8">
+      <div class="q-text"><strong>8.</strong> It seemed that the ancient temple _______ by lightning many years ago. Its roof is still partially destroyed.
+        <br><small style="color:#888">（提示：seem/appear 改寫）</small>
+      </div>
+      <label class="option-label"><input type="radio" name="q8" value="A"> (A) was struck</label>
+      <label class="option-label"><input type="radio" name="q8" value="B"> (B) has been struck</label>
+      <label class="option-label"><input type="radio" name="q8" value="C"> (C) had been struck</label>
+      <label class="option-label"><input type="radio" name="q8" value="D"> (D) is struck</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">C — had been struck</div>
+        <div class="explain">It seemed（過去推測）+ 事件比「推測時間」更早 → that 子句用<strong>過去完成式被動</strong>：<strong>had been struck</strong>。<br>對應的 S + seem 改寫 = The temple seemed to have been struck by lightning.</div>
+      </div>
+    </div>
+
+    <button class="check-btn" onclick="gradeSection('p1', 8)">📝 批改第一大題</button>
+    <div id="p1-result" style="margin-top:14px; font-size:15px; font-weight:700; color:var(--blue);"></div>
+  </div>
+</div>
+
+<!-- ═══ PART 2：填空題 ═══ -->
+<div class="page" id="p2-page">
+  <div class="lesson-header">
+    <div class="lesson-code">PART 2 · FILL IN THE BLANK</div>
+    <h2>二、填空題 <em>（共 20 分）</em></h2>
+    <div class="subtitle">每題 4 分，共 5 題 · 依提示填入正確的動詞形式或片語</div>
+  </div>
+
+  <div class="practice-section">
+    <h3>填空題</h3>
+
+    <div class="q-block">
+      <div class="q-text"><strong>1.</strong> If the weather _______ (be) better last weekend, we could have gone hiking in the mountains.</div>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">had been</div>
+        <div class="explain">主要子句有 could have gone → 與過去相反 → If 子句用 <strong>had + p.p.</strong>（had been）。</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><strong>2.</strong> The chef walked around the kitchen with a big pot of soup _______ (boil) on the stove.</div>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">boiling</div>
+        <div class="explain">受詞 pot of soup 是「自己在沸騰」→ <strong>主動進行</strong> → V-ing（boiling）。</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><strong>3.</strong> _______ (exhaust) after the long journey, the travelers went straight to bed without having dinner.</div>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">Exhausted</div>
+        <div class="explain">主詞 travelers 是「被旅程弄得精疲力竭」→ <strong>被動</strong> → 過去分詞 <strong>Exhausted</strong> 開頭的分詞構句。</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><strong>4.</strong> Not until the principal announced the results _______ the students _______ (stop) worrying about their grades.
+        <br><small style="color:#888">（提示：not…until 倒裝，stop 是一般動詞）</small>
+      </div>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">did / stop</div>
+        <div class="explain">Not until 放句首 → 倒裝。stop 是一般動詞，時態為過去式 → 借 <strong>did</strong>，動詞恢復原形 stop → <strong>did the students stop</strong>。</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><strong>5.</strong> The scientist appears _______ (make) a major breakthrough in cancer research. The media is reporting it everywhere.</div>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">to have made</div>
+        <div class="explain">突破「發生在」推測之前（現在推測更早的事件）→ <strong>appears to have + p.p.</strong>（to have made）。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PART 3：改寫題 ═══ -->
+<div class="page" id="p3-page">
+  <div class="lesson-header">
+    <div class="lesson-code">PART 3 · SENTENCE REWRITING</div>
+    <h2>三、改寫題 <em>（共 20 分）</em></h2>
+    <div class="subtitle">每題 5 分，共 4 題 · 依指示改寫，保持語意相同</div>
+  </div>
+
+  <div class="practice-section">
+    <h3>改寫題</h3>
+
+    <div class="q-block">
+      <div class="q-text"><strong>改寫 1.</strong> It seems that the old bridge was built over two hundred years ago.<br>
+      ⇒ The old bridge <input class="fill-input" placeholder="seem + ?" style="width:320px"> over two hundred years ago.</div>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">seems to have been built</div>
+        <div class="explain">建造事件（過去）早於推測（現在）→ <strong>seems to have been + p.p.</strong>（被動：been built）。</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><strong>改寫 2.</strong> Because she was touched by the performance, Sofia cried tears of joy.<br>
+      ⇒ <input class="fill-input" placeholder="分詞構句" style="width:320px">, Sofia cried tears of joy.</div>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">Touched by the performance</div>
+        <div class="explain">Sofia 是「被感動」→ 被動分詞構句 → <strong>Touched by the performance</strong>（because 省略，being 可省）。</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><strong>改寫 3.</strong> Victor didn't realize he had left his wallet at home until he reached the cashier.<br>
+      ⇒ Not until he reached the cashier <input class="fill-input" placeholder="倒裝" style="width:260px"> he had left his wallet at home.</div>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">did Victor realize</div>
+        <div class="explain">realize 是一般動詞，過去式 → Not until 倒裝 → 借 <strong>did</strong> → did Victor realize。</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><strong>改寫 4.</strong> After I submitted the report, I went home and took a long nap.<br>
+      ⇒ <input class="fill-input" placeholder="分詞構句" style="width:320px">, I went home and took a long nap.</div>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">After submitting the report</div>
+        <div class="explain"><strong>After 不可省略！</strong>（省略後無法判斷先後順序）→ After + V-ing → <strong>After submitting the report</strong>。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PART 4：克漏字 ═══ -->
+<div class="page" id="p4-page">
+  <div class="lesson-header">
+    <div class="lesson-code">PART 4-1 · CLOZE TEST</div>
+    <h2>四、克漏字（第一篇）<em>— 音樂老師</em></h2>
+    <div class="subtitle">共四篇，每篇 4 題 · 每題 5 分</div>
+  </div>
+
+  <div style="background:#fff; border:1.5px solid var(--light-rule); border-radius:8px; padding:22px 26px; margin-bottom:24px; line-height:2.1; font-size:14.5px; box-shadow: 0 2px 8px var(--shadow);">
+    <p style="margin-bottom:8px; font-family:'DM Mono',monospace; font-size:11px; color:var(--blue); letter-spacing:.08em;">READ THE PASSAGE</p>
+    <p>
+      Mr. Chen is a retired music teacher who devoted his entire life to education. He __<strong>31</strong>__ to have spent over forty years teaching in a small mountain village school, where resources were scarce and students were few. Whenever he played the piano, he performed with his eyes __<strong>32</strong>__, fully immersed in the melody. If the government __<strong>33</strong>__ his school earlier, he might have had access to better instruments and teaching materials. __<strong>34</strong>__ how challenging the conditions were, he never gave up. Not until he retired __<strong>35</strong>__ that his students had gone on to become musicians, teachers, and artists all over the country.
+    </p>
+  </div>
+
+  <div class="practice-section">
+    <h3>克漏字選擇</h3>
+
+    <!-- Q31 -->
+    <div class="q-block" id="q31">
+      <div class="q-text"><strong>31.</strong> Mr. Chen is _______ to have spent over forty years teaching in a small mountain village school.</div>
+      <label class="option-label"><input type="radio" name="q31" value="A"> (A) seemed</label>
+      <label class="option-label"><input type="radio" name="q31" value="B"> (B) said</select></label>
+      <label class="option-label"><input type="radio" name="q31" value="C"> (C) appears</label>
+      <label class="option-label"><input type="radio" name="q31" value="D"> (D) appeared</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">C — appears</div>
+        <div class="explain">主詞是 Mr. Chen（現在仍存在），用現在式 <strong>appears</strong>（或 seems）。後面有 to have spent → 正確搭配。<br>❌ (A) seemed / (D) appeared：時態為過去式，和後文 is 不一致。</div>
+      </div>
+    </div>
+
+    <!-- Q32 -->
+    <div class="q-block" id="q32">
+      <div class="q-text"><strong>32.</strong> He performed with his eyes _______, fully immersed in the melody.</div>
+      <label class="option-label"><input type="radio" name="q32" value="A"> (A) closing</label>
+      <label class="option-label"><input type="radio" name="q32" value="B"> (B) closed</label>
+      <label class="option-label"><input type="radio" name="q32" value="C"> (C) close</label>
+      <label class="option-label"><input type="radio" name="q32" value="D"> (D) to close</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">B — closed</div>
+        <div class="explain">with + O + OC：受詞 eyes 是「被閉上」的狀態 → <strong>被動/靜態</strong> → 過去分詞 <strong>closed</strong>。（eyes closed = 眼睛閉著，固定用法）</div>
+      </div>
+    </div>
+
+    <!-- Q33 -->
+    <div class="q-block" id="q33">
+      <div class="q-text"><strong>33.</strong> If the government _______ his school earlier, he might have had access to better instruments.</div>
+      <label class="option-label"><input type="radio" name="q33" value="A"> (A) funded</label>
+      <label class="option-label"><input type="radio" name="q33" value="B"> (B) had funded</label>
+      <label class="option-label"><input type="radio" name="q33" value="C"> (C) would fund</label>
+      <label class="option-label"><input type="radio" name="q33" value="D"> (D) has funded</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">B — had funded</div>
+        <div class="explain">主要子句有 might have had → 與過去相反的假設語氣 → If 子句用 <strong>had + p.p.</strong>（had funded）。</div>
+      </div>
+    </div>
+
+    <!-- Q34 -->
+    <div class="q-block" id="q34">
+      <div class="q-text"><strong>34.</strong> _______ how challenging the conditions were, he never gave up.</div>
+      <label class="option-label"><input type="radio" name="q34" value="A"> (A) Although knowing</label>
+      <label class="option-label"><input type="radio" name="q34" value="B"> (B) Not knowing</label>
+      <label class="option-label"><input type="radio" name="q34" value="C"> (C) Knowing</label>
+      <label class="option-label"><input type="radio" name="q34" value="D"> (D) Known</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">C — Knowing</div>
+        <div class="explain">He 主動「知道」條件有多困難，但仍不放棄 → 主動分詞構句 <strong>Knowing</strong>（省略 Because/Although，語意為「即使知道」）。<br>❌ (B) Not knowing：語意變成「不知道有多難」，與後文邏輯相反。</div>
+      </div>
+    </div>
+
+    <button class="check-btn" onclick="gradeSection('p4', 4)">📝 批改第一篇</button>
+    <div id="p4-result" style="margin-top:14px; font-size:15px; font-weight:700; color:var(--blue);"></div>
+    <div class="note" style="margin-top:20px">💡 <strong>第35題補充：</strong>Not until he retired <strong>did he realize</strong> that his students had gone on to become musicians... （Not until 倒裝，realize 一般動詞過去式 → did he realize）</div>
+    <div style="margin-top:20px; text-align:right;">
+      <button class="check-btn" style="background:var(--blue);" onclick="showPage('p5')">下一篇 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PART 5：克漏字第二篇 ═══ -->
+<div class="page" id="p5-page">
+  <div class="lesson-header">
+    <div class="lesson-code">PART 4-2 · CLOZE TEST</div>
+    <h2>四、克漏字（第二篇）<em>— 探險家</em></h2>
+    <div class="subtitle">共四篇，每篇 4 題 · 每題 5 分</div>
+  </div>
+
+  <div style="background:#fff; border:1.5px solid var(--light-rule); border-radius:8px; padding:22px 26px; margin-bottom:24px; line-height:2.1; font-size:14.5px; box-shadow: 0 2px 8px var(--shadow);">
+    <p style="margin-bottom:8px; font-family:'DM Mono',monospace; font-size:11px; color:var(--blue); letter-spacing:.08em;">READ THE PASSAGE · 第二篇</p>
+    <p>
+      Marco was a young explorer who dreamed of crossing the Amazon rainforest alone. His friends warned him about the dangers, but he __<strong>36</strong>__ to have made up his mind long before anyone could stop him. He set out on a rainy morning with all his supplies __<strong>37</strong>__ carefully in a waterproof bag. If he __<strong>38</strong>__ a detailed map, he would never have found his way back to the base camp. __<strong>39</strong>__ in the jungle for three weeks, Marco finally emerged with notebooks full of discoveries. Not until he returned to the city __<strong>40</strong>__ that his journey had changed him forever.
+    </p>
+  </div>
+
+  <div class="practice-section">
+    <h3>克漏字選擇（第二篇）</h3>
+
+    <div class="q-block" id="q36">
+      <div class="q-text"><strong>36.</strong> His friends warned him about the dangers, but he _______ to have made up his mind long before anyone could stop him.</div>
+      <label class="option-label"><input type="radio" name="q36" value="A"> (A) seemed</label>
+      <label class="option-label"><input type="radio" name="q36" value="B"> (B) seems</label>
+      <label class="option-label"><input type="radio" name="q36" value="C"> (C) appears</label>
+      <label class="option-label"><input type="radio" name="q36" value="D"> (D) is appeared</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">A — seemed</div>
+        <div class="explain">全文描述過去事件，時態為過去式 → <strong>seemed</strong>。後面接 to have made（比 seemed 更早決定）→ 正確搭配。<br>❌ (D) is appeared：appear 不用被動語態。</div>
+      </div>
+    </div>
+
+    <div class="q-block" id="q37">
+      <div class="q-text"><strong>37.</strong> He set out on a rainy morning with all his supplies _______ carefully in a waterproof bag.</div>
+      <label class="option-label"><input type="radio" name="q37" value="A"> (A) packing</label>
+      <label class="option-label"><input type="radio" name="q37" value="B"> (B) to pack</label>
+      <label class="option-label"><input type="radio" name="q37" value="C"> (C) packed</label>
+      <label class="option-label"><input type="radio" name="q37" value="D"> (D) pack</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">C — packed</div>
+        <div class="explain">with + O + OC：受詞 supplies 是「被打包」→ <strong>被動</strong> → 過去分詞 <strong>packed</strong>。<br>❌ (A) packing：supplies 無法主動打包自己。</div>
+      </div>
+    </div>
+
+    <div class="q-block" id="q38">
+      <div class="q-text"><strong>38.</strong> If he _______ a detailed map, he would never have found his way back to the base camp.</div>
+      <label class="option-label"><input type="radio" name="q38" value="A"> (A) didn't bring</label>
+      <label class="option-label"><input type="radio" name="q38" value="B"> (B) hadn't brought</label>
+      <label class="option-label"><input type="radio" name="q38" value="C"> (C) wouldn't bring</label>
+      <label class="option-label"><input type="radio" name="q38" value="D"> (D) hasn't brought</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">B — hadn't brought</div>
+        <div class="explain">主要子句有 would never have found → 與過去相反假設語氣 → If 子句用 <strong>had not + p.p.</strong>（hadn't brought）。<br>❌ (C) If 子句絕對不能用 would！</div>
+      </div>
+    </div>
+
+    <div class="q-block" id="q39">
+      <div class="q-text"><strong>39.</strong> _______ in the jungle for three weeks, Marco finally emerged with notebooks full of discoveries.</div>
+      <label class="option-label"><input type="radio" name="q39" value="A"> (A) Having survived</label>
+      <label class="option-label"><input type="radio" name="q39" value="B"> (B) Survived</label>
+      <label class="option-label"><input type="radio" name="q39" value="C"> (C) He survived</label>
+      <label class="option-label"><input type="radio" name="q39" value="D"> (D) Survive</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">A — Having survived</div>
+        <div class="explain">分詞構句中，survive（在叢林存活）發生在 emerged（出現）<strong>之前</strong> → 用 <strong>Having + p.p.</strong>（完成分詞構句）表示動作已完成。<br>❌ (B) Survived：只有被動才用 p.p. 開頭，Marco 不是被存活的。</div>
+      </div>
+    </div>
+
+    <button class="check-btn" onclick="gradeSection('p5', 4)">📝 批改第二篇</button>
+    <div id="p5-result" style="margin-top:14px; font-size:15px; font-weight:700; color:var(--blue);"></div>
+    <div class="note" style="margin-top:20px">💡 <strong>第40題補充：</strong>Not until he returned to the city <strong>did he realize</strong> that his journey had changed him forever.（Not until 倒裝，realize 一般動詞 → did he realize）</div>
+    <div style="margin-top:20px; text-align:right;">
+      <button class="check-btn" style="background:var(--blue);" onclick="showPage('p6')">下一篇 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PART 6：克漏字第三篇 ═══ -->
+<div class="page" id="p6-page">
+  <div class="lesson-header">
+    <div class="lesson-code">PART 4-3 · CLOZE TEST</div>
+    <h2>四、克漏字（第三篇）<em>— 發明家</em></h2>
+    <div class="subtitle">共四篇，每篇 4 題 · 每題 5 分</div>
+  </div>
+
+  <div style="background:#fff; border:1.5px solid var(--light-rule); border-radius:8px; padding:22px 26px; margin-bottom:24px; line-height:2.1; font-size:14.5px; box-shadow: 0 2px 8px var(--shadow);">
+    <p style="margin-bottom:8px; font-family:'DM Mono',monospace; font-size:11px; color:var(--blue); letter-spacing:.08em;">READ THE PASSAGE · 第三篇</p>
+    <p>
+      Dr. Rivera was a brilliant inventor who worked in a small laboratory at the edge of town. She __<strong>41</strong>__ to have been researching clean energy solutions for over a decade. Every morning, she sat at her desk with a cup of coffee __<strong>42</strong>__ in her hand, reviewing pages of notes. If she __<strong>43</strong>__ additional funding from the government, she could have completed her research two years earlier. __<strong>44</strong>__ by one failure after another, she never lost hope. Not until the day she finally succeeded __<strong>45</strong>__ that her work would one day power entire cities.
+    </p>
+  </div>
+
+  <div class="practice-section">
+    <h3>克漏字選擇（第三篇）</h3>
+
+    <div class="q-block" id="q41">
+      <div class="q-text"><strong>41.</strong> She _______ to have been researching clean energy solutions for over a decade.</div>
+      <label class="option-label"><input type="radio" name="q41" value="A"> (A) seemed</label>
+      <label class="option-label"><input type="radio" name="q41" value="B"> (B) appears</label>
+      <label class="option-label"><input type="radio" name="q41" value="C"> (C) seem</label>
+      <label class="option-label"><input type="radio" name="q41" value="D"> (D) was appeared</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">A — seemed</div>
+        <div class="explain">全篇時態為過去式 → <strong>seemed</strong>。to have been researching = 比 seemed 更早且持續的事件，搭配正確。<br>❌ (B) appears：現在式，與全文過去時態不一致。</div>
+      </div>
+    </div>
+
+    <div class="q-block" id="q42">
+      <div class="q-text"><strong>42.</strong> Every morning, she sat at her desk with a cup of coffee _______ in her hand.</div>
+      <label class="option-label"><input type="radio" name="q42" value="A"> (A) warming</label>
+      <label class="option-label"><input type="radio" name="q42" value="B"> (B) warmed</label>
+      <label class="option-label"><input type="radio" name="q42" value="C"> (C) to warm</label>
+      <label class="option-label"><input type="radio" name="q42" value="D"> (D) warm</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">A — warming</div>
+        <div class="explain">with + O + OC：受詞 coffee 是「自己在散發熱氣/主動暖著手」→ <strong>主動進行</strong> → V-ing（warming）。<br>💡 「a cup of coffee warming in her hand」= 一杯咖啡暖在手心，coffee 是主動散熱的，所以用 V-ing。</div>
+      </div>
+    </div>
+
+    <div class="q-block" id="q43">
+      <div class="q-text"><strong>43.</strong> If she _______ additional funding from the government, she could have completed her research two years earlier.</div>
+      <label class="option-label"><input type="radio" name="q43" value="A"> (A) received</label>
+      <label class="option-label"><input type="radio" name="q43" value="B"> (B) would receive</label>
+      <label class="option-label"><input type="radio" name="q43" value="C"> (C) had received</label>
+      <label class="option-label"><input type="radio" name="q43" value="D"> (D) has received</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">C — had received</div>
+        <div class="explain">主要子句有 could have completed → 與過去相反假設語氣 → If 子句用 <strong>had + p.p.</strong>（had received）。<br>❌ (B) would receive：If 子句絕不能用 would！</div>
+      </div>
+    </div>
+
+    <div class="q-block" id="q44">
+      <div class="q-text"><strong>44.</strong> _______ by one failure after another, she never lost hope.</div>
+      <label class="option-label"><input type="radio" name="q44" value="A"> (A) Discouraging</label>
+      <label class="option-label"><input type="radio" name="q44" value="B"> (B) She was discouraged</label>
+      <label class="option-label"><input type="radio" name="q44" value="C"> (C) Discouraged</label>
+      <label class="option-label"><input type="radio" name="q44" value="D"> (D) Although discourage</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">C — Discouraged</div>
+        <div class="explain">She 是「被」一次次失敗打擊 → <strong>被動分詞構句</strong> → 過去分詞 <strong>Discouraged</strong> 開頭。<br>❌ (A) Discouraging：主動，語意變成「她令人沮喪」，方向錯誤。<br>❌ (D) although 後面要接形容詞或 being + adj，discourage 是動詞原形錯誤。</div>
+      </div>
+    </div>
+
+    <button class="check-btn" onclick="gradeSection('p6', 4)">📝 批改第三篇</button>
+    <div id="p6-result" style="margin-top:14px; font-size:15px; font-weight:700; color:var(--blue);"></div>
+    <div class="note" style="margin-top:20px">💡 <strong>第45題補充：</strong>Not until the day she finally succeeded <strong>did she realize</strong> that her work would one day power entire cities.（Not until 倒裝，realize 一般動詞 → did she realize）</div>
+    <div style="margin-top:20px; text-align:right;">
+      <button class="check-btn" style="background:var(--blue);" onclick="showPage('p7')">下一篇 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PART 7：克漏字第四篇 ═══ -->
+<div class="page" id="p7-page">
+  <div class="lesson-header">
+    <div class="lesson-code">PART 4-4 · CLOZE TEST</div>
+    <h2>四、克漏字（第四篇）<em>— 運動員</em></h2>
+    <div class="subtitle">共四篇，每篇 4 題 · 每題 5 分 · 最後一篇加油！</div>
+  </div>
+
+  <div style="background:#fff; border:1.5px solid var(--light-rule); border-radius:8px; padding:22px 26px; margin-bottom:24px; line-height:2.1; font-size:14.5px; box-shadow: 0 2px 8px var(--shadow);">
+    <p style="margin-bottom:8px; font-family:'DM Mono',monospace; font-size:11px; color:var(--blue); letter-spacing:.08em;">READ THE PASSAGE · 第四篇</p>
+    <p>
+      Yuki was a competitive swimmer who had dreamed of winning gold at the national championships since childhood. On the morning of the final race, she stood at the starting block with her heart __<strong>46</strong>__ wildly. Her coach appeared __<strong>47</strong>__ more nervous than she was. If Yuki __<strong>48</strong>__ her knee in the semi-finals, she would have broken the national record on that day. __<strong>49</strong>__ deep breaths to calm herself, she dove into the water the moment the signal sounded. Not until she touched the finish wall __<strong>50</strong>__ the cheering of the crowd surrounding her.
+    </p>
+  </div>
+
+  <div class="practice-section">
+    <h3>克漏字選擇（第四篇）</h3>
+
+    <div class="q-block" id="q46">
+      <div class="q-text"><strong>46.</strong> She stood at the starting block with her heart _______ wildly.</div>
+      <label class="option-label"><input type="radio" name="q46" value="A"> (A) beaten</label>
+      <label class="option-label"><input type="radio" name="q46" value="B"> (B) beat</label>
+      <label class="option-label"><input type="radio" name="q46" value="C"> (C) beating</label>
+      <label class="option-label"><input type="radio" name="q46" value="D"> (D) to beat</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">C — beating</div>
+        <div class="explain">with + O + OC：受詞 heart 是「自己在跳動」→ <strong>主動進行</strong> → V-ing（<strong>beating</strong>）。<br>❌ (A) beaten：被打敗，語意不符。heart 不是被動地跳。</div>
+      </div>
+    </div>
+
+    <div class="q-block" id="q47">
+      <div class="q-text"><strong>47.</strong> Her coach appeared _______ more nervous than she was.</div>
+      <label class="option-label"><input type="radio" name="q47" value="A"> (A) to have been</label>
+      <label class="option-label"><input type="radio" name="q47" value="B"> (B) to be</label>
+      <label class="option-label"><input type="radio" name="q47" value="C"> (C) being</label>
+      <label class="option-label"><input type="radio" name="q47" value="D"> (D) that he was</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">B — to be</div>
+        <div class="explain">推測的「緊張狀態」與 appeared 是<strong>同一時間</strong>（教練當下看起來緊張）→ <strong>appeared to be</strong>（過去推測同時）。<br>❌ (A) to have been：用於事件比推測時間更早，此處時間相同。<br>❌ (D) S 後面接 appear 不能再接 that 子句。</div>
+      </div>
+    </div>
+
+    <div class="q-block" id="q48">
+      <div class="q-text"><strong>48.</strong> If Yuki _______ her knee in the semi-finals, she would have broken the national record on that day.</div>
+      <label class="option-label"><input type="radio" name="q48" value="A"> (A) didn't injure</label>
+      <label class="option-label"><input type="radio" name="q48" value="B"> (B) wouldn't have injured</label>
+      <label class="option-label"><input type="radio" name="q48" value="C"> (C) hadn't injured</label>
+      <label class="option-label"><input type="radio" name="q48" value="D"> (D) has not injured</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">C — hadn't injured</div>
+        <div class="explain">主要子句有 would have broken → 與過去相反假設語氣 → If 子句用 <strong>had not + p.p.</strong>（hadn't injured）。<br>❌ (B) If 子句絕對不能用 would have！這是最常見的錯誤。</div>
+      </div>
+    </div>
+
+    <div class="q-block" id="q49">
+      <div class="q-text"><strong>49.</strong> _______ deep breaths to calm herself, she dove into the water the moment the signal sounded.</div>
+      <label class="option-label"><input type="radio" name="q49" value="A"> (A) Taken</label>
+      <label class="option-label"><input type="radio" name="q49" value="B"> (B) Taking</label>
+      <label class="option-label"><input type="radio" name="q49" value="C"> (C) She took</label>
+      <label class="option-label"><input type="radio" name="q49" value="D"> (D) After taken</label>
+      <button class="answer-toggle" onclick="toggleAnswer(this)">看答案</button>
+      <div class="answer-box">
+        <div class="correct">B — Taking</div>
+        <div class="explain">Yuki 主動「深呼吸」→ <strong>主動分詞構句</strong> → V-ing（<strong>Taking</strong>）。<br>❌ (A) Taken：被動，Yuki 不是被深呼吸的對象。<br>❌ (D) After + p.p. 只用於被動；主動應為 After taking。</div>
+      </div>
+    </div>
+
+    <button class="check-btn" onclick="gradeSection('p7', 4)">📝 批改第四篇</button>
+    <div id="p7-result" style="margin-top:14px; font-size:15px; font-weight:700; color:var(--blue);"></div>
+    <div class="note" style="margin-top:20px">💡 <strong>第50題補充：</strong>Not until she touched the finish wall <strong>did she hear</strong> the cheering of the crowd surrounding her.（Not until 倒裝，hear 一般動詞 → did she hear）</div>
+    <div style="margin-top:20px; text-align:right;">
+      <button class="check-btn" style="background:var(--green);" onclick="showPage('result')">📊 查看成績總結</button>
+    </div>
+  </div>
+
+<!-- ═══ RESULT PAGE ═══ -->
+<div class="page" id="result-page">
+  <div class="lesson-header" style="border-left-color:var(--gold)">
+    <div class="lesson-code">RESULT · 成績報告</div>
+    <h2>測驗完成！<em>成績總結</em></h2>
+    <div class="subtitle">各大題得分 + 錯誤文法點分析</div>
+  </div>
+
+  <div id="final-score-area">
+    <div class="note">📌 請先完成各大題的批改後，再查看成績總結。</div>
+  </div>
+
+  <div class="divider"><hr><span>各單元錯誤分析</span><hr></div>
+
+  <div style="background:#fff; border:1.5px solid var(--light-rule); border-radius:8px; padding:22px 26px; box-shadow:0 2px 8px var(--shadow);">
+    <p style="font-family:'DM Mono',monospace; font-size:11px; color:var(--blue); letter-spacing:.08em; margin-bottom:14px;">GRAMMAR CHECKLIST · 複習清單</p>
+    <table style="width:100%; border-collapse:collapse; font-size:14px;">
+      <tr style="background:var(--ink); color:#f0e8d8;">
+        <th style="padding:9px 14px; text-align:left;">文法點</th>
+        <th style="padding:9px 14px; text-align:left;">核心公式</th>
+        <th style="padding:9px 14px; text-align:left;">最常錯的地方</th>
+      </tr>
+      <tr style="border-bottom:1px solid var(--light-rule);">
+        <td style="padding:10px 14px;"><strong>seem / appear</strong></td>
+        <td style="padding:10px 14px; font-family:'DM Mono',monospace; font-size:13px;">seems to V. / seems to have p.p.</td>
+        <td style="padding:10px 14px; color:#c0392b;">事件更早 → to have p.p.；S 後面不能接 that</td>
+      </tr>
+      <tr style="background:#faf5ec; border-bottom:1px solid var(--light-rule);">
+        <td style="padding:10px 14px;"><strong>with + O + OC</strong></td>
+        <td style="padding:10px 14px; font-family:'DM Mono',monospace; font-size:13px;">主動→V-ing；被動→p.p.；狀態→Adj</td>
+        <td style="padding:10px 14px; color:#c0392b;">判斷 O 是主動還是被動，不是主詞！</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--light-rule);">
+        <td style="padding:10px 14px;"><strong>假設語氣（過去）</strong></td>
+        <td style="padding:10px 14px; font-family:'DM Mono',monospace; font-size:13px;">If had p.p. → would have p.p.</td>
+        <td style="padding:10px 14px; color:#c0392b;">If 子句絕不能用 would！</td>
+      </tr>
+      <tr style="background:#faf5ec; border-bottom:1px solid var(--light-rule);">
+        <td style="padding:10px 14px;"><strong>分詞構句</strong></td>
+        <td style="padding:10px 14px; font-family:'DM Mono',monospace; font-size:13px;">主動→V-ing；被動→p.p.；否定→Not V-ing</td>
+        <td style="padding:10px 14px; color:#c0392b;">After 不能省！Not 要放最前面</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 14px;"><strong>not…until 倒裝</strong></td>
+        <td style="padding:10px 14px; font-family:'DM Mono',monospace; font-size:13px;">Not until… + 助動詞/Be/did + S + V</td>
+        <td style="padding:10px 14px; color:#c0392b;">只有主要子句倒裝，until 子句不倒裝！</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note" style="margin-top:24px; font-size:15px;">
+    🎉 <strong>完成測驗！</strong> 有不確定的題目，翻回各單元的教材再對照公式表複習一遍！
+  </div>
+</div>
+
+<script>
+// ── PAGE NAVIGATION ──
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id + '-page').classList.add('active');
+  document.querySelectorAll('.nav button:not(.timer-wrap button)').forEach(b => b.classList.remove('active'));
+  const pages = ['home','p1','p2','p3','p4','p5','p6','p7','result'];
+  const idx = pages.indexOf(id);
+  const navBtns = document.querySelectorAll('.nav button:not(.timer-wrap button)');
+  if (navBtns[idx]) navBtns[idx].classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── ANSWER TOGGLE (for fill-in / rewrite) ──
+function toggleAnswer(btn) {
+  const box = btn.nextElementSibling;
+  if (box.style.display === 'block') {
+    box.style.display = 'none';
+    btn.textContent = '看答案';
+  } else {
+    box.style.display = 'block';
+    btn.textContent = '收起答案';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[onclick="ToggleAnswer(this)"]').forEach(el => {
+    el.setAttribute('onclick', 'toggleAnswer(this)');
+  });
+});
+
+// ── ANSWER KEY ──
+const answerKey = {
+  // Part 1
+  q1: 'B', q2: 'C', q3: 'A', q4: 'A',
+  q5: 'C', q6: 'D', q7: 'C', q8: 'C',
+  // Part 4 篇一
+  q31: 'C', q32: 'B', q33: 'B', q34: 'C',
+  // Part 4 篇二
+  q36: 'A', q37: 'C', q38: 'B', q39: 'A',
+  // Part 4 篇三
+  q41: 'A', q42: 'A', q43: 'C', q44: 'C',
+  // Part 4 篇四
+  q46: 'C', q47: 'B', q48: 'C', q49: 'B'
+};
+
+const sectionQuestions = {
+  p1:  ['q1','q2','q3','q4','q5','q6','q7','q8'],
+  p4:  ['q31','q32','q33','q34'],
+  p5:  ['q36','q37','q38','q39'],
+  p6:  ['q41','q42','q43','q44'],
+  p7:  ['q46','q47','q48','q49']
+};
+
+const scores = { p1: null, p4: null, p5: null, p6: null, p7: null };
+
+// ── GRADE SECTION ──
+function gradeSection(section, count) {
+  const questions = sectionQuestions[section] || [];
+  let correct = 0;
+
+  questions.forEach(qName => {
+    const selected = document.querySelector(`input[name="${qName}"]:checked`);
+    const labels = document.querySelectorAll(`input[name="${qName}"]`);
+    labels.forEach(inp => inp.parentElement.classList.remove('correct-ans', 'wrong-ans'));
+
+    const correctVal = answerKey[qName];
+    labels.forEach(inp => {
+      if (inp.value === correctVal) inp.parentElement.classList.add('correct-ans');
+    });
+    if (selected) {
+      if (selected.value === correctVal) correct++;
+      else selected.parentElement.classList.add('wrong-ans');
+    }
+  });
+
+  const pts = correct * 5;
+  const total = count * 5;
+  scores[section] = pts;
+
+  const resultEl = document.getElementById(section + '-result');
+  const pct = Math.round(pts/total*100);
+  let emoji = pct >= 80 ? '🎉' : pct >= 60 ? '👍' : '📖';
+  resultEl.innerHTML = `${emoji} 本篇得分：<span style="color:var(--accent)">${pts} / ${total}</span>（答對 ${correct}/${count} 題，正確率 ${pct}%）`;
+
+  updateFinalScore();
+}
+
+function updateFinalScore() {
+  const area = document.getElementById('final-score-area');
+  let total = 0, possible = 0;
+  const labels = { p1:'單選題(40分)', p4:'克漏字第一篇(20分)', p5:'克漏字第二篇(20分)', p6:'克漏字第三篇(20分)', p7:'克漏字第四篇(20分)' };
+  const maxes = { p1:40, p4:20, p5:20, p6:20, p7:20 };
+
+  let rows = '';
+  for (const [key, label] of Object.entries(labels)) {
+    if (scores[key] !== null) {
+      total += scores[key];
+      possible += maxes[key];
+      const pct = Math.round(scores[key]/maxes[key]*100);
+      const color = pct >= 80 ? 'var(--green)' : pct >= 60 ? 'var(--gold)' : 'var(--accent)';
+      rows += `<tr style="border-bottom:1px solid var(--light-rule)">
+        <td style="padding:8px 14px">${label}</td>
+        <td style="padding:8px 14px; font-weight:700; color:${color}">${scores[key]} / ${maxes[key]}</td>
+        <td style="padding:8px 14px; color:${color}">${pct}%</td>
+      </tr>`;
+    }
+  }
+
+  let html = '';
+  if (possible > 0) {
+    const pct = Math.round(total/possible*100);
+    const msg = pct >= 90 ? '🏆 優秀！文法掌握扎實' : pct >= 70 ? '👍 不錯！繼續加油' : '📖 建議複習各單元公式';
+    html += `<div class="score-bar">
+      <div><div class="score-label">已批改選擇題合計</div>
+      <div class="score-num">${total} <span class="score-denom">/ ${possible}</span></div></div>
+      <div class="score-pct">${pct}%</div>
+      <div class="score-msg">${msg}</div>
+    </div>`;
+    if (rows) {
+      html += `<table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:14px;">
+        <tr style="background:var(--ink);color:#f0e8d8">
+          <th style="padding:9px 14px;text-align:left">大題</th>
+          <th style="padding:9px 14px;text-align:left">得分</th>
+          <th style="padding:9px 14px;text-align:left">正確率</th>
+        </tr>${rows}</table>`;
+    }
+  } else {
+    html = '<div class="note">📌 請先完成各大題的批改後，再查看成績總結。</div>';
+  }
+  html += '<div class="note" style="margin-top:12px">📝 <strong>第二、三大題（填空/改寫）</strong>為人工批改，請自行對照答案加分（各 20 分）。</div>';
+  area.innerHTML = html;
+}
+
+// ── TIMER ──
+let totalSeconds = 0;
+let timerInterval = null;
+let running = false;
+
+function startTimer() {
+  if (running) {
+    clearInterval(timerInterval); running = false;
+    document.getElementById('timerBtn').textContent = '▶';
+    return;
+  }
+  running = true;
+  document.getElementById('timerBtn').textContent = '⏸';
+  timerInterval = setInterval(() => {
+    totalSeconds++;
+    const m = Math.floor(totalSeconds / 60);
+    const s = totalSeconds % 60;
+    document.getElementById('timerDisplay').textContent = `${m}:${String(s).padStart(2,'0')}`;
+    if (totalSeconds >= 1800) {
+      document.getElementById('timerDisplay').style.color = '#f88';
+    }
+  }, 1000);
+}
+
+function resetTimer() {
+  clearInterval(timerInterval); running = false;
+  totalSeconds = 0;
+  document.getElementById('timerDisplay').textContent = '0:00';
+  document.getElementById('timerDisplay').style.color = '#ffd';
+  document.getElementById('timerBtn').textContent = '▶';
+}
+</script>
+</body>
+</html>
