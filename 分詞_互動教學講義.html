@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第 11 章 ・ 分詞 — 互動教學講義</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-2: #ebe2d1;
+    --ink: #1a1612;
+    --ink-soft: #4a4036;
+    --ink-faint: #8a7e6e;
+    --rule: #c9bca6;
+    --accent: #8b1e1e;       /* 書本紅章 */
+    --accent-soft: #b8525233;
+    --gold: #a8843d;
+    --teal: #2c5f5d;
+    --correct: #2d6a4f;
+    --wrong: #9d2933;
+    --highlight: #f5e6a8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Crimson Pro', 'Noto Serif TC', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 17px;
+    /* 紙本紋理 */
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(139, 30, 30, 0.025) 0, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(168, 132, 61, 0.03) 0, transparent 40%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 60px 32px 120px;
+  }
+
+  /* ============ 封面 ============ */
+  .cover {
+    text-align: center;
+    padding: 80px 20px 60px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 60px;
+    position: relative;
+  }
+  .cover::before {
+    content: "";
+    position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 1px; background: var(--ink);
+  }
+  .cover-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-soft);
+    letter-spacing: 0.1em;
+    margin-bottom: 24px;
+  }
+  .cover-chapter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 96px;
+    font-weight: 400;
+    line-height: 0.9;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .cover-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: 0.5em;
+    margin-left: 0.5em;  /* 補償 letter-spacing 使其視覺置中 */
+    margin-bottom: 12px;
+  }
+  .cover-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+  }
+  .cover-meta {
+    display: inline-flex;
+    gap: 28px;
+    padding: 14px 28px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+  }
+  .cover-meta span strong { color: var(--ink); font-weight: 600; }
+
+  /* ============ 章節導航 ============ */
+  .toc {
+    background: var(--paper-2);
+    padding: 28px 32px;
+    margin-bottom: 60px;
+    border-left: 3px solid var(--accent);
+    position: relative;
+  }
+  .toc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--ink-faint);
+    margin-bottom: 14px;
+  }
+  .toc ol {
+    list-style: none;
+    counter-reset: toc;
+    columns: 2;
+    column-gap: 32px;
+  }
+  .toc li {
+    counter-increment: toc;
+    padding: 5px 0;
+    break-inside: avoid;
+    font-size: 16px;
+  }
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero) "  ";
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    font-weight: 600;
+    margin-right: 8px;
+  }
+  .toc a { color: var(--ink); text-decoration: none; border-bottom: 1px dotted transparent; transition: border-color .2s; }
+  .toc a:hover { border-color: var(--accent); }
+
+  /* ============ 區塊標題 ============ */
+  section { margin-bottom: 72px; scroll-margin-top: 24px; }
+  .section-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  h2.section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .section-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink-faint);
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  h3 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 36px 0 14px;
+    padding-left: 14px;
+    border-left: 4px solid var(--accent);
+  }
+  h4 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin: 24px 0 10px;
+    color: var(--ink-soft);
+  }
+
+  p { margin-bottom: 14px; }
+  strong { color: var(--accent); font-weight: 600; }
+  em { font-style: italic; color: var(--ink-soft); }
+
+  /* ============ 對比表（玻璃感） ============ */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    background: rgba(255,255,255,0.4);
+  }
+  .compare-table th {
+    font-family: 'Noto Serif TC', serif;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+  }
+  .compare-table th:first-child { width: 22%; }
+  .compare-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .compare-table td:first-child {
+    font-weight: 600;
+    color: var(--ink-soft);
+    background: var(--paper-2);
+    font-family: 'Noto Serif TC', serif;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+
+  /* ============ 公式框 ============ */
+  .formula {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 16px 24px;
+    text-align: center;
+    margin: 18px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    border-radius: 2px;
+    box-shadow: 0 4px 12px rgba(26,22,18,0.15);
+  }
+  .formula .red { color: #f4a8a8; }
+  .formula .gold { color: #f0d090; }
+  .formula .arrow { color: var(--ink-faint); margin: 0 10px; }
+
+  /* ============ 例句 ============ */
+  .example {
+    background: rgba(255,255,255,0.5);
+    padding: 14px 18px 14px 28px;
+    margin: 10px 0;
+    border-left: 2px solid var(--accent);
+    position: relative;
+    font-family: 'Crimson Pro', serif;
+    font-size: 17px;
+  }
+  .example::before {
+    content: "▸";
+    position: absolute; left: 10px; top: 14px;
+    color: var(--accent);
+    font-size: 13px;
+  }
+  .example .zh {
+    display: block;
+    color: var(--ink-faint);
+    font-size: 14px;
+    font-family: 'Noto Serif TC', serif;
+    margin-top: 4px;
+  }
+  .example b { color: var(--accent); font-weight: 600; }
+
+  /* 簡化箭頭：原句 → 簡化句 */
+  .transform {
+    background: rgba(255,255,255,0.5);
+    padding: 16px 20px;
+    margin: 14px 0;
+    border-left: 2px solid var(--gold);
+  }
+  .transform .arrow-line {
+    text-align: center;
+    color: var(--ink-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    margin: 6px 0;
+  }
+  .transform .from { color: var(--ink-soft); }
+  .transform .to { color: var(--ink); font-weight: 500; }
+  .transform b { color: var(--accent); font-weight: 600; }
+  .transform s { color: var(--ink-faint); text-decoration: line-through; }
+
+  /* ============ 提示框 ============ */
+  .note, .tip, .warn {
+    padding: 16px 20px;
+    margin: 18px 0;
+    border-radius: 3px;
+    position: relative;
+    padding-left: 56px;
+  }
+  .note::before, .tip::before, .warn::before {
+    position: absolute;
+    left: 18px; top: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .note { background: #fff8e8; border-left: 3px solid var(--gold); }
+  .note::before { content: "註"; color: var(--gold); }
+  .tip { background: #e8f0ee; border-left: 3px solid var(--teal); }
+  .tip::before { content: "訣"; color: var(--teal); }
+  .warn { background: #fbe6e6; border-left: 3px solid var(--accent); }
+  .warn::before { content: "警"; color: var(--accent); }
+
+  /* ============ 教學流程小卡 ============ */
+  .lesson-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .flow-card {
+    background: rgba(255,255,255,0.6);
+    padding: 18px 20px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    position: relative;
+  }
+  .flow-card .step {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 36px;
+    color: var(--accent-soft);
+    line-height: 1;
+    position: absolute; top: 12px; right: 16px;
+  }
+  .flow-card h5 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .flow-card p { font-size: 14px; color: var(--ink-soft); margin: 0; line-height: 1.5; }
+
+  /* ============ 題目區 ============ */
+  .quiz-intro {
+    background: var(--paper-2);
+    padding: 24px 28px;
+    margin: 28px 0;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+  .quiz-intro h4 {
+    margin: 0 0 8px;
+    color: var(--accent);
+    font-size: 17px;
+  }
+  .quiz-intro p { margin: 0; font-size: 15px; color: var(--ink-soft); }
+
+  .question {
+    background: rgba(255,255,255,0.55);
+    padding: 22px 26px;
+    margin: 14px 0;
+    border-left: 3px solid var(--rule);
+    border-radius: 2px;
+    position: relative;
+    transition: border-color .25s;
+  }
+  .question.answered.correct { border-left-color: var(--correct); background: #e8f3ec; }
+  .question.answered.wrong { border-left-color: var(--wrong); background: #fbe9e9; }
+
+  .q-num {
+    position: absolute; left: -2px; top: 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2px 8px;
+    border-radius: 0 2px 2px 0;
+    letter-spacing: 0.1em;
+  }
+  .q-stem {
+    font-family: 'Crimson Pro', serif;
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 6px 0 14px 36px;
+  }
+  .q-stem .blank {
+    display: inline-block;
+    min-width: 80px;
+    border-bottom: 1.5px solid var(--ink);
+    margin: 0 4px;
+    text-align: center;
+    font-weight: 500;
+  }
+  .q-stem .blank.filled { color: var(--accent); border-color: var(--accent); }
+  .q-zh { font-size: 14px; color: var(--ink-faint); margin-left: 36px; margin-bottom: 12px; font-family: 'Noto Serif TC', serif; }
+
+  .q-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 8px;
+    margin-left: 36px;
+  }
+  .q-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.6);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all .15s;
+    font-size: 16px;
+  }
+  .q-option:hover { background: rgba(255,255,255,0.95); border-color: var(--ink-soft); }
+  .q-option.selected { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .q-option.correct-answer {
+    background: #d4ead8 !important; border-color: var(--correct) !important; color: var(--ink) !important;
+  }
+  .q-option.wrong-answer {
+    background: #f4cccc !important; border-color: var(--wrong) !important; color: var(--ink) !important;
+  }
+  .q-option .letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--accent);
+    min-width: 18px;
+  }
+  .q-option.selected .letter { color: var(--gold); }
+
+  /* 填空輸入 */
+  .fill-input {
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    padding: 6px 10px;
+    border: none;
+    border-bottom: 1.5px solid var(--ink);
+    background: transparent;
+    width: 140px;
+    color: var(--accent);
+    font-weight: 500;
+    outline: none;
+    text-align: center;
+  }
+  .fill-input:focus { border-color: var(--accent); background: rgba(255,255,255,0.5); }
+  .fill-input.correct { border-color: var(--correct); color: var(--correct); }
+  .fill-input.wrong { border-color: var(--wrong); color: var(--wrong); }
+
+  .q-explanation {
+    margin: 14px 0 0 36px;
+    padding: 14px 18px;
+    background: rgba(26,22,18,0.04);
+    border-left: 2px solid var(--gold);
+    font-size: 15px;
+    line-height: 1.6;
+    display: none;
+  }
+  .question.answered .q-explanation { display: block; }
+  .q-explanation .label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: 6px;
+  }
+  .q-explanation .answer-tag {
+    display: inline-block;
+    padding: 2px 10px;
+    background: var(--correct);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    border-radius: 2px;
+    margin-right: 8px;
+    letter-spacing: 0.05em;
+  }
+  .q-explanation .answer-tag.wrong { background: var(--wrong); }
+
+  /* 翻譯題 */
+  .translate-box { margin-left: 36px; }
+  .translate-box .blank-input {
+    width: 100%;
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    padding: 10px 14px;
+    border: 1px solid var(--rule);
+    background: rgba(255,255,255,0.6);
+    border-radius: 2px;
+    outline: none;
+    margin-top: 8px;
+    color: var(--ink);
+  }
+  .translate-box .blank-input:focus { border-color: var(--accent); background: white; }
+
+  /* 控制按鈕區 */
+  .quiz-controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 32px 0;
+    padding: 20px;
+    background: var(--paper-2);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    background: rgba(235, 226, 209, 0.92);
+  }
+  .btn {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 10px 28px;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all .2s;
+    text-transform: uppercase;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: white; }
+  .btn.primary:hover { background: #6b1717; border-color: #6b1717; }
+
+  .score-display {
+    text-align: center;
+    margin: 28px 0;
+    padding: 28px 24px;
+    background: linear-gradient(135deg, var(--paper-2), var(--paper));
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    display: none;
+  }
+  .score-display.show { display: block; }
+  .score-display .score-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    letter-spacing: 0.2em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+  .score-display .score-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 84px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--accent);
+    margin: 8px 0;
+  }
+  .score-display .score-num small { font-size: 32px; color: var(--ink-faint); }
+  .score-display .score-detail { color: var(--ink-soft); font-size: 15px; }
+
+  /* footer */
+  .footer {
+    text-align: center;
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--ink-faint);
+    font-size: 14px;
+    letter-spacing: 0.1em;
+  }
+
+  /* 章節分隔花飾 */
+  .ornament {
+    text-align: center;
+    margin: 40px 0;
+    color: var(--ink-faint);
+    font-size: 24px;
+    letter-spacing: 0.5em;
+  }
+
+  /* 響應式 */
+  @media (max-width: 720px) {
+    .container { padding: 40px 18px 100px; }
+    .cover-chapter { font-size: 64px; }
+    .cover-title { font-size: 36px; letter-spacing: 0.3em; }
+    .cover-meta { flex-direction: column; gap: 8px; padding: 12px 20px; }
+    h2.section-title { font-size: 28px; }
+    .toc ol { columns: 1; }
+    .compare-table { font-size: 14px; }
+    .compare-table th, .compare-table td { padding: 10px; }
+    .q-stem, .q-zh, .q-options, .q-explanation, .translate-box { margin-left: 0; }
+    .q-num { position: static; display: inline-block; margin-bottom: 6px; }
+  }
+
+  /* 列印用 */
+  @media print {
+    body { background: white; }
+    .quiz-controls { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ============ 封面 ============ -->
+  <div class="cover">
+    <div class="cover-eyebrow">Senior High English Grammar · Chapter 11</div>
+    <div class="cover-chapter">XI</div>
+    <h1 class="cover-title">分詞</h1>
+    <div class="cover-subtitle">Participles &mdash; The Living Modifier</div>
+    <div class="cover-meta">
+      <span><strong>範圍</strong>　p.195–219</span>
+      <span><strong>建議</strong>　3–4 節</span>
+      <span><strong>授課</strong>　Frank</span>
+    </div>
+  </div>
+
+  <!-- ============ 目錄 ============ -->
+  <nav class="toc">
+    <div class="toc-title">Table of Contents　目　錄</div>
+    <ol>
+      <li><a href="#overview">章節導讀與教學總覽</a></li>
+      <li><a href="#warmup">課前暖身</a></li>
+      <li><a href="#point1">POINT 1　分詞的妙用</a></li>
+      <li><a href="#point2">POINT 2　分詞構句</a></li>
+      <li><a href="#point3">POINT 3　獨立分詞構句</a></li>
+      <li><a href="#point4">POINT 4　With 引導附帶動作</a></li>
+      <li><a href="#point5">POINT 5　分詞慣用語</a></li>
+      <li><a href="#quiz-mc">綜合演練 ・ 文法選擇</a></li>
+      <li><a href="#quiz-fill">綜合演練 ・ 填空</a></li>
+      <li><a href="#quiz-translate">綜合演練 ・ 引導式翻譯</a></li>
+    </ol>
+  </nav>
+
+  <!-- ============ 1. 章節導讀 ============ -->
+  <section id="overview">
+    <div class="section-num">Section I</div>
+    <h2 class="section-title">章節導讀</h2>
+    <div class="section-en">Chapter Overview &amp; Teaching Map</div>
+
+    <h3>核心觀念：分詞是「會動的形容詞」</h3>
+    <p>分詞由動詞變化而來，分為<strong>現在分詞 (V-ing)</strong> 與 <strong>過去分詞 (p.p.)</strong>。學生必須在開場就建立兩組對比直覺：</p>
+
+    <table class="compare-table">
+      <thead>
+        <tr><th>對比軸</th><th>V-ing（現在分詞）</th><th>p.p.（過去分詞）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>外形</td><td>動詞 + ing</td><td>規則：+ ed　／　不規則：依字典</td></tr>
+        <tr><td>核心意涵</td><td>主動 / 進行 / 令人……</td><td>被動 / 完成 / 感到……</td></tr>
+        <tr><td>例：a ___ leaf</td><td>a <b>falling</b> leaf（正在落下）</td><td>a <b>fallen</b> leaf（已落下的）</td></tr>
+        <tr><td>例：情緒</td><td>The news is <b>surprising</b>.（令人吃驚）</td><td>I am <b>surprised</b>.（感到吃驚）</td></tr>
+      </tbody>
+    </table>
+
+    <h3>授課時數規劃</h3>
+    <table class="compare-table">
+      <thead>
+        <tr><th>內容</th><th>頁碼</th><th>時數</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>文法大特寫（V-ing vs. p.p. 入門）</td><td>195</td><td>10 分鐘</td></tr>
+        <tr><td>POINT 1　分詞的妙用</td><td>196–199</td><td>40 分鐘</td></tr>
+        <tr><td>POINT 2　分詞構句</td><td>200–209</td><td>60–80 分鐘</td></tr>
+        <tr><td>POINT 3　獨立分詞構句</td><td>210–211</td><td>20 分鐘</td></tr>
+        <tr><td>POINT 4　with 引導附帶動作</td><td>212–213</td><td>20 分鐘</td></tr>
+        <tr><td>POINT 5　分詞慣用語</td><td>214–215</td><td>15 分鐘</td></tr>
+        <tr><td>綜合演練 + 檢討</td><td>216–219</td><td>50 分鐘</td></tr>
+      </tbody>
+    </table>
+
+    <h3>學生最常見的四大迷思</h3>
+    <div class="warn">
+      <strong>迷思 1：</strong>「為什麼是 V-ing 不是 p.p.？」<br>
+      → 教學重點：永遠先問「這個動作是<em>自己做</em>還是<em>被做</em>？」
+    </div>
+    <div class="warn">
+      <strong>迷思 2：</strong>「分詞構句的主詞要看誰？」<br>
+      → 鐵則：簡化前後<em>主詞要相同</em>。不同就不能簡化（要保留主詞變獨立分詞構句）。
+    </div>
+    <div class="warn">
+      <strong>迷思 3：</strong>「Having + p.p. 跟 Having been + p.p. 差在哪？」<br>
+      → 前者：主動 + 完成。後者：被動 + 完成。
+    </div>
+    <div class="warn">
+      <strong>迷思 4：</strong>「interesting / interested 怎麼選？」<br>
+      → 看「令人」（V-ing）還是「感到」（p.p.），不要死記「人 = ed」。
+    </div>
+  </section>
+
+  <div class="ornament">❦ ❦ ❦</div>
+
+  <!-- ============ 2. 課前暖身 ============ -->
+  <section id="warmup">
+    <div class="section-num">Section II</div>
+    <h2 class="section-title">課前暖身</h2>
+    <div class="section-en">Warm-up &mdash; Build the Intuition First</div>
+
+    <p>在進入課本之前，用三個對比問題建立學生直覺。</p>
+
+    <div class="lesson-flow">
+      <div class="flow-card">
+        <div class="step">i</div>
+        <h5>"a sleeping baby" vs. "a sleeping pill"</h5>
+        <p>都是 sleeping，但前者是「正在睡的嬰兒」（分詞），後者是「用來睡覺的藥」（動名詞）。<br>提醒：分詞 ≠ 動名詞。</p>
+      </div>
+      <div class="flow-card">
+        <div class="step">ii</div>
+        <h5>"a falling leaf" vs. "a fallen leaf"</h5>
+        <p>正在落下 vs. 已落下。直接帶出 V-ing（進行）與 p.p.（完成）的差別，這是 p.196 的核心。</p>
+      </div>
+      <div class="flow-card">
+        <div class="step">iii</div>
+        <h5>"The movie is boring" vs. "I am bored"</h5>
+        <p>都對，但意義不同。引出 p.198「情緒類分詞」的對比。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="ornament">❦ ❦ ❦</div>
+
+  <!-- ============ POINT 1 ============ -->
+  <section id="point1">
+    <div class="section-num">Point One　·　p.196–199</div>
+    <h2 class="section-title">分詞的妙用</h2>
+    <div class="section-en">Participles as Modifiers, Subjects, &amp; Complements</div>
+
+    <h3>(一) 當形容詞 — 修飾名詞</h3>
+
+    <h4>① 放在名詞「前」修飾</h4>
+    <div class="formula">V-ing / p.p. <span class="arrow">+</span> 名詞</div>
+
+    <div class="example">a <b>falling</b> leaf <span class="zh">將落中的葉子（V-ing → 主動 / 進行）</span></div>
+    <div class="example">a <b>fallen</b> leaf <span class="zh">落葉（p.p. → 已完成）</span></div>
+    <div class="example"><b>boiling</b> water <span class="zh">正在沸騰的水</span></div>
+    <div class="example"><b>boiled</b> water <span class="zh">煮開過的水</span></div>
+    <div class="example">a <b>drowning</b> dog <span class="zh">溺水的狗（還在掙扎）</span></div>
+    <div class="example">a <b>drowned</b> dog <span class="zh">溺斃的狗</span></div>
+
+    <div class="tip">用「動畫 vs. 定格照」對比：<b>falling</b> 是錄影、<b>fallen</b> 是照片。</div>
+
+    <h4>② 放在名詞「後」修飾（分詞片語）</h4>
+    <p>本質是<strong>形容詞子句的簡化</strong> — 將「關係代名詞 + be 動詞」一起省略。</p>
+    <div class="formula">名詞 <span class="arrow">+</span> V-ing / p.p. (片語)</div>
+
+    <div class="transform">
+      <div class="from">The man <s>who is</s> living in that house is a famous director.</div>
+      <div class="arrow-line">↓ 省略 who is</div>
+      <div class="to">→ The man <b>living in that house</b> is a famous director.</div>
+    </div>
+    <div class="transform">
+      <div class="from">The car <s>that was</s> found under the tree is Mike's.</div>
+      <div class="arrow-line">↓ 省略 that was</div>
+      <div class="to">→ The car <b>found under the tree</b> is Mike's.</div>
+    </div>
+
+    <div class="note">主動進行 → V-ing；被動完成 → p.p.<br>判斷方式：把名詞和動詞拉出來想：「是車<em>被</em>發現，還是車<em>發現</em>？」→ 車「被」發現 → 用 found (p.p.)。</div>
+
+    <h3>(二) 分詞當主詞補語 (S + V + SC)</h3>
+    <p>連綴動詞 (be, become, get, appear, seem, feel, look, smell…) 後面接分詞，補充說明主詞的<strong>狀態 / 情緒</strong>。</p>
+
+    <table class="compare-table">
+      <thead><tr><th></th><th>V-ing（令人……的）</th><th>p.p.（感到……的）</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>事物 / 情境</td>
+          <td>The topic sounds <b>interesting</b>.<br>Your plan seems <b>fascinating</b>.</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>人 / 主詞感受</td>
+          <td>—</td>
+          <td>He sounds <b>interested</b> in the topic.<br>They seem <b>fascinated</b> by your plan.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>常見情緒對 — 學生必背</h4>
+    <table class="compare-table">
+      <thead><tr><th>V-ing「令人」</th><th>p.p.「感到」</th></tr></thead>
+      <tbody>
+        <tr><td>exciting / amazing / surprising</td><td>excited / amazed / surprised</td></tr>
+        <tr><td>boring / confusing / tiring</td><td>bored / confused / tired</td></tr>
+        <tr><td>frightening / terrifying</td><td>frightened / terrified</td></tr>
+        <tr><td>embarrassing / exhausting</td><td>embarrassed / exhausted</td></tr>
+        <tr><td>relaxing / fascinating</td><td>relaxed / fascinated</td></tr>
+      </tbody>
+    </table>
+
+    <h3>(三) 分詞當受詞補語 (S + V + O + OC)</h3>
+    <div class="formula">主詞 <span class="arrow">+</span> 動詞 <span class="arrow">+</span> 受詞 <span class="arrow">+</span> <span class="red">V-ing / p.p.</span></div>
+
+    <p>感官 / 知覺動詞 (see, hear, feel, watch, find, catch…) 後面接受詞 + 分詞補語：</p>
+    <ul style="margin-left: 24px; margin-bottom: 12px;">
+      <li><b>V-ing</b>（OC 主動進行中）</li>
+      <li><b>p.p.</b>（OC 被動 / 已完成）</li>
+    </ul>
+
+    <div class="example">I saw an armed robber <b>entering</b> the bank. <span class="zh">我看到搶匪正進銀行（OC 是主動）</span></div>
+    <div class="example">Mr. Wang caught Brad <b>cheating</b> on the exam. <span class="zh">王老師抓到 Brad 考試作弊（主動）</span></div>
+    <div class="example">When we got home, we found the window <b>broken</b> and all the valuable jewelry <b>stolen</b>. <span class="zh">回到家發現窗戶被打破、珠寶被偷（被動）</span></div>
+
+    <div class="warn">受詞補語到底用 V-ing 還是 p.p.，就看「OC 跟受詞之間是主動還是被動」。</div>
+  </section>
+
+  <div class="ornament">❦ ❦ ❦</div>
+
+  <!-- ============ POINT 2 ============ -->
+  <section id="point2">
+    <div class="section-num">Point Two　·　p.200–209</div>
+    <h2 class="section-title">分詞構句</h2>
+    <div class="section-en">Participial Phrases &mdash; The Art of Sentence Reduction</div>
+
+    <p>分詞構句的本質：把一個長句子的「子句」簡化成分詞片語，讓句子更簡潔。一定要搞清楚<strong>來源是哪一種子句</strong>，才知道怎麼簡化。</p>
+
+    <h3>三大簡化來源</h3>
+    <div class="lesson-flow">
+      <div class="flow-card">
+        <div class="step">①</div>
+        <h5>形容詞子句</h5>
+        <p>關代 + be 動詞一起省略。be 動詞改 V-ing。</p>
+      </div>
+      <div class="flow-card">
+        <div class="step">②</div>
+        <h5>對等子句</h5>
+        <p>S₁ = S₂ 時，刪除 S₂ 與 and，第二個動詞改 V-ing。</p>
+      </div>
+      <div class="flow-card">
+        <div class="step">③</div>
+        <h5>副詞子句</h5>
+        <p>S₁ = S₂ 時，刪連接詞、刪主詞、動詞改 V-ing/p.p.</p>
+      </div>
+    </div>
+
+    <h3>(三) 副詞子句的簡化（最常考！）</h3>
+
+    <h4>句型 1：一般動詞 → V-ing</h4>
+    <div class="formula">連接詞 + S + V…, S + V… <span class="arrow">→</span> <span class="red">V-ing</span>…, S + V…</div>
+    <div class="transform">
+      <div class="from">When the thief saw the policeman, <b>he</b> ran away.</div>
+      <div class="arrow-line">↓ 刪 When，刪 the thief（前後主詞相同），saw → seeing</div>
+      <div class="to">→ <b>Seeing</b> the policeman, he ran away.</div>
+    </div>
+
+    <h4>句型 2：完成式 → Having + p.p.（先發生）</h4>
+    <div class="formula">連接詞 + S + have + p.p.…, S + V… <span class="arrow">→</span> <span class="red">Having + p.p.</span>…, S + V…</div>
+    <div class="transform">
+      <div class="from">Because he <b>has failed</b> math twice, he fears this subject above all others.</div>
+      <div class="to">→ <b>Having failed</b> math twice, he fears this subject above all others.</div>
+    </div>
+    <div class="tip">Having + p.p. = 強調「先做、做完了，才導致主要子句」。表示<em>時間先後</em>。</div>
+
+    <h4>句型 3：be 動詞 → being（常被省略）</h4>
+    <div class="formula">連接詞 + S + be + p.p./adj./N…, S + V… <span class="arrow">→</span> (Being) + p.p./adj./N…, S + V…</div>
+    <div class="transform">
+      <div class="from">Because the little girl was frightened by the black dog, she burst into tears.</div>
+      <div class="arrow-line">↓ being frightened（被動分詞）</div>
+      <div class="to">→ <b>(Being) Frightened</b> by the black dog, the little girl burst into tears.</div>
+    </div>
+    <div class="warn">表「原因」的 Being 通常省略；表「狀態」的 being 可保留可省略。<br>但 before、after 引導的子句若簡化為 being 必須保留：<br>→ After <b>being bitten</b> by the snake, Vicky lost consciousness.</div>
+
+    <h4>句型 4：have + been → Having been（被動完成）</h4>
+    <div class="formula">S + have been + p.p./adj./N…, S + V… <span class="arrow">→</span> <span class="red">Having been + p.p./adj./N</span>…</div>
+    <div class="transform">
+      <div class="from">After John <b>had been told</b> not to drive so fast, he slowed down.</div>
+      <div class="to">→ <b>(Having been) Told</b> not to drive so fast, John slowed down.</div>
+    </div>
+
+    <h4>句型 5：否定式 → Not + V-ing / p.p.（not 擺第一）</h4>
+    <div class="formula">Not + V-ing / Not + having + p.p.</div>
+    <div class="transform">
+      <div class="from">Because he didn't know what to do, he asked his parents for help.</div>
+      <div class="to">→ <b>Not knowing</b> what to do, he asked his parents for help.</div>
+    </div>
+    <div class="transform">
+      <div class="from">Because Ms. Li was not satisfied with my report, she asked me to rewrite it.</div>
+      <div class="to">→ <b>Ms. Li (being) not satisfied</b> with my report, she asked me to rewrite it.<br>= <b>Not having finished</b> my assignment, I was very anxious.</div>
+    </div>
+
+    <h3>(四) 省略副詞連接詞後會造成語意不清，則保留</h3>
+    <p>大部分連接詞（because, after, when, while…）省略後語意還清楚，所以省略。<br>但有些連接詞省略會造成混淆，<strong>要保留</strong>。</p>
+
+    <table class="compare-table">
+      <thead><tr><th>連接詞</th><th>處理方式</th><th>例</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>because, after, when, while…</td>
+          <td>通常省略</td>
+          <td>(While) Walking on the street, …</td>
+        </tr>
+        <tr>
+          <td>before, after</td>
+          <td>常保留（表時間順序）</td>
+          <td><b>Before</b> washing his face, Johnny brushed his teeth.</td>
+        </tr>
+        <tr>
+          <td>although, though</td>
+          <td>必須保留（表讓步）</td>
+          <td><b>Although</b> a little boy, he is quite sophisticated.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="ornament">❦ ❦ ❦</div>
+
+  <!-- ============ POINT 3 ============ -->
+  <section id="point3">
+    <div class="section-num">Point Three　·　p.210–211</div>
+    <h2 class="section-title">獨立分詞構句</h2>
+    <div class="section-en">Absolute Construction &mdash; When Subjects Differ</div>
+
+    <p>當副詞子句的主詞與主要子句的主詞<strong>不同</strong>時，<em>不能</em>把副詞子句的主詞省略，要保留下來，這就是「獨立分詞構句」。</p>
+
+    <h3>句型一：副詞子句</h3>
+    <div class="formula">副詞連接詞 + <span class="red">S₁</span> + V…, <span class="red">S₂</span> + V…　（S₁ ≠ S₂）</div>
+    <div class="formula">→ <span class="red">S₁</span> + V-ing…, <span class="red">S₂</span> + V…</div>
+
+    <div class="transform">
+      <div class="from">When <b>the sun</b> has risen, <b>the farmers</b> start to work.<br><span style="color:var(--ink-faint); font-size:14px;">（前後主詞不同）</span></div>
+      <div class="arrow-line">↓ 刪連接詞 When，保留 the sun，has → having</div>
+      <div class="to">→ <b>The sun having risen</b>, the farmers start to work.<br><span style="color:var(--ink-faint); font-size:14px;">（太陽升起後，農夫們開始幹活）</span></div>
+    </div>
+
+    <h3>句型二：對等子句</h3>
+    <div class="formula"><span class="red">S₁</span> + V…, and <span class="red">S₂</span> + V…<span class="arrow">→</span><span class="red">S₁</span> + V…, <span class="red">S₂</span> + V-ing…</div>
+    <div class="transform">
+      <div class="from">Luke looked sadly at his mom, and <b>tears</b> ran down his cheeks.</div>
+      <div class="to">→ Luke looked sadly at his mom, <b>tears running</b> down his cheeks.</div>
+    </div>
+    <div class="transform">
+      <div class="from">The girl rode past me on a bike, and <b>her hair</b> blew in the wind.</div>
+      <div class="to">→ The girl rode past me on a bike, <b>her hair blowing</b> in the wind.</div>
+    </div>
+  </section>
+
+  <div class="ornament">❦ ❦ ❦</div>
+
+  <!-- ============ POINT 4 ============ -->
+  <section id="point4">
+    <div class="section-num">Point Four　·　p.212–213</div>
+    <h2 class="section-title">With 引導附帶動作</h2>
+    <div class="section-en">With + Object + Complement</div>
+
+    <p>用來描述「主要子句的動作伴隨著的細節」（狀態 / 原因 / 動作），補充<em>畫面感</em>。</p>
+
+    <h3>三種型態</h3>
+
+    <h4>① with + N + 介系詞 (片語)</h4>
+    <div class="example">He is sleeping on the sofa, <b>with the television on</b>. <span class="zh">他躺在沙發上睡覺，電視機開著</span></div>
+    <div class="example">The lady stood with her back <b>to me</b>. <span class="zh">那位小姐背對著我站著</span></div>
+
+    <h4>② with + N + 形容詞</h4>
+    <div class="example">My dad often speaks <b>with his mouth full</b>. <span class="zh">我爸常常滿嘴食物時講話</span></div>
+    <div class="example">I don't like to sleep <b>with the window open</b>. <span class="zh">我不喜歡開著窗睡覺</span></div>
+
+    <h4>③ with + N + V-ing（OC 主動）</h4>
+    <div class="example">The girl stared at the final exam, <b>with her mouth watering</b>. <span class="zh">那女孩盯著大餐看，口水直流</span></div>
+    <div class="example">Sam is talking to Mr. Chen, <b>with his legs trembling</b>. <span class="zh">Sam 正在跟陳老師講話，腳一直發抖</span></div>
+
+    <h4>④ with + N + p.p.（OC 被動）</h4>
+    <div class="example">He sat in the corner <b>with his eyes closed</b>. <span class="zh">他雙眼緊閉地坐在角落</span></div>
+    <div class="example">Amy is talking to Milton <b>with her arms folded</b>. <span class="zh">Amy 雙手交叉跟 Milton 講話</span></div>
+
+    <div class="tip"><strong>判斷口訣：</strong>OC 跟 N 之間，主動 → V-ing，被動 → p.p.<br>「眼睛被閉上」→ closed；「腳自己抖」→ trembling。</div>
+  </section>
+
+  <div class="ornament">❦ ❦ ❦</div>
+
+  <!-- ============ POINT 5 ============ -->
+  <section id="point5">
+    <div class="section-num">Point Five　·　p.214–215</div>
+    <h2 class="section-title">分詞慣用語</h2>
+    <div class="section-en">Idiomatic Participial Phrases</div>
+
+    <p>這些慣用語的「主詞」不一定要與主要子句一致，是約定俗成的用法。<strong>必背 10 個</strong>。</p>
+
+    <table class="compare-table">
+      <thead><tr><th>慣用語</th><th>意思</th><th>例句</th></tr></thead>
+      <tbody>
+        <tr><td>generally speaking</td><td>一般說來 (= in general)</td><td>Generally speaking, men can run faster than women.</td></tr>
+        <tr><td>strictly speaking</td><td>嚴格說來</td><td>Strictly speaking, this is not a question but a request.</td></tr>
+        <tr><td>frankly speaking</td><td>坦白說</td><td>Frankly speaking, I can't stand your temper.</td></tr>
+        <tr><td>speaking of / about</td><td>談到</td><td>Speaking of Leo, I met his ex-girlfriend yesterday.</td></tr>
+        <tr><td>judging from / by</td><td>由……來判斷</td><td>Judging from his facial expression, he must be nervous.</td></tr>
+        <tr><td>concerning / regarding</td><td>有關（= with regard to）</td><td>Do you have any other opinion regarding this issue?</td></tr>
+        <tr><td>provided / providing (that)</td><td>假如；要是（= if）</td><td>I will let you play games provided that you finish your homework first.</td></tr>
+        <tr><td>supposing (that)</td><td>= suppose (that) 假設</td><td>Supposing you won a lot of money in the lottery, what would you do?</td></tr>
+        <tr><td>given / considering<br>given that / considering that</td><td>考量到；有鑑於</td><td>Given his lack of experience, she has done pretty well.<br>Considering (that) he is only five years old, it is surprising that he knows so many words.</td></tr>
+        <tr><td>seeing as / that<br>given as / that</td><td>既然；因為（多用於口語）</td><td>Seeing as your budget is pretty tight, you may as well book this cheap hotel.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="ornament">❦ ❦ ❦</div>
+
+  <!-- ============================================== -->
+  <!-- ============ 綜合演練：選擇題 ================ -->
+  <!-- ============================================== -->
+  <section id="quiz-mc">
+    <div class="section-num">Drill I　·　p.216–217</div>
+    <h2 class="section-title">綜合演練：文法選擇</h2>
+    <div class="section-en">Multiple Choice &mdash; 25 Questions</div>
+
+    <div class="quiz-intro">
+      <h4>作答說明</h4>
+      <p>共 25 題，每題 2 分。點擊選項作答，再按下方「批改全部」即可看到答案與解析。</p>
+    </div>
+
+    <div id="mc-questions"></div>
+
+    <div class="quiz-controls">
+      <button class="btn primary" onclick="gradeMC()">批改全部</button>
+      <button class="btn" onclick="resetMC()">重新作答</button>
+      <button class="btn" onclick="revealMC()">顯示解答</button>
+    </div>
+
+    <div id="mc-score" class="score-display"></div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- ============ 綜合演練：填空 ================ -->
+  <!-- ============================================== -->
+  <section id="quiz-fill">
+    <div class="section-num">Drill II　·　p.218</div>
+    <h2 class="section-title">綜合演練：填空</h2>
+    <div class="section-en">Fill in the Blanks &mdash; Use the Correct Form</div>
+
+    <div class="quiz-intro">
+      <h4>作答說明</h4>
+      <p>根據上下文，在空格內填入適當的現在分詞或過去分詞（每格一字，一格 2 分，共 14 格）。注意主動 / 被動的判斷。</p>
+    </div>
+
+    <div id="fill-questions"></div>
+
+    <div class="quiz-controls">
+      <button class="btn primary" onclick="gradeFill()">批改全部</button>
+      <button class="btn" onclick="resetFill()">重新作答</button>
+      <button class="btn" onclick="revealFill()">顯示解答</button>
+    </div>
+
+    <div id="fill-score" class="score-display"></div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- ============ 綜合演練：翻譯 ================ -->
+  <!-- ============================================== -->
+  <section id="quiz-translate">
+    <div class="section-num">Drill III　·　p.219</div>
+    <h2 class="section-title">引導式翻譯</h2>
+    <div class="section-en">Guided Translation</div>
+
+    <div class="quiz-intro">
+      <h4>作答說明</h4>
+      <p>請將中文句子翻成英文。共 5 題，作答完按「顯示參考解答」對照。本題型不自動批改，鼓勵學生先寫，再看老師示範解答。</p>
+    </div>
+
+    <div id="translate-questions"></div>
+
+    <div class="quiz-controls">
+      <button class="btn primary" onclick="revealTranslate()">顯示參考解答</button>
+      <button class="btn" onclick="resetTranslate()">隱藏解答</button>
+    </div>
+  </section>
+
+  <div class="footer">
+    &mdash; Fin &mdash; <br>
+    Chapter XI · Participles · End of Lesson
+  </div>
+
+</div>
+
+<script>
+/* ============================================
+   題庫資料（從課本 p.216-219 抓出來）
+   ============================================ */
+
+const mcQuestions = [
+  // p.216
+  { id: 1, stem: 'I am not ___ in this topic at all because it is ___.',
+    options: ['interested; boring', 'interesting; boring', 'interested; bored', 'interesting; bored'],
+    answer: 0,
+    explain: '主詞 I 是「人」感到無聊 → interested。topic「主題」這個事物本身令人無聊 → boring。情緒對的核心：人 = p.p.；事物 = V-ing。'
+  },
+  { id: 2, stem: 'Tina is sweeping the ___ leaves from the path in the ___ wind.',
+    options: ['falling; freezing', 'fallen; freezing', 'falling; frozen', 'fallen; frozen'],
+    answer: 1,
+    explain: '「已經落下的葉子」→ fallen（p.p. 表完成）；「刺骨的寒風」風還在吹 → freezing（V-ing 表正在進行 / 令人感受到的）。'
+  },
+  { id: 3, stem: 'People who work in offices all day often come home ___ tired and depressed.',
+    options: ['to feel', 'feeling', 'felt', 'and felt'],
+    answer: 1,
+    explain: '對等子句 "and they feel tired" 簡化為分詞，主詞相同，feel → feeling。'
+  },
+  { id: 4, stem: 'When the tennis match was over, we sat quietly for a few minutes, ___ by his performance.',
+    options: ['disappointedly', 'disappointing', 'to disappoint', 'disappointed'],
+    answer: 3,
+    explain: '我們是「感到失望」（被表現使失望）→ disappointed。disappointing 是「令人失望的」，修飾事物。'
+  },
+  { id: 5, stem: 'The Internet is like a huge information center ___ any kind of information you are looking for.',
+    options: ['providing', 'that provide', 'which providing', 'provided'],
+    answer: 0,
+    explain: '原句為 "...center which provides..."，關代 + 一般動詞簡化為 V-ing：providing。(B) 主詞單數動詞要 -s 不對；(C) which providing 不合語法。'
+  },
+  { id: 6, stem: 'I have difficulty understanding this message ___ in French.',
+    options: ['which written', 'writing', 'written', 'to write'],
+    answer: 2,
+    explain: '原句 "...message which is written in French"，關代 + be 動詞省略 → 直接留 written（被動寫的）。'
+  },
+  { id: 7, stem: "The boy walked onto the stage, ___ his speech with amazing confidence.",
+    options: ['beginning', 'to begin', 'began', 'and begin'],
+    answer: 0,
+    explain: '"and he began..." 對等子句簡化，前後主詞相同 → began → beginning。'
+  },
+  { id: 8, stem: 'Robert watched the boy solve the math problems, ___ by his unusual talent.',
+    options: ['amazing', 'amazed', 'and amazed', 'to amaze'],
+    answer: 1,
+    explain: 'Robert 是「人」感到驚奇 → amazed (= and was amazed)。'
+  },
+  { id: 9, stem: '___ that all the people were staring at me, I felt embarrassed and left the store right away.',
+    options: ['Knowing', 'To know', 'Because knowing', 'I knew'],
+    answer: 0,
+    explain: '副詞子句 "Because I knew that..." 簡化，主詞同 → 刪 because 與 I，knew → Knowing。'
+  },
+  { id: 10, stem: '___ preparing lunch in the kitchen, Sandra couldn\'t answer the phone.',
+    options: ['As she busy', 'Busy', 'She was busy', 'As busy'],
+    answer: 1,
+    explain: '原句 "Because she was busy preparing..."，be 動詞改為 being，再省略 → 直接留 Busy（形容詞）。'
+  },
+  { id: 11, stem: '___ along the street, I ran into one of my friends.',
+    options: ['Walked', 'Walking', 'To walk', 'I walked'],
+    answer: 1,
+    explain: '"While I was walking..." 簡化 → Walking。前後主詞相同（都是 I）才能省略主詞。'
+  },
+  // p.217
+  { id: 12, stem: '___ the only daughter in her family, she has been pampered (寵愛) by her father and brothers.',
+    options: ['She is', 'Be', 'To be', 'Being'],
+    answer: 3,
+    explain: '"Because she is the only daughter..." 簡化，be 動詞 → being。Being 表原因可保留也可省略，但這裡 4 選 1 必選 Being。'
+  },
+  { id: 13, stem: '___ of working for his rude boss, he decided to quit.',
+    options: ['Because being tired', 'Because he tired', 'Tired', 'To be tired'],
+    answer: 2,
+    explain: '原句 "Because he was tired of...", 簡化為 (Being) Tired of...。Being 通常省略，留 Tired。注意：(A) Because 不能配 V-ing，省連接詞時 being 要省。'
+  },
+  { id: 14, stem: '___ with Jane\'s term paper, Professor Wang asked her to rewrite it.',
+    options: ['Not satisfying', 'Having not satisfied', 'Not satisfied', 'Being not satisfying'],
+    answer: 2,
+    explain: '王教授「對 Jane 的報告不滿意」→ 被動：(being) not satisfied。否定 not 擺第一，being 省略。'
+  },
+  { id: 15, stem: '___ in French, the novel is all Greek to me.',
+    options: ['Writing', 'To be written', 'It is written', 'Written'],
+    answer: 3,
+    explain: '小說「被寫成法文」→ p.p. (Being) Written，Being 通常省略，留 Written。'
+  },
+  { id: 16, stem: '___ any positive response, they decided to stage a protest.',
+    options: ['Having not received', 'Because have not received', 'No having received', 'Not having received'],
+    answer: 3,
+    explain: '完成式否定 → Not + having + p.p.。Not 永遠擺第一個。(A) 不對，順序錯。'
+  },
+  { id: 17, stem: 'When the microphone died, I just stood there on the stage, ___ what to do.',
+    options: ['knowing not', 'not knowing', 'and not knew', 'not knew'],
+    answer: 1,
+    explain: '對等子句 "and I didn\'t know..."，否定分詞 not + V-ing → not knowing。Not 在 V-ing 前。'
+  },
+  { id: 18, stem: 'Mr. Church became furious when ___ that he was not qualified for the job.',
+    options: ['telling', 'having told', 'told', 'been told'],
+    answer: 2,
+    explain: '原句 "when he was told..." 副詞子句保留 when，省略 he was，留 told（被動）。'
+  },
+  { id: 19, stem: '___ by a truck, the old lady was taken to the hospital in no time.',
+    options: ['hit', 'being hit', 'having hit', 'hitting'],
+    answer: 0,
+    explain: '老奶奶「被卡車撞」→ 被動。原句 "Being hit / Having been hit by..."，Being 與 having been 都可省略，剩 hit。'
+  },
+  { id: 20, stem: '___ a fine day, Tim and his wife went out for a walk.',
+    options: ['It being', 'Being', 'As it is', 'As being'],
+    answer: 0,
+    explain: '前後主詞不同（虛主詞 it ≠ Tim and his wife），所以是<strong>獨立分詞構句</strong>，要保留 it。原句 "It was a fine day, ..." → It being a fine day, ...。'
+  },
+  { id: 21, stem: 'Weather ___, we can go hiking on Sunday.',
+    options: ['permits', 'permitted', 'being permitted', 'permitting'],
+    answer: 3,
+    explain: '"If the weather permits..." → 獨立分詞構句（前後主詞不同：weather ≠ we），permits → permitting。注意：是「天氣允許」（主動），不是「天氣被允許」。'
+  },
+  { id: 22, stem: '___ across the table, she was terrified and couldn\'t help bursting into tears.',
+    options: ['Seeing the cockroach ran', 'When she seeing the cockroach running', 'Seeing the cockroach run', 'Seen running'],
+    answer: 2,
+    explain: '"When she saw the cockroach run across..."，see + O + V-原 (看到動作完整發生) 簡化為 Seeing + O + V-原。'
+  },
+  { id: 23, stem: 'Tom has invited many world-famous musicians to the concert, ___ coming from Austria.',
+    options: ['and two of whom', 'two of whom', 'two of them', 'and two of them'],
+    answer: 1,
+    explain: '兩句要連接需要連接詞或關代。(A) and + 關代不行；(D) and + 代名詞 + V-ing 也不行（缺 are）。(B) two of whom = and two of them are，是非限定關代用法。'
+  },
+  // p.219 第 1-5 題（歷屆試題）
+  { id: 24, stem: 'Many mammals fluff up their fur when ___ in order to look bigger and more dangerous to scare the enemy.',
+    options: ['threaten', 'threatening', 'threatened', 'to threaten'],
+    answer: 2,
+    explain: '哺乳動物「被威脅」時鼓起毛 → 被動。"when they are threatened" 簡化保留 when，省 they are，留 threatened。'
+  },
+  { id: 25, stem: '___ already shrunk by 85% to a mere 0.5 square kilometers, Papua\'s glaciers will completely disappear within a decade, researchers have predicted.',
+    options: ['Have', 'Had', 'Having', 'Having been'],
+    answer: 2,
+    explain: '冰川「已經縮小」→ 主動完成。"Glaciers have already shrunk..." 簡化為 Having shrunk... 。(D) Having been shrunk 是被動，但 shrink 是不及物動詞用法在這裡不需被動。'
+  }
+];
+
+const fillQuestions = [
+  // p.218 II 填空
+  { id: 1, stem: 'Alison sat on the sofa ___ with her dolls.',
+    hint: '(play)',
+    answer: ['playing'],
+    explain: '與主詞 Alison 同時發生的動作，主動 → V-ing。原句 "Alison sat on the sofa, and she was playing..." 簡化為 playing。'
+  },
+  { id: 2, stem: 'I don\'t like being alone at a party ___ by fashion models and fancily dressed celebrities. They are so fake!',
+    hint: '(surround)',
+    answer: ['surrounded'],
+    explain: '我「被」名模圍繞 → 被動，p.p. surrounded。原句 "...a party where I am surrounded by..."。'
+  },
+  { id: 3, stem: 'When ___ if I smoke, I told him that I am a heavy smoker.',
+    hint: '(ask)',
+    answer: ['asked'],
+    explain: '我「被問」→ 被動。"When I was asked if..." 簡化保留 when，省 I was，留 asked。'
+  },
+  { id: 4, stem: 'Michael Jackson died, ___ a lot of mysteries unanswered.',
+    hint: '(leave)',
+    answer: ['leaving'],
+    explain: '對等子句 "and he left a lot of mysteries..." 簡化，主動 → leaving。'
+  },
+  { id: 5, stem: '___ how to decline his invitation, I remained silent.',
+    hint: '(not know)',
+    answer: ['Not knowing'],
+    explain: '"Because I didn\'t know how to..." 簡化，否定分詞 → Not knowing。Not 永遠擺第一個。'
+  },
+  { id: 6, stem: 'Betty, my best friend, has ended up (到頭來淪為) as another poor girl ___ by Daniel.',
+    hint: '(dump)',
+    answer: ['dumped'],
+    explain: '可憐的女生「被」拋棄 → 被動 p.p. dumped。形容詞子句 "...girl who was dumped..." 簡化。'
+  },
+  { id: 7, stem: '___ at the news of her son\'s death, Susan shouted and screamed, tears ___ down her cheeks.',
+    hint: '(shock) ... (roll)',
+    answer: ['Shocked', 'rolling'],
+    explain: '第一格：Susan「被震驚」→ Being shocked, Being 省 → Shocked。第二格：獨立分詞構句（tears ≠ Susan），主動 → rolling。'
+  },
+  { id: 8, stem: 'I stood up and walked up to the stage with my heart ___, and my cheeks ___ like fire.',
+    hint: '(pound) ... (burn)',
+    answer: ['pounding', 'burning'],
+    explain: 'with + N + V-ing 結構：心跳「自己跳」→ pounding；臉頰「自己燒」→ burning。皆主動。'
+  },
+  { id: 9, stem: '___ from his face, he is very upset.',
+    hint: '(judge)',
+    answer: ['Judging'],
+    explain: '分詞慣用語 judging from = 由……判斷。固定用法。'
+  },
+  { id: 10, stem: 'He has done pretty well so far ___ that he is only a rookie (菜鳥) on the team.',
+    hint: '(give)',
+    answer: ['given'],
+    explain: '分詞慣用語 given that = considering that = 考量到；有鑑於。'
+  },
+  { id: 11, stem: 'Betty, my best friend, has ended up (到頭來淪為) as another poor girl', 
+    skip: true   // 為了測試一下，這是備用，可忽略
+  }
+].filter(q => !q.skip);
+
+const translateQuestions = [
+  { id: 1,
+    zh: '時間允許的話，我會在回來的路上順道去拜訪你們。',
+    blanks: ['___', '___', '___', '___', '___', '___'],
+    fullChinese: '時間允許的話，我會在回來的路上順道去拜訪你們。',
+    answer: 'Time permitting, I will drop in on you on my way back.',
+    explain: '<strong>解析：</strong>"If time permits..." 改為獨立分詞構句（前後主詞不同：time ≠ I）→ Time permitting, ...。drop in on sb = 順道拜訪某人。'
+  },
+  { id: 2,
+    zh: '有關於你昨天所提的計畫，我會詳細閱讀過一遍，看是否有需要修改之處。',
+    fullChinese: '有關於你昨天所提的計畫，我會詳細閱讀過一遍，看是否有需要修改之處。',
+    answer: 'Regarding the proposal you submitted yesterday, I will read it over and see if it needs any revision.',
+    explain: '<strong>解析：</strong>分詞慣用語 regarding = 有關（= concerning / with regard to）。"the proposal (which) you submitted" 用接觸子句省略 which。'
+  },
+  { id: 3,
+    zh: '我從他精品店買了一個昂貴的包包給她，希望她會原諒我。',
+    fullChinese: '我從他精品店買了一個昂貴的包包給她，希望她會原諒我。',
+    answer: 'I gave her an expensive bag, bought in a boutique, hoping that she would forgive me.',
+    explain: '<strong>解析：</strong>"a bag (which was) bought in a boutique" 形容詞子句簡化為 p.p. 片語。對等子句 "and I hoped..." 簡化為 V-ing → hoping。'
+  },
+  { id: 4,
+    zh: '超過一百位工人參與這項工程，他們全部都日以繼夜地在惡劣的環境中工作。',
+    fullChinese: '超過一百位工人參與這項工程，他們全部都日以繼夜地在惡劣的環境中工作。',
+    answer: 'More than one hundred workers were involved in this project, all working day and night in a very difficult environment around the clock.',
+    explain: '<strong>解析：</strong>第二個分句改成獨立分詞構句：all (of them) working...（全部的人都在工作，主動進行 → V-ing）。「日以繼夜」= day and night / around the clock。'
+  },
+  { id: 5,
+    zh: '完成論文後，Milton 打包好行囊，前往蘇格蘭享受他七天的假期。',
+    fullChinese: '完成論文後，Milton 打包好行囊，前往蘇格蘭享受他七天的假期。',
+    answer: 'Having finished his dissertation, Milton packed his bags and headed to Scotland for a seven-day vacation.',
+    explain: '<strong>解析：</strong>「完成論文後」表示<em>先發生的動作</em> → Having + p.p. (Having finished)。head to = 前往。'
+  }
+];
+
+/* ============================================
+   渲染題目
+   ============================================ */
+function renderMC() {
+  const container = document.getElementById('mc-questions');
+  container.innerHTML = mcQuestions.map((q, idx) => {
+    const opts = q.options.map((opt, i) => {
+      const letter = String.fromCharCode(65 + i);
+      return `<div class="q-option" data-q="${idx}" data-opt="${i}" onclick="selectMC(${idx}, ${i})">
+        <span class="letter">(${letter})</span><span>${opt}</span>
+      </div>`;
+    }).join('');
+    return `<div class="question" id="mc-q-${idx}">
+      <span class="q-num">Q ${String(q.id).padStart(2, '0')}</span>
+      <div class="q-stem">${q.stem.replace(/___/g, '<span class="blank">　　</span>')}</div>
+      <div class="q-options">${opts}</div>
+      <div class="q-explanation"><span class="label">Explanation</span><span class="answer-tag" id="mc-tag-${idx}"></span>${q.explain}</div>
+    </div>`;
+  }).join('');
+}
+
+const mcAnswers = {};
+function selectMC(qIdx, optIdx) {
+  // 已批改不能再改
+  const qBox = document.getElementById('mc-q-' + qIdx);
+  if (qBox.classList.contains('answered')) return;
+  mcAnswers[qIdx] = optIdx;
+  // 更新 UI
+  document.querySelectorAll(`[data-q="${qIdx}"]`).forEach(el => el.classList.remove('selected'));
+  document.querySelector(`[data-q="${qIdx}"][data-opt="${optIdx}"]`).classList.add('selected');
+}
+
+function gradeMC() {
+  let correct = 0;
+  let answered = 0;
+  mcQuestions.forEach((q, idx) => {
+    const qBox = document.getElementById('mc-q-' + idx);
+    qBox.classList.add('answered');
+    const userAns = mcAnswers[idx];
+    const tag = document.getElementById('mc-tag-' + idx);
+
+    if (userAns === undefined) {
+      tag.className = 'answer-tag wrong';
+      tag.textContent = '未作答 → ' + String.fromCharCode(65 + q.answer);
+    } else {
+      answered++;
+      if (userAns === q.answer) {
+        correct++;
+        qBox.classList.add('correct');
+        tag.className = 'answer-tag';
+        tag.textContent = '正確 ✓ ' + String.fromCharCode(65 + q.answer);
+      } else {
+        qBox.classList.add('wrong');
+        tag.className = 'answer-tag wrong';
+        tag.textContent = '答案：' + String.fromCharCode(65 + q.answer);
+      }
+    }
+    // 標記正確 / 錯誤選項
+    document.querySelectorAll(`[data-q="${idx}"]`).forEach((el, i) => {
+      el.classList.remove('selected');
+      if (i === q.answer) el.classList.add('correct-answer');
+      if (userAns === i && userAns !== q.answer) el.classList.add('wrong-answer');
+    });
+  });
+
+  const score = document.getElementById('mc-score');
+  score.classList.add('show');
+  score.innerHTML = `
+    <div class="score-label">Multiple Choice Score</div>
+    <div class="score-num">${correct}<small>／${mcQuestions.length}</small></div>
+    <div class="score-detail">答對 ${correct} 題 ・ 答錯 ${mcQuestions.length - correct} 題　|　得分：${(correct / mcQuestions.length * 100).toFixed(1)}%</div>
+  `;
+  score.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetMC() {
+  for (const k in mcAnswers) delete mcAnswers[k];
+  document.getElementById('mc-score').classList.remove('show');
+  renderMC();
+}
+
+function revealMC() {
+  mcQuestions.forEach((q, idx) => {
+    const qBox = document.getElementById('mc-q-' + idx);
+    qBox.classList.add('answered');
+    const tag = document.getElementById('mc-tag-' + idx);
+    tag.className = 'answer-tag';
+    tag.textContent = '答案：' + String.fromCharCode(65 + q.answer);
+    document.querySelectorAll(`[data-q="${idx}"]`).forEach((el, i) => {
+      el.classList.remove('selected', 'wrong-answer');
+      if (i === q.answer) el.classList.add('correct-answer');
+    });
+  });
+}
+
+/* ============ 填空題 ============ */
+function renderFill() {
+  const container = document.getElementById('fill-questions');
+  container.innerHTML = fillQuestions.map((q, idx) => {
+    let stemHtml = q.stem;
+    let blankCount = 0;
+    stemHtml = stemHtml.replace(/___/g, () => {
+      const i = blankCount++;
+      return `<input type="text" class="fill-input" id="fill-${idx}-${i}" />`;
+    });
+    return `<div class="question" id="fill-q-${idx}">
+      <span class="q-num">F ${String(idx + 1).padStart(2, '0')}</span>
+      <div class="q-stem">${stemHtml} <span style="color:var(--ink-faint); font-style:italic;">${q.hint || ''}</span></div>
+      <div class="q-explanation"><span class="label">Answer</span><span class="answer-tag" id="fill-tag-${idx}"></span>${q.explain}</div>
+    </div>`;
+  }).join('');
+}
+
+function gradeFill() {
+  let correct = 0;
+  let totalBlanks = 0;
+  fillQuestions.forEach((q, idx) => {
+    const qBox = document.getElementById('fill-q-' + idx);
+    qBox.classList.add('answered');
+    let allCorrect = true;
+    q.answer.forEach((ans, i) => {
+      totalBlanks++;
+      const input = document.getElementById(`fill-${idx}-${i}`);
+      const val = input.value.trim();
+      if (val.toLowerCase() === ans.toLowerCase()) {
+        correct++;
+        input.classList.add('correct');
+        input.classList.remove('wrong');
+      } else {
+        input.classList.add('wrong');
+        input.classList.remove('correct');
+        allCorrect = false;
+      }
+    });
+    qBox.classList.add(allCorrect ? 'correct' : 'wrong');
+    const tag = document.getElementById('fill-tag-' + idx);
+    tag.className = 'answer-tag' + (allCorrect ? '' : ' wrong');
+    tag.textContent = '解答：' + q.answer.join('　/　');
+  });
+
+  const score = document.getElementById('fill-score');
+  score.classList.add('show');
+  score.innerHTML = `
+    <div class="score-label">Fill-in-the-Blanks Score</div>
+    <div class="score-num">${correct}<small>／${totalBlanks}</small></div>
+    <div class="score-detail">填對 ${correct} 格 ・ 共 ${totalBlanks} 格　|　得分：${(correct / totalBlanks * 100).toFixed(1)}%</div>
+  `;
+  score.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetFill() {
+  document.getElementById('fill-score').classList.remove('show');
+  renderFill();
+}
+
+function revealFill() {
+  fillQuestions.forEach((q, idx) => {
+    const qBox = document.getElementById('fill-q-' + idx);
+    qBox.classList.add('answered');
+    q.answer.forEach((ans, i) => {
+      const input = document.getElementById(`fill-${idx}-${i}`);
+      input.value = ans;
+      input.classList.add('correct');
+    });
+    const tag = document.getElementById('fill-tag-' + idx);
+    tag.className = 'answer-tag';
+    tag.textContent = '解答：' + q.answer.join('　/　');
+  });
+}
+
+/* ============ 翻譯題 ============ */
+function renderTranslate() {
+  const container = document.getElementById('translate-questions');
+  container.innerHTML = translateQuestions.map((q, idx) => {
+    return `<div class="question" id="tr-q-${idx}">
+      <span class="q-num">T ${String(idx + 1).padStart(2, '0')}</span>
+      <div class="q-stem">${q.zh}</div>
+      <div class="translate-box">
+        <textarea class="blank-input" rows="2" placeholder="在此輸入英文翻譯..." id="tr-input-${idx}"></textarea>
+      </div>
+      <div class="q-explanation">
+        <div style="margin-bottom: 8px;"><span class="label">Reference</span> ${q.answer}</div>
+        ${q.explain}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function revealTranslate() {
+  translateQuestions.forEach((q, idx) => {
+    document.getElementById('tr-q-' + idx).classList.add('answered');
+  });
+}
+
+function resetTranslate() {
+  translateQuestions.forEach((q, idx) => {
+    document.getElementById('tr-q-' + idx).classList.remove('answered');
+  });
+}
+
+/* ============ 初始化 ============ */
+renderMC();
+renderFill();
+renderTranslate();
+</script>
+</body>
+</html>
