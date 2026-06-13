@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 12 形容詞與副詞 · 假設語氣延伸 — 小考</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F6F2;
+    --surface: #FFFFFF;
+    --border: #E2DDD6;
+    --border-dark: #C8C2B8;
+    --text-primary: #1A1A1A;
+    --text-secondary: #6B6560;
+    --text-muted: #9E9890;
+    --accent: #2E5BFF;
+    --accent-light: #EEF1FF;
+    --warn: #C84B11;
+    --warn-light: #FFF0EB;
+    --success: #0F7B4D;
+    --success-light: #E8F7F1;
+    --danger: #B91C1C;
+    --danger-light: #FEF2F2;
+    --yellow: #92600A;
+    --yellow-light: #FFFBEB;
+    --font-display: 'Georgia', 'Noto Serif TC', serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .topbar-chapter {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(46,91,255,0.2);
+  }
+  .topbar-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .progress-track {
+    width: 120px;
+    height: 5px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 5px;
+    background: var(--accent);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem 2.5rem;
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+  }
+  .tag-warn  { background: var(--warn-light);    color: var(--warn);    border-color: rgba(200,75,17,0.2); }
+  .tag-blue  { background: var(--accent-light);   color: var(--accent);  border-color: rgba(46,91,255,0.2); }
+  .tag-green { background: var(--success-light);  color: var(--success); border-color: rgba(15,123,77,0.2); }
+  .hero-score-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+    min-width: 110px;
+  }
+  .hero-score-num {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+  .hero-score-denom {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .hero-score-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 2rem 0 1.25rem;
+  }
+  .section-divider-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .section-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s;
+  }
+  .q-card:hover { border-color: var(--border-dark); }
+  .q-card.answered-correct { border-color: rgba(15,123,77,0.4); }
+  .q-card.answered-wrong   { border-color: rgba(185,28,28,0.35); }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .q-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px 7px;
+    white-space: nowrap;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .q-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .q-badge-warn  { background: var(--warn-light);  color: var(--warn); }
+  .q-badge-plain { background: var(--bg);           color: var(--text-muted); border: 1px solid var(--border); }
+
+  .q-text {
+    font-size: 15px;
+    color: var(--text-primary);
+    line-height: 1.7;
+    flex: 1;
+  }
+  .blank {
+    display: inline-block;
+    min-width: 70px;
+    border-bottom: 1.5px solid var(--border-dark);
+    height: 17px;
+    vertical-align: bottom;
+    margin: 0 2px;
+  }
+
+  /* ── OPTIONS ── */
+  .q-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  @media (max-width: 540px) {
+    .q-options { grid-template-columns: 1fr; }
+  }
+  .opt-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 9px 14px;
+    font-size: 14px;
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    cursor: pointer;
+    text-align: left;
+    line-height: 1.5;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  }
+  .opt-btn:hover:not(:disabled) {
+    background: var(--accent-light);
+    border-color: rgba(46,91,255,0.35);
+    transform: translateY(-1px);
+  }
+  .opt-btn:disabled { cursor: default; }
+  .opt-btn.correct {
+    background: var(--success-light);
+    border-color: rgba(15,123,77,0.5);
+    color: var(--success);
+    font-weight: 600;
+  }
+  .opt-btn.wrong {
+    background: var(--danger-light);
+    border-color: rgba(185,28,28,0.4);
+    color: var(--danger);
+    text-decoration: line-through;
+    opacity: 0.85;
+  }
+  .opt-btn.reveal {
+    background: var(--success-light);
+    border-color: rgba(15,123,77,0.5);
+    color: var(--success);
+    font-weight: 600;
+  }
+  .opt-btn.dimmed { opacity: 0.38; }
+
+  /* ── EXPLANATION ── */
+  .explain {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: var(--yellow-light);
+    border: 1px solid rgba(146,96,10,0.2);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.7;
+    border-left: 3px solid var(--yellow);
+  }
+  .explain.show { display: block; }
+  .explain strong { color: var(--yellow); font-weight: 700; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  /* ── SCORE RESULT ── */
+  .result-box {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .result-box.show { display: block; }
+  .result-big {
+    font-family: var(--font-display);
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+  .result-denom {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .result-stars {
+    font-size: 28px;
+    margin: 16px 0 8px;
+    letter-spacing: 4px;
+  }
+  .result-msg {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+  .result-breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 1.25rem 0;
+  }
+  .result-stat {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem 0.5rem;
+  }
+  .result-stat-num  { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+  .result-stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .reset-btn {
+    background: var(--text-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 11px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .reset-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 2rem 0 1rem;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .topbar, .progress-wrap, .reset-btn { display: none; }
+    body { background: #fff; font-size: 13px; }
+    .q-card { break-inside: avoid; border: 1px solid #ccc; }
+    .opt-btn { pointer-events: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-chapter">Ch. 12 + L7-1</span>
+    <span class="topbar-title">形容詞與副詞 · 假設語氣延伸</span>
+  </div>
+  <div class="topbar-right">
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="bar"></div></div>
+      <span class="progress-text" id="counter">0 / 25</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">高中英文文法</div>
+      <h1>Chapter 12 形容詞與副詞<br>+ L7-1 假設語氣延伸</h1>
+      <div class="hero-meta">
+        <span class="tag tag-warn">錯題加強 ★</span>
+        <span class="tag tag-blue">共 25 題</span>
+        <span class="tag tag-green">每題 2 分 · 共 50 分</span>
+      </div>
+    </div>
+    <div class="hero-score-box">
+      <div class="hero-score-num" id="live-score">—</div>
+      <div class="hero-score-denom">/ 50 分</div>
+      <div class="hero-score-label">即時得分</div>
+    </div>
+  </div>
+
+  <!-- SECTION: 形容詞與副詞 -->
+  <div class="section-divider">
+    <span class="section-divider-label">選擇題 · 形容詞與副詞</span>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div id="questions-a"></div>
+
+  <!-- SECTION: 假設語氣 -->
+  <div class="section-divider">
+    <span class="section-divider-label">選擇題 · 假設語氣延伸</span>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div id="questions-b"></div>
+
+  <!-- RESULT -->
+  <div class="result-box" id="result-box">
+    <div class="result-big" id="result-score">—</div>
+    <div class="result-denom">分 / 50</div>
+    <div class="result-stars" id="result-stars">⭐⭐⭐</div>
+    <div class="result-msg" id="result-msg">—</div>
+    <div class="result-breakdown">
+      <div class="result-stat">
+        <div class="result-stat-num" id="r-correct">—</div>
+        <div class="result-stat-label">答對題數</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-num" id="r-wrong">—</div>
+        <div class="result-stat-label">答錯題數</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-num" id="r-pct">—</div>
+        <div class="result-stat-label">正確率</div>
+      </div>
+    </div>
+    <button class="reset-btn" onclick="resetQuiz()">重新作答</button>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Chapter 12 形容詞與副詞 + L7-1 假設語氣延伸 &nbsp;·&nbsp; 高中英文文法實力評量 &nbsp;·&nbsp; ★ 標記為原考卷錯題加強
+</div>
+
+<script>
+const QA = [
+  {
+    warn: true,
+    q: "I need <span class='blank'></span> to take care of the company when I am away on a business trip.",
+    opts: ["(A) some one responsible", "(B) careful someone", "(C) someone responsible", "(D) someone carefully"],
+    ans: 2,
+    exp: "somebody / someone / anybody / anyone 等不定代名詞，形容詞必須「後位修飾」放在其後。所以是 someone responsible，不是 responsible someone。"
+  },
+  {
+    warn: false,
+    q: "This romantic town attracts <span class='blank'></span> tourists from around the world every year.",
+    opts: ["(A) a large amount of", "(B) a plenty of", "(C) a lot of", "(D) many a"],
+    ans: 2,
+    exp: "tourists 是可數複數名詞，修飾可數名詞的大量詞：a lot of / lots of / a large number of / plenty of。a large amount of 只接不可數；a plenty of 不存在（正確是 plenty of）；many a 接單數名詞。"
+  },
+  {
+    warn: false,
+    q: "It's impossible to complete all the work today. We have very <span class='blank'></span> time left.",
+    opts: ["(A) a little", "(B) little", "(C) a few", "(D) few"],
+    ans: 1,
+    exp: "time 是不可數名詞，選 little（幾乎沒有，帶否定意味）或 a little（一些）。題意強調「時間不夠」，選 little。a few / few 修飾可數複數名詞，不適用。"
+  },
+  {
+    warn: false,
+    q: "The government has spent <span class='blank'></span> money building ten power plants around the country.",
+    opts: ["(A) a large sum of", "(B) quite a few", "(C) a large number of", "(D) a good many"],
+    ans: 0,
+    exp: "money 是不可數名詞，修飾金額的不可數大量詞：a large sum of = a large amount of = a great deal of。quite a few / a large number of / a good many 均修飾可數複數名詞。"
+  },
+  {
+    warn: true,
+    q: "Many people in the audience couldn't help shedding tears after hearing this <span class='blank'></span> story.",
+    opts: ["(A) breaking-heart", "(B) hearts-breaking", "(C) heartbroken", "(D) heartbreaking"],
+    ans: 3,
+    exp: "N + V-ing 複合形容詞（主動）：heart-breaking = a story that breaks one's heart（令人心碎的）。heartbroken 是「某人的心被打碎」，修飾人而非故事。選 heartbreaking。"
+  },
+  {
+    warn: false,
+    q: "Kelly is <span class='blank'></span> Judy. They are adorable students.",
+    opts: ["(A) as clever as", "(B) more smart than", "(C) as friendly than", "(D) more humorous as"],
+    ans: 0,
+    exp: "as + adj. + as（原級比較，表程度相當）。注意：as...as 中間必須用形容詞原級，不能接 than。clever 是雙音節字，可直接用原級，故選 as clever as。"
+  },
+  {
+    warn: false,
+    q: "The Wang family has two boys. James is <span class='blank'></span> of the two.",
+    opts: ["(A) the tall", "(B) the taller", "(C) taller", "(D) tallest"],
+    ans: 1,
+    exp: "兩者相比，用 S + be + the + 比較級 + of the two。有 of the two 時，比較級前面必須加 the。"
+  },
+  {
+    warn: false,
+    q: "It's getting <span class='blank'></span> here. Could you please turn on the air-conditioner?",
+    opts: ["(A) the hotter", "(B) the hottest", "(C) hotter and hotter", "(D) hot and hot"],
+    ans: 2,
+    exp: "「越來越……」：單/雙音節用 adj.-er and adj.-er；多音節用 more and more + adj.。hot → hotter and hotter。(A) the hotter 表「兩者中較熱」，語境不符。"
+  },
+  {
+    warn: true,
+    q: "Dr. Lin is <span class='blank'></span> Dr. Wang. They are both respected by students.",
+    opts: ["(A) as a good teacher as", "(B) as kindly a teacher as", "(C) so great a teacher than", "(D) as patient a teacher as"],
+    ans: 3,
+    exp: "as + adj. + a/an + N + as 句型中，形容詞夾在 as...as 之間。正確格式：as patient a teacher as。(C) 用 than 是錯的，as...as 不接 than。"
+  },
+  {
+    warn: true,
+    q: "Maggie is <span class='blank'></span> me. She is the most experienced employee in the company.",
+    opts: ["(A) junior than", "(B) senior to", "(C) junior to", "(D) senior than"],
+    ans: 1,
+    exp: "senior / junior / superior / inferior 這四個形容詞後面一律接 to，不能用 than！Maggie 是最有經驗的，代表她比 me 資深，所以用 senior to。"
+  },
+  {
+    warn: true,
+    q: "The road can be slippery on a rainy day, so you should drive <span class='blank'></span> than you do on a sunny day.",
+    opts: ["(A) more slow", "(B) slowly", "(C) slower", "(D) more slowly"],
+    ans: 3,
+    exp: "slowly 是副詞，多音節副詞的比較級用 more slowly。slower 是形容詞 slow 的比較級，不可修飾動詞 drive。有 than 代表需用比較級，故選 more slowly。"
+  },
+  {
+    warn: true,
+    q: "This program is <span class='blank'></span> shorter than that one.",
+    opts: ["(A) very", "(B) much", "(C) more", "(D) so"],
+    ans: 1,
+    exp: "比較級前可加 much / a lot / far / even / still 來加強程度，絕對不能加 very（大錯！）。答案選 much。"
+  },
+  {
+    warn: true,
+    q: "The more you exercise, <span class='blank'></span> you'll become.",
+    opts: ["(A) much healthier", "(B) the healthy", "(C) the healthier", "(D) the healthiest"],
+    ans: 2,
+    exp: "the + 比較級...the + 比較級（越……越……）。後半句也要用 the + 比較級，答案是 the healthier。"
+  },
+  {
+    warn: true,
+    q: "Piggy is heavier than <span class='blank'></span> student in Dr. Owl's class.",
+    opts: ["(A) other", "(B) the others", "(C) all", "(D) any other"],
+    ans: 3,
+    exp: "比較級表最高級的句型：S + V + 比較級 + than + any other + 單數 N。Piggy 也是班上的一員，比較時需排除自己，所以必須用 any other（不能去掉 other）。"
+  },
+  {
+    warn: true,
+    q: "No other leader in modern history is <span class='blank'></span> than him. He led his country into a new era.",
+    opts: ["(A) so great", "(B) greater", "(C) as great", "(D) more greater"],
+    ans: 1,
+    exp: "No other + N + V + 比較級 + than 用比較級表達最高級概念：没有任何其他領導人比他更偉大 = 他是最偉大的。答案用比較級 greater。"
+  },
+  {
+    warn: true,
+    q: "We <span class='blank'></span> outside the house than the earthquake struck.",
+    opts: ["(A) walked", "(B) had no sooner walked", "(C) as soon as walked", "(D) had walked"],
+    ans: 1,
+    exp: "had no sooner + p.p. ... than + 過去簡單式，表「一……就……」。主要動作用過去完成式（had walked），than 後面用過去式。= As soon as we walked outside, the earthquake struck."
+  },
+  {
+    warn: true,
+    q: "He is <span class='blank'></span>, gentle, and tender. Many girls in the office admire him.",
+    opts: ["(A) well-educating", "(B) well-educated", "(C) good-educating", "(D) good-educated"],
+    ans: 1,
+    exp: "adv. + p.p.（副詞 + 過去分詞）複合形容詞，表被動：well-educated（受良好教育的）。-ing 為主動，語意錯誤；good 是形容詞不能修飾分詞，需用副詞 well。"
+  },
+  {
+    warn: true,
+    q: "He earns <span class='blank'></span> than NT$10,000 per month. I wonder how he can support his family on such a low income.",
+    opts: ["(A) little", "(B) less", "(C) least", "(D) fewer"],
+    ans: 1,
+    exp: "money 是不可數名詞，少量用 little（原級）/ less（比較級）/ least（最高級）。有 than，需用比較級 less。fewer 只修飾可數名詞，不適用。"
+  },
+  {
+    warn: true,
+    q: "Jack is <span class='blank'></span> the most responsible among us. That's why he is trusted by our boss.",
+    opts: ["(A) much", "(B) even", "(C) very", "(D) by far"],
+    ans: 3,
+    exp: "最高級前面可加 by far 來強調程度（by far the most...是最強調的說法）。注意：very 也可接最高級，但通常搭配 the very best，較少單用。本題 by far 最自然。"
+  },
+  {
+    warn: true,
+    q: "He has asked for a day off; <span class='blank'></span>, he won't show up today.",
+    opts: ["(A) nevertheless", "(B) first of all", "(C) in other words", "(D) in addition"],
+    ans: 2,
+    exp: "in other words（換句話說）是解釋前句的轉折語。前句「他請假了」→ 後句「他今天不會來」，意思相同，用 in other words 最恰當。nevertheless 表「儘管如此」，語意相反，不符。"
+  }
+];
+
+const QB = [
+  {
+    warn: true,
+    q: "If it <span class='blank'></span> not for the COVID-19 crisis, most people <span class='blank'></span> how great Taiwan's health care system is.",
+    opts: ["(A) was; would not know", "(B) was; would not have known", "(C) were; would not have known", "(D) were; would not know"],
+    ans: 3,
+    exp: "If it were not for... 是與現在事實相反的假設語氣，主句用 would + 原形動詞（would not know）。假設語氣固定用 were（非 was）。答案 (D)。"
+  },
+  {
+    warn: true,
+    q: "<span class='blank'></span> Mandy's headache, she could go to Daisy's birthday party this evening.",
+    opts: ["(A) Without for", "(B) If it were not for", "(C) Were if it not for", "(D) If it had not been for"],
+    ans: 1,
+    exp: "要不是有 Mandy 的頭痛 → 與現在相反，用 If it were not for = But for = Without + N。(C) Were if 語法錯誤（倒裝句不保留 if）；(D) had not been for 用於過去。"
+  },
+  {
+    warn: true,
+    q: "If it <span class='blank'></span> the terrible weather, we <span class='blank'></span> picnicking in the park yesterday.",
+    opts: ["(A) had not been for; would have gone", "(B) had not been for; would go", "(C) were not for; would have gone", "(D) were not for; would go"],
+    ans: 0,
+    exp: "yesterday 表示是過去，與過去事實相反 → If it had not been for（過去假設），主句用 would have + p.p.（would have gone）。答案 (A)。"
+  },
+  {
+    warn: false,
+    q: "If it had not been for my parents' financial aid, I <span class='blank'></span> my own house.",
+    opts: ["(A) can't buy", "(B) won't buy", "(C) couldn't buy", "(D) couldn't have bought"],
+    ans: 3,
+    exp: "If it had not been for... 與過去事實相反的假設語氣，主句固定用 would / could / should / might + have + p.p.。答案是 couldn't have bought。"
+  },
+  {
+    warn: false,
+    q: "<span class='blank'></span> it not for my parents' support, I couldn't afford an apartment of my own.",
+    opts: ["(A) If", "(B) Were", "(C) Had", "(D) Without"],
+    ans: 1,
+    exp: "假設語氣倒裝：砍掉 If，將 were 移到主詞前面。If it were not for → Were it not for（與現在相反，用 were）。Had 用於過去（Had it not been for）。"
+  }
+];
+
+let answered = 0;
+let correct   = 0;
+const total   = QA.length + QB.length;
+
+function buildQ(q, globalIdx, containerId) {
+  const wrap = document.getElementById(containerId);
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.id = 'q' + globalIdx;
+
+  const badgeClass = q.warn ? 'q-badge-warn' : 'q-badge-plain';
+  const badgeLabel = q.warn ? '★ 錯題加強' : '基礎鞏固';
+
+  card.innerHTML = `
+    <div class="q-header">
+      <span class="q-num">Q${globalIdx + 1}</span>
+      <span class="q-badge ${badgeClass}">${badgeLabel}</span>
+      <div class="q-text">${q.q}</div>
+    </div>
+    <div class="q-options" id="opts${globalIdx}">
+      ${q.opts.map((o, j) => `<button class="opt-btn" onclick="pick(${globalIdx}, ${j})">${o}</button>`).join('')}
+    </div>
+    <div class="explain" id="exp${globalIdx}"><strong>解析</strong>${q.exp}</div>
+  `;
+  wrap.appendChild(card);
+}
+
+function renderAll() {
+  document.getElementById('questions-a').innerHTML = '';
+  document.getElementById('questions-b').innerHTML = '';
+  QA.forEach((q, i)         => buildQ(q, i,            'questions-a'));
+  QB.forEach((q, i)         => buildQ(q, QA.length + i, 'questions-b'));
+}
+
+function pick(qi, oi) {
+  const allQ = [...QA, ...QB];
+  const q    = allQ[qi];
+  const opts = document.querySelectorAll(`#opts${qi} .opt-btn`);
+
+  opts.forEach(o => o.disabled = true);
+
+  const isCorrect = oi === q.ans;
+  if (isCorrect) {
+    opts[oi].classList.add('correct');
+  } else {
+    opts[oi].classList.add('wrong');
+    opts[q.ans].classList.add('reveal');
+  }
+  opts.forEach((o, j) => {
+    if (j !== oi && j !== q.ans) o.classList.add('dimmed');
+  });
+
+  document.getElementById('exp' + qi).classList.add('show');
+
+  const card = document.getElementById('q' + qi);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+
+  answered++;
+  if (isCorrect) correct++;
+
+  updateProgress();
+  if (answered === total) setTimeout(showResult, 600);
+}
+
+function updateProgress() {
+  const pct = (answered / total * 100).toFixed(0);
+  document.getElementById('bar').style.width    = pct + '%';
+  document.getElementById('counter').textContent = answered + ' / ' + total;
+  document.getElementById('live-score').textContent = correct * 2;
+}
+
+function showResult() {
+  const score   = correct * 2;
+  const pct     = Math.round(correct / total * 100);
+  let stars, msg;
+  if (correct >= 23)      { stars = '⭐⭐⭐'; msg = '太強了！文法掌握度極高，表現出色！'; }
+  else if (correct >= 19) { stars = '⭐⭐';  msg = '表現不錯！再把錯題的解析看一遍會更紮實。'; }
+  else if (correct >= 14) { stars = '⭐';    msg = '還有進步空間，重點規則多看幾遍加油！'; }
+  else                    { stars = '📖';    msg = '錯題較多，建議把解析仔細讀過，再重新作答一次。'; }
+
+  document.getElementById('result-score').textContent = score;
+  document.getElementById('result-stars').textContent = stars;
+  document.getElementById('result-msg').textContent   = msg;
+  document.getElementById('r-correct').textContent    = correct;
+  document.getElementById('r-wrong').textContent      = total - correct;
+  document.getElementById('r-pct').textContent        = pct + '%';
+  document.getElementById('result-box').classList.add('show');
+  document.getElementById('result-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  answered = 0; correct = 0;
+  document.getElementById('result-box').classList.remove('show');
+  document.getElementById('live-score').textContent = '—';
+  document.getElementById('bar').style.width = '0%';
+  document.getElementById('counter').textContent = '0 / ' + total;
+  renderAll();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+renderAll();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英文文法教材 | Ch.12 形容詞與副詞 + 假設語氣延伸</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red:    #FF6B6B;
+    --teal:   #4ECDC4;
+    --yellow: #FFE66D;
+    --purple: #A855F7;
+    --green:  #22C55E;
+    --blue:   #3B82F6;
+    --orange: #F97316;
+    --bg:     #0F0F1A;
+    --card:   #1A1A2E;
+    --card2:  #16213E;
+    --border: rgba(255,255,255,0.08);
+    --text:   #E2E8F0;
+    --muted:  #94A3B8;
+    --font:   'Segoe UI', 'Microsoft JhengHei', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(78,205,196,0.15) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(168,85,247,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(78,205,196,0.15);
+    border: 1px solid rgba(78,205,196,0.4);
+    color: var(--teal);
+    padding: 0.35rem 1rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    opacity: 0;
+  }
+  .hero h1 span { color: var(--teal); }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--muted);
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+  }
+  .hero-pills {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+    justify-content: center;
+    opacity: 0;
+  }
+  .pill {
+    padding: 0.5rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .pill:hover { transform: translateY(-2px); }
+  .pill-adj  { background: rgba(255,107,107,0.2); border: 1px solid var(--red);    color: var(--red); }
+  .pill-adv  { background: rgba(78,205,196,0.2);  border: 1px solid var(--teal);   color: var(--teal); }
+  .pill-if   { background: rgba(168,85,247,0.2);   border: 1px solid var(--purple); color: var(--purple); }
+  .scroll-hint {
+    position: absolute; bottom: 2rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: var(--muted); font-size: 0.8rem;
+    animation: bounce 2s infinite;
+    opacity: 0;
+  }
+  .scroll-hint svg { width: 20px; height: 20px; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+  /* ===== NAV ===== */
+  .nav-sticky {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,15,26,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; gap: 0; overflow-x: auto;
+  }
+  .nav-btn {
+    padding: 1rem 1.5rem;
+    background: none; border: none;
+    color: var(--muted);
+    font-size: 0.9rem; font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    font-family: var(--font);
+  }
+  .nav-btn:hover { color: var(--text); }
+  .nav-btn.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+  section { padding: 5rem 0; }
+
+  /* ===== SECTION HEADER ===== */
+  .section-header {
+    text-align: center; margin-bottom: 3rem;
+  }
+  .section-tag {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+  }
+  .tag-red    { background: rgba(255,107,107,0.15); color: var(--red); border: 1px solid rgba(255,107,107,0.3); }
+  .tag-teal   { background: rgba(78,205,196,0.15);  color: var(--teal); border: 1px solid rgba(78,205,196,0.3); }
+  .tag-purple { background: rgba(168,85,247,0.15);  color: var(--purple); border: 1px solid rgba(168,85,247,0.3); }
+  .tag-yellow { background: rgba(255,230,109,0.15); color: var(--yellow); border: 1px solid rgba(255,230,109,0.3); }
+  .tag-blue   { background: rgba(59,130,246,0.15);  color: var(--blue); border: 1px solid rgba(59,130,246,0.3); }
+  .section-header h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  .section-header p { color: var(--muted); font-size: 1rem; }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  }
+  .card.red::before    { background: var(--red); }
+  .card.teal::before   { background: var(--teal); }
+  .card.yellow::before { background: var(--yellow); }
+  .card.purple::before { background: var(--purple); }
+  .card.blue::before   { background: var(--blue); }
+  .card.green::before  { background: var(--green); }
+  .card.orange::before { background: var(--orange); }
+  .card h3 {
+    font-size: 1.1rem; font-weight: 700;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .card p, .card li { color: var(--muted); font-size: 0.95rem; }
+  .card ul { padding-left: 1.2rem; }
+  .card li { margin-bottom: 0.4rem; }
+
+  /* ===== EXAM BOX ===== */
+  .exam-box {
+    background: linear-gradient(135deg, rgba(255,230,109,0.08), rgba(249,115,22,0.08));
+    border: 1px solid rgba(255,230,109,0.25);
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .exam-box h3 {
+    color: var(--yellow);
+    font-size: 1rem; font-weight: 700;
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .exam-item {
+    display: flex; gap: 0.75rem; align-items: flex-start;
+    margin-bottom: 0.6rem;
+    padding: 0.6rem 0.75rem;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+  }
+  .exam-num {
+    background: var(--yellow);
+    color: #000;
+    font-size: 0.7rem; font-weight: 800;
+    min-width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 0.1rem;
+  }
+  .exam-text { color: var(--text); font-size: 0.9rem; }
+  .exam-text strong { color: var(--yellow); }
+
+  /* ===== FORMULA BOX ===== */
+  .formula {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    font-family: 'Courier New', monospace;
+    color: var(--teal);
+    font-size: 0.95rem;
+    margin: 0.75rem 0;
+    position: relative;
+  }
+  .formula-label {
+    position: absolute; top: -0.65rem; left: 1rem;
+    background: var(--card2);
+    padding: 0 0.5rem;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 1px;
+    color: var(--teal); font-family: var(--font);
+    text-transform: uppercase;
+  }
+
+  /* ===== EXAMPLE ===== */
+  .ex {
+    background: rgba(255,255,255,0.03);
+    border-left: 3px solid var(--teal);
+    padding: 0.6rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.9rem;
+  }
+  .ex .en { color: var(--text); }
+  .ex .cn { color: var(--muted); font-size: 0.85rem; }
+  .ex .highlight { color: var(--teal); font-weight: 700; }
+  .ex .highlight-r { color: var(--red); font-weight: 700; }
+  .ex .highlight-y { color: var(--yellow); font-weight: 700; }
+  .ex .err { color: var(--red); text-decoration: line-through; }
+  .ex .ok  { color: var(--green); }
+
+  /* ===== TABLE ===== */
+  .tbl-wrap { overflow-x: auto; margin: 1rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th {
+    background: rgba(78,205,196,0.15);
+    color: var(--teal);
+    padding: 0.6rem 1rem; text-align: left;
+    font-weight: 700; border-bottom: 2px solid var(--teal);
+  }
+  td { padding: 0.55rem 1rem; border-bottom: 1px solid var(--border); }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  td strong { color: var(--text); font-weight: 600; }
+  .tbl-head-red th { background: rgba(255,107,107,0.12); color: var(--red); border-bottom-color: var(--red); }
+  .tbl-head-purple th { background: rgba(168,85,247,0.12); color: var(--purple); border-bottom-color: var(--purple); }
+
+  /* ===== GRID ===== */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+  @media(max-width:640px){
+    .grid-2,.grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ===== MINI CARD ===== */
+  .mini-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+  }
+  .mini-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .mini-card p, .mini-card li { color: var(--muted); font-size: 0.85rem; }
+
+  /* ===== WARN BOX ===== */
+  .warn-box {
+    background: rgba(255,107,107,0.08);
+    border: 1px solid rgba(255,107,107,0.25);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin: 0.75rem 0;
+  }
+  .warn-box h4 { color: var(--red); font-size: 0.85rem; margin-bottom: 0.5rem; }
+  .warn-box p { color: var(--muted); font-size: 0.85rem; }
+
+  /* ===== TIP BOX ===== */
+  .tip-box {
+    background: rgba(78,205,196,0.08);
+    border: 1px solid rgba(78,205,196,0.2);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin: 0.75rem 0;
+  }
+  .tip-box h4 { color: var(--teal); font-size: 0.85rem; margin-bottom: 0.4rem; }
+  .tip-box p { color: var(--muted); font-size: 0.85rem; }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 3rem 0;
+  }
+  .divider-label {
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+  }
+  .divider-label::before {
+    content: '';
+    position: absolute; left: 0; right: 0; top: 50%;
+    height: 1px; background: var(--border);
+  }
+  .divider-label span {
+    position: relative;
+    background: var(--bg);
+    padding: 0 1rem;
+    color: var(--muted); font-size: 0.85rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+
+  /* ===== POINT BADGE ===== */
+  .point-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.75rem; font-weight: 800;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    margin-bottom: 0.4rem;
+  }
+  .pb-red    { background: rgba(255,107,107,0.2); color: var(--red); }
+  .pb-teal   { background: rgba(78,205,196,0.2);  color: var(--teal); }
+  .pb-yellow { background: rgba(255,230,109,0.2); color: var(--yellow); }
+  .pb-purple { background: rgba(168,85,247,0.2);  color: var(--purple); }
+
+  /* ===== QUIZ SECTION ===== */
+  .quiz-wrap { padding: 1rem 0; }
+  .q-item {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .q-item p { color: var(--text); font-size: 0.92rem; margin-bottom: 0.6rem; }
+  .q-options {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;
+  }
+  .q-opt {
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.85rem; color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    background: none;
+    text-align: left; font-family: var(--font);
+  }
+  .q-opt:hover { border-color: var(--teal); color: var(--teal); }
+  .q-opt.correct { border-color: var(--green); background: rgba(34,197,94,0.1); color: var(--green); }
+  .q-opt.wrong   { border-color: var(--red);   background: rgba(255,107,107,0.1); color: var(--red); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center; padding: 3rem 1rem;
+    color: var(--muted); font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ===== SCROLL REVEAL ===== */
+  .reveal { opacity: 0; transform: translateY(30px); }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-badge">KUSO 英文文法 • Chapter 12 + L7-1</div>
+  <h1>形容詞 · 副詞<br><span>&amp; 假設語氣</span></h1>
+  <p class="hero-sub">完整上課教材 · 考試重點整理 · 互動練習題</p>
+  <div class="hero-pills">
+    <a href="#adj-section" class="pill pill-adj">📌 形容詞</a>
+    <a href="#adv-section" class="pill pill-adv">🔷 副詞</a>
+    <a href="#if-section"  class="pill pill-if">✨ 假設語氣延伸</a>
+  </div>
+  <div class="scroll-hint">
+    <span>向下滾動</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</div>
+
+<!-- ===== STICKY NAV ===== -->
+<nav class="nav-sticky">
+  <button class="nav-btn active" onclick="scrollTo('adj-section', this)">形容詞 Adj.</button>
+  <button class="nav-btn" onclick="scrollTo('adv-section', this)">副詞 Adv.</button>
+  <button class="nav-btn" onclick="scrollTo('if-section', this)">假設語氣延伸</button>
+  <button class="nav-btn" onclick="scrollTo('compound-section', this)">複合形容詞</button>
+  <button class="nav-btn" onclick="scrollTo('transition-section', this)">轉折語</button>
+  <button class="nav-btn" onclick="scrollTo('quiz-section', this)">🎯 練習題</button>
+</nav>
+
+<!-- ===========================
+     SECTION 1: 形容詞
+     =========================== -->
+<section id="adj-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag tag-red">Point 1</div>
+      <h2>形容詞 Adjectives</h2>
+      <p>修飾名詞或代名詞，表達其性質和狀態</p>
+    </div>
+
+    <!-- 1-1 位置 -->
+    <h3 class="reveal" style="color:var(--red);margin-bottom:1rem;font-size:1.2rem;">（一）形容詞的位置</h3>
+
+    <div class="grid-2 reveal">
+      <div class="card red">
+        <h3>🔴 放名詞<strong>前</strong></h3>
+        <div class="ex"><span class="en">She is a <span class="highlight">friendly</span> lady.</span><br><span class="cn">她是個友善的女士。</span></div>
+        <div class="ex"><span class="en">John is an <span class="highlight">excellent</span> actor.</span></div>
+      </div>
+      <div class="card teal">
+        <h3>🟢 放名詞<strong>後</strong>（後位修飾）</h3>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.6rem;">以下三種情形需後位修飾：</p>
+        <div class="ex"><span class="en">Did you see <span class="highlight">anything interesting</span>?</span><br><span class="cn">修飾 -body/-one/-thing/-where 等不定代名詞</span></div>
+        <div class="ex"><span class="en">The tower is <span class="highlight">100 meters tall</span>.</span><br><span class="cn">數字 + 測量單位 + 形容詞</span></div>
+        <div class="ex"><span class="en">The man <span class="highlight">who is standing there</span> is my brother.</span><br><span class="cn">形容詞子句 / 分詞片語 / 不定詞片語</span></div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="margin-top:1rem;">
+      <div class="card blue">
+        <h3>🔵 放 be 動詞或連綴動詞<strong>後</strong></h3>
+        <div class="ex"><span class="en">The situation <span class="highlight">is dangerous</span>.</span></div>
+        <div class="ex"><span class="en">Our teacher <span class="highlight">seems angry</span> with us.</span></div>
+      </div>
+      <div class="card purple">
+        <h3>🟣 放受詞<strong>後</strong>（受詞補語）</h3>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.6rem;">S + V + O + OC 句型</p>
+        <div class="ex"><span class="en">What he said made me <span class="highlight">sad</span>.</span></div>
+        <div class="ex"><span class="en">The earthquake left thousands of people <span class="highlight">homeless</span>.</span></div>
+      </div>
+    </div>
+
+    <div class="exam-box reveal" style="margin-top:2rem;">
+      <h3>⚠️ 窩心叮嚀：a- 開頭的特殊形容詞</h3>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">以下形容詞<strong style="color:var(--red);">只能放在 be 動詞後</strong>，不可置於名詞之前！</p>
+      <div class="grid-3">
+        <div class="mini-card"><h4 style="color:var(--teal);">afraid</h4><p>害怕的</p></div>
+        <div class="mini-card"><h4 style="color:var(--teal);">alike</h4><p>相像的</p></div>
+        <div class="mini-card"><h4 style="color:var(--teal);">alive</h4><p>活著的</p></div>
+        <div class="mini-card"><h4 style="color:var(--teal);">alone</h4><p>單獨的</p></div>
+        <div class="mini-card"><h4 style="color:var(--teal);">asleep</h4><p>睡著的</p></div>
+        <div class="mini-card"><h4 style="color:var(--teal);">awake</h4><p>醒著的</p></div>
+        <div class="mini-card"><h4 style="color:var(--teal);">aware</h4><p>意識到的</p></div>
+        <div class="mini-card"><h4 style="color:var(--teal);">ashamed</h4><p>感到羞恥的</p></div>
+      </div>
+      <div style="margin-top:1rem;">
+        <div class="ex">
+          <span class="ok">✅ That baby is <strong>asleep</strong>.</span><br>
+          <span class="err">❌ It is an asleep baby.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1-2 數量形容詞 -->
+    <div class="divider-label reveal"><span>（二）數量形容詞</span></div>
+
+    <div class="card teal reveal">
+      <h3>📊 修飾可數名詞</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>許多；大量</th><th>一些</th><th>（很）少</th></tr>
+          <tr>
+            <td>many<br>quite a few<br>a good/great many<br>a large/great number of<br>a large number of</td>
+            <td>a few<br>several<br>a number of</td>
+            <td>a small number of<br>few（非常少；幾乎沒有）</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card blue reveal">
+      <h3>📊 修飾不可數名詞</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>許多；大量</th><th>一些</th><th>（很）少</th></tr>
+          <tr>
+            <td>much<br>a great deal of<br>quite a little<br>a large amount of<br>a large sum of + 金額</td>
+            <td>a little</td>
+            <td>a small amount of<br>a small sum of + 金額<br>little（很少；幾乎沒有）</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card green reveal">
+      <h3>📊 修飾可數 AND 不可數</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>許多；大量</th><th>一些</th></tr>
+          <tr><td>a lot of = lots of<br>plenty of<br>a large/great quantity of</td><td>some</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- the number of vs. a number of -->
+    <div class="exam-box reveal">
+      <h3>⚠️ 考試重點：the number of vs. a number of</h3>
+      <div class="grid-2">
+        <div>
+          <div class="point-badge pb-red">the number of</div>
+          <div class="formula">
+            <span class="formula-label">句型</span>
+            the number of + 複數名詞 + <strong>單數動詞</strong>
+          </div>
+          <div class="ex"><span class="en">The number of people involved in this scandal <span class="highlight">is</span> increasing.</span><br><span class="cn">表「……的數目」→ 視為單數</span></div>
+        </div>
+        <div>
+          <div class="point-badge pb-teal">a number of</div>
+          <div class="formula">
+            <span class="formula-label">句型</span>
+            a number of + 複數名詞 + <strong>複數動詞</strong>
+          </div>
+          <div class="ex"><span class="en">A number of courses <span class="highlight">are</span> provided for students.</span><br><span class="cn">表「一些……」→ 視為複數</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1-3 比較級/最高級 -->
+    <div class="divider-label reveal"><span>（三/四）原級 · 比較級 · 最高級</span></div>
+
+    <div class="card yellow reveal">
+      <h3>⚡ 形容詞三級比較</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>級別</th><th>使用時機</th><th>例句</th></tr>
+          <tr><td><strong style="color:var(--teal);">原級</strong></td><td>單獨描述 / 程度相當</td><td>Amy is very <strong>beautiful</strong>.</td></tr>
+          <tr><td><strong style="color:var(--yellow);">比較級</strong></td><td>兩者比較</td><td>Amy is <strong>more beautiful</strong> than Sarah.</td></tr>
+          <tr><td><strong style="color:var(--red);">最高級</strong></td><td>三者（以上）最高/最低</td><td>Amy is <strong>the most beautiful</strong> teacher.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 原級句型 -->
+    <h3 class="reveal" style="color:var(--yellow);margin:1.5rem 0 0.75rem;font-size:1.1rem;">形容詞原級的用法</h3>
+
+    <div class="card teal reveal">
+      <div class="point-badge pb-teal">句型一</div>
+      <div class="formula"><span class="formula-label">正面</span>S + V + as + adj. + as … （和……一樣）</div>
+      <div class="ex"><span class="en">Kelly is <span class="highlight">as tall as</span> I (am).</span><span class="cn"> Kelly 和我一樣高。</span></div>
+    </div>
+    <div class="card red reveal">
+      <div class="point-badge pb-red">句型二</div>
+      <div class="formula"><span class="formula-label">否定</span>S + V + not + as/so + adj. + as … （不如……）</div>
+      <div class="ex"><span class="en">Their house is <span class="highlight-r">not as/so big as</span> ours.</span><span class="cn"> 他們的房子不如我們的大。</span></div>
+    </div>
+    <div class="card purple reveal">
+      <div class="point-badge pb-purple">句型三</div>
+      <div class="formula"><span class="formula-label">名詞量</span>S + V + as much/many + N + as …（和……一樣多）</div>
+      <div class="ex"><span class="en">I have <span class="highlight">as much money as</span> he (does).</span></div>
+      <div class="ex"><span class="en">I bought <span class="highlight">as many books as</span> you (did).</span></div>
+    </div>
+    <div class="card blue reveal">
+      <div class="point-badge pb-teal">句型四</div>
+      <div class="formula"><span class="formula-label">盡可能</span>S + V + as + adj. + as + possible / one can （盡可能……）</div>
+      <div class="ex"><span class="en">We keep the room <span class="highlight">as clean as possible</span>.</span></div>
+      <div class="ex"><span class="en">= We keep the room <span class="highlight">as clean as we can</span>.</span></div>
+    </div>
+
+    <!-- 比較級句型 -->
+    <h3 class="reveal" style="color:var(--yellow);margin:1.5rem 0 0.75rem;font-size:1.1rem;">形容詞比較級的用法</h3>
+
+    <div class="grid-2 reveal">
+      <div class="card red">
+        <div class="point-badge pb-red">句型一</div>
+        <div class="formula"><span class="formula-label">比較</span>S + be + adj.-er / more + adj. + than</div>
+        <div class="ex"><span class="en">Health is <span class="highlight-r">more important than</span> money.</span></div>
+        <div class="tip-box"><h4>💡 加強程度</h4><p>比較級前可加：much, a lot, far, a great deal, even, still<br><strong style="color:var(--red);">❌ 絕對不可加 very！</strong></p></div>
+      </div>
+      <div class="card yellow">
+        <div class="point-badge pb-yellow">句型二</div>
+        <div class="formula"><span class="formula-label">兩者中較</span>S + be + the + 比較級 + of the two</div>
+        <div class="ex"><span class="en">Emily is <span class="highlight-y">the thinner of the two girls</span>.</span></div>
+        <div class="warn-box"><h4>⚠️ 注意！</h4><p>比較級前一定要加 <strong>the</strong>！</p></div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="margin-top:1rem;">
+      <div class="card teal">
+        <div class="point-badge pb-teal">句型三</div>
+        <div class="formula"><span class="formula-label">越來越</span>adj.-er and adj.-er<br>more and more + adj.</div>
+        <div class="ex"><span class="en">It's getting <span class="highlight">hotter and hotter</span>.</span></div>
+        <div class="ex"><span class="en">The situation is becoming <span class="highlight">more and more complicated</span>.</span></div>
+      </div>
+      <div class="card purple">
+        <div class="point-badge pb-purple">句型四</div>
+        <div class="formula"><span class="formula-label">越…越…</span>The + 比較級…, the + 比較級…</div>
+        <div class="ex"><span class="en"><span class="highlight">The hotter</span> the weather, <span class="highlight">the lazier</span> we'll get.</span></div>
+        <div class="ex"><span class="en"><span class="highlight">The more</span> optimistic you are, <span class="highlight">the happier</span> you'll be.</span></div>
+      </div>
+    </div>
+
+    <div class="card orange reveal" style="margin-top:1rem;">
+      <div class="point-badge" style="background:rgba(249,115,22,0.2);color:var(--orange);">句型五</div>
+      <div class="formula"><span class="formula-label">比較（含to）</span>be + superior / inferior / senior / junior + to + 受格</div>
+      <div class="grid-2">
+        <div>
+          <div class="ex"><span class="en">superior to（比……優秀）</span></div>
+          <div class="ex"><span class="en">inferior to（比……不如）</span></div>
+        </div>
+        <div>
+          <div class="ex"><span class="en">senior to（比……資深）</span></div>
+          <div class="ex"><span class="en">junior to（比……資淺）</span></div>
+        </div>
+      </div>
+      <div class="tip-box"><h4>💡 注意</h4><p>這些形容詞已含「比較」意思，後面恆用 <strong>to + 受格</strong>，不用 more/than！</p></div>
+    </div>
+
+    <!-- 最高級 -->
+    <h3 class="reveal" style="color:var(--yellow);margin:1.5rem 0 0.75rem;font-size:1.1rem;">形容詞最高級的用法</h3>
+
+    <div class="card teal reveal">
+      <div class="point-badge pb-teal">句型一</div>
+      <div class="formula"><span class="formula-label">最高級</span>S + V + the + adj.-est/most + adj. + among/of + 範圍 / in + 地點</div>
+      <div class="ex"><span class="en">Jack is <span class="highlight">by far the smartest</span> student in our class.</span><br><span class="cn">可加 by far 加強語氣</span></div>
+      <div class="ex"><span class="en">Dr. Owl is <span class="highlight">the best</span> teacher <span class="highlight">ever</span>.</span><br><span class="cn">可加 ever 在最高級後加強</span></div>
+    </div>
+
+    <div class="card red reveal">
+      <div class="point-badge pb-red">句型二</div>
+      <div class="formula">
+        <span class="formula-label">沒有比…更…</span>
+        No other + N(單數) + V + 比較級 + than…<br>
+        = S + V + 比較級 + than any other + 單N / all the other + 複N
+      </div>
+      <div class="ex">
+        <span class="en"><span class="highlight-r">No other student</span> in Dr. Owl's class is heavier than Piggy.</span><br>
+        <span class="en">= Piggy is heavier than <span class="highlight-r">any other student</span> in Dr. Owl's class.</span><br>
+        <span class="cn">小豬比任何其他學生都要重。注意：other 不可去掉！</span>
+      </div>
+    </div>
+
+    <!-- 不規則變化表 -->
+    <div class="card purple reveal">
+      <h3>📋 不規則比較級/最高級</h3>
+      <div class="tbl-wrap">
+        <table class="tbl-head-purple">
+          <tr><th>原級</th><th>比較級</th><th>最高級</th></tr>
+          <tr><td>good / well</td><td>better</td><td>(the) best</td></tr>
+          <tr><td>bad / ill</td><td>worse</td><td>(the) worst</td></tr>
+          <tr><td>little</td><td>less</td><td>(the) least</td></tr>
+          <tr><td>many / much</td><td>more</td><td>(the) most</td></tr>
+          <tr><td>old（年紀）</td><td>older</td><td>(the) oldest</td></tr>
+          <tr><td>old（排行）</td><td>elder</td><td>(the) eldest</td></tr>
+          <tr><td>far（距離）</td><td>farther</td><td>(the) farthest</td></tr>
+          <tr><td>far（程度/距離）</td><td>further</td><td>(the) furthest</td></tr>
+          <tr><td>late（時間）</td><td>later</td><td>(the) latest（最新的）</td></tr>
+          <tr><td>late（順序）</td><td>latter</td><td>(the) last（最後的）</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 倍數 -->
+    <div class="card blue reveal">
+      <h3>✖️ 倍數的用法</h3>
+      <div class="formula"><span class="formula-label">句型一</span>倍數 + as + 原級 + as = 倍數 + 比較級 + than</div>
+      <div class="ex">
+        <span class="en">Our country is <span class="highlight">ten times as large as</span> yours.</span><br>
+        <span class="en">= Our country is <span class="highlight">ten times larger than</span> yours.</span>
+      </div>
+      <div class="formula"><span class="formula-label">句型二</span>倍數 + the + N + of…（如 the price of / the weight of）</div>
+      <div class="ex"><span class="en">This car is <span class="highlight">four times the price of</span> that one.</span></div>
+      <div class="tip-box"><h4>💡 倍數用字</h4><p>twice（兩倍）, three times, four times, five times…<br>當倍數為 half 或 twice，搭配比較級 -er 或 more</p></div>
+    </div>
+
+    <div class="exam-box reveal">
+      <h3>🎯 形容詞考試重點整理</h3>
+      <div class="exam-item"><div class="exam-num">1</div><div class="exam-text">a- 開頭形容詞（afraid, asleep, alive 等）<strong>只能放 be 動詞後</strong></div></div>
+      <div class="exam-item"><div class="exam-num">2</div><div class="exam-text"><strong>the number of + 單數動詞</strong> vs. <strong>a number of + 複數動詞</strong></div></div>
+      <div class="exam-item"><div class="exam-num">3</div><div class="exam-text">比較級前<strong>絕對不加 very</strong>，可加 much/far/a lot/even/still</div></div>
+      <div class="exam-item"><div class="exam-num">4</div><div class="exam-text">two者中較：<strong>S + be + the + 比較級 + of the two</strong>（一定要有 the！）</div></div>
+      <div class="exam-item"><div class="exam-num">5</div><div class="exam-text">superior/inferior/senior/junior 後面用 <strong>to</strong>，不用 than</div></div>
+      <div class="exam-item"><div class="exam-num">6</div><div class="exam-text">No other 句型中 <strong>other 不可去掉</strong></div></div>
+      <div class="exam-item"><div class="exam-num">7</div><div class="exam-text">as...as 中間必須用<strong>原級</strong>；not as/so...as 用於否定句</div></div>
+      <div class="exam-item"><div class="exam-num">8</div><div class="exam-text">倍數：<strong>twice</strong> 和 <strong>half</strong> 搭配比較級；其他倍數（three times...）可搭配原級或比較級</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     SECTION 2: 複合形容詞
+     =========================== -->
+<section id="compound-section" style="padding-top:2rem;">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag tag-purple">延伸教學</div>
+      <h2>複合形容詞</h2>
+      <p>名詞/形容詞/副詞 與 現在/過去分詞 搭配</p>
+    </div>
+
+    <div class="card purple reveal">
+      <h3>⚙️ V-ing vs. p.p. 關鍵規則</h3>
+      <div class="grid-2">
+        <div class="mini-card">
+          <h4 style="color:var(--teal);">V-ing → 主動（令人……的）</h4>
+          <div class="ex"><span class="en">a <span class="highlight">heart-breaking</span> story</span><br><span class="cn">= a story that breaks one's heart</span></div>
+        </div>
+        <div class="mini-card">
+          <h4 style="color:var(--red);">p.p. → 被動（感到……的）</h4>
+          <div class="ex"><span class="en">a <span class="highlight-r">heart-broken</span> man</span><br><span class="cn">= a man whose heart has been broken</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card teal reveal">
+      <h3>📋 常見複合形容詞分類</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>結構</th><th>例子</th><th>中文</th></tr>
+          <tr><td>(1) N-V-ing</td><td>eye-catching, heart-breaking, energy-saving</td><td>引人注目的、令人心碎的、節省能源的</td></tr>
+          <tr><td>(2) N-p.p.</td><td>hand-made, heart-broken, snow-covered</td><td>手工的、心碎的、被雪覆蓋的</td></tr>
+          <tr><td>(3) N-adj.</td><td>bullet-proof, life-long, earth-friendly</td><td>防彈的、終身的、環保的</td></tr>
+          <tr><td>(4) adj.-V-ing</td><td>good-looking, sweet-smelling, good-tasting</td><td>好看的、香的、好吃的</td></tr>
+          <tr><td>(5) adj.-p.p.</td><td>ready-made, red-painted</td><td>現成的、漆成紅色的</td></tr>
+          <tr><td>(6) adj.-N-ed</td><td>long-haired, one-eyed, kind-hearted</td><td>長髮的、獨眼的、心腸好的</td></tr>
+          <tr><td>(7) adv.-V-ing</td><td>hard-working, fast-moving, long-lasting</td><td>努力工作的、速度快的、持久的</td></tr>
+          <tr><td>(8) adv.-p.p.</td><td>beautifully-decorated, well-educated</td><td>裝飾美麗的、受良好教育的</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="exam-box reveal">
+      <h3>🎯 複合形容詞考試重點</h3>
+      <div class="exam-item"><div class="exam-num">1</div><div class="exam-text"><strong>V-ing = 主動</strong>（令人…的）；<strong>p.p. = 被動</strong>（感到…的）</div></div>
+      <div class="exam-item"><div class="exam-num">2</div><div class="exam-text">good-looking（✅）vs. <span style="color:var(--red)">looking-good（❌）</span> — 形容詞修飾語通常在前</div></div>
+      <div class="exam-item"><div class="exam-num">3</div><div class="exam-text">old-fashioned（✅）vs. <span style="color:var(--red)">old-fashion（❌）</span> — 後面需加 -ed</div></div>
+      <div class="exam-item"><div class="exam-num">4</div><div class="exam-text">time-consuming（消耗時間的）、weight-reducing（減重的）— 注意主被動</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     SECTION 3: 副詞
+     =========================== -->
+<section id="adv-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag tag-teal">Point 2</div>
+      <h2>副詞 Adverbs</h2>
+      <p>修飾動詞、形容詞、副詞及整個句子</p>
+    </div>
+
+    <!-- 副詞種類 -->
+    <div class="grid-2 reveal">
+      <div class="card teal">
+        <h3>1. 狀態副詞</h3>
+        <p>表動作或狀態，可放在動詞片語前或動詞後</p>
+        <div class="ex"><span class="en">He ran into the house <span class="highlight">quickly</span>.</span></div>
+        <div class="ex"><span class="en">Mom <span class="highlight">carefully</span> put the vase on the table.</span></div>
+      </div>
+      <div class="card blue">
+        <h3>2. 時間副詞</h3>
+        <p>可放句尾或句首，前不加介系詞</p>
+        <div class="ex"><span class="en">We'll move to Taichung <span class="highlight">next year</span>.</span></div>
+        <div class="warn-box" style="margin-top:0.5rem;"><h4>⚠️ this~/next~/last~ 前千萬不可加介系詞！</h4><p><span class="err">in next year</span> → <span class="ok">next year</span></p></div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="margin-top:1rem;">
+      <div class="card purple">
+        <h3>3. 地方副詞</h3>
+        <p>常置句尾。常見：here, there, upstairs, downstairs, home, outside, nowhere, everywhere</p>
+        <div class="ex"><span class="en">Let's go <span class="highlight">outside</span> and get some exercise.</span></div>
+      </div>
+      <div class="card yellow">
+        <h3>4. 頻率副詞</h3>
+        <p style="margin-bottom:0.5rem;">頻率從低到高：</p>
+        <div class="formula" style="font-size:0.8rem;">never → seldom/rarely → sometimes → often → usually → always</div>
+        <div class="tip-box"><h4>📌 位置規則</h4><p>be動詞後、一般動詞前、助動詞和原V之間</p></div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="margin-top:1rem;">
+      <div class="card orange">
+        <h3>5. 程度副詞</h3>
+        <p>修飾形容詞或副詞的程度</p>
+        <p style="margin:0.4rem 0;font-size:0.85rem;color:var(--muted);">常見：so, too, much, enough, very, quite, pretty, rather, extremely, fairly</p>
+        <div class="warn-box"><h4>⚠️ enough 的位置！</h4><p>only enough 必須置於<strong>被修飾字之後</strong></p><div class="ex"><span class="en">Sam is not old <span class="highlight-r">enough</span> to attend school.</span></div></div>
+      </div>
+      <div class="card red">
+        <h3>6-7. 疑問副詞 & 關係副詞</h3>
+        <p style="margin-bottom:0.5rem;"><strong>疑問副詞：</strong>when（時）where（地）why（原因）how（方式）</p>
+        <p style="margin-bottom:0.5rem;"><strong>關係副詞：</strong>where, when, why, how</p>
+        <div class="ex"><span class="en">This is <span class="highlight">where</span> we live.</span></div>
+        <div class="ex"><span class="en">This is <span class="highlight">why</span> I like baseball.</span></div>
+      </div>
+    </div>
+
+    <!-- 狀態副詞構成法 -->
+    <div class="divider-label reveal"><span>狀態副詞的構成法</span></div>
+    <div class="card blue reveal">
+      <h3>📐 形容詞 → 副詞</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>規則</th><th>例子</th></tr>
+          <tr><td>形容詞 + -ly</td><td>actively, badly, carefully, quickly, slowly</td></tr>
+          <tr><td>字尾 -le → -ly</td><td>gentle→gently, simple→simply, possible→possibly</td></tr>
+          <tr><td>字尾「子音+y」去y加 -ily</td><td>angry→angrily, easy→easily, happy→happily</td></tr>
+          <tr><td>字尾 -ll + -y</td><td>full→fully, dull→dully</td></tr>
+          <tr><td>字尾 -ic + -ally</td><td>automatic→automatically, energetic→energetically</td></tr>
+          <tr><td>字尾 -ue 去e + -ly</td><td>true→truly</td></tr>
+        </table>
+      </div>
+      <div class="warn-box" style="margin-top:1rem;"><h4>⚠️ 字尾 -ly 不一定是副詞！</h4><p>cost→costly（形容詞）, friend→friendly（形容詞）, time→timely（形容詞）</p></div>
+      <div class="tip-box"><h4>💡 形副同形</h4><p>early（早的/早地）、fast（快的/快地）、late（晚的/晚地）、hard（硬的/努力地）</p></div>
+    </div>
+
+    <!-- 易混淆副詞 -->
+    <div class="divider-label reveal"><span>易混淆副詞</span></div>
+    <div class="card red reveal">
+      <h3>⚠️ 易混淆副詞對比</h3>
+      <div class="tbl-wrap">
+        <table class="tbl-head-red">
+          <tr><th>副詞 A</th><th>中文</th><th>副詞 B</th><th>中文</th></tr>
+          <tr><td><strong>hard</strong></td><td>努力地</td><td><strong>hardly</strong></td><td>幾乎不</td></tr>
+          <tr><td><strong>high</strong></td><td>高（地點）</td><td><strong>highly</strong></td><td>很；非常</td></tr>
+          <tr><td><strong>deep</strong></td><td>深地</td><td><strong>deeply</strong></td><td>強烈地；深切地</td></tr>
+          <tr><td><strong>late</strong></td><td>晚地</td><td><strong>lately</strong></td><td>最近</td></tr>
+          <tr><td><strong>close</strong></td><td>靠近地</td><td><strong>closely</strong></td><td>嚴密地；密切地</td></tr>
+          <tr><td><strong>near</strong></td><td>靠近</td><td><strong>nearly</strong></td><td>幾乎</td></tr>
+          <tr><td><strong>wide</strong></td><td>寬地</td><td><strong>widely</strong></td><td>廣泛地</td></tr>
+        </table>
+      </div>
+      <div style="margin-top:1rem;">
+        <div class="ex"><span class="ok">✅ He works <strong>hard</strong> every day.（努力）</span><br><span class="err">❌ I studied hardly last night.（應用 hard）</span></div>
+        <div class="ex"><span class="en">She is <span class="highlight">highly</span> intelligent.（非常聰明）</span></div>
+        <div class="ex"><span class="en">The earth's climate has been <span class="highlight">deeply</span> influenced by global warming.（深切地受影響）</span></div>
+      </div>
+    </div>
+
+    <!-- 副詞比較級 -->
+    <div class="divider-label reveal"><span>副詞原級・比較級・最高級</span></div>
+    <div class="grid-2 reveal">
+      <div class="card teal">
+        <div class="point-badge pb-teal">副詞比較級</div>
+        <div class="formula"><span class="formula-label">句型</span>S + V + adv.-er / more + adv. + than</div>
+        <div class="ex"><span class="en">Tom drove <span class="highlight">faster than</span> I (did).</span></div>
+      </div>
+      <div class="card purple">
+        <div class="point-badge pb-purple">越…越…</div>
+        <div class="formula"><span class="formula-label">句型</span>the + 副詞比較級…, the + 副詞比較級…</div>
+        <div class="ex"><span class="en"><span class="highlight">The more often</span> you practice, <span class="highlight">the faster</span> you can run.</span></div>
+      </div>
+    </div>
+    <div class="card blue reveal" style="margin-top:1rem;">
+      <div class="point-badge pb-teal">副詞最高級</div>
+      <div class="formula"><span class="formula-label">句型</span>S + V + (the) + adv.-est / most + adv.</div>
+      <div class="ex"><span class="en">Chris sings <span class="highlight">(the) best</span> in his class.</span></div>
+      <div class="ex"><span class="en">Mary danced <span class="highlight">(the) most beautifully</span> among us.</span></div>
+    </div>
+
+    <div class="exam-box reveal">
+      <h3>🎯 副詞考試重點整理</h3>
+      <div class="exam-item"><div class="exam-num">1</div><div class="exam-text">頻率副詞位置：be動詞後、一般動詞前、助動詞和原V之間</div></div>
+      <div class="exam-item"><div class="exam-num">2</div><div class="exam-text"><strong>enough</strong> 必須置於被修飾字<strong>之後</strong>（old enough）</div></div>
+      <div class="exam-item"><div class="exam-num">3</div><div class="exam-text">this~/next~/last~ 前<strong>千萬不加介系詞</strong></div></div>
+      <div class="exam-item"><div class="exam-num">4</div><div class="exam-text">hard（努力）≠ hardly（幾乎不）；high（高）≠ highly（非常）</div></div>
+      <div class="exam-item"><div class="exam-num">5</div><div class="exam-text">字尾 -ly 不一定是副詞！friendly, costly, timely 是形容詞</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     SECTION 4: 轉折語
+     =========================== -->
+<section id="transition-section" style="padding-top:2rem;">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag tag-blue">延伸教學</div>
+      <h2>轉折語 Transitional Adverbs</h2>
+      <p>使句子間語意順暢，是作文的好幫手</p>
+    </div>
+
+    <div class="warn-box reveal" style="margin-bottom:1.5rem;">
+      <h4>⚠️ 重要！however / besides 不是連接詞！</h4>
+      <p>副詞轉折語在兩個完整句間使用時，須用<strong>分號</strong>或<strong>句點</strong>與前句分開，不可用逗號！</p>
+      <div class="ex" style="margin-top:0.5rem;">
+        <span class="ok">✅ He wants to succeed; <strong>however</strong>, he doesn't want to work hard.</span><br>
+        <span class="err">❌ He wants to succeed, however, he doesn't want to work hard.</span>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal">
+      <div class="card teal">
+        <h3>📋 順序的轉折語</h3>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>首先</th><th>此外；再者</th><th>最後</th></tr>
+            <tr>
+              <td>first of all<br>firstly<br>in the first place<br>to begin/start with<br>for one thing…for another</td>
+              <td>next<br>secondly<br>what's more<br>in addition<br>besides<br>furthermore<br>moreover<br>also</td>
+              <td>lastly<br>finally<br>last but not least</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="card purple">
+        <h3>📋 因果的轉折語</h3>
+        <div class="mini-card" style="margin-bottom:0.5rem;">
+          <h4 style="color:var(--yellow);">因此</h4>
+          <p>therefore, thus, hence, accordingly, consequently, in consequence, as a consequence, as a result</p>
+        </div>
+        <div class="ex"><span class="en">He was lazy and often late for work. <span class="highlight">As a result</span>, he was fired.</span></div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="margin-top:1rem;">
+      <div class="card red">
+        <h3>📋 對比的轉折語</h3>
+        <table style="font-size:0.85rem;width:100%;">
+          <tr><th style="background:rgba(255,107,107,0.15);color:var(--red);padding:0.4rem;">語意</th><th style="background:rgba(255,107,107,0.15);color:var(--red);padding:0.4rem;">用法</th></tr>
+          <tr><td style="padding:0.4rem;">尚管如此；然而</td><td style="padding:0.4rem;">however, nevertheless, nonetheless, still, (and) yet</td></tr>
+          <tr><td style="padding:0.4rem;">反而</td><td style="padding:0.4rem;">instead, rather</td></tr>
+          <tr><td style="padding:0.4rem;">另一方面</td><td style="padding:0.4rem;">on the other hand</td></tr>
+          <tr><td style="padding:0.4rem;">相較之下</td><td style="padding:0.4rem;">in/by contrast, on the other hand</td></tr>
+          <tr><td style="padding:0.4rem;">正好相反</td><td style="padding:0.4rem;">on the contrary</td></tr>
+        </table>
+      </div>
+      <div class="card blue">
+        <h3>📋 列舉 & 解釋</h3>
+        <div class="mini-card" style="margin-bottom:0.5rem;">
+          <h4 style="color:var(--teal);">例如</h4>
+          <p>for example, for instance<br>Take...for example = Take...as an example</p>
+        </div>
+        <div class="mini-card">
+          <h4 style="color:var(--yellow);">也就是說；換句話說</h4>
+          <p>that is (to say), in other words, namely</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="exam-box reveal">
+      <h3>🎯 轉折語考試重點</h3>
+      <div class="exam-item"><div class="exam-num">1</div><div class="exam-text">besides, however 等是<strong>副詞</strong>，不是連接詞，兩句間不可只用逗號！</div></div>
+      <div class="exam-item"><div class="exam-num">2</div><div class="exam-text"><strong>in/by contrast</strong> = 對比兩個人/物的差異（兩個比較對象）<br><strong>on the contrary</strong> = 恰恰相反（針對同一件事的否定）</div></div>
+      <div class="exam-item"><div class="exam-num">3</div><div class="exam-text">Take...for example 是祈使句，句尾需加句號再接下一句</div></div>
+      <div class="exam-item"><div class="exam-num">4</div><div class="exam-text">such as...不可改成 such...like；as 是固定搭配</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     SECTION 5: 假設語氣延伸
+     =========================== -->
+<section id="if-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag tag-purple">L7-1</div>
+      <h2>假設語氣延伸</h2>
+      <p>「要不是…；若非」— 表達遺憾、感嘆之意</p>
+    </div>
+
+    <!-- Review -->
+    <div class="card blue reveal">
+      <h3>📖 假設語氣複習</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>種類</th><th>If 子句</th><th>主要子句</th></tr>
+          <tr><td><strong>條件句（真實）</strong><br>現在/習慣/事實</td><td>現在式</td><td>現在式 / will</td></tr>
+          <tr><td><strong>條件句（未來）</strong></td><td>現在式</td><td>will/shall + VR</td></tr>
+          <tr><td><strong>與現在事實相反</strong></td><td>過去式（be→were）</td><td>would/could/should/might + VR</td></tr>
+          <tr><td><strong>與過去事實相反</strong></td><td>had + p.p.</td><td>would/could/should/might + have p.p.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 要不是 -->
+    <div class="divider-label reveal"><span>要不是…；若非</span></div>
+
+    <div class="card purple reveal">
+      <h3>🔑 核心句型：If it were/had not been for</h3>
+      <div class="grid-2">
+        <div>
+          <div class="point-badge pb-purple">與現在事實相反</div>
+          <div class="formula">
+            <span class="formula-label">句型</span>
+            If it <strong>were</strong> not for + N,<br>
+            S + would/could/should/might + VR
+          </div>
+          <p style="font-size:0.85rem;color:var(--muted);margin:0.5rem 0;">等同於：<br>= <strong>But for</strong> + N, S + would...<br>= <strong>Without</strong> + N, S + would...</p>
+          <div class="ex">
+            <span class="en">If it <span class="highlight">were</span> not for your help, I <span class="highlight">would fail</span> my English exams.</span><br>
+            <span class="en">= <span class="highlight">But for</span> your help, I would fail...</span><br>
+            <span class="en">= <span class="highlight">Without</span> your help, I would fail...</span>
+          </div>
+        </div>
+        <div>
+          <div class="point-badge pb-red">與過去事實相反</div>
+          <div class="formula">
+            <span class="formula-label">句型</span>
+            If it <strong>had</strong> not <strong>been</strong> for + N,<br>
+            S + would/could/should/might + have p.p.
+          </div>
+          <p style="font-size:0.85rem;color:var(--muted);margin:0.5rem 0;">等同於：<br>= <strong>But for</strong> + N, S + would have...<br>= <strong>Without</strong> + N, S + would have...</p>
+          <div class="ex">
+            <span class="en">If it <span class="highlight-r">had not been</span> for your help, I <span class="highlight-r">would have failed</span> my English exams.</span><br>
+            <span class="en">= <span class="highlight-r">But for</span> your help, I would have failed...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 倒裝句 -->
+    <div class="divider-label reveal"><span>假設語氣的倒裝句構</span></div>
+
+    <div class="card teal reveal">
+      <h3>🔄 倒裝變化法</h3>
+      <div class="tip-box">
+        <h4>規則：① 砍掉 If ② 把 were / had 移到主詞前面</h4>
+      </div>
+      <div class="grid-2" style="margin-top:1rem;">
+        <div>
+          <div class="point-badge pb-teal">與現在相反</div>
+          <div class="ex">
+            <span class="en"><span class="err">If it were</span> not for my mom's objection, I would go hiking.</span><br>
+            <span class="ok">→ <span class="highlight">Were it</span> not for my mom's objection, I would go hiking.</span>
+          </div>
+        </div>
+        <div>
+          <div class="point-badge pb-red">與過去相反</div>
+          <div class="ex">
+            <span class="en"><span class="err">If it hadn't been</span> for her hard work, Julia wouldn't have passed.</span><br>
+            <span class="ok">→ <span class="highlight-r">Had it not been</span> for her hard work, Julia wouldn't have passed.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 換句話說 -->
+    <div class="card yellow reveal">
+      <h3>🔁 三種等效說法整理</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tr>
+            <th>種類</th>
+            <th>現在（與現在相反）</th>
+            <th>過去（與過去相反）</th>
+          </tr>
+          <tr>
+            <td><strong>If it...not for</strong></td>
+            <td>If it <strong>were</strong> not for + N</td>
+            <td>If it <strong>had not been</strong> for + N</td>
+          </tr>
+          <tr>
+            <td><strong>But for</strong></td>
+            <td colspan="2">But for + N（現在/過去皆可，靠主句判斷）</td>
+          </tr>
+          <tr>
+            <td><strong>Without</strong></td>
+            <td colspan="2">Without + N（現在/過去皆可，靠主句判斷）</td>
+          </tr>
+          <tr>
+            <td><strong>倒裝</strong></td>
+            <td><strong>Were it</strong> not for + N</td>
+            <td><strong>Had it not been</strong> for + N</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="exam-box reveal">
+      <h3>🎯 假設語氣延伸考試重點</h3>
+      <div class="exam-item"><div class="exam-num">1</div><div class="exam-text">時態判斷：主要子句用 <strong>would VR</strong> → 與現在相反；用 <strong>would have p.p.</strong> → 與過去相反</div></div>
+      <div class="exam-item"><div class="exam-num">2</div><div class="exam-text">If it were not for = But for = Without（<strong>三者等效</strong>）</div></div>
+      <div class="exam-item"><div class="exam-num">3</div><div class="exam-text">倒裝：砍 if，were/had 提前。<strong>Were it not for...</strong> / <strong>Had it not been for...</strong></div></div>
+      <div class="exam-item"><div class="exam-num">4</div><div class="exam-text">But for / Without 改用介系詞用法時，<strong>時態需自行判斷</strong></div></div>
+      <div class="exam-item"><div class="exam-num">5</div><div class="exam-text">主句 would/could/should/might + VR（現在）或 + have p.p.（過去）</div></div>
+    </div>
+
+    <!-- 練習例句 -->
+    <div class="card teal reveal">
+      <h3>📝 練習例句參考</h3>
+      <div class="ex"><span class="en">If it <span class="highlight">hadn't been for</span> the scholarship, Eric <span class="highlight">couldn't have graduated</span> from university.</span><br><span class="cn">要不是有獎學金，Eric 當時就無法從大學畢業了。</span></div>
+      <div class="ex"><span class="en">If it <span class="highlight">weren't for</span> her headache, Vicky <span class="highlight">could go</span> to Joanne's birthday party.</span><br><span class="cn">要不是 Vicky 頭痛，她就能去 Joanne 的生日派對了。</span></div>
+      <div class="ex"><span class="en"><span class="highlight">Without</span> my teacher's encouragement, I <span class="highlight">might not have participated</span> in the student exchange program last year.</span><br><span class="cn">沒有老師的鼓勵，我去年可能不會參加交換學生計畫。</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     SECTION 6: 互動練習題
+     =========================== -->
+<section id="quiz-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag tag-yellow">Quiz Time</div>
+      <h2>🎯 互動練習題</h2>
+      <p>點選選項，立即知道對錯</p>
+    </div>
+
+    <div class="quiz-wrap reveal">
+      <!-- Q1 -->
+      <div class="q-item">
+        <p><strong>1.</strong> She came upon _______ information about the concert.</p>
+        <div class="q-options">
+          <button class="q-opt" onclick="answer(this, false)">(A) something useful</button>
+          <button class="q-opt" onclick="answer(this, true)">(B) some useful</button>
+          <button class="q-opt" onclick="answer(this, false)">(C) useful something</button>
+          <button class="q-opt" onclick="answer(this, false)">(D) something usefully</button>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="q-item">
+        <p><strong>2.</strong> Kelly is kinder than _______ student in her class.</p>
+        <div class="q-options">
+          <button class="q-opt" onclick="answer(this, false)">(A) any</button>
+          <button class="q-opt" onclick="answer(this, true)">(B) any other</button>
+          <button class="q-opt" onclick="answer(this, false)">(C) all the other</button>
+          <button class="q-opt" onclick="answer(this, false)">(D) no other</button>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="q-item">
+        <p><strong>3.</strong> Her language skill is _______ other contestants'.</p>
+        <div class="q-options">
+          <button class="q-opt" onclick="answer(this, false)">(A) superior than</button>
+          <button class="q-opt" onclick="answer(this, false)">(B) better to</button>
+          <button class="q-opt" onclick="answer(this, true)">(C) superior to</button>
+          <button class="q-opt" onclick="answer(this, false)">(D) good than</button>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="q-item">
+        <p><strong>4.</strong> _______ the terrible weather, we would have gone picnicking yesterday.</p>
+        <div class="q-options">
+          <button class="q-opt" onclick="answer(this, true)">(A) If it had not been for</button>
+          <button class="q-opt" onclick="answer(this, false)">(B) If it were not for</button>
+          <button class="q-opt" onclick="answer(this, false)">(C) Had not it been for</button>
+          <button class="q-opt" onclick="answer(this, false)">(D) If it has not been for</button>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="q-item">
+        <p><strong>5.</strong> Bruce is _______ of the two brothers.</p>
+        <div class="q-options">
+          <button class="q-opt" onclick="answer(this, false)">(A) more strong</button>
+          <button class="q-opt" onclick="answer(this, true)">(B) the stronger</button>
+          <button class="q-opt" onclick="answer(this, false)">(C) stronger</button>
+          <button class="q-opt" onclick="answer(this, false)">(D) the strong</button>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="q-item">
+        <p><strong>6.</strong> We seldom go out _______ at night.</p>
+        <div class="q-options">
+          <button class="q-opt" onclick="answer(this, false)">(A) lately</button>
+          <button class="q-opt" onclick="answer(this, true)">(B) late</button>
+          <button class="q-opt" onclick="answer(this, false)">(C) later</button>
+          <button class="q-opt" onclick="answer(this, false)">(D) hardly</button>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="q-item">
+        <p><strong>7.</strong> I couldn't find any joy in my job. _______, I decided to quit.</p>
+        <div class="q-options">
+          <button class="q-opt" onclick="answer(this, true)">(A) Thus</button>
+          <button class="q-opt" onclick="answer(this, false)">(B) Moreover</button>
+          <button class="q-opt" onclick="answer(this, false)">(C) Nevertheless</button>
+          <button class="q-opt" onclick="answer(this, false)">(D) To begin with</button>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="q-item">
+        <p><strong>8.</strong> _______ it not for my parents' support, I couldn't afford an apartment of my own.</p>
+        <div class="q-options">
+          <button class="q-opt" onclick="answer(this, false)">(A) If</button>
+          <button class="q-opt" onclick="answer(this, true)">(B) Were</button>
+          <button class="q-opt" onclick="answer(this, false)">(C) Had</button>
+          <button class="q-opt" onclick="answer(this, false)">(D) Without</button>
+        </div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="q-item">
+        <p><strong>9.</strong> Sam is such a _______ guy that he is a household name at his school.</p>
+        <div class="q-options">
+          <button class="q-opt" onclick="answer(this, false)">(A) nicely-looking</button>
+          <button class="q-opt" onclick="answer(this, true)">(B) nice-looking</button>
+          <button class="q-opt" onclick="answer(this, false)">(C) looking-nice</button>
+          <button class="q-opt" onclick="answer(this, false)">(D) looking-nicely</button>
+        </div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="q-item">
+        <p><strong>10.</strong> This test is _______ easier than the last one.</p>
+        <div class="q-options">
+          <button class="q-opt" onclick="answer(this, false)">(A) very</button>
+          <button class="q-opt" onclick="answer(this, true)">(B) much</button>
+          <button class="q-opt" onclick="answer(this, false)">(C) more</button>
+          <button class="q-opt" onclick="answer(this, false)">(D) so</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="score-display" style="text-align:center;margin-top:2rem;display:none;">
+      <div style="font-size:2rem;font-weight:800;color:var(--teal);" id="score-text"></div>
+      <p style="color:var(--muted);margin-top:0.5rem;">繼續加油！多複習考試重點 💪</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>KUSO 英文文法 Ch.12 形容詞與副詞 + L7-1 假設語氣延伸</p>
+  <p style="margin-top:0.5rem;opacity:0.5;">上課教材 · 考試重點整理</p>
+</footer>
+
+<script>
+// ===== GSAP ANIMATIONS =====
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero animation
+gsap.timeline()
+  .to('.hero-badge', { opacity:1, y:0, duration:0.6, ease:'power3.out' }, 0.2)
+  .to('.hero h1',    { opacity:1, y:0, duration:0.7, ease:'power3.out' }, 0.4)
+  .to('.hero-sub',   { opacity:1, y:0, duration:0.6, ease:'power3.out' }, 0.6)
+  .to('.hero-pills', { opacity:1, y:0, duration:0.6, ease:'power3.out' }, 0.8)
+  .to('.scroll-hint',{ opacity:1, y:0, duration:0.5, ease:'power3.out' }, 1.1);
+
+// Hero h1 initial state
+gsap.set('.hero h1, .hero-sub, .hero-pills, .scroll-hint', { y: 30 });
+
+// Scroll reveal for .reveal elements
+gsap.utils.toArray('.reveal').forEach(el => {
+  gsap.to(el, {
+    opacity: 1,
+    y: 0,
+    duration: 0.7,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 88%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+
+// Nav scroll
+function scrollTo(id, btn) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// Update active nav on scroll
+const sections = [
+  { id: 'adj-section',       btn: 0 },
+  { id: 'adv-section',       btn: 1 },
+  { id: 'if-section',        btn: 2 },
+  { id: 'compound-section',  btn: 3 },
+  { id: 'transition-section',btn: 4 },
+  { id: 'quiz-section',      btn: 5 },
+];
+const navBtns = document.querySelectorAll('.nav-btn');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY + 120;
+  sections.forEach(({ id, btn }) => {
+    const el = document.getElementById(id);
+    if (el && scrollY >= el.offsetTop) {
+      navBtns.forEach(b => b.classList.remove('active'));
+      navBtns[btn]?.classList.add('active');
+    }
+  });
+});
+
+// ===== QUIZ =====
+let answered = 0;
+let correct = 0;
+const total = 10;
+
+function answer(btn, isCorrect) {
+  const parent = btn.closest('.q-item');
+  const opts = parent.querySelectorAll('.q-opt');
+  // disable all
+  opts.forEach(o => {
+    o.style.pointerEvents = 'none';
+    o.style.opacity = '0.5';
+  });
+  if (isCorrect) {
+    btn.classList.add('correct');
+    btn.style.opacity = '1';
+    correct++;
+  } else {
+    btn.classList.add('wrong');
+    btn.style.opacity = '1';
+    // highlight correct
+    opts.forEach(o => {
+      if (o !== btn && o.getAttribute('onclick').includes('true')) {
+        o.classList.add('correct');
+        o.style.opacity = '1';
+      }
+    });
+  }
+  answered++;
+  if (answered === total) {
+    const display = document.getElementById('score-display');
+    const text = document.getElementById('score-text');
+    text.textContent = `得分：${correct} / ${total}`;
+    display.style.display = 'block';
+    gsap.from(display, { opacity:0, y:20, duration:0.5 });
+  }
+}
+
+// Pill links
+document.querySelectorAll('.pill').forEach(p => {
+  p.addEventListener('click', e => {
+    e.preventDefault();
+    const href = p.getAttribute('href');
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
