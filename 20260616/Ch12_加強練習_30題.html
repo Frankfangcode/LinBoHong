@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 12 加強練習 30 題</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F4F0;
+    --surface: #FFFFFF;
+    --border: #E0DAD3;
+    --border-dark: #C5BEB5;
+    --text-primary: #18181A;
+    --text-secondary: #65615C;
+    --text-muted: #9B9590;
+    --accent: #5B3FE4;
+    --accent-bg: #F0EEFF;
+    --accent-border: rgba(91,63,228,0.22);
+    --green: #0C7A4A;
+    --green-bg: #E8F7F0;
+    --green-border: rgba(12,122,74,0.25);
+    --red: #B91C1C;
+    --red-bg: #FEF2F2;
+    --red-border: rgba(185,28,28,0.3);
+    --orange: #9A3E0C;
+    --orange-bg: #FFF4ED;
+    --orange-border: rgba(154,62,12,0.2);
+    --blue: #1547A0;
+    --blue-bg: #EEF3FF;
+    --blue-border: rgba(21,71,160,0.2);
+    --teal: #0D6E6E;
+    --teal-bg: #E6F5F5;
+    --teal-border: rgba(13,110,110,0.22);
+    --yellow: #8A5C0A;
+    --yellow-bg: #FEFCE8;
+    --yellow-border: rgba(138,92,10,0.22);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    --serif: 'Georgia', 'Noto Serif TC', serif;
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 14px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text-primary); font-family: var(--font); font-size: 15px; line-height: 1.7; }
+
+  /* ── STICKY TOP BAR ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245,244,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    height: 50px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .topbar-pill {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 999px; white-space: nowrap; flex-shrink: 0;
+    background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-border);
+  }
+  .topbar-name {
+    font-size: 13px; font-weight: 600; color: var(--text-primary);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .progress-wrap { display: flex; align-items: center; gap: 8px; }
+  .progress-track { width: 110px; height: 5px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 5px; border-radius: 999px; background: var(--accent); transition: width 0.4s ease; width: 0%; }
+  .progress-text { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+  .live-chip {
+    font-size: 13px; font-weight: 700; color: var(--accent);
+    background: var(--accent-bg); border: 1px solid var(--accent-border);
+    padding: 3px 12px; border-radius: 999px;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
+    padding: 1.75rem 2rem; margin-bottom: 2rem;
+    display: grid; grid-template-columns: 1fr; gap: 1rem;
+  }
+  .hero-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
+  .hero h1 { font-family: var(--serif); font-size: 22px; font-weight: 700; line-height: 1.3; }
+  .hero-tags { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 10px; }
+  .htag {
+    font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+    border: 1px solid transparent;
+  }
+  .htag-purple { background: var(--accent-bg);  color: var(--accent); border-color: var(--accent-border); }
+  .htag-orange { background: var(--orange-bg);  color: var(--orange); border-color: var(--orange-border); }
+  .htag-teal   { background: var(--teal-bg);    color: var(--teal);   border-color: var(--teal-border); }
+  .htag-blue   { background: var(--blue-bg);    color: var(--blue);   border-color: var(--blue-border); }
+
+  /* ── FOCUS LEGEND ── */
+  .legend {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
+    padding: 1.25rem 1.5rem; margin-bottom: 2rem;
+  }
+  .legend-title { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+  .legend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px; border-radius: var(--r-sm);
+    border: 1px solid var(--border); font-size: 13px;
+  }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-compound  { background: var(--accent); }
+  .dot-quantity  { background: #E07B00; }
+  .dot-compare   { background: var(--teal); }
+  .dot-subjunctive { background: #5C0FA3; }
+  .dot-adverb    { background: var(--green); }
+  .dot-transition { background: #B91C1C; }
+  .legend-count  { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--text-muted); background: var(--bg); padding: 1px 7px; border-radius: 999px; }
+
+  /* ── SECTION DIVIDER ── */
+  .sec-div { display: flex; align-items: center; gap: 10px; margin: 2.25rem 0 1.25rem; }
+  .sec-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
+  .sec-line { flex: 1; height: 1px; background: var(--border); }
+  .sec-compound   { color: var(--accent); }
+  .sec-mixed      { color: var(--teal); }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
+    padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .q-card:hover:not(.done) { border-color: var(--border-dark); }
+  .q-card.done-ok   { border-color: rgba(12,122,74,0.45); box-shadow: 0 0 0 1px rgba(12,122,74,0.12) inset; }
+  .q-card.done-fail { border-color: rgba(185,28,28,0.4);  box-shadow: 0 0 0 1px rgba(185,28,28,0.1) inset; }
+
+  .q-head { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 12px; }
+  .q-num {
+    font-size: 11px; font-weight: 700; color: var(--text-muted);
+    background: var(--bg); border: 1px solid var(--border); border-radius: 5px;
+    padding: 2px 7px; white-space: nowrap; flex-shrink: 0; margin-top: 3px;
+  }
+  .q-type {
+    font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px;
+    white-space: nowrap; flex-shrink: 0; margin-top: 3px;
+  }
+  .type-compound    { background: var(--accent-bg);  color: var(--accent); border: 1px solid var(--accent-border); }
+  .type-quantity    { background: var(--orange-bg);  color: var(--orange); border: 1px solid var(--orange-border); }
+  .type-compare     { background: var(--teal-bg);    color: var(--teal);   border: 1px solid var(--teal-border); }
+  .type-subjunctive { background: #F3E8FF;            color: #5C0FA3;       border: 1px solid rgba(92,15,163,0.2); }
+  .type-adverb      { background: var(--green-bg);   color: var(--green);  border: 1px solid var(--green-border); }
+  .type-transition  { background: var(--red-bg);     color: var(--red);    border: 1px solid var(--red-border); }
+
+  .q-text { font-size: 15px; color: var(--text-primary); line-height: 1.75; flex: 1; }
+  .blank {
+    display: inline-block; min-width: 75px;
+    border-bottom: 1.5px solid var(--border-dark);
+    height: 17px; vertical-align: bottom; margin: 0 2px;
+  }
+
+  /* ── OPTIONS ── */
+  .q-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  @media (max-width: 520px) { .q-opts { grid-template-columns: 1fr; } }
+
+  .opt {
+    background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm);
+    padding: 9px 13px; font-size: 14px; font-family: var(--font);
+    color: var(--text-primary); cursor: pointer; text-align: left; line-height: 1.5;
+    transition: background 0.12s, border-color 0.12s, transform 0.1s;
+  }
+  .opt:hover:not(:disabled) { background: var(--accent-bg); border-color: var(--accent-border); transform: translateY(-1px); }
+  .opt:disabled { cursor: default; }
+  .opt.correct { background: var(--green-bg); border-color: var(--green-border); color: var(--green); font-weight: 600; }
+  .opt.wrong   { background: var(--red-bg);   border-color: var(--red-border);   color: var(--red);   text-decoration: line-through; opacity: 0.8; }
+  .opt.reveal  { background: var(--green-bg); border-color: var(--green-border); color: var(--green); font-weight: 600; }
+  .opt.dim     { opacity: 0.35; }
+
+  /* ── EXPLAINER ── */
+  .exp-box {
+    display: none; margin-top: 13px; padding: 11px 14px;
+    background: var(--yellow-bg); border: 1px solid var(--yellow-border);
+    border-left: 3px solid #C88A14; border-radius: var(--r-sm);
+    font-size: 13px; color: var(--text-primary); line-height: 1.75;
+  }
+  .exp-box.show { display: block; }
+  .exp-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--yellow); display: block; margin-bottom: 4px;
+  }
+  .exp-formula {
+    display: inline-block; margin-top: 6px;
+    background: rgba(138,92,10,0.08); border: 1px solid var(--yellow-border);
+    border-radius: var(--r-sm); padding: 5px 10px;
+    font-size: 12px; font-weight: 600; color: var(--yellow); letter-spacing: 0.5px;
+  }
+
+  /* ── COMPOUND CHEAT SHEET (collapsible) ── */
+  .cheatsheet {
+    background: var(--accent-bg); border: 1px solid var(--accent-border); border-radius: var(--r-lg);
+    margin-bottom: 1.75rem; overflow: hidden;
+  }
+  .cheatsheet-toggle {
+    width: 100%; background: none; border: none; cursor: pointer; font-family: var(--font);
+    padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;
+    color: var(--accent); font-size: 14px; font-weight: 700; text-align: left;
+  }
+  .cheatsheet-toggle:hover { background: rgba(91,63,228,0.06); }
+  .cheatsheet-arrow { font-size: 18px; transition: transform 0.25s; }
+  .cheatsheet-toggle.open .cheatsheet-arrow { transform: rotate(180deg); }
+  .cheatsheet-body {
+    display: none; padding: 0 1.25rem 1.25rem;
+  }
+  .cheatsheet-body.show { display: block; }
+  .cs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 4px; }
+  .cs-card {
+    background: var(--surface); border: 1px solid var(--accent-border); border-radius: var(--r-md);
+    padding: 10px 12px;
+  }
+  .cs-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .cs-row { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; margin-bottom: 3px; font-size: 13px; }
+  .cs-formula { font-weight: 700; color: var(--text-primary); }
+  .cs-ex { color: var(--text-secondary); font-size: 12px; }
+  .cs-note { font-size: 12px; color: var(--text-secondary); margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+
+  /* ── SCORE RESULT ── */
+  .result {
+    display: none; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 2rem 1.5rem; text-align: center; margin-top: 2rem;
+  }
+  .result.show { display: block; }
+  .result-emoji { font-size: 40px; margin-bottom: 10px; }
+  .result-score { font-family: var(--serif); font-size: 52px; font-weight: 700; line-height: 1; }
+  .result-denom { font-size: 16px; color: var(--text-muted); margin-top: 3px; }
+  .result-msg { font-size: 15px; color: var(--text-secondary); margin: 14px 0 18px; }
+  .result-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+  @media (max-width: 500px) { .result-grid { grid-template-columns: repeat(2, 1fr); } }
+  .r-stat { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md); padding: 0.9rem 0.5rem; }
+  .r-stat-n { font-size: 22px; font-weight: 700; }
+  .r-stat-l { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .r-stat-n.good { color: var(--green); }
+  .r-stat-n.bad  { color: var(--red); }
+  .r-stat-n.mid  { color: var(--accent); }
+  .reset-btn {
+    background: var(--text-primary); color: #fff;
+    border: none; border-radius: var(--r-md);
+    padding: 11px 28px; font-size: 14px; font-weight: 600; font-family: var(--font);
+    cursor: pointer; transition: opacity 0.15s, transform 0.1s;
+  }
+  .reset-btn:hover { opacity: 0.82; transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; font-size: 12px; color: var(--text-muted);
+    border-top: 1px solid var(--border); padding: 2rem 0 1rem; margin-top: 3rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-pill">Ch.12 加強</span>
+    <span class="topbar-name">形容詞與副詞 · 複合形容詞專項練習</span>
+  </div>
+  <div class="topbar-right">
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="bar"></div></div>
+      <span class="progress-text" id="counter">0 / 30</span>
+    </div>
+    <span class="live-chip" id="live-score">0 分</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="hero-eyebrow">高中英文文法 — 加強版</div>
+        <h1>Chapter 12 · 30 題精練</h1>
+        <div class="hero-tags">
+          <span class="htag htag-purple">複合形容詞 × 12</span>
+          <span class="htag htag-orange">數量形容詞 × 4</span>
+          <span class="htag htag-teal">比較級句型 × 8</span>
+          <span class="htag htag-blue">假設語氣 × 6</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-title">題型分布</div>
+    <div class="legend-grid">
+      <div class="legend-item"><div class="legend-dot dot-compound"></div>複合形容詞（重點加強）<span class="legend-count">12 題</span></div>
+      <div class="legend-item"><div class="legend-dot dot-compare"></div>比較級 / 最高級句型<span class="legend-count">8 題</span></div>
+      <div class="legend-item"><div class="legend-dot dot-subjunctive"></div>假設語氣延伸<span class="legend-count">6 題</span></div>
+      <div class="legend-item"><div class="legend-dot dot-quantity"></div>數量形容詞<span class="legend-count">4 題</span></div>
+    </div>
+  </div>
+
+  <!-- CHEAT SHEET -->
+  <div class="cheatsheet">
+    <button class="cheatsheet-toggle" id="cs-toggle" onclick="toggleCS()">
+      <span>📋 複合形容詞構成法 — 快速複習（點擊展開）</span>
+      <span class="cheatsheet-arrow">▼</span>
+    </button>
+    <div class="cheatsheet-body" id="cs-body">
+      <div class="cs-grid">
+        <div class="cs-card">
+          <div class="cs-title">N + V-ing（主動）</div>
+          <div class="cs-row"><span class="cs-formula">heart-breaking</span><span class="cs-ex">令人心碎的</span></div>
+          <div class="cs-row"><span class="cs-formula">eye-catching</span><span class="cs-ex">引人注目的</span></div>
+          <div class="cs-row"><span class="cs-formula">time-consuming</span><span class="cs-ex">耗時的</span></div>
+          <div class="cs-row"><span class="cs-formula">energy-saving</span><span class="cs-ex">節能的</span></div>
+          <div class="cs-note">邏輯：名詞是動作的受詞，動作是主動進行中</div>
+        </div>
+        <div class="cs-card">
+          <div class="cs-title">N + p.p.（被動）</div>
+          <div class="cs-row"><span class="cs-formula">hand-made</span><span class="cs-ex">手工製作的</span></div>
+          <div class="cs-row"><span class="cs-formula">heart-broken</span><span class="cs-ex">心碎的（人）</span></div>
+          <div class="cs-row"><span class="cs-formula">snow-covered</span><span class="cs-ex">被雪覆蓋的</span></div>
+          <div class="cs-row"><span class="cs-formula">state-run</span><span class="cs-ex">國營的</span></div>
+          <div class="cs-note">邏輯：名詞是動作的施事者，動作被動完成</div>
+        </div>
+        <div class="cs-card">
+          <div class="cs-title">Adj. + N-ed</div>
+          <div class="cs-row"><span class="cs-formula">long-haired</span><span class="cs-ex">長髮的</span></div>
+          <div class="cs-row"><span class="cs-formula">kind-hearted</span><span class="cs-ex">好心腸的</span></div>
+          <div class="cs-row"><span class="cs-formula">one-eyed</span><span class="cs-ex">獨眼的</span></div>
+          <div class="cs-row"><span class="cs-formula">warm-blooded</span><span class="cs-ex">溫血的</span></div>
+          <div class="cs-note">= a person with + adj. + N</div>
+        </div>
+        <div class="cs-card">
+          <div class="cs-title">Adv. + V-ing / p.p.</div>
+          <div class="cs-row"><span class="cs-formula">hard-working</span><span class="cs-ex">努力工作的</span></div>
+          <div class="cs-row"><span class="cs-formula">well-educated</span><span class="cs-ex">受良好教育的</span></div>
+          <div class="cs-row"><span class="cs-formula">well-known</span><span class="cs-ex">著名的</span></div>
+          <div class="cs-row"><span class="cs-formula">fast-moving</span><span class="cs-ex">快速移動的</span></div>
+          <div class="cs-note">V-ing = 主動；p.p. = 被動（最常考）</div>
+        </div>
+        <div class="cs-card">
+          <div class="cs-title">Adj. + V-ing / p.p.</div>
+          <div class="cs-row"><span class="cs-formula">good-looking</span><span class="cs-ex">好看的</span></div>
+          <div class="cs-row"><span class="cs-formula">ready-made</span><span class="cs-ex">現成的</span></div>
+          <div class="cs-row"><span class="cs-formula">old-fashioned</span><span class="cs-ex">老式的</span></div>
+          <div class="cs-row"><span class="cs-formula">good-tasting</span><span class="cs-ex">好吃的</span></div>
+          <div class="cs-note">adj. 修飾後面的分詞</div>
+        </div>
+        <div class="cs-card">
+          <div class="cs-title">N + Adj.（特例）</div>
+          <div class="cs-row"><span class="cs-formula">bullet-proof</span><span class="cs-ex">防彈的</span></div>
+          <div class="cs-row"><span class="cs-formula">life-long</span><span class="cs-ex">終生的</span></div>
+          <div class="cs-row"><span class="cs-formula">user-friendly</span><span class="cs-ex">易用的</span></div>
+          <div class="cs-row"><span class="cs-formula">world-famous</span><span class="cs-ex">世界知名的</span></div>
+          <div class="cs-note">N + adj. 整體作形容詞用</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION A: 複合形容詞 -->
+  <div class="sec-div"><span class="sec-label sec-compound">Part A · 複合形容詞（重點加強）</span><div class="sec-line"></div></div>
+  <div id="part-a"></div>
+
+  <!-- SECTION B: 比較級 / 最高級 -->
+  <div class="sec-div"><span class="sec-label sec-mixed">Part B · 比較級與最高級</span><div class="sec-line"></div></div>
+  <div id="part-b"></div>
+
+  <!-- SECTION C: 數量形容詞 -->
+  <div class="sec-div"><span class="sec-label sec-mixed">Part C · 數量形容詞</span><div class="sec-line"></div></div>
+  <div id="part-c"></div>
+
+  <!-- SECTION D: 假設語氣 -->
+  <div class="sec-div"><span class="sec-label sec-mixed">Part D · 假設語氣延伸</span><div class="sec-line"></div></div>
+  <div id="part-d"></div>
+
+  <!-- RESULT -->
+  <div class="result" id="result">
+    <div class="result-emoji" id="r-emoji">🎉</div>
+    <div class="result-score" id="r-score">—</div>
+    <div class="result-denom">分 / 60</div>
+    <div class="result-msg" id="r-msg">—</div>
+    <div class="result-grid">
+      <div class="r-stat"><div class="r-stat-n good" id="r-ok">—</div><div class="r-stat-l">答對</div></div>
+      <div class="r-stat"><div class="r-stat-n bad"  id="r-ng">—</div><div class="r-stat-l">答錯</div></div>
+      <div class="r-stat"><div class="r-stat-n mid"  id="r-pct">—</div><div class="r-stat-l">正確率</div></div>
+      <div class="r-stat"><div class="r-stat-n mid"  id="r-compound">—</div><div class="r-stat-l">複合形容詞</div></div>
+    </div>
+    <button class="reset-btn" onclick="reset()">重新作答</button>
+  </div>
+
+</div>
+
+<footer>Chapter 12 形容詞與副詞 · 複合形容詞專項加強 · 共 30 題 · 每題 2 分</footer>
+
+<script>
+const QA_COMPOUND = [
+  {
+    type:'compound',
+    q:"Sam is such a <span class='blank'></span> guy that everyone knows him in school.",
+    opts:["(A) nicely-looking","(B) nice-looking","(C) looking-nice","(D) looking-nicely"],
+    ans:1,
+    exp:"Adj. + V-ing 的複合形容詞：nice-looking（好看的）。Adj. 修飾 V-ing，所以 adj. 在前，V-ing 在後，中間加連字號。不能用副詞 nicely，因為要修飾名詞（guy）需用形容詞。",
+    formula:"Adj. + V-ing → nice-looking（好看的）"
+  },
+  {
+    type:'compound',
+    q:"Don't wear such <span class='blank'></span> clothes all the time. Get something more stylish!",
+    opts:["(A) old-fashion","(B) old-fashioned","(C) fashion-old","(D) fashioned-old"],
+    ans:1,
+    exp:"Adj. + p.p. 的複合形容詞：old-fashioned（老式的 / 過時的）。fashion 是名詞，加 -ed 變成類過去分詞，表「具有某名詞特性」，不能直接用 old-fashion。",
+    formula:"Adj. + N-ed → old-fashioned"
+  },
+  {
+    type:'compound',
+    q:"Jack is a <span class='blank'></span> person, which explains why he is so popular among his friends.",
+    opts:["(A) good-tempered","(B) well-tempered","(C) good-tempering","(D) well-tempering"],
+    ans:0,
+    exp:"Adj. + N-ed 的複合形容詞：good-tempered（個性好的）= a person with a good temper。temper 是名詞，加 -ed 形成複合形容詞，修飾人的特質。不能用副詞 well（修飾動詞，不是修飾名詞 temper）。",
+    formula:"Adj. + N-ed → good-tempered（好脾氣的）"
+  },
+  {
+    type:'compound',
+    q:"The <span class='blank'></span> new book is selling like hot cakes. It's really worth reading!",
+    opts:["(A) well-written","(B) written-well","(C) well-writing","(D) writing-well"],
+    ans:0,
+    exp:"Adv. + p.p. 的複合形容詞：well-written（寫得很好的）。書是被寫的（被動），用 p.p. 的 written；副詞 well 在前修飾。連字號後的順序固定：adv. + p.p.，不能倒過來。",
+    formula:"Adv. + p.p. → well-written（寫得好的）"
+  },
+  {
+    type:'compound',
+    q:"The <span class='blank'></span> typhoon is on its way to Taiwan. It will hit the island tonight.",
+    opts:["(A) rapid-moved","(B) rapidly-moved","(C) rapid-moving","(D) rapidly-moving"],
+    ans:3,
+    exp:"Adv. + V-ing 的複合形容詞：rapidly-moving（快速移動的）。颱風是主動移動的，用 V-ing；修飾 V-ing 需要副詞，所以用 rapidly 而非形容詞 rapid。",
+    formula:"Adv. + V-ing → rapidly-moving（主動進行）"
+  },
+  {
+    type:'compound',
+    q:"I took a trip to Egypt last summer; the <span class='blank'></span> tour made a lasting impression on me.",
+    opts:["(A) eye-opening","(B) open-eyed","(C) eye-opened","(D) open-eye"],
+    ans:0,
+    exp:"N + V-ing 的複合形容詞：eye-opening（大開眼界的）= something that opens one's eyes。旅行是主動讓人「大開眼界」，用 V-ing 表主動。open-eyed 指「睜著眼睛的」，語意不符。",
+    formula:"N + V-ing（主動）→ eye-opening（大開眼界的）"
+  },
+  {
+    type:'compound',
+    q:"The company is <span class='blank'></span>. It is not owned or managed by the government.",
+    opts:["(A) private-run","(B) privately-run","(C) private-running","(D) privately-running"],
+    ans:1,
+    exp:"Adv. + p.p.：privately-run（私人經營的）。公司是被經營的（被動）→ p.p. run；修飾 p.p. 要用副詞 privately，不能用形容詞 private。",
+    formula:"Adv. + p.p. → privately-run（私人經營的）"
+  },
+  {
+    type:'compound',
+    q:"The task is <span class='blank'></span>. It will take you a lot of time to finish it.",
+    opts:["(A) consuming-time","(B) consumed-time","(C) time-consuming","(D) time-consumed"],
+    ans:2,
+    exp:"N + V-ing：time-consuming（耗時的）= something that consumes time。time 是 consume 的受詞，動作持續進行（主動），用 V-ing consuming；N 在前，V-ing 在後。",
+    formula:"N + V-ing（主動，N 是受詞）→ time-consuming"
+  },
+  {
+    type:'compound',
+    q:"He is <span class='blank'></span>, gentle, and tender. Many people in the office admire him.",
+    opts:["(A) well-educating","(B) well-educated","(C) good-educating","(D) good-educated"],
+    ans:1,
+    exp:"Adv. + p.p.：well-educated（受良好教育的）。他是被教育的對象（被動）→ p.p. educated；修飾 p.p. 用副詞 well，不能用形容詞 good。",
+    formula:"Adv. + p.p. → well-educated（受良好教育的）"
+  },
+  {
+    type:'compound',
+    q:"Many people couldn't help crying after hearing this <span class='blank'></span> story.",
+    opts:["(A) breaking-heart","(B) hearts-breaking","(C) heartbroken","(D) heartbreaking"],
+    ans:3,
+    exp:"N + V-ing：heart-breaking / heartbreaking（令人心碎的）。故事讓人心碎，是主動進行的動作 → V-ing。heartbroken 是「某人的心已被打碎」，用來描述人的感受，不能修飾故事。",
+    formula:"N + V-ing（主動）→ heartbreaking（令人心碎的）"
+  },
+  {
+    type:'compound',
+    q:"Look at the girl with red hair! = Look at that <span class='blank'></span> girl!",
+    opts:["(A) red-hair","(B) red-haired","(C) haired-red","(D) hair-red"],
+    ans:1,
+    exp:"Adj. + N-ed：red-haired（紅髮的）= a girl with red hair。描述人的外觀特徵用 Adj. + N-ed 結構，N 加 -ed 表「擁有……特徵」。",
+    formula:"Adj. + N-ed → red-haired（有紅髮的）"
+  },
+  {
+    type:'compound',
+    q:"It's a tradition that has existed for a long time. = It's a <span class='blank'></span> tradition.",
+    opts:["(A) long-existed","(B) long-existing","(C) existed-long","(D) existing-long"],
+    ans:1,
+    exp:"Adv. + V-ing：long-existing（長期存在的）。傳統是持續「存在著」（主動，進行中）→ V-ing existing；副詞 long 在前修飾。",
+    formula:"Adv. + V-ing → long-existing（長期存在的）"
+  }
+];
+
+const QB_COMPARE = [
+  {
+    type:'compare',
+    q:"Dr. Lin is <span class='blank'></span> Dr. Wang. They are both respected by students.",
+    opts:["(A) as a good teacher as","(B) as kindly a teacher as","(C) so great a teacher than","(D) as patient a teacher as"],
+    ans:3,
+    exp:"as + adj. + a/an + N + as 句型，adj. 夾在 as...as 之間。正確格式：as patient a teacher as。(C) as...as 不接 than，錯誤。",
+    formula:"as + adj. + a/an + N + as"
+  },
+  {
+    type:'compare',
+    q:"Maggie is <span class='blank'></span> me. She is the most experienced employee in the company.",
+    opts:["(A) junior than","(B) senior to","(C) junior to","(D) senior than"],
+    ans:1,
+    exp:"senior / junior / superior / inferior 後面一律接 to，絕對不用 than！Maggie 最有經驗 = 她比 me 資深 = senior to me。",
+    formula:"senior / junior / superior / inferior + to（不接 than）"
+  },
+  {
+    type:'compare',
+    q:"The road can be slippery on a rainy day, so you should drive <span class='blank'></span> than on a sunny day.",
+    opts:["(A) more slow","(B) slowly","(C) slower","(D) more slowly"],
+    ans:3,
+    exp:"slowly 是多音節副詞，比較級為 more slowly。slower 是形容詞 slow 的比較級，不可修飾動詞 drive。有 than 必須用比較級。",
+    formula:"多音節副詞比較級：more + adv."
+  },
+  {
+    type:'compare',
+    q:"This test is <span class='blank'></span> easier than the last one.",
+    opts:["(A) very","(B) much","(C) even more","(D) so"],
+    ans:1,
+    exp:"比較級前加強程度：much / a lot / far / even / still，絕對不能加 very！選 much。",
+    formula:"比較級前強調：much / far / even / still（不能用 very）"
+  },
+  {
+    type:'compare',
+    q:"The more you exercise, <span class='blank'></span> you'll become.",
+    opts:["(A) much healthier","(B) the healthy","(C) the healthier","(D) the healthiest"],
+    ans:2,
+    exp:"the + 比較級 ... the + 比較級（越...越...），前後都要用 the + 比較級形式。答案 the healthier。",
+    formula:"the + 比較級 ..., the + 比較級"
+  },
+  {
+    type:'compare',
+    q:"Piggy is heavier than <span class='blank'></span> student in Dr. Owl's class.",
+    opts:["(A) other","(B) the others","(C) all","(D) any other"],
+    ans:3,
+    exp:"S + V + 比較級 + than any other + 單數 N（比較級表最高級）。Piggy 也是班上一員，other 不能省（排除自己）。接單數名詞 student。",
+    formula:"比較級 + than + any other + 單數 N"
+  },
+  {
+    type:'compare',
+    q:"We <span class='blank'></span> outside the house than the earthquake struck.",
+    opts:["(A) walked","(B) had no sooner walked","(C) no sooner walk","(D) have no sooner walked"],
+    ans:1,
+    exp:"had no sooner + p.p. ... than + 過去式，「一...就...」。主動作在前，用過去完成式 had walked；than 後用過去簡單式。",
+    formula:"had no sooner + p.p. ... than + 過去式"
+  },
+  {
+    type:'compare',
+    q:"Jack is <span class='blank'></span> the most responsible among us. That's why he is trusted by our boss.",
+    opts:["(A) much","(B) even","(C) very","(D) by far"],
+    ans:3,
+    exp:"by far the most... 是強調最高級程度的固定說法，語氣最強。much / even 也可接最高級，但 by far 最地道。",
+    formula:"by far + the + 最高級（強調程度）"
+  }
+];
+
+const QC_QUANTITY = [
+  {
+    type:'quantity',
+    q:"It's impossible to complete all the work today. We have very <span class='blank'></span> time left.",
+    opts:["(A) a little","(B) little","(C) a few","(D) few"],
+    ans:1,
+    exp:"time 是不可數名詞 → 選 little（幾乎沒有）或 a little（一點點）。題意說「幾乎沒有時間」，選否定意味的 little。a few / few 修飾可數複數名詞。",
+    formula:"不可數：little（幾乎沒有）/ a little（一些）"
+  },
+  {
+    type:'quantity',
+    q:"The government has spent <span class='blank'></span> money building power plants around the country.",
+    opts:["(A) a large sum of","(B) quite a few","(C) a large number of","(D) a good many"],
+    ans:0,
+    exp:"money 是不可數名詞 → 修飾不可數金額的大量詞：a large sum of = a large amount of。quite a few / a large number of / a good many 都修飾可數複數名詞。",
+    formula:"金額（不可數）：a large sum of / a large amount of"
+  },
+  {
+    type:'quantity',
+    q:"He earns <span class='blank'></span> than NT$10,000 per month. I wonder how he supports his family.",
+    opts:["(A) little","(B) less","(C) least","(D) fewer"],
+    ans:1,
+    exp:"money 是不可數名詞，少量比較級：less（= 較少的不可數）。有 than 需用比較級，選 less。fewer 只修飾可數名詞。",
+    formula:"不可數比較級少量：less（比較級）"
+  },
+  {
+    type:'quantity',
+    q:"This romantic town attracts <span class='blank'></span> tourists from around the world every year.",
+    opts:["(A) a large amount of","(B) a plenty of","(C) a lot of","(D) many a"],
+    ans:2,
+    exp:"tourists 是可數複數名詞 → 大量詞用 a lot of / lots of / a large number of / plenty of。a large amount of 接不可數；a plenty of 不存在（正確是 plenty of）；many a 接可數單數。",
+    formula:"可數複數大量：a lot of / a large number of / plenty of"
+  }
+];
+
+const QD_SUBJUNCTIVE = [
+  {
+    type:'subjunctive',
+    q:"If it <span class='blank'></span> not for the COVID-19 crisis, most people <span class='blank'></span> how great Taiwan's health care system is.",
+    opts:["(A) was; would not know","(B) was; would not have known","(C) were; would not have known","(D) were; would not know"],
+    ans:3,
+    exp:"If it were not for... 與現在事實相反，假設語氣固定用 were（不用 was），主句用 would + 原形動詞 know（不是 have known）。",
+    formula:"現在相反：If it were not for... + would + V"
+  },
+  {
+    type:'subjunctive',
+    q:"<span class='blank'></span> Mandy's headache, she could go to Daisy's birthday party this evening.",
+    opts:["(A) Without for","(B) If it were not for","(C) Were if it not for","(D) If it had not been for"],
+    ans:1,
+    exp:"與現在相反：If it were not for = But for = Without + N。(C) 倒裝後不能保留 if。(D) had not been for 用於過去相反。",
+    formula:"If it were not for = But for = Without（現在相反）"
+  },
+  {
+    type:'subjunctive',
+    q:"If it <span class='blank'></span> the terrible weather, we <span class='blank'></span> picnicking in the park yesterday.",
+    opts:["(A) had not been for; would have gone","(B) had not been for; would go","(C) were not for; would have gone","(D) were not for; would go"],
+    ans:0,
+    exp:"yesterday = 過去，與過去事實相反 → If it had not been for...（過去假設），主句用 would have + p.p.（would have gone）。",
+    formula:"過去相反：If it had not been for... + would have + p.p."
+  },
+  {
+    type:'subjunctive',
+    q:"<span class='blank'></span> it not for my parents' support, I couldn't afford an apartment of my own.",
+    opts:["(A) If","(B) Were","(C) Had","(D) Without"],
+    ans:1,
+    exp:"假設語氣倒裝：砍掉 If，把 were 移到主詞前面。If it were not for → Were it not for（現在相反）。Had it not been for 是過去相反的倒裝。",
+    formula:"倒裝：If it were not for → Were it not for"
+  },
+  {
+    type:'subjunctive',
+    q:"<span class='blank'></span> it not been for your timely help, we couldn't have finished the project on time.",
+    opts:["(A) Were","(B) Had","(C) Did","(D) Should"],
+    ans:1,
+    exp:"過去相反的倒裝：If it had not been for → Had it not been for（砍掉 If，had 移前）。主句 couldn't have finished 也是過去相反的標誌。",
+    formula:"過去倒裝：If it had not been for → Had it not been for"
+  },
+  {
+    type:'subjunctive',
+    q:"He has asked for a day off; <span class='blank'></span>, he won't show up today.",
+    opts:["(A) nevertheless","(B) first of all","(C) in other words","(D) in addition"],
+    ans:2,
+    exp:"in other words（換句話說）是解釋前句的轉折語。前句「請假」= 後句「不來」，意思相同，用 in other words。nevertheless 表「儘管如此」，語意相反，不符。",
+    formula:"轉折語：in other words（換句話說 / 解釋前句）"
+  }
+];
+
+let answered = 0, correct = 0, compoundCorrect = 0, compoundTotal = 0;
+const TOTAL = 30;
+
+const TYPE_LABEL = {
+  compound:   ['複合形容詞','type-compound'],
+  quantity:   ['數量形容詞','type-quantity'],
+  compare:    ['比較句型','type-compare'],
+  subjunctive:['假設語氣','type-subjunctive'],
+  adverb:     ['易混副詞','type-adverb'],
+  transition: ['轉折語','type-transition']
+};
+
+let globalMap = [];
+
+function buildSection(qs, containerId) {
+  const wrap = document.getElementById(containerId);
+  qs.forEach(q => {
+    const gi = globalMap.length;
+    globalMap.push(q);
+    const [label, cls] = TYPE_LABEL[q.type] || ['題型','type-compare'];
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'qc' + gi;
+    card.innerHTML = `
+      <div class="q-head">
+        <span class="q-num">Q${gi+1}</span>
+        <span class="q-type ${cls}">${label}</span>
+        <div class="q-text">${q.q}</div>
+      </div>
+      <div class="q-opts" id="opts${gi}">
+        ${q.opts.map((o,j)=>`<button class="opt" onclick="pick(${gi},${j})">${o}</button>`).join('')}
+      </div>
+      <div class="exp-box" id="exp${gi}">
+        <span class="exp-label">解析</span>
+        ${q.exp}
+        ${q.formula ? `<div class="exp-formula">${q.formula}</div>` : ''}
+      </div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function pick(gi, oi) {
+  const q = globalMap[gi];
+  const opts = document.querySelectorAll(`#opts${gi} .opt`);
+  opts.forEach(o => o.disabled = true);
+  const ok = oi === q.ans;
+  opts[oi].classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) opts[q.ans].classList.add('reveal');
+  opts.forEach((o,j) => { if(j!==oi && j!==q.ans) o.classList.add('dim'); });
+  document.getElementById('exp'+gi).classList.add('show');
+  const card = document.getElementById('qc'+gi);
+  card.classList.add('done', ok ? 'done-ok' : 'done-fail');
+  answered++; if(ok) correct++;
+  if (q.type === 'compound') { compoundTotal++; if(ok) compoundCorrect++; }
+  updateProgress();
+  if (answered === TOTAL) setTimeout(showResult, 700);
+}
+
+function updateProgress() {
+  document.getElementById('bar').style.width = (answered/TOTAL*100).toFixed(0)+'%';
+  document.getElementById('counter').textContent = answered + ' / ' + TOTAL;
+  document.getElementById('live-score').textContent = (correct*2) + ' 分';
+}
+
+function showResult() {
+  const score = correct * 2;
+  const pct   = Math.round(correct/TOTAL*100);
+  const cpct  = compoundTotal ? Math.round(compoundCorrect/compoundTotal*100) : 0;
+  let emoji, msg;
+  if (correct >= 27)      { emoji='🏆'; msg='完美！幾乎全對，文法掌握非常紮實！'; }
+  else if (correct >= 23) { emoji='🎉'; msg='表現很好！複合形容詞再多練幾次就完美了。'; }
+  else if (correct >= 18) { emoji='💪'; msg='有進步空間，把錯題的規則再看一遍！'; }
+  else                    { emoji='📖'; msg='建議把上方複習表仔細看完，再重新作答。'; }
+  document.getElementById('r-emoji').textContent = emoji;
+  document.getElementById('r-score').textContent = score;
+  document.getElementById('r-msg').textContent   = msg;
+  document.getElementById('r-ok').textContent  = correct;
+  document.getElementById('r-ng').textContent  = TOTAL - correct;
+  document.getElementById('r-pct').textContent  = pct + '%';
+  document.getElementById('r-compound').textContent = cpct + '%';
+  document.getElementById('result').classList.add('show');
+  document.getElementById('result').scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+function reset() {
+  answered = 0; correct = 0; compoundCorrect = 0; compoundTotal = 0; globalMap = [];
+  ['part-a','part-b','part-c','part-d'].forEach(id => document.getElementById(id).innerHTML = '');
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('bar').style.width = '0%';
+  document.getElementById('counter').textContent = '0 / 30';
+  document.getElementById('live-score').textContent = '0 分';
+  renderAll();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleCS() {
+  const btn  = document.getElementById('cs-toggle');
+  const body = document.getElementById('cs-body');
+  btn.classList.toggle('open');
+  body.classList.toggle('show');
+}
+
+function renderAll() {
+  buildSection(QA_COMPOUND, 'part-a');
+  buildSection(QB_COMPARE,  'part-b');
+  buildSection(QC_QUANTITY, 'part-c');
+  buildSection(QD_SUBJUNCTIVE,'part-d');
+}
+
+renderAll();
+</script>
+</body>
+</html>
