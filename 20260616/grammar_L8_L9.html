@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L8–L9 英文文法教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --surface2: #f0ede6;
+    --ink: #1a1814;
+    --ink2: #5a5650;
+    --ink3: #9a948c;
+    --rule: #e2ddd6;
+    --accent: #c94f2e;
+    --accent-light: #f9ece8;
+    --blue: #1e5fa8;
+    --blue-light: #e8f0fa;
+    --green: #2d7a4f;
+    --green-light: #e8f5ee;
+    --amber: #b06a00;
+    --amber-light: #fff3e0;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Noto Sans TC', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    color: #fff;
+    padding: 3.5rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 24px,
+      rgba(255,255,255,0.025) 24px,
+      rgba(255,255,255,0.025) 25px
+    );
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: .75rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    line-height: 1.15;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: #f0c060;
+  }
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,.55);
+    max-width: 480px;
+    margin: 0 auto 2rem;
+  }
+  .hero-chips {
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+  }
+  .hero-chip {
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 100px;
+    padding: 5px 16px;
+    font-size: 13px;
+    color: rgba(255,255,255,.85);
+    cursor: pointer;
+    transition: background .15s;
+    text-decoration: none;
+  }
+  .hero-chip:hover { background: rgba(255,255,255,.18); }
+
+  /* ── NAV ── */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sticky-nav::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 14px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink2);
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all .15s;
+    border: none;
+    background: none;
+    font-family: var(--sans);
+  }
+  .nav-tab:hover { color: var(--ink); background: var(--surface2); }
+  .nav-tab.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
+
+  /* ── SECTIONS ── */
+  .page-section { display: none; padding: 2.5rem 1rem 4rem; max-width: 820px; margin: 0 auto; }
+  .page-section.active { display: block; }
+
+  /* ── TYPOGRAPHY ── */
+  .section-head {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 1.75rem;
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--surface);
+    background: var(--accent);
+    border-radius: 4px;
+    padding: 3px 8px;
+    letter-spacing: .05em;
+  }
+  .section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  h3.rule-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink2);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: .5rem;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink2);
+    margin-bottom: .75rem;
+    letter-spacing: .04em;
+  }
+  .card.accent-left {
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+  }
+  .card.accent-blue {
+    border-left: 3px solid var(--blue);
+    border-radius: 0 12px 12px 0;
+  }
+  .card.accent-green {
+    border-left: 3px solid var(--green);
+    border-radius: 0 12px 12px 0;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media(max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── FORMULA ── */
+  .formula {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: var(--surface2);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: .6rem 1rem;
+    margin: .5rem 0 .75rem;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .formula .kw { color: var(--accent); font-weight: 500; }
+  .formula .kw2 { color: var(--blue); font-weight: 500; }
+  .formula .kw3 { color: var(--green); font-weight: 500; }
+
+  /* ── EXAMPLE LINES ── */
+  .example-pair {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: .75rem 1rem;
+    margin: .5rem 0;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .example-pair .orig { color: var(--ink2); }
+  .example-pair .arrow { color: var(--ink3); font-size: 12px; margin: 0 4px; }
+  .example-pair .trans { color: var(--ink); }
+  .hl { color: var(--accent); font-weight: 700; }
+  .hl-b { color: var(--blue); font-weight: 700; }
+  .hl-g { color: var(--green); font-weight: 700; }
+  .u { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink3); }
+
+  /* ── TAGS ── */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin: .5rem 0; }
+  .tag {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-weight: 500;
+  }
+  .tag.ok { background: var(--green-light); color: var(--green); }
+  .tag.no { background: #fdecea; color: #c0392b; }
+  .tag.info { background: var(--blue-light); color: var(--blue); }
+  .tag.warn { background: var(--amber-light); color: var(--amber); }
+
+  /* ── STRENGTH BAR ── */
+  .strength-bar {
+    display: flex; gap: 0; margin: .75rem 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--rule);
+  }
+  .strength-item {
+    flex: 1;
+    text-align: center;
+    padding: 8px 4px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* ── TABLE ── */
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: .75rem 0 1rem;
+  }
+  .ref-table th {
+    background: var(--surface2);
+    font-weight: 500;
+    text-align: left;
+    padding: 8px 12px;
+    border: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--ink2);
+  }
+  .ref-table td {
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.65;
+  }
+  .ref-table tr:hover td { background: var(--surface2); }
+
+  /* ── QUIZ ── */
+  .quiz-wrap { display: flex; flex-direction: column; gap: .75rem; }
+  .quiz-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+  }
+  .quiz-card .q-text {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .quiz-card .q-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink3);
+    margin-bottom: .35rem;
+  }
+  .opts-grid { display: flex; flex-direction: column; gap: 6px; }
+  .opt {
+    padding: 9px 14px;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    background: var(--surface2);
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--sans);
+    transition: all .15s;
+  }
+  .opt:hover:not(:disabled) { background: var(--surface); border-color: var(--ink3); }
+  .opt.correct { background: var(--green-light); color: var(--green); border-color: var(--green); font-weight: 500; }
+  .opt.wrong { background: #fdecea; color: #c0392b; border-color: #e57373; }
+  .feedback-box {
+    margin-top: .75rem;
+    padding: .6rem 1rem;
+    border-radius: 8px;
+    font-size: 13px;
+    display: none;
+    line-height: 1.6;
+  }
+  .feedback-box.show { display: block; }
+  .feedback-box.ok { background: var(--green-light); color: #1b5e20; }
+  .feedback-box.bad { background: #fdecea; color: #7f0000; }
+  .score-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    font-size: 14px;
+  }
+  .score-val { font-size: 1.5rem; font-weight: 700; font-family: var(--mono); color: var(--accent); }
+  .reset-btn {
+    padding: 8px 18px;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: opacity .15s;
+  }
+  .reset-btn:hover { opacity: .8; }
+
+  /* ── WORKSHEET ── */
+  .ws-item {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: .75rem;
+  }
+  .ws-item .stem { font-size: 14px; color: var(--ink); margin-bottom: .5rem; }
+  .ws-item .arrow-line { font-size: 13px; color: var(--ink2); margin-top: .4rem; }
+  .ws-item input[type=text] {
+    border: none;
+    border-bottom: 1.5px solid var(--ink3);
+    background: transparent;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+    min-width: 180px;
+    padding: 2px 4px;
+    transition: border-color .15s;
+  }
+  .ws-item input[type=text]:focus { border-color: var(--accent); }
+  .ws-check-btn {
+    margin-top: 1rem;
+    padding: 9px 20px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--sans);
+  }
+  .ws-check-btn:hover { opacity: .85; }
+  .ws-result { font-size: 13px; margin-top: .35rem; display: none; font-weight: 500; }
+  .ws-result.ok { color: var(--green); display: block; }
+  .ws-result.no { color: var(--accent); display: block; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 1.75rem 0;
+  }
+
+  /* ── NOTE BOX ── */
+  .note {
+    background: var(--amber-light);
+    border: 1px solid #ffe0a0;
+    border-radius: 10px;
+    padding: .85rem 1.1rem;
+    font-size: 13px;
+    color: #7a4a00;
+    margin: .75rem 0;
+  }
+  .note strong { color: var(--amber); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 12px;
+    color: var(--ink3);
+    border-top: 1px solid var(--rule);
+    margin-top: 2rem;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; }
+  .progress-track { flex: 1; height: 4px; background: var(--rule); border-radius: 2px; }
+  .progress-fill { height: 100%; border-radius: 2px; background: var(--accent); transition: width .4s; }
+  .progress-label { font-size: 12px; color: var(--ink3); font-family: var(--mono); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-eyebrow">高中英文文法 · L8–L9</div>
+  <h1>倒裝句、倍數表達<br>與<em>助動詞推測</em></h1>
+  <p class="hero-sub">觀念整理 × 例句解析 × 練習題 × 牛刀小試填空</p>
+  <div class="hero-chips">
+    <a class="hero-chip" href="#" onclick="switchTab('l81');return false;">L8-1 Only 倒裝句</a>
+    <a class="hero-chip" href="#" onclick="switchTab('l82');return false;">L8-2 倍數表達</a>
+    <a class="hero-chip" href="#" onclick="switchTab('l91');return false;">L9-1 助動詞推測</a>
+    <a class="hero-chip" href="#" onclick="switchTab('ws');return false;">📝 牛刀小試</a>
+    <a class="hero-chip" href="#" onclick="switchTab('quiz');return false;">✅ 測驗</a>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="sticky-nav">
+  <button class="nav-tab active" onclick="switchTab('l81',this)">L8-1 Only 倒裝句</button>
+  <button class="nav-tab" onclick="switchTab('l82',this)">L8-2 倍數表達</button>
+  <button class="nav-tab" onclick="switchTab('l91',this)">L9-1 助動詞推測</button>
+  <button class="nav-tab" onclick="switchTab('ws',this)">📝 牛刀小試</button>
+  <button class="nav-tab" onclick="switchTab('quiz',this)">✅ 綜合測驗</button>
+</nav>
+
+<!-- ══════════════════════════════════════
+     L8-1 ONLY 倒裝句
+══════════════════════════════════════ -->
+<section id="l81" class="page-section active">
+  <div class="section-head">
+    <span class="section-num">L8-1</span>
+    <span class="section-title">Only 的倒裝句</span>
+  </div>
+
+  <!-- 核心判斷 -->
+  <div class="card accent-left">
+    <div class="card-title">⭐ 核心判斷：什麼時候才要倒裝？</div>
+    <p style="font-size:14px;margin-bottom:.75rem;">Only 引導<strong>副詞修飾語</strong>（介系詞片語、副詞子句、時間副詞）放在句首時，<strong>主句動詞需要倒裝</strong>。</p>
+    <div class="tag-row">
+      <span class="tag ok">✓ Only when / after / if … 子句</span>
+      <span class="tag ok">✓ Only + 介系詞片語（by/in/at…）</span>
+      <span class="tag ok">✓ Only then / only at that moment</span>
+      <span class="tag no">✗ Only + 主詞 → 不倒裝</span>
+    </div>
+    <div class="note">
+      <strong>記憶方法：</strong>問自己「only 後面的東西是『修飾語』還是『主詞』？」<br>
+      只有 my boyfriend / Grandma / the teacher 這種接<em>人或名詞當主詞</em>的，才不倒裝。
+    </div>
+  </div>
+
+  <!-- 三種類型 -->
+  <h3 class="rule-label" style="margin:.25rem 0 .75rem;">三種動詞類型的倒裝方式</h3>
+
+  <div class="two-col">
+    <!-- 一般動詞 -->
+    <div class="card">
+      <div class="card-title">① 一般動詞 — 用 do/does/did 幫忙</div>
+      <div class="formula">
+        Only [副詞語] + <span class="kw">do/does/did</span> + S + 原V
+      </div>
+      <div class="example-pair">
+        <div class="orig">You <span class="u">realize</span> its value <strong>only</strong> <span class="u">when you lose your health</span>.</div>
+        <div class="trans">→ <span class="hl">Only when you lose your health</span> <span class="hl">do</span> you <span class="hl">realize</span> its value.</div>
+      </div>
+      <div class="note" style="font-size:12px;margin-top:.5rem;">時態跟原句一樣：原句用現在式 → does/do；過去式 → did，後面動詞還原成原形。</div>
+    </div>
+
+    <!-- Be 動詞 -->
+    <div class="card">
+      <div class="card-title">② Be 動詞 — Be 直接移到主詞前</div>
+      <div class="formula">
+        Only [副詞語] + <span class="kw2">be</span> + S + …
+      </div>
+      <div class="example-pair">
+        <div class="orig">Citizens of Taiwan <span class="u">are</span> allowed to vote <strong>only</strong> <span class="u">after they turn 20</span>.</div>
+        <div class="trans">→ <span class="hl-b">Only after they turn 20</span> <span class="hl-b">are</span> citizens of Taiwan allowed to vote.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 助動詞 -->
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-title">③ 自帶助動詞（can / will / must / should…）— 助動詞移到主詞前</div>
+    <div class="formula">
+      Only [副詞語] + <span class="kw3">助動詞</span> + S + 原V
+    </div>
+    <div class="example-pair">
+      <div class="orig">We <span class="u">can</span> succeed <strong>only</strong> <span class="u">by working hard</span>.</div>
+      <div class="trans">→ <span class="hl-g">Only by working hard</span> <span class="hl-g">can</span> we succeed.</div>
+    </div>
+    <div class="example-pair">
+      <div class="orig">I <span class="u">will</span> not stop saying "sorry" <strong>until</strong> you accept my apology.</div>
+      <div class="trans">→ <span class="hl-g">Not until</span> you accept my apology <span class="hl-g">will</span> I stop saying "sorry".</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 完整對照表 -->
+  <h3 class="rule-label">完整對照表</h3>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>類型</th>
+          <th>原句</th>
+          <th>倒裝句</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>一般動詞</strong><br><small style="color:#888">do/does/did</small></td>
+          <td>You <u>realize</u> its value only when you lose your health.</td>
+          <td><span class="hl">Only when you lose your health <strong>do</strong></span> you realize its value.</td>
+        </tr>
+        <tr>
+          <td><strong>Be 動詞</strong></td>
+          <td>Citizens <u>are</u> allowed to vote only after they turn 20.</td>
+          <td><span class="hl-b">Only after they turn 20 <strong>are</strong></span> citizens allowed to vote.</td>
+        </tr>
+        <tr>
+          <td><strong>助動詞</strong></td>
+          <td>We <u>can</u> succeed only by working hard.</td>
+          <td><span class="hl-g">Only by working hard <strong>can</strong></span> we succeed.</td>
+        </tr>
+        <tr>
+          <td><strong>Not until</strong><br><small style="color:#888">否定字倒裝</small></td>
+          <td>I <u>didn't</u> do homework until mom came home.</td>
+          <td><span class="hl">Not until mom came home <strong>did</strong></span> I do homework.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 不倒裝的例子 -->
+  <div class="card accent-left">
+    <div class="card-title">❌ 這些句子 Only 放句首但「不倒裝」</div>
+    <div class="tag-row" style="flex-direction:column;gap:4px;">
+      <span class="tag no" style="border-radius:6px;padding:5px 12px;">Only <strong>my boyfriend</strong> can kiss me. → boyfriend 是主詞</span>
+      <span class="tag no" style="border-radius:6px;padding:5px 12px;">Only <strong>Grandma</strong> has that apple pie recipe. → Grandma 是主詞</span>
+    </div>
+    <p style="font-size:13px;color:var(--ink2);margin-top:.6rem;">Only 後面直接接主詞（人名/代名詞/名詞片語當主詞），句子正常語序，不需倒裝。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     L8-2 倍數表達法
+══════════════════════════════════════ -->
+<section id="l82" class="page-section">
+  <div class="section-head">
+    <span class="section-num">L8-2</span>
+    <span class="section-title">倍數表達法</span>
+  </div>
+
+  <div class="card accent-green">
+    <div class="card-title">⭐ 核心規則：倍數加在比較結構前面</div>
+    <p style="font-size:14px;margin-bottom:.75rem;">只要把「倍數詞」加在<strong>比較級前面</strong>就好，有兩種句型，意思完全一樣。</p>
+    <div class="two-col">
+      <div>
+        <div class="formula"><span class="kw3">N times</span> + as <span class="kw3">原級</span> as</div>
+        <div class="example-pair">
+          Tom is <span class="hl-g">three times as tall as</span> Peter.
+        </div>
+      </div>
+      <div>
+        <div class="formula"><span class="kw3">N times</span> + <span class="kw3">比較級</span> + than</div>
+        <div class="example-pair">
+          Tom is <span class="hl-g">three times taller than</span> Peter.
+        </div>
+      </div>
+    </div>
+    <div class="note"><strong>注意：</strong>as … as 中間一定放<strong>原級</strong>（不能加 -er！）</div>
+  </div>
+
+  <!-- 倍數說法 -->
+  <div class="card">
+    <div class="card-title">倍數怎麼說</div>
+    <table class="ref-table">
+      <thead><tr><th>倍數</th><th>說法</th><th>備注</th></tr></thead>
+      <tbody>
+        <tr><td>1 倍</td><td colspan="2" style="color:#c0392b;">❌ 沒有「once」這種用法</td></tr>
+        <tr><td>2 倍</td><td><strong>twice</strong></td><td>特殊字，不用 two times</td></tr>
+        <tr><td>3 倍</td><td><strong>three times</strong></td><td>數字 + times</td></tr>
+        <tr><td>4 倍以上</td><td><strong>four / five / ten … times</strong></td><td>數字 + times</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- much / many -->
+  <div class="card accent-blue">
+    <div class="card-title">⭐ 不可數用 much，可數用 many</div>
+    <div class="two-col">
+      <div class="example-pair">
+        <div><strong>不可數名詞</strong> → much</div>
+        <div>He has <span class="hl-b">three times as <strong>much</strong> money</span> as I do.</div>
+        <div>（錢、時間、水→不可數）</div>
+      </div>
+      <div class="example-pair">
+        <div><strong>可數名詞</strong> → many</div>
+        <div>She has <span class="hl-b">twice as <strong>many</strong> books</span> as he does.</div>
+        <div>（書、蘋果、人→可數）</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 完整例句表 -->
+  <h3 class="rule-label">形容詞 vs 副詞對照</h3>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="ref-table">
+      <thead>
+        <tr><th>類型</th><th>as…as 句型</th><th>比較級 + than 句型</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>形容詞</strong><br><small>Tom 是 Peter 的 3 倍高</small></td>
+          <td>Tom is <span class="hl-g">three times as <u>tall</u> as</span> Peter.</td>
+          <td>Tom is <span class="hl-g">three times <u>taller</u> than</span> Peter.</td>
+        </tr>
+        <tr>
+          <td><strong>副詞</strong><br><small>獵豹跑得比人快 2 倍</small></td>
+          <td>Cheetahs run <span class="hl-g">twice as <u>fast</u> as</span> humans.</td>
+          <td>Cheetahs run <span class="hl-g">twice <u>faster</u> than</span> humans.</td>
+        </tr>
+        <tr>
+          <td><strong>動詞（花費）</strong><br><small>進口蘋果是國內的 3 倍貴</small></td>
+          <td>Imported apples cost <span class="hl-g">three times as <u>much</u> as</span> domestic ones.</td>
+          <td>Imported apples cost <span class="hl-g">three times <u>more</u> than</span> domestic ones.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     L9-1 助動詞推測
+══════════════════════════════════════ -->
+<section id="l91" class="page-section">
+  <div class="section-head">
+    <span class="section-num">L9-1</span>
+    <span class="section-title">助動詞—對未知情況的推測/猜想</span>
+  </div>
+
+  <!-- 強弱程度 -->
+  <div class="card">
+    <div class="card-title">推測強弱程度（由強→弱）</div>
+    <div class="strength-bar">
+      <div class="strength-item" style="background:#1e5fa8;color:#fff;">must<br><small>一定</small></div>
+      <div class="strength-item" style="background:#2d7a4f;color:#fff;">may<br><small>可能</small></div>
+      <div class="strength-item" style="background:#b06a00;color:#fff;">might<br><small>可能</small></div>
+      <div class="strength-item" style="background:#6b6560;color:#fff;">could<br><small>可能</small></div>
+    </div>
+    <p style="font-size:13px;color:var(--ink2);margin-top:.5rem;">must 確定度最高（幾乎肯定），could 最低（有可能，但不太確定）。四個字都是「正面推測」（覺得可能發生）。</p>
+  </div>
+
+  <!-- 兩大句型 -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">① 對現在 / 未來事件的推測</div>
+      <div class="formula">
+        S + <span class="kw">must/may/might/could</span> + <span class="kw2">原V</span>
+      </div>
+      <div class="example-pair">
+        <div class="orig">Ellen is sleeping now.</div>
+        <div class="trans">→ She <span class="hl">must be</span> very tired.</div>
+      </div>
+      <div class="example-pair">
+        <div class="orig">The student raised his hand.</div>
+        <div class="trans">→ He <span class="hl">might have</span> a question to ask.</div>
+      </div>
+      <div class="note" style="font-size:12px;margin-top:.5rem;">現在推測：助動詞 + 原形動詞（be / have / go…）</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">② 對過去事件的推測</div>
+      <div class="formula">
+        S + <span class="kw">must/may/might/could</span> + <span class="kw2">have + p.p.</span>
+      </div>
+      <div class="example-pair">
+        <div class="orig">The house was a total mess.</div>
+        <div class="trans">→ Someone <span class="hl">must have broken</span> in.</div>
+      </div>
+      <div class="example-pair">
+        <div class="orig">I can't find my cell phone.</div>
+        <div class="trans">→ I <span class="hl">could have lost</span> it somewhere.</div>
+      </div>
+      <div class="note" style="font-size:12px;margin-top:.5rem;">過去推測：助動詞 + have + 過去分詞 (p.p.)</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 易混點 -->
+  <div class="card accent-left">
+    <div class="card-title">⭐ 最常考的判斷：現在 vs 過去 vs 進行</div>
+    <table class="ref-table" style="margin-top:.5rem;">
+      <thead><tr><th>狀況</th><th>句型</th><th>例句</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>推測<strong>現在狀態</strong></td>
+          <td><span class="hl-b">must/may + 原V</span></td>
+          <td>It's midnight, Tom is still studying. There <span class="hl-b">must be</span> an important test tomorrow.</td>
+        </tr>
+        <tr>
+          <td>推測<strong>現在進行中</strong></td>
+          <td><span class="hl-g">must/may + be + V-ing</span></td>
+          <td>Tina has been practicing day and night. She <span class="hl-g">must be preparing</span> for a contest.</td>
+        </tr>
+        <tr>
+          <td>推測<strong>過去發生</strong></td>
+          <td><span class="hl">must/may + have + p.p.</span></td>
+          <td>I called many times, no one answered. They <span class="hl">must have gone</span> on a vacation.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 假設語氣提醒 -->
+  <div class="card">
+    <div class="card-title">⚠️ 跟假設語氣的助動詞要分開！</div>
+    <div class="two-col">
+      <div class="example-pair">
+        <div><strong>假設語氣</strong>（與現實相反）</div>
+        <div>If I <u>were</u> you, I <span class="hl-b">would</span> study harder.</div>
+        <div style="font-size:12px;color:var(--ink3);">→ 語氣助動詞：would/could/should/might</div>
+      </div>
+      <div class="example-pair">
+        <div><strong>推測用法</strong>（猜測事實）</div>
+        <div>She <span class="hl">must be</span> tired. / He <span class="hl">might have left</span>.</div>
+        <div style="font-size:12px;color:var(--ink3);">→ 推測助動詞：must/may/might/could</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     牛刀小試（填空練習）
+══════════════════════════════════════ -->
+<section id="ws" class="page-section">
+  <div class="section-head">
+    <span class="section-num">填空</span>
+    <span class="section-title">牛刀小試 — 填寫後對答案</span>
+  </div>
+
+  <h3 class="rule-label">L8-1 Only 倒裝句改寫</h3>
+
+  <div class="ws-item" id="ws1">
+    <div class="stem">1. We can <strong>only</strong> see this kind of insect <u>in the Amazon rainforest</u>.</div>
+    <div class="arrow-line">→ Only in the Amazon rainforest <input type="text" id="a1" placeholder="填入動詞部分"> this kind of insect.</div>
+    <div class="ws-result" id="r1"></div>
+  </div>
+
+  <div class="ws-item" id="ws2">
+    <div class="stem">2. The castle is <strong>only</strong> accessible <u>by boat</u>.</div>
+    <div class="arrow-line">→ Only by boat <input type="text" id="a2" placeholder="填入動詞+主詞"> .</div>
+    <div class="ws-result" id="r2"></div>
+  </div>
+
+  <div class="ws-item" id="ws3">
+    <div class="stem">3. The wife will go to bed <strong>only</strong> <u>when the husband comes home</u>.</div>
+    <div class="arrow-line">→ Only when the husband comes home <input type="text" id="a3" placeholder="填入動詞部分"> .</div>
+    <div class="ws-result" id="r3"></div>
+  </div>
+
+  <div class="ws-item" id="ws4">
+    <div class="stem">4. Josh reunites with his family <strong>only</strong> <u>on New Year's Eve</u>.</div>
+    <div class="arrow-line">→ Only <input type="text" id="a4" placeholder="on New Year's Eve + 倒裝"> with his family.</div>
+    <div class="ws-result" id="r4"></div>
+  </div>
+
+  <div class="ws-item" id="ws5">
+    <div class="stem">5. Those kids <strong>only</strong> behave themselves <u>at home</u>.</div>
+    <div class="arrow-line">→ Only <input type="text" id="a5" placeholder="at home + 倒裝"> themselves.</div>
+    <div class="ws-result" id="r5"></div>
+  </div>
+
+  <div class="ws-item" id="ws6">
+    <div class="stem">6. I am happy <strong>only</strong> <u>when my girlfriend is with me</u>.</div>
+    <div class="arrow-line">→ Only when my girlfriend is with me <input type="text" id="a6" placeholder="填入倒裝部分"> .</div>
+    <div class="ws-result" id="r6"></div>
+  </div>
+
+  <hr class="divider">
+  <h3 class="rule-label">L8-2 倍數表達填空</h3>
+
+  <div class="ws-item">
+    <div class="stem">1. John 比 Josh 常（often）健身 2 倍。</div>
+    <div class="arrow-line">→ John works out <input type="text" id="b1" placeholder="twice"> as <input type="text" id="b2" placeholder="often"> as Josh.</div>
+    <div class="arrow-line">= John works out <input type="text" id="b3" placeholder="twice more often"> than Josh.</div>
+    <div class="ws-result" id="rb1"></div>
+  </div>
+
+  <div class="ws-item">
+    <div class="stem">2. 進口蘋果是國內蘋果要價的三倍。</div>
+    <div class="arrow-line">→ Imported apples cost three <input type="text" id="b4" placeholder="times"> as <input type="text" id="b5" placeholder="much"> as domestic ones.</div>
+    <div class="arrow-line">= Imported apples cost three <input type="text" id="b6" placeholder="times more"> than domestic ones.</div>
+    <div class="ws-result" id="rb2"></div>
+  </div>
+
+  <div class="ws-item">
+    <div class="stem">3. 這棟摩天大樓是那棟建築物的十倍高。</div>
+    <div class="arrow-line">→ This skyscraper <input type="text" id="b7" placeholder="is ten times as tall as"> that building.</div>
+    <div class="arrow-line">= This skyscraper <input type="text" id="b8" placeholder="is ten times taller than"> that building.</div>
+    <div class="ws-result" id="rb3"></div>
+  </div>
+
+  <div class="ws-item">
+    <div class="stem">4. 男人重 100 公斤，太太重 50 公斤。用 as...as 合併。</div>
+    <div class="arrow-line">→ The man weighs <input type="text" id="b9" placeholder="twice as much as"> his wife.</div>
+    <div class="arrow-line">= The man is <input type="text" id="b10" placeholder="twice as heavy as"> his wife.</div>
+    <div class="ws-result" id="rb4"></div>
+  </div>
+
+  <div class="ws-item">
+    <div class="stem">5. 爺爺 90 歲，弟弟 9 歲。（10 倍）</div>
+    <div class="arrow-line">→ My grandfather is <input type="text" id="b11" placeholder="ten times as old as"> my younger brother.</div>
+    <div class="arrow-line">→ My grandfather is <input type="text" id="b12" placeholder="ten times older than"> my younger brother.</div>
+    <div class="ws-result" id="rb5"></div>
+  </div>
+
+  <div class="ws-item">
+    <div class="stem">6. 國中學 2000 字，高中學 8000 字（4 倍）</div>
+    <div class="arrow-line">→ I will learn <input type="text" id="b13" placeholder="four"> times <input type="text" id="b14" placeholder="more English words"> in senior high school than I <input type="text" id="b15" placeholder="learned"> in junior high school.</div>
+    <div class="ws-result" id="rb6"></div>
+  </div>
+
+  <button class="ws-check-btn" onclick="checkWS()">對答案 ✓</button>
+
+</section>
+
+<!-- ══════════════════════════════════════
+     綜合測驗
+══════════════════════════════════════ -->
+<section id="quiz" class="page-section">
+  <div class="section-head">
+    <span class="section-num">測驗</span>
+    <span class="section-title">綜合選擇題</span>
+  </div>
+
+  <div class="score-bar">
+    <div>
+      <div style="font-size:12px;color:var(--ink3);margin-bottom:2px;">目前分數</div>
+      <div class="score-val" id="score-display">0 / 20</div>
+    </div>
+    <div style="display:flex;gap:.75rem;">
+      <div class="progress-wrap" style="width:180px;margin:0;">
+        <div class="progress-track" style="width:180px;">
+          <div class="progress-fill" id="score-bar" style="width:0%"></div>
+        </div>
+      </div>
+      <button class="reset-btn" onclick="resetQuiz()">重新作答</button>
+    </div>
+  </div>
+
+  <div class="quiz-wrap" id="quiz-container"></div>
+</section>
+
+<footer>
+  L8–L9 英文文法教學整理 · 內容依課本講義製作
+</footer>
+
+<script>
+// ── TAB SWITCH ──
+function switchTab(id, btn) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  else {
+    const tabs = document.querySelectorAll('.nav-tab');
+    const map = { l81: 0, l82: 1, l91: 2, ws: 3, quiz: 4 };
+    if (map[id] !== undefined) tabs[map[id]].classList.add('active');
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.querySelectorAll('.nav-tab').forEach((tab, i) => {
+  tab.addEventListener('click', function () { switchTab(['l81','l82','l91','ws','quiz'][i], this); });
+});
+
+// ── WORKSHEET CHECK ──
+const wsAnswers = {
+  a1: ['can we see', 'can you see'],
+  a2: ['is the castle built on the rocky island accessible', 'is the castle accessible'],
+  a3: ['will the wife go to bed'],
+  a4: ['on New Year\'s Eve does Josh reunite', 'on New Year\'s Eve does Josh reunites'],
+  a5: ['at home do those kids behave', 'at home do those kids'],
+  a6: ['am I happy'],
+  b1: ['twice'], b2: ['often'], b3: ['twice more often'],
+  b4: ['times'], b5: ['much'], b6: ['times more'],
+  b7: ['is ten times as tall as', 'is ten times as high as'],
+  b8: ['is ten times taller than', 'is ten times higher than'],
+  b9: ['twice as much as'],
+  b10: ['twice as heavy as'],
+  b11: ['ten times as old as'],
+  b12: ['ten times older than'],
+  b13: ['four'],
+  b14: ['more english words', 'more words', 'more english words'],
+  b15: ['learned', 'did']
+};
+
+function normalize(s){ return s.trim().toLowerCase().replace(/\s+/g,' '); }
+
+function checkInput(id, resultId) {
+  const val = normalize(document.getElementById(id).value);
+  const correct = wsAnswers[id].map(a => normalize(a));
+  const isOk = correct.some(c => val === c || val.includes(c) || c.includes(val));
+  return { id, isOk, correct: wsAnswers[id][0] };
+}
+
+function checkWS() {
+  const allIds = ['a1','a2','a3','a4','a5','a6','b1','b2','b3','b4','b5','b6','b7','b8','b9','b10','b11','b12','b13','b14','b15'];
+  const resultMap = {
+    a1:'r1', a2:'r2', a3:'r3', a4:'r4', a5:'r5', a6:'r6',
+    b1:'rb1', b2:'rb1', b3:'rb1',
+    b4:'rb2', b5:'rb2', b6:'rb2',
+    b7:'rb3', b8:'rb3',
+    b9:'rb4', b10:'rb4',
+    b11:'rb5', b12:'rb5',
+    b13:'rb6', b14:'rb6', b15:'rb6'
+  };
+  const shown = {};
+  allIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const r = checkInput(id);
+    const rid = resultMap[id];
+    if (!shown[rid]) { shown[rid] = { ok: true, wrongs: [] }; }
+    if (!r.isOk) { shown[rid].ok = false; shown[rid].wrongs.push(id + ': ' + r.correct); }
+  });
+  Object.entries(shown).forEach(([rid, info]) => {
+    const el = document.getElementById(rid);
+    if (!el) return;
+    if (info.ok) {
+      el.className = 'ws-result ok';
+      el.textContent = '✓ 正確！';
+    } else {
+      el.className = 'ws-result no';
+      el.textContent = '✗ 參考答案：' + info.wrongs.join('；');
+    }
+  });
+}
+
+// ── QUIZ DATA ──
+const quizData = [
+  // L8-1
+  { topic:'L8-1', q:'Only in the smoking area _____ you smoke.', opts:['(A) you can','(B) can you','(C) you','(D) smoke you'], ans:1, exp:'Only + 介系詞片語放句首 → 助動詞 can 移到主詞 you 前 → can you smoke' },
+  { topic:'L8-1', q:'Only at that moment _____ how poor my English was.', opts:['(A) I did realize','(B) did I realize','(C) realized I did','(D) did realize I'], ans:1, exp:'Only then/at that moment 放句首 → 一般動詞 realize（過去）→ did 幫忙：did I realize' },
+  { topic:'L8-1', q:'Only in a big city like New York _____ such a marvelous sight.', opts:['(A) you can see','(B) can you see','(C) you\'ll see','(D) you haven\'t seen'], ans:1, exp:'Only + 介系詞片語 → 助動詞 can 倒裝 → can you see' },
+  { topic:'L8-1', q:'Only when _____ how important health is.', opts:['(A) did Jim get sick he realized','(B) did Jim get sick did he realize','(C) Jim got sick did he realize','(D) Jim got sick he realized'], ans:2, exp:'Only when 後的子句本身不倒裝（Jim got sick），主句才倒裝（did he realize）' },
+  { topic:'L8-1', q:'Only then _____ to have dinner with you.', opts:['(A) Lisa has time','(B) has Lisa time','(C) Lisa does have time','(D) does Lisa have time'], ans:3, exp:'Only then 放句首 → 一般動詞 have（現在，三單）→ does 幫忙：does Lisa have time' },
+  { topic:'L8-1', q:'Only when Albert came home _____ how much damage had been caused.', opts:['(A) did he realize','(B) he realized','(C) had he realized','(D) he had realized'], ans:0, exp:'Only when 子句不倒裝，主句一般動詞（過去）→ did 幫忙：did he realize' },
+  { topic:'L8-1', q:'Only after Peter apologizes _____.', opts:['(A) I will talk to him again','(B) I can\'t talk to him again','(C) can\'t I talk to him again','(D) will I talk to him again'], ans:3, exp:'Only after + 子句放句首 → 助動詞 will 倒裝：will I talk to him again' },
+  { topic:'L8-1', q:'Choose the correct sentence:', opts:['(A) Only when I have to talk to a native English speaker I realize the importance.','(B) Only when I have to talk to a native English speaker do I realize the importance.','(C) Only when do I have to talk to a native English speaker I realize the importance.','(D) Only when I have to talk to a native English speaker am I realize the importance.'], ans:1, exp:'Only when 子句內部不倒裝，主句用 do I realize（一般動詞現在式倒裝）' },
+  // L8-2
+  { topic:'L8-2', q:'This year, the farm\'s harvest was _____ last year.', opts:['(A) twice as much as','(B) as much twice','(C) twice more','(D) as many as twice'], ans:0, exp:'倍數 twice 加在 as much as 前面：twice as much as（harvest 是不可數 → much）' },
+  { topic:'L8-2', q:'This tree is _____ that one.', opts:['(A) twice as taller as','(B) as twice taller as','(C) twice as tall as','(D) as twice tall as'], ans:2, exp:'倍數在前：twice as tall as（as...as 中間放原級 tall，不能用 taller）' },
+  { topic:'L8-2', q:'This typhoon is _____ the last one.', opts:['(A) stronger than three times','(B) three times as strong as','(C) three times stronger as','(D) as strongly as three times'], ans:1, exp:'三倍：three times as strong as（原級 strong，用 as...as）' },
+  { topic:'L8-2', q:'Her husband has two times more books than _____.', opts:['(A) I am','(B) I can','(C) I do','(D) mine do'], ans:2, exp:'和前句主詞 her husband 平行，補充動詞：than I do（代替 have books）' },
+  { topic:'L8-2', q:'I spend _____ John does exercising every day.', opts:['(A) more than three times','(B) three times as much time as','(C) as many as three times','(D) as much time as three times'], ans:1, exp:'time 不可數 → 用 much；三倍：three times as much time as' },
+  { topic:'L8-2', q:'Choose the correct sentence:', opts:['(A) John has as three times money in the bank as he did five years ago.','(B) John has three times as money in the bank as he did five years ago.','(C) John has as three times much money in the bank as he did five years ago.','(D) John has three times as much money in the bank as he did five years ago.'], ans:3, exp:'正確順序：three times as much money as（倍數 → as 原級 as；money 不可數 → much）' },
+  // L9-1
+  { topic:'L9-1', q:'I am terribly sorry. I _____ because I did not hear a sound.', opts:['(A) could be sound asleep','(B) may be sound asleep','(C) must have been sound asleep','(D) might be sound asleep'], ans:2, exp:'因為「沒有聽到聲音」→ 推測過去發生的事 → must have been（過去推測）' },
+  { topic:'L9-1', q:'Nancy found all her valuables missing. A thief _____ her house.', opts:['(A) might break into','(B) must have broken into','(C) must be breaking into','(D) could have been breaking into'], ans:1, exp:'過去發現失竊 → 推測過去事件 → must have broken into（must 確定度高）' },
+  { topic:'L9-1', q:"It's already midnight, but Tom is still studying. There _____ an important test tomorrow.", opts:['(A) must have been','(B) may have','(C) must be','(D) could have'], ans:2, exp:'推測現在/未來的事（明天考試）→ must be（現在推測用原V）' },
+  { topic:'L9-1', q:'Kent got a perfect score on today\'s exam. He _____ really hard for it.', opts:['(A) may study','(B) might study','(C) must have studied','(D) could have studying'], ans:2, exp:'得到滿分 → 推測他過去一定很用功 → must have studied（過去推測）' },
+  { topic:'L9-1', q:'Joan could not find the key to her apartment. She _____ it somewhere in her office.', opts:['(A) must leave','(B) must be leaving','(C) must have been leaving','(D) must have left'], ans:3, exp:'推測她過去把鑰匙留在辦公室 → must have left（過去推測）' },
+  { topic:'L9-1', q:'The bathroom and the sink are very wet. My naughty son _____ with the water.', opts:['(A) may play','(B) may be playing','(C) must have played','(D) must play'], ans:2, exp:'浴室現在很濕 → 推測剛才發生的事（過去）→ must have played' },
+];
+
+let answered = {};
+let score = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  answered = {};
+  score = 0;
+  updateScore();
+
+  quizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.innerHTML = `
+      <div class="q-num">Q${i+1} · ${q.topic}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="opts-grid" id="opts-${i}">
+        ${q.opts.map((o, j) => `<button class="opt" onclick="pick(${i},${j})">${o}</button>`).join('')}
+      </div>
+      <div class="feedback-box" id="fb-${i}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function pick(qi, sel) {
+  if (answered[qi] !== undefined) return;
+  answered[qi] = sel;
+  const q = quizData[qi];
+  const opts = document.querySelectorAll(`#opts-${qi} .opt`);
+  opts.forEach(o => o.disabled = true);
+  opts[q.ans].classList.add('correct');
+  if (sel !== q.ans) opts[sel].classList.add('wrong');
+  else score++;
+
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.classList.add('show');
+  fb.classList.add(sel === q.ans ? 'ok' : 'bad');
+  fb.textContent = (sel === q.ans ? '✓ 正確！' : '✗ 答錯了！') + ' ' + q.exp;
+
+  updateScore();
+}
+
+function updateScore() {
+  const total = quizData.length;
+  document.getElementById('score-display').textContent = `${score} / ${total}`;
+  document.getElementById('score-bar').style.width = `${(score/total)*100}%`;
+}
+
+function resetQuiz() {
+  score = 0;
+  buildQuiz();
+}
+
+buildQuiz();
+</script>
+</body>
+</html>
