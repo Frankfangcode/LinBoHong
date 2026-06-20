@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>期末模擬考 — 50 題 · 滿分 100 分</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F2F1ED;--surface:#FFF;--border:#E0DAD3;--bdk:#C8C2BA;
+  --ink:#17171A;--ink2:#5E5A55;--ink3:#9A9590;
+  --acc:#1A3FA0;--acc-bg:#EBF0FF;--acc-bd:rgba(26,63,160,.2);
+  --red:#B91C1C;--red-bg:#FEF2F2;--red-bd:rgba(185,28,28,.28);
+  --grn:#0A6E40;--grn-bg:#E8F5EE;--grn-bd:rgba(10,110,64,.28);
+  --ylw:#7A5200;--ylw-bg:#FFFBEB;--ylw-bd:rgba(122,82,0,.22);
+  --pur:#5B18D0;--pur-bg:#F3EEFF;--pur-bd:rgba(91,24,208,.2);
+  --ora:#9A3A08;--ora-bg:#FFF4ED;--ora-bd:rgba(154,58,8,.22);
+  --f:system-ui,'PingFang TC','Microsoft JhengHei',sans-serif;
+  --r:10px;--rlg:14px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.7}
+
+/* topbar */
+.topbar{
+  position:sticky;top:0;z-index:90;
+  background:rgba(242,241,237,.94);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  height:50px;padding:0 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+.tb-left{display:flex;align-items:center;gap:10px}
+.tb-pill{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  padding:3px 10px;border-radius:999px;
+  background:var(--acc-bg);color:var(--acc);border:1px solid var(--acc-bd);white-space:nowrap}
+.tb-title{font-size:13px;font-weight:600;color:var(--ink)}
+.tb-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.prog-track{width:100px;height:5px;background:var(--border);border-radius:999px;overflow:hidden}
+.prog-fill{height:5px;background:var(--acc);border-radius:999px;transition:width .4s;width:0%}
+.prog-txt{font-size:12px;color:var(--ink3);white-space:nowrap}
+.live{font-size:13px;font-weight:700;color:var(--acc);background:var(--acc-bg);
+  border:1px solid var(--acc-bd);padding:3px 12px;border-radius:999px;white-space:nowrap}
+
+/* layout */
+.wrap{max-width:800px;margin:0 auto;padding:2rem 1.25rem 5rem}
+
+/* hero */
+.hero{background:var(--surface);border:1px solid var(--border);border-radius:var(--rlg);
+  padding:1.75rem 2rem;margin-bottom:2rem}
+.hero-eye{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:6px}
+.hero h1{font-size:22px;font-weight:700;line-height:1.3;margin-bottom:12px}
+.hero-tags{display:flex;gap:7px;flex-wrap:wrap}
+.htag{font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;border:1px solid transparent}
+.t-acc{background:var(--acc-bg);color:var(--acc);border-color:var(--acc-bd)}
+.t-pur{background:var(--pur-bg);color:var(--pur);border-color:var(--pur-bd)}
+.t-ora{background:var(--ora-bg);color:var(--ora);border-color:var(--ora-bd)}
+.t-grn{background:var(--grn-bg);color:var(--grn);border-color:var(--grn-bd)}
+.t-red{background:var(--red-bg);color:var(--red);border-color:var(--red-bd)}
+
+/* sec divider */
+.sdiv{display:flex;align-items:center;gap:10px;margin:2.25rem 0 1.25rem}
+.slabel{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;white-space:nowrap}
+.sline{flex:1;height:1px;background:var(--border)}
+.s-voc{color:var(--pur)}.s-gram{color:var(--acc)}.s-kuso{color:var(--ora)}.s-subj{color:var(--red)}
+
+/* card */
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--rlg);
+  padding:1.2rem 1.5rem;margin-bottom:.9rem;transition:border-color .2s}
+.qcard:hover:not(.done){border-color:var(--bdk)}
+.qcard.ok{border-color:rgba(10,110,64,.42)}
+.qcard.ng{border-color:rgba(185,28,28,.38)}
+
+.qhead{display:flex;align-items:flex-start;gap:8px;margin-bottom:11px}
+.qnum{font-size:11px;font-weight:700;color:var(--ink3);
+  background:var(--bg);border:1px solid var(--border);border-radius:5px;
+  padding:2px 6px;white-space:nowrap;flex-shrink:0;margin-top:3px}
+.qtag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;
+  white-space:nowrap;flex-shrink:0;margin-top:3px}
+.tag-voc{background:var(--pur-bg);color:var(--pur);border:1px solid var(--pur-bd)}
+.tag-gram{background:var(--acc-bg);color:var(--acc);border:1px solid var(--acc-bd)}
+.tag-kuso{background:var(--ora-bg);color:var(--ora);border:1px solid var(--ora-bd)}
+.tag-subj{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.qtext{font-size:15px;line-height:1.75;flex:1}
+.blank{display:inline-block;min-width:68px;border-bottom:1.5px solid var(--bdk);
+  height:17px;vertical-align:bottom;margin:0 2px}
+
+/* opts */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:11px}
+@media(max-width:500px){.opts{grid-template-columns:1fr}}
+.opt{background:var(--bg);border:1px solid var(--border);border-radius:8px;
+  padding:8px 12px;font-size:14px;font-family:var(--f);color:var(--ink);
+  cursor:pointer;text-align:left;line-height:1.5;
+  transition:background .12s,border-color .12s,transform .1s}
+.opt:hover:not(:disabled){background:var(--acc-bg);border-color:var(--acc-bd);transform:translateY(-1px)}
+.opt:disabled{cursor:default}
+.opt.cor{background:var(--grn-bg);border-color:var(--grn-bd);color:var(--grn);font-weight:600}
+.opt.wrg{background:var(--red-bg);border-color:var(--red-bd);color:var(--red);text-decoration:line-through;opacity:.78}
+.opt.rev{background:var(--grn-bg);border-color:var(--grn-bd);color:var(--grn);font-weight:600}
+.opt.dim{opacity:.32}
+
+/* explain */
+.exp{display:none;margin-top:12px;padding:10px 13px;
+  background:var(--ylw-bg);border:1px solid var(--ylw-bd);border-left:3px solid #C8A000;
+  border-radius:8px;font-size:13px;color:var(--ink);line-height:1.75}
+.exp.show{display:block}
+.exp-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--ylw);display:block;margin-bottom:3px}
+
+/* result */
+.result{display:none;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--rlg);padding:2rem 1.5rem;text-align:center;margin-top:2rem}
+.result.show{display:block}
+.r-big{font-size:58px;font-weight:700;line-height:1}
+.r-denom{font-size:16px;color:var(--ink3);margin-top:3px}
+.r-msg{font-size:15px;color:var(--ink2);margin:14px 0 18px}
+.r-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+@media(max-width:480px){.r-grid{grid-template-columns:repeat(2,1fr)}}
+.r-stat{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:.85rem .5rem}
+.r-n{font-size:20px;font-weight:700}.r-l{font-size:11px;color:var(--ink3);margin-top:2px}
+.r-grn{color:var(--grn)}.r-red{color:var(--red)}.r-acc{color:var(--acc)}
+.reset{background:var(--ink);color:#fff;border:none;border-radius:var(--r);
+  padding:11px 28px;font-size:14px;font-weight:600;font-family:var(--f);cursor:pointer;
+  transition:opacity .15s,transform .1s}
+.reset:hover{opacity:.82;transform:translateY(-1px)}
+
+footer{text-align:center;font-size:12px;color:var(--ink3);
+  border-top:1px solid var(--border);padding:2rem 0 1rem;margin-top:3rem}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-left">
+    <span class="tb-pill">期末模擬考</span>
+    <span class="tb-title">50 題全範圍綜合測驗</span>
+  </div>
+  <div class="tb-right">
+    <div class="prog-track"><div class="prog-fill" id="bar"></div></div>
+    <span class="prog-txt" id="ctr">0 / 50</span>
+    <span class="live" id="live">0 分</span>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="hero">
+  <div class="hero-eye">高中英文 · 期末模擬考</div>
+  <h1>全範圍綜合測驗 · 50 題</h1>
+  <div class="hero-tags">
+    <span class="htag t-pur">單字 Units 11–15 × 20</span>
+    <span class="htag t-acc">文法 Ch12 形副詞 × 12</span>
+    <span class="htag t-ora">文法 L8 倒裝 / 倍數 × 10</span>
+    <span class="htag t-red">文法 L9 助動詞推測 × 4</span>
+    <span class="htag t-grn">假設語氣 L7 × 4</span>
+  </div>
+</div>
+
+<!-- 單字區 -->
+<div class="sdiv"><span class="slabel s-voc">Part I · 單字 Units 11–15（第 1–20 題）</span><div class="sline"></div></div>
+<div id="pA"></div>
+
+<!-- Ch12 文法 -->
+<div class="sdiv"><span class="slabel s-gram">Part II · Ch12 形容詞與副詞（第 21–32 題）</span><div class="sline"></div></div>
+<div id="pB"></div>
+
+<!-- L8 文法 -->
+<div class="sdiv"><span class="slabel s-kuso">Part III · L8 Only 倒裝句 + 倍數表達（第 33–42 題）</span><div class="sline"></div></div>
+<div id="pC"></div>
+
+<!-- L9 + L7 -->
+<div class="sdiv"><span class="slabel s-subj">Part IV · L9 助動詞推測 + L7 假設語氣（第 43–50 題）</span><div class="sline"></div></div>
+<div id="pD"></div>
+
+<div class="result" id="result">
+  <div style="font-size:36px;margin-bottom:8px" id="r-emoji">🎉</div>
+  <div class="r-big" id="r-score">—</div>
+  <div class="r-denom">分 / 100</div>
+  <div class="r-msg" id="r-msg">—</div>
+  <div class="r-grid">
+    <div class="r-stat"><div class="r-n r-grn" id="r-ok">—</div><div class="r-l">答對</div></div>
+    <div class="r-stat"><div class="r-n r-red" id="r-ng">—</div><div class="r-l">答錯</div></div>
+    <div class="r-stat"><div class="r-n r-acc" id="r-pct">—</div><div class="r-l">正確率</div></div>
+    <div class="r-stat"><div class="r-n r-acc" id="r-voc">—</div><div class="r-l">單字部分</div></div>
+  </div>
+  <button class="reset" onclick="resetQ()">重新作答</button>
+</div>
+</div>
+
+<footer>期末模擬考 · Units 11–15 單字 + Ch12 / L7-1 / L8-1 / L8-2 / L9-1 文法 · 50 題 · 每題 2 分 · 滿分 100 分</footer>
+
+<script>
+const QA=[
+  // ── PART A：單字 (20題) ──
+  {s:'voc',t:'單字',
+   q:"He worked <u>　　　　</u>（認真地）to prepare for the final exam.",
+   o:["(A) obediently","(B) earnestly","(C) vividly","(D) diligently"],a:1,
+   e:"in earnest / earnestly（認真地；誠摯地），earnest 作形容詞是「認真的；真誠的」。"},
+  {s:'voc',t:'單字',
+   q:"The teacher tried to <u>　　　　</u>（闡明）the difficult concept with a diagram.",
+   o:["(A) recite","(B) retain","(C) clarify","(D) initiate"],a:2,
+   e:"clarify（vt. 闡明；使清楚），名詞 clarification。"},
+  {s:'voc',t:'單字',
+   q:"Students who <u>　　　　</u>（硬記）the night before tend to forget quickly.",
+   o:["(A) drill","(B) occupy","(C) cram","(D) illustrate"],a:2,
+   e:"cram（vi./vt. 硬記；填鴨；塞進），cram school = 補習班，be crammed with = 塞滿。"},
+  {s:'voc',t:'單字',
+   q:"A strong <u>　　　　</u>（基礎）in grammar helps you write better essays.",
+   o:["(A) session","(B) foundation","(C) gap","(D) possession"],a:1,
+   e:"foundation（n. 基礎；根基），lay the foundation(s) for sth. = 為……奠定基礎。"},
+  {s:'voc',t:'單字',
+   q:"The government decided to <u>　　　　</u>（禁止）the use of single-use plastics.",
+   o:["(A) discard","(B) emit","(C) ban","(D) tempt"],a:2,
+   e:"ban（vt. 禁止；n. 禁令）= prohibit（以法令禁止）。"},
+  {s:'voc',t:'單字',
+   q:"The factory was found to <u>　　　　</u>（排放）large amounts of carbon dioxide.",
+   o:["(A) initiate","(B) emit","(C) inspect","(D) reflect"],a:1,
+   e:"emit（vt. 排出；散發），名詞 emission（排放物）。"},
+  {s:'voc',t:'單字',
+   q:"The customer left without <u>　　　　</u>（猶豫）and paid the full price.",
+   o:["(A) hesitation","(B) intention","(C) cooperation","(D) temptation"],a:0,
+   e:"hesitation（n. 猶豫；遲疑），動詞 hesitate，without hesitation = 毫不猶豫。"},
+  {s:'voc',t:'單字',
+   q:"Leaving a tip is <u>　　　　</u>（義務的；自願的）in Taiwan, unlike in the US.",
+   o:["(A) automatic","(B) voluntary","(C) precise","(D) sufficient"],a:1,
+   e:"voluntary（adj. 義務性的；自願的），反義詞 involuntary（不由自主的）。"},
+  {s:'voc',t:'單字',
+   q:"The restaurant owner said that the new policy would <u>　　　　</u>（產出）higher revenue.",
+   o:["(A) protest","(B) yield","(C) bump","(D) establish"],a:1,
+   e:"yield（vt. 產出；vi. 讓路；屈服），yield one's seat = 讓座。"},
+  {s:'voc',t:'單字',
+   q:"She was completely <u>　　　　</u>（著迷於）her smartphone and barely looked up.",
+   o:["(A) obsessed with","(B) concerned with","(C) involved in","(D) tolerant of"],a:0,
+   e:"be obsessed with（著迷於；執著於），名詞 obsession（癡迷；使人著迷的事物）。"},
+  {s:'voc',t:'單字',
+   q:"The company hired a team to <u>　　　　</u>（監控）all incoming network traffic.",
+   o:["(A) customize","(B) delete","(C) monitor","(D) scan"],a:2,
+   e:"monitor（vt. 監控；監測；n. 螢幕），keep tabs on = 密切注意（Unit 15 相關詞）。"},
+  {s:'voc',t:'單字',
+   q:"She took every <u>　　　　</u>（防範措施）to protect her personal data online.",
+   o:["(A) precaution","(B) assurance","(C) deletion","(D) tolerance"],a:0,
+   e:"precaution（n. 防範措施；預防），take precautions = 採取預防措施。"},
+  {s:'voc',t:'單字',
+   q:"The thief <u>　　　　</u>（大量）overstated the value of the stolen goods.",
+   o:["(A) aggressively","(B) merely","(C) essentially","(D) exaggerated"],a:3,
+   e:"exaggerate（vt./vi. 誇大；誇張），adj. exaggerated（誇大的），n. exaggeration。"},
+  {s:'voc',t:'單字',
+   q:"Many teenagers suffer from <u>　　　　</u>（失眠症）due to excessive screen time.",
+   o:["(A) misery","(B) insomnia","(C) withdrawal","(D) tendency"],a:1,
+   e:"insomnia（n. [U] 失眠症），fall victim to insomnia = 受失眠所苦。"},
+  {s:'voc',t:'單字',
+   q:"Doctors recommend drinking coffee in <u>　　　　</u>（適度地）.",
+   o:["(A) moderation","(B) recession","(C) cessation","(D) fragrance"],a:0,
+   e:"moderation（n. 適度），in moderation = 適量地；adj. moderate（適度的；溫和的）。"},
+  {s:'voc',t:'單字',
+   q:"The report showed that coffee had <u>　　　　</u>（戒斷症狀）similar to other drugs.",
+   o:["(A) commitment","(B) withdrawal symptoms","(C) brake","(D) tendency"],a:1,
+   e:"withdrawal symptom（戒斷症狀），withdrawal（n. 戒毒斷癮的痛苦症狀；提款）。"},
+  {s:'voc',t:'單字',
+   q:"The city <u>　　　　</u>（委任）a local artist to design the public mural.",
+   o:["(A) committed","(B) commissioned","(C) proposed","(D) ceased"],a:1,
+   e:"commission（vt. 委任；委託製作；n. 委員會；佣金）。"},
+  {s:'voc',t:'單字',
+   q:"Some researchers suggest that caffeine can be a <u>　　　　</u>（代替的人或物）for sleep.",
+   o:["(A) substitute","(B) proposal","(C) monitor","(D) fragrance"],a:0,
+   e:"substitute（n. 代替的人或物；vt. 代替），replace = 取代（replacement = 代替物）。"},
+  {s:'voc',t:'單字',
+   q:"The company's new initiative aimed to <u>　　　　</u>（減少）food waste significantly.",
+   o:["(A) discard","(B) prohibit","(C) reduce","(D) gobble"],a:2,
+   e:"本題考字義選擇，reduce（減少）最符合 food waste 的語境；discard = 丟棄。"},
+  {s:'voc',t:'單字',
+   q:"She became <u>　　　　</u>（意識到；醒悟）the dangers of sharing personal information online.",
+   o:["(A) fond of","(B) awake to","(C) tolerant of","(D) obsessed with"],a:1,
+   e:"awake to（phr. 意識到；醒悟），be awakened from = 自……中被驚醒。"},
+  // ── PART B：Ch12 形容詞副詞 (12題) ──
+  {s:'gram',t:'Ch12',
+   q:"I need <u>　　　　</u> to take care of the company while I'm away.",
+   o:["(A) some one responsible","(B) someone responsible","(C) responsible someone","(D) someone responsibly"],a:1,
+   e:"someone / anybody 等不定代名詞，形容詞須後位修飾。正確：someone responsible。"},
+  {s:'gram',t:'Ch12',
+   q:"We have very <u>　　　　</u> time left to finish the project.",
+   o:["(A) a little","(B) little","(C) a few","(D) few"],a:1,
+   e:"time 是不可數名詞，用 little（幾乎沒有，否定意味）或 a little（一點）。此句語意為「幾乎沒有」，選 little。"},
+  {s:'gram',t:'Ch12',
+   q:"The government has spent <u>　　　　</u> money building new highways.",
+   o:["(A) a large number of","(B) quite a few","(C) a large sum of","(D) a good many"],a:2,
+   e:"money 是不可數名詞 → 修飾不可數金額：a large sum of = a large amount of。"},
+  {s:'gram',t:'Ch12',
+   q:"Don't wear such <u>　　　　</u> clothes. Try something more modern!",
+   o:["(A) old-fashion","(B) old-fashioning","(C) old-fashioned","(D) fashion-old"],a:2,
+   e:"Adj. + N-ed 複合形容詞：old-fashioned（過時的）。fashion 加 -ed，不能直接用 old-fashion。"},
+  {s:'gram',t:'Ch12',
+   q:"This is a <u>　　　　</u> novel — it sold millions of copies worldwide.",
+   o:["(A) well-writing","(B) written-well","(C) well-written","(D) good-written"],a:2,
+   e:"Adv. + p.p.：well-written（寫得好的）。書是被寫的（被動）→ p.p.；修飾 p.p. 用副詞 well。"},
+  {s:'gram',t:'Ch12',
+   q:"Maggie is <u>　　　　</u> me in terms of work experience.",
+   o:["(A) senior than","(B) junior than","(C) senior to","(D) more senior as"],a:2,
+   e:"senior / junior / superior / inferior 後面一律用 to，絕對不接 than！"},
+  {s:'gram',t:'Ch12',
+   q:"The road is slippery; please drive <u>　　　　</u> than usual.",
+   o:["(A) more slow","(B) slowly","(C) slower","(D) more slowly"],a:3,
+   e:"slowly 是多音節副詞，比較級 = more slowly。有 than，必須用比較級，選 more slowly。"},
+  {s:'gram',t:'Ch12',
+   q:"This exam is <u>　　　　</u> harder than the last one.",
+   o:["(A) very","(B) much","(C) so","(D) too"],a:1,
+   e:"比較級前加強程度用 much / far / a lot / even / still，絕對不能用 very！選 much。"},
+  {s:'gram',t:'Ch12',
+   q:"The more you practice speaking English, <u>　　　　</u> you will become.",
+   o:["(A) much more confident","(B) the most confident","(C) the more confident","(D) the confident"],a:2,
+   e:"the + 比較級 … the + 比較級（越…越…），後半句也要用 the + 比較級。"},
+  {s:'gram',t:'Ch12',
+   q:"Kelly is heavier than <u>　　　　</u> student in the class.",
+   o:["(A) other","(B) the others","(C) all the other","(D) any other"],a:3,
+   e:"比較級表最高級：heavier than any other + 單數 N。Kelly 也是班上一員，other 不可省略。"},
+  {s:'gram',t:'Ch12',
+   q:"Jack is <u>　　　　</u> the best player on the team. Everyone agrees.",
+   o:["(A) very","(B) much","(C) even","(D) by far"],a:3,
+   e:"by far the + 最高級，是強調最高級程度的慣用說法（語氣最強）。"},
+  {s:'gram',t:'Ch12',
+   q:"I couldn't find my keys. <u>　　　　</u>, I had to call a locksmith.",
+   o:["(A) In other words","(B) Nevertheless","(C) As a result","(D) On the contrary"],a:2,
+   e:"As a result（因此；結果）= therefore，前句是「找不到鑰匙」，後句是「結果打電話給鎖匠」，因果關係。"},
+  // ── PART C：L8 倒裝 + 倍數 (10題) ──
+  {s:'kuso',t:'L8-1',
+   q:"Only in the library <u>　　　　</u> allowed to study quietly.",
+   o:["(A) students are","(B) are students","(C) students were","(D) do students"],a:1,
+   e:"Only + 介系詞片語放句首 → be 動詞 are 移到主詞 students 前：are students allowed…"},
+  {s:'kuso',t:'L8-1',
+   q:"Only when you lose your health <u>　　　　</u> its true value.",
+   o:["(A) you realize","(B) realize you","(C) do you realize","(D) you do realize"],a:2,
+   e:"Only when 子句本身不倒裝（you lose your health），主句一般動詞現在式倒裝：do you realize。"},
+  {s:'kuso',t:'L8-1',
+   q:"Only after Peter apologizes <u>　　　　</u> to him again.",
+   o:["(A) I will talk","(B) will I talk","(C) I talked","(D) did I talk"],a:1,
+   e:"Only after + 子句放句首 → 助動詞 will 倒裝到主詞 I 前：will I talk。"},
+  {s:'kuso',t:'L8-1',
+   q:"Only at that moment <u>　　　　</u> how serious the situation was.",
+   o:["(A) I did realize","(B) did I realize","(C) realized I","(D) I realized"],a:1,
+   e:"Only then / at that moment → 一般動詞過去式倒裝：did I realize（did 幫忙，動詞還原原形）。"},
+  {s:'kuso',t:'L8-1',
+   q:"Choose the correct sentence with 'Only':",
+   o:["(A) Only my mother did cook for me.","(B) Only when I am sick I want my mom.","(C) Only by working hard can we succeed.","(D) Only in summer does hot the weather become."],a:2,
+   e:"(C) Only + 介系詞片語 → 助動詞 can 倒裝：Only by working hard can we succeed. ✓ (A) Only + 主詞，不需倒裝。"},
+  {s:'kuso',t:'L8-1',
+   q:"Not until the teacher entered the classroom <u>　　　　</u> quiet.",
+   o:["(A) the students became","(B) became the students","(C) did the students become","(D) the students did become"],a:2,
+   e:"Not until 放句首 → 主句倒裝，一般動詞過去式：did the students become（did 幫忙，become 還原原形）。"},
+  {s:'kuso',t:'L8-2',
+   q:"This skyscraper is <u>　　　　</u> that old building.",
+   o:["(A) three times as taller as","(B) three times taller than","(C) taller as three times","(D) as three times tall as"],a:1,
+   e:"倍數 + 比較級 + than：three times taller than（比較級 taller，後面接 than）。"},
+  {s:'kuso',t:'L8-2',
+   q:"He has <u>　　　　</u> books as I do.",
+   o:["(A) twice as much","(B) twice as many","(C) twice many","(D) as many twice"],a:1,
+   e:"books 是可數複數名詞 → 用 many：twice as many books as（倍數 + as many + 可數N + as）。"},
+  {s:'kuso',t:'L8-2',
+   q:"The imported phone costs <u>　　　　</u> the domestic one.",
+   o:["(A) three times as much as","(B) three times as many as","(C) as much three times","(D) three time more"],a:0,
+   e:"cost 後接 much（不可數）：three times as much as（倍數 + as much as）。"},
+  {s:'kuso',t:'L8-2',
+   q:"John has three times as much money in the bank as he <u>　　　　</u> five years ago.",
+   o:["(A) is","(B) can","(C) did","(D) had done"],a:2,
+   e:"as 後面用助動詞代替前句動詞 have（過去式）→ did（代替 had money / had three times…）。"},
+  // ── PART D：L9 + L7 (8題) ──
+  {s:'subj',t:'L9-1',
+   q:"I am terribly sorry. I <u>　　　　</u> because I did not hear your call at all.",
+   o:["(A) could be sound asleep","(B) may be sound asleep","(C) must have been sound asleep","(D) might be sound asleep"],a:2,
+   e:"因為「沒聽到叫聲」推測過去發生的事：must have been（過去推測，must + have + p.p.）。"},
+  {s:'subj',t:'L9-1',
+   q:"It's already midnight, but Tom is still studying. There <u>　　　　</u> an important test tomorrow.",
+   o:["(A) must have been","(B) may have","(C) must be","(D) could have been"],a:2,
+   e:"推測現在 / 未來的事（明天考試）→ must be（現在推測：助動詞 + 原形 be）。"},
+  {s:'subj',t:'L9-1',
+   q:"Nancy found all her valuables missing. A thief <u>　　　　</u> her house last night.",
+   o:["(A) might break into","(B) must have broken into","(C) must be breaking into","(D) could break into"],a:1,
+   e:"過去發現失竊 → 推測過去事件：must have broken into（must + have + p.p.）。"},
+  {s:'subj',t:'L9-1',
+   q:"Tina has been practicing day and night. She <u>　　　　</u> for a big competition.",
+   o:["(A) must have prepared","(B) must be preparing","(C) might prepare","(D) could have prepared"],a:1,
+   e:"推測現在進行中的事（她一直在練習）→ must be + V-ing（推測現在進行）。"},
+  {s:'subj',t:'L7-1',
+   q:"If it <u>　　　　</u> for your timely help, we would have failed the project.",
+   o:["(A) was not","(B) were not","(C) had not been","(D) has not been"],a:2,
+   e:"If it had not been for + N.（要不是有……）是與過去事實相反，主句 would have failed 也是過去假設的標誌。"},
+  {s:'subj',t:'L7-1',
+   q:"<u>　　　　</u> it not for the scholarship, Eric couldn't have graduated from university.",
+   o:["(A) If","(B) Were","(C) Had","(D) Without"],a:2,
+   e:"過去相反的倒裝：If it had not been for → Had it not been for（砍 If，had 移到主詞前）。"},
+  {s:'subj',t:'L7-1',
+   q:"If it were not for your support, I <u>　　　　</u> to stand here today.",
+   o:["(A) couldn't have been able","(B) won't be able","(C) wouldn't be able","(D) can't be able"],a:2,
+   e:"If it were not for（與現在相反）→ 主句用 would/could + 原形動詞：wouldn't be able to。"},
+  {s:'subj',t:'L7-1',
+   q:"If it <u>　　　　</u> the terrible weather yesterday, we <u>　　　　</u> to the beach.",
+   o:["(A) wasn't for; would go","(B) hadn't been for; would have gone","(C) weren't for; would have gone","(D) hadn't been for; would go"],a:1,
+   e:"yesterday = 過去相反：If it hadn't been for…（過去假設），主句 would have gone（would have + p.p.）。"},
+];
+
+let answered=0,correct=0,vocCorrect=0,vocTotal=0;
+const TOTAL=QA.length;
+const SECTS={voc:'pA',gram:'pB',kuso:'pC',subj:'pD'};
+const TAGS={voc:'tag-voc',gram:'tag-gram',kuso:'tag-kuso',subj:'tag-subj'};
+const TLAB={voc:'單字',gram:'Ch12',kuso:'L8',subj:'L7/L9'};
+
+function buildAll(){
+  ['pA','pB','pC','pD'].forEach(id=>document.getElementById(id).innerHTML='');
+  QA.forEach((q,gi)=>{
+    const el=document.createElement('div');
+    el.className='qcard';el.id='qc'+gi;
+    el.innerHTML=`
+      <div class="qhead">
+        <span class="qnum">Q${gi+1}</span>
+        <span class="qtag ${TAGS[q.s]}">${TLAB[q.s]}</span>
+        <div class="qtext">${q.q}</div>
+      </div>
+      <div class="opts" id="opts${gi}">
+        ${q.o.map((o,j)=>`<button class="opt" onclick="pick(${gi},${j})">${o}</button>`).join('')}
+      </div>
+      <div class="exp" id="exp${gi}"><span class="exp-lbl">解析</span>${q.e}</div>`;
+    document.getElementById(SECTS[q.s]).appendChild(el);
+  });
+}
+
+function pick(gi,oi){
+  const q=QA[gi];
+  const opts=document.querySelectorAll(`#opts${gi} .opt`);
+  opts.forEach(o=>o.disabled=true);
+  const ok=oi===q.a;
+  opts[oi].classList.add(ok?'cor':'wrg');
+  if(!ok)opts[q.a].classList.add('rev');
+  opts.forEach((o,j)=>{if(j!==oi&&j!==q.a)o.classList.add('dim')});
+  document.getElementById('exp'+gi).classList.add('show');
+  const card=document.getElementById('qc'+gi);
+  card.classList.add('done',ok?'ok':'ng');
+  answered++;if(ok)correct++;
+  if(q.s==='voc'){vocTotal++;if(ok)vocCorrect++;}
+  upd();
+  if(answered===TOTAL)setTimeout(showRes,700);
+}
+
+function upd(){
+  document.getElementById('bar').style.width=(answered/TOTAL*100).toFixed(0)+'%';
+  document.getElementById('ctr').textContent=answered+' / '+TOTAL;
+  document.getElementById('live').textContent=(correct*2)+' 分';
+}
+
+function showRes(){
+  const sc=correct*2;
+  const pct=Math.round(correct/TOTAL*100);
+  const vpct=vocTotal?Math.round(vocCorrect/vocTotal*100):0;
+  let emoji,msg;
+  if(sc>=90){emoji='🏆';msg='完美！期末考穩拿高分！';}
+  else if(sc>=78){emoji='🎉';msg='表現優秀！再鞏固幾個錯誤點就能更好。';}
+  else if(sc>=60){emoji='💪';msg='基礎不錯，還有加強空間，錯題解析要仔細讀！';}
+  else{emoji='📖';msg='建議搭配複習網頁把重點再看一遍，再重新挑戰！';}
+  document.getElementById('r-emoji').textContent=emoji;
+  document.getElementById('r-score').textContent=sc;
+  document.getElementById('r-msg').textContent=msg;
+  document.getElementById('r-ok').textContent=correct;
+  document.getElementById('r-ng').textContent=TOTAL-correct;
+  document.getElementById('r-pct').textContent=pct+'%';
+  document.getElementById('r-voc').textContent=vpct+'%';
+  const res=document.getElementById('result');
+  res.classList.add('show');
+  res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function resetQ(){
+  answered=0;correct=0;vocCorrect=0;vocTotal=0;
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('bar').style.width='0%';
+  document.getElementById('ctr').textContent='0 / 50';
+  document.getElementById('live').textContent='0 分';
+  buildAll();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buildAll();
+</script>
+</body>
+</html>

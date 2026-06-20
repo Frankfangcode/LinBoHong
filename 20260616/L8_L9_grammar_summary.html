@@ -1,0 +1,182 @@
+
+<style>
+.tab-bar{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab{padding:8px 18px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);cursor:pointer;font-size:14px;color:var(--color-text-secondary);transition:all .15s}
+.tab.active{background:var(--color-background-primary);color:var(--color-text-primary);border-color:var(--color-border-primary);font-weight:500}
+.section{display:none}.section.active{display:block}
+.rule-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:1rem}
+.rule-title{font-size:13px;font-weight:500;color:var(--color-text-secondary);margin-bottom:.5rem}
+.formula{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.6rem 1rem;font-family:var(--font-mono);font-size:13px;color:var(--color-text-primary);margin:.5rem 0}
+.example{font-size:14px;color:var(--color-text-secondary);margin:.25rem 0;padding-left:.75rem;border-left:2px solid var(--color-border-secondary)}
+.highlight{color:#185FA5;font-weight:500}
+.highlight2{color:#3B6D11;font-weight:500}
+.highlight3{color:#993C1D;font-weight:500}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-info);color:var(--color-text-info);margin-right:6px;margin-bottom:4px}
+.tag.warn{background:var(--color-background-warning);color:var(--color-text-warning)}
+.tag.suc{background:var(--color-background-success);color:var(--color-text-success)}
+.quiz-q{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:.75rem}
+.quiz-q p{font-size:14px;margin:0 0 .75rem}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt-btn{padding:7px 14px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);font-size:13px;color:var(--color-text-primary);cursor:pointer;text-align:left;transition:all .15s}
+.opt-btn:hover{background:var(--color-background-primary);border-color:var(--color-border-primary)}
+.opt-btn.correct{background:var(--color-background-success);color:var(--color-text-success);border-color:var(--color-border-success)}
+.opt-btn.wrong{background:var(--color-background-danger);color:var(--color-text-danger);border-color:var(--color-border-danger)}
+.feedback{font-size:13px;margin-top:.5rem;padding:.4rem .75rem;border-radius:var(--border-radius-md)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:520px){.two-col{grid-template-columns:1fr}}
+</style>
+<h2 class="sr-only">L8-L9 英文文法重點整理：only倒裝句、倍數表達、助動詞推測</h2>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="showTab('t1',this)">L8-1 Only 倒裝句</button>
+  <button class="tab" onclick="showTab('t2',this)">L8-2 倍數表達</button>
+  <button class="tab" onclick="showTab('t3',this)">L9-1 助動詞推測</button>
+  <button class="tab" onclick="showTab('t4',this)">小測驗</button>
+</div>
+
+<div id="t1" class="section active">
+  <div class="rule-card">
+    <div class="rule-title">核心規則：什麼時候要倒裝？</div>
+    <p style="font-size:14px;color:var(--color-text-primary);margin:.5rem 0">Only 引導<strong>副詞修飾語</strong>（介系詞片語 / 副詞子句 / 時間副詞）放句首時，主句要倒裝。<br>只是主詞或受詞，<span style="color:#A32D2D">❌ 不倒裝</span>。</p>
+    <span class="tag suc">✓ Only when / after / if + 子句</span>
+    <span class="tag suc">✓ Only + 介系詞片語</span>
+    <span class="tag suc">✓ Only then / only at that moment</span>
+    <span class="tag warn">✗ Only my boyfriend... → 主詞，不倒裝</span>
+    <span class="tag warn">✗ Only Grandma... → 主詞，不倒裝</span>
+  </div>
+
+  <div class="two-col">
+    <div class="rule-card">
+      <div class="rule-title">① 一般動詞 → <span class="highlight">do/does/did</span> 幫忙</div>
+      <div class="formula">Only [副詞語] + <span class="highlight">do/does/did</span> + S + 原V</div>
+      <div class="example">You realize its value only <u>when you lose health</u>.</div>
+      <div class="example">→ <span class="highlight">Only when you lose health <strong>do</strong></span> you realize its value.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-title">② Be 動詞 → <span class="highlight2">Be 移到主詞前</span></div>
+      <div class="formula">Only [副詞語] + <span class="highlight2">be</span> + S + ...</div>
+      <div class="example">Citizens <u>are</u> allowed to vote only <u>after they turn 20</u>.</div>
+      <div class="example">→ <span class="highlight2">Only after they turn 20 <strong>are</strong></span> citizens allowed to vote.</div>
+    </div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-title">③ 助動詞（can/will/must...）→ <span class="highlight3">助動詞移到主詞前</span></div>
+    <div class="formula">Only [副詞語] + <span class="highlight3">助動詞</span> + S + 原V</div>
+    <div class="example">We <u>can</u> succeed only <u>by working hard</u>.</div>
+    <div class="example">→ <span class="highlight3">Only by working hard <strong>can</strong></span> we succeed.</div>
+  </div>
+
+  <div class="rule-card" style="border-left:3px solid #378ADD;border-radius:0 var(--border-radius-lg) var(--border-radius-lg) 0">
+    <div class="rule-title">⭐ Not until 同類倒裝（否定字放句首）</div>
+    <div class="example">I didn't do homework <strong>until</strong> mom came home.</div>
+    <div class="example">→ <span class="highlight"><strong>Not until</strong> mom came home <strong>did</strong></span> I do homework.</div>
+  </div>
+</div>
+
+<div id="t2" class="section">
+  <div class="rule-card">
+    <div class="rule-title">倍數放哪裡？</div>
+    <p style="font-size:14px;color:var(--color-text-primary);margin:.5rem 0">只要把倍數加在<strong>比較級前面</strong>就好了！</p>
+    <div class="two-col">
+      <div>
+        <div class="formula">S + V + <span class="highlight">N times</span> + as 原級 as</div>
+        <div class="example">Tom is <span class="highlight">three times</span> <u>as tall as</u> Peter.</div>
+        <div class="example">Cheetahs run <span class="highlight">twice</span> <u>as fast as</u> humans.</div>
+      </div>
+      <div>
+        <div class="formula">S + V + <span class="highlight2">N times</span> + 比較級 + than</div>
+        <div class="example">Tom is <span class="highlight2">three times</span> <u>taller than</u> Peter.</div>
+        <div class="example">Cheetahs run <span class="highlight2">twice</span> <u>faster than</u> humans.</div>
+      </div>
+    </div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-title">倍數怎麼說</div>
+    <span class="tag">once ❌（沒有這用法）</span>
+    <span class="tag suc">twice = 2倍</span>
+    <span class="tag suc">three times = 3倍</span>
+    <span class="tag suc">four times = 4倍</span>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-top:.5rem">as...as 中間放<strong>原級</strong>（不加 -er！）</p>
+  </div>
+  <div class="rule-card" style="border-left:3px solid #3B6D11;border-radius:0 var(--border-radius-lg) var(--border-radius-lg) 0">
+    <div class="rule-title">⭐ 不可數名詞用 much，可數名詞用 many</div>
+    <div class="example">John has <span class="highlight2">three times as <strong>much</strong> money</span> as Bill. （錢→不可數）</div>
+    <div class="example">I will learn <span class="highlight2">four times <strong>more</strong> words</span> than I learned. （比較級）</div>
+  </div>
+</div>
+
+<div id="t3" class="section">
+  <div class="rule-card">
+    <div class="rule-title">推測的強弱程度</div>
+    <div style="display:flex;align-items:center;gap:0;margin:.5rem 0">
+      <span style="font-size:13px;padding:4px 10px;background:#E6F1FB;color:#042C53;border-radius:4px 0 0 4px;border:0.5px solid #B5D4F4">must（一定）</span>
+      <span style="font-size:13px;padding:4px 10px;background:#EAF3DE;color:#173404;border:0.5px solid #C0DD97;border-left:none">may（可能）</span>
+      <span style="font-size:13px;padding:4px 10px;background:#FAEEDA;color:#412402;border:0.5px solid #FAC775;border-left:none">might（可能）</span>
+      <span style="font-size:13px;padding:4px 10px;background:#F1EFE8;color:#2C2C2A;border-radius:0 4px 4px 0;border:0.5px solid #D3D1C7;border-left:none">could（可能）</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:.5rem 0">⬆ 強 → 弱 ⬇ （must 確定度最高，could 最低）</p>
+  </div>
+  <div class="two-col">
+    <div class="rule-card">
+      <div class="rule-title">① 對<strong>現在/未來</strong>事件推測</div>
+      <div class="formula">S + must/may/might/could + <span class="highlight">原V</span></div>
+      <div class="example">Ellen is sleeping. She <span class="highlight">must <strong>be</strong></span> very tired.</div>
+      <div class="example">He raised his hand. He <span class="highlight">might <strong>have</strong></span> a question.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-title">② 對<strong>過去</strong>事件推測</div>
+      <div class="formula">S + must/may/might/could + <span class="highlight2">have + p.p.</span></div>
+      <div class="example">The house was a mess. Someone <span class="highlight2">must <strong>have broken</strong></span> in.</div>
+      <div class="example">I can't find my phone. I <span class="highlight2">could <strong>have lost</strong></span> it.</div>
+    </div>
+  </div>
+  <div class="rule-card" style="border-left:3px solid #D85A30;border-radius:0 var(--border-radius-lg) var(--border-radius-lg) 0">
+    <div class="rule-title">⭐ 常考易混點：現在 vs 過去</div>
+    <div class="example">進行式推測現在：She <span class="highlight3">must be preparing</span> for a contest. （她正在準備）</div>
+    <div class="example">過去推測：A thief <span class="highlight3">must have broken</span> into her house. （過去入室行竊）</div>
+  </div>
+</div>
+
+<div id="t4" class="section">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:1rem">選出正確答案，即時確認！</p>
+  <div id="quiz-container"></div>
+</div>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+function showTab(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  tabs.forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const quizData=[
+  {q:'Only in the smoking area _____ you smoke.',opts:['(A) you can','(B) can you','(C) you','(D) smoke you'],ans:1,exp:'Only + 介系詞片語放句首 → 助動詞 can 移到主詞 you 前面'},
+  {q:'Only when _____ how important health is.',opts:['(A) did Jim get sick he realized','(B) Jim got sick did he realize','(C) Jim got sick he realized','(D) did Jim get sick did he realize'],ans:1,exp:'Only when + 子句（不倒裝），主句才倒裝：did he realize'},
+  {q:'Only then _____ to have dinner with you.',opts:['(A) Lisa has time','(B) has Lisa time','(C) Lisa does have time','(D) does Lisa have time'],ans:3,exp:'Only then 放句首，一般動詞 have → does 幫忙倒裝：does Lisa have time'},
+  {q:'This typhoon is _____ the last one.',opts:['(A) stronger than three times','(B) three times as strong as','(C) three times stronger as','(D) as strongly as three times'],ans:1,exp:'倍數放比較級前：three times as strong as（as...as 用原級）'},
+  {q:'The show was fantastic! The performer _____ a lot of time preparing.',opts:['(A) might spend','(B) could spend','(C) may not have spent','(D) must have spent'],ans:3,exp:'show was fantastic → 推測他過去一定花很多時間準備 → must have spent（過去推測）'},
+  {q:'Nancy found all her valuables missing. A thief _____ her house.',opts:['(A) might break into','(B) must have broken into','(C) must be breaking into','(D) could have been breaking into'],ans:1,exp:'過去發現失竊 → 推測過去事件 → must have broken into'},
+];
+
+const qc=document.getElementById('quiz-container');
+quizData.forEach((q,i)=>{
+  const div=document.createElement('div');div.className='quiz-q';
+  div.innerHTML=`<p><strong>Q${i+1}.</strong> ${q.q}</p><div class="opts">${q.opts.map((o,j)=>`<button class="opt-btn" onclick="checkAns(${i},${j},this)">${o}</button>`).join('')}</div><div class="feedback" id="fb${i}" style="display:none"></div>`;
+  qc.appendChild(div);
+});
+
+function checkAns(qi,sel,btn){
+  const q=quizData[qi];
+  const btns=btn.parentElement.querySelectorAll('.opt-btn');
+  btns.forEach(b=>b.disabled=true);
+  btns[q.ans].classList.add('correct');
+  if(sel!==q.ans) btn.classList.add('wrong');
+  const fb=document.getElementById('fb'+qi);
+  fb.style.display='block';
+  fb.style.background=sel===q.ans?'var(--color-background-success)':'var(--color-background-danger)';
+  fb.style.color=sel===q.ans?'var(--color-text-success)':'var(--color-text-danger)';
+  fb.textContent=(sel===q.ans?'✓ 正確！':'✗ 答錯了！')+' '+q.exp;
+}
+</script>

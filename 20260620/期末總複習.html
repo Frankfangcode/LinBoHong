@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>期末總複習 — 完整重點整理</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F3EF;--surf:#FFF;--surf2:#EDEBE6;--border:#DDD8D0;--bdk:#C0BAB0;
+  --ink:#17171A;--ink2:#5A5650;--ink3:#9A9590;
+  --acc:#1A3FA0;--acc-bg:#EAF0FF;--acc-bd:rgba(26,63,160,.2);
+  --red:#B91C1C;--red-bg:#FEF2F2;--red-bd:rgba(185,28,28,.2);
+  --grn:#0A6E40;--grn-bg:#E8F5EE;--grn-bd:rgba(10,110,64,.22);
+  --ylw:#7A5200;--ylw-bg:#FFFBEB;--ylw-bd:rgba(122,82,0,.22);
+  --pur:#5B18D0;--pur-bg:#F2EEFF;--pur-bd:rgba(91,24,208,.2);
+  --ora:#9A3A08;--ora-bg:#FFF4ED;--ora-bd:rgba(154,58,8,.22);
+  --tea:#0A7070;--tea-bg:#E6F5F5;--tea-bd:rgba(10,112,112,.2);
+  --f:system-ui,'PingFang TC','Microsoft JhengHei',sans-serif;
+  --mono:'SFMono-Regular','Consolas',monospace;
+  --r:10px;--rlg:14px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.75}
+
+/* top nav */
+.tnav{position:sticky;top:0;z-index:100;background:rgba(244,243,239,.95);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--border);
+  display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.tnav::-webkit-scrollbar{display:none}
+.ntab{padding:13px 20px;font-size:13px;font-weight:500;color:var(--ink2);
+  cursor:pointer;white-space:nowrap;border:none;background:none;
+  font-family:var(--f);border-bottom:2px solid transparent;transition:all .15s}
+.ntab:hover{color:var(--ink);background:var(--surf2)}
+.ntab.on{color:var(--acc);border-bottom:2px solid var(--acc)}
+
+/* sections */
+.sec{display:none;max-width:820px;margin:0 auto;padding:2.25rem 1.25rem 5rem}
+.sec.on{display:block}
+
+/* page header */
+.ph{margin-bottom:1.75rem}
+.ph-eye{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:5px}
+.ph h2{font-size:22px;font-weight:700;line-height:1.3}
+.ph-sub{font-size:14px;color:var(--ink2);margin-top:5px}
+
+/* card */
+.card{background:var(--surf);border:1px solid var(--border);border-radius:var(--rlg);
+  padding:1.25rem 1.5rem;margin-bottom:1rem}
+.card.al{border-left:3px solid var(--acc);border-radius:0 var(--rlg) var(--rlg) 0}
+.card.gl{border-left:3px solid var(--grn);border-radius:0 var(--rlg) var(--rlg) 0}
+.card.rl{border-left:3px solid var(--red);border-radius:0 var(--rlg) var(--rlg) 0}
+.card.pl{border-left:3px solid var(--pur);border-radius:0 var(--rlg) var(--rlg) 0}
+.card.ol{border-left:3px solid var(--ora);border-radius:0 var(--rlg) var(--rlg) 0}
+.ctit{font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink2);margin-bottom:10px}
+.star-tit{font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--acc);margin-bottom:10px}
+
+/* formula box */
+.form{font-family:var(--mono);font-size:13px;background:var(--surf2);
+  border:1px solid var(--border);border-radius:8px;padding:.6rem 1rem;
+  margin:.5rem 0 .75rem;color:var(--ink);line-height:1.6}
+.ka{color:var(--acc);font-weight:600}
+.kg{color:var(--grn);font-weight:600}
+.kr{color:var(--red);font-weight:600}
+.kp{color:var(--pur);font-weight:600}
+.ko{color:var(--ora);font-weight:600}
+
+/* example */
+.ex{background:var(--surf2);border-radius:8px;padding:.7rem 1rem;
+  margin:.4rem 0;font-size:14px;line-height:1.8}
+.ex .orig{color:var(--ink2)}
+.ex .tr{color:var(--ink)}
+.hl{color:var(--acc);font-weight:700}
+.hlg{color:var(--grn);font-weight:700}
+.hlr{color:var(--red);font-weight:700}
+.hlo{color:var(--ora);font-weight:700}
+.hlp{color:var(--pur);font-weight:700}
+u{text-underline-offset:3px;text-decoration-color:var(--ink3)}
+
+/* tag chips */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:.5rem 0}
+.chip{font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;border:1px solid transparent}
+.c-ok {background:var(--grn-bg);color:var(--grn);border-color:var(--grn-bd)}
+.c-no {background:var(--red-bg);color:var(--red);border-color:var(--red-bd)}
+.c-acc{background:var(--acc-bg);color:var(--acc);border-color:var(--acc-bd)}
+.c-pur{background:var(--pur-bg);color:var(--pur);border-color:var(--pur-bd)}
+.c-ora{background:var(--ora-bg);color:var(--ora);border-color:var(--ora-bd)}
+.c-ylw{background:var(--ylw-bg);color:var(--ylw);border-color:var(--ylw-bd)}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:14px;margin:.6rem 0 1rem}
+.tbl th{background:var(--surf2);font-weight:600;text-align:left;
+  padding:8px 12px;border:1px solid var(--border);font-size:12px;color:var(--ink2)}
+.tbl td{padding:9px 12px;border:1px solid var(--border);vertical-align:top;line-height:1.65}
+.tbl tr:hover td{background:var(--surf2)}
+
+/* note box */
+.note{background:var(--ylw-bg);border:1px solid var(--ylw-bd);border-radius:8px;
+  padding:.8rem 1rem;font-size:13px;color:var(--ylw);margin:.5rem 0}
+.note strong{color:#5A3B00}
+
+/* divider */
+hr.dv{border:none;border-top:1px solid var(--border);margin:1.5rem 0}
+
+/* two-col */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:560px){.two{grid-template-columns:1fr}}
+
+/* strength bar */
+.sbar{display:flex;border-radius:8px;overflow:hidden;border:1px solid var(--border);margin:.6rem 0}
+.sb-item{flex:1;text-align:center;padding:8px 4px;font-size:12px;font-weight:600;line-height:1.4}
+
+/* vocab grid */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin:.5rem 0}
+.vcard{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);
+  padding:.75rem 1rem}
+.vword{font-size:14px;font-weight:700;color:var(--ink)}
+.vpos{font-size:11px;color:var(--ink3);margin-left:4px}
+.vmean{font-size:13px;color:var(--ink2);margin-top:2px}
+.vex{font-size:12px;color:var(--acc);margin-top:3px;font-style:italic}
+
+/* section label */
+.sec-lbl{display:flex;align-items:center;gap:10px;margin:1.75rem 0 1rem}
+.sl-text{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;white-space:nowrap}
+.sl-line{flex:1;height:1px;background:var(--border)}
+.sl-acc{color:var(--acc)}.sl-grn{color:var(--grn)}.sl-pur{color:var(--pur)}.sl-ora{color:var(--ora)}.sl-red{color:var(--red)}
+
+/* compound table */
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.comp-card{background:var(--surf);border:1px solid var(--pur-bd);border-radius:var(--r);padding:.9rem 1rem}
+.comp-head{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--pur);margin-bottom:7px}
+.comp-row{display:flex;justify-content:space-between;gap:6px;margin-bottom:3px;font-size:13px}
+.comp-f{font-weight:700;color:var(--ink)}
+.comp-c{color:var(--ink3);font-size:12px}
+.comp-note{font-size:12px;color:var(--ink2);margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}
+
+footer{text-align:center;font-size:12px;color:var(--ink3);
+  border-top:1px solid var(--border);padding:2rem 0 1rem;margin-top:3rem}
+</style>
+</head>
+<body>
+
+<nav class="tnav" id="tnav">
+  <button class="ntab on" onclick="sw('s1',this)">📚 Units 11–15 單字</button>
+  <button class="ntab" onclick="sw('s2',this)">📐 Ch12 形容詞</button>
+  <button class="ntab" onclick="sw('s3',this)">📐 Ch12 副詞</button>
+  <button class="ntab" onclick="sw('s4',this)">📐 Ch12 比較句型</button>
+  <button class="ntab" onclick="sw('s5',this)">↩ L8-1 Only倒裝</button>
+  <button class="ntab" onclick="sw('s6',this)">✕ L8-2 倍數表達</button>
+  <button class="ntab" onclick="sw('s7',this)">🔮 L9-1 助動詞</button>
+  <button class="ntab" onclick="sw('s8',this)">💭 L7-1 假設語氣</button>
+  <button class="ntab" onclick="sw('s9',this)">⭐ 易錯總整理</button>
+</nav>
+
+<!-- ═══ S1: 單字 ═══ -->
+<section class="sec on" id="s1">
+<div class="ph">
+  <div class="ph-eye">Units 11–15 單字</div>
+  <h2>核心詞彙整理</h2>
+  <div class="ph-sub">各單元高頻、易混、必考單字 — 按主題分組記憶效果最好</div>
+</div>
+
+<div class="sec-lbl"><span class="sl-text sl-pur">Unit 11 · Tips for Remembering What You've Learned</span><div class="sl-line"></div></div>
+<div class="card">
+  <div class="ctit">⭐ 高頻核心字</div>
+  <div class="vgrid">
+    <div class="vcard"><div class="vword">earnest<span class="vpos">adj.</span></div><div class="vmean">認真的；真誠的</div><div class="vex">in earnest = 認真地（phr.）</div></div>
+    <div class="vcard"><div class="vword">diligent<span class="vpos">adj.</span></div><div class="vmean">勤勉的；勤奮的</div><div class="vex">diligently adv. / diligence n.</div></div>
+    <div class="vcard"><div class="vword">retain<span class="vpos">vt.</span></div><div class="vmean">記住；保留；保有</div><div class="vex">retain ownership 保留所有權</div></div>
+    <div class="vcard"><div class="vword">clarify<span class="vpos">vt.</span></div><div class="vmean">闡明；使清楚</div><div class="vex">clarification n. [C,U]</div></div>
+    <div class="vcard"><div class="vword">cram<span class="vpos">vi./vt.</span></div><div class="vmean">硬記；填鴨；把…塞進</div><div class="vex">cram school 補習班</div></div>
+    <div class="vcard"><div class="vword">illustrate<span class="vpos">vt.</span></div><div class="vmean">加插圖；用圖說明</div><div class="vex">illustrated book 繪本</div></div>
+    <div class="vcard"><div class="vword">adequate<span class="vpos">adj.</span></div><div class="vmean">足夠的；適當的</div><div class="vex">inadequate 不足的 ↔ sufficient</div></div>
+    <div class="vcard"><div class="vword">initial<span class="vpos">adj.</span></div><div class="vmean">最初的；開始的</div><div class="vex">initially adv. / initials n.[P] 首字母</div></div>
+    <div class="vcard"><div class="vword">foundation<span class="vpos">n.</span></div><div class="vmean">基礎；根基；基金會</div><div class="vex">lay the foundation(s) for sth.</div></div>
+    <div class="vcard"><div class="vword">procedure<span class="vpos">n.</span></div><div class="vmean">程序；步驟；手續</div><div class="vex">customs procedure 通關程序</div></div>
+  </div>
+</div>
+<div class="note"><strong>⚠️ 易混：</strong>economic（經濟的）vs economical（節約的）vs economics（經濟學，不可數）</div>
+
+<div class="sec-lbl"><span class="sl-text sl-pur">Unit 12 · The War against Food Waste</span><div class="sl-line"></div></div>
+<div class="card">
+  <div class="ctit">⭐ 高頻核心字</div>
+  <div class="vgrid">
+    <div class="vcard"><div class="vword">discard<span class="vpos">vt./vi.</span></div><div class="vmean">丟棄</div><div class="vex">= throw out（扔掉）</div></div>
+    <div class="vcard"><div class="vword">emit<span class="vpos">vt.</span></div><div class="vmean">排出；散發</div><div class="vex">emission n. [C,U] 排放物</div></div>
+    <div class="vcard"><div class="vword">ban<span class="vpos">vt./n.</span></div><div class="vmean">禁止；禁令</div><div class="vex">= prohibit（以法令禁止）</div></div>
+    <div class="vcard"><div class="vword">initiate<span class="vpos">vt.</span></div><div class="vmean">開始；發起</div><div class="vex">initiative n. 創新計畫；倡議</div></div>
+    <div class="vcard"><div class="vword">substantial<span class="vpos">adj.</span></div><div class="vmean">可觀的；重大的</div><div class="vex">= considerable / significant</div></div>
+    <div class="vcard"><div class="vword">tempt<span class="vpos">vt.</span></div><div class="vmean">引誘；使很想要</div><div class="vex">be tempted to V. tempting adj.</div></div>
+    <div class="vcard"><div class="vword">cooperation<span class="vpos">n.[U]</span></div><div class="vmean">合作；配合</div><div class="vex">cooperate vi. / cooperative adj.</div></div>
+    <div class="vcard"><div class="vword">reflect<span class="vpos">vt.</span></div><div class="vmean">反映；反射；反省</div><div class="vex">reflect on/upon 認真思考</div></div>
+  </div>
+</div>
+
+<div class="sec-lbl"><span class="sl-text sl-pur">Unit 13 · To Tip, or Not to Tip?</span><div class="sl-line"></div></div>
+<div class="card">
+  <div class="ctit">⭐ 高頻核心字</div>
+  <div class="vgrid">
+    <div class="vcard"><div class="vword">voluntary<span class="vpos">adj.</span></div><div class="vmean">義務性的；自願的</div><div class="vex">involuntary 不由自主的 / volunteer n.</div></div>
+    <div class="vcard"><div class="vword">sufficient<span class="vpos">adj.</span></div><div class="vmean">足夠的；充足的</div><div class="vex">insufficient 不足的 / sufficiently adv.</div></div>
+    <div class="vcard"><div class="vword">establish<span class="vpos">vt.</span></div><div class="vmean">設立；訂定</div><div class="vex">establishment n. / established adj.</div></div>
+    <div class="vcard"><div class="vword">yield<span class="vpos">vt./vi.</span></div><div class="vmean">產出；讓路；屈服</div><div class="vex">yield one's seat 讓座</div></div>
+    <div class="vcard"><div class="vword">obsess<span class="vpos">vt.</span></div><div class="vmean">使著迷</div><div class="vex">be obsessed with 著迷於</div></div>
+    <div class="vcard"><div class="vword">consequently<span class="vpos">adv.</span></div><div class="vmean">因此</div><div class="vex">= therefore / hence / thus</div></div>
+    <div class="vcard"><div class="vword">stingy<span class="vpos">adj.</span></div><div class="vmean">吝嗇的</div><div class="vex">↔ generous（慷慨的）</div></div>
+    <div class="vcard"><div class="vword">potential<span class="vpos">adj./n.</span></div><div class="vmean">潛在的；潛力</div><div class="vex">potentially adv. possibly adv.</div></div>
+  </div>
+</div>
+<div class="note"><strong>⚠️ 易混：</strong>salary（年/月薪）vs wage（工資，按時計薪）vs bonus（獎金）</div>
+
+<div class="sec-lbl"><span class="sl-text sl-pur">Unit 14 · Smartphone Snoopers</span><div class="sl-line"></div></div>
+<div class="card">
+  <div class="ctit">⭐ 高頻核心字</div>
+  <div class="vgrid">
+    <div class="vcard"><div class="vword">precaution<span class="vpos">n.[C]</span></div><div class="vmean">防範措施；預防</div><div class="vex">take precautions 採取預防措施</div></div>
+    <div class="vcard"><div class="vword">privacy<span class="vpos">n.[U]</span></div><div class="vmean">隱私；私生活</div><div class="vex">private adj. / privacy setting</div></div>
+    <div class="vcard"><div class="vword">tolerate<span class="vpos">vt.</span></div><div class="vmean">容忍；容許</div><div class="vex">tolerant adj. / intolerant adj.</div></div>
+    <div class="vcard"><div class="vword">exaggerate<span class="vpos">vt./vi.</span></div><div class="vmean">誇大；誇張</div><div class="vex">exaggerated adj. / exaggeration n.</div></div>
+    <div class="vcard"><div class="vword">conscious<span class="vpos">adj.</span></div><div class="vmean">有意識的；清醒的</div><div class="vex">consciousness n. / unconscious adj.</div></div>
+    <div class="vcard"><div class="vword">psychological<span class="vpos">adj.</span></div><div class="vmean">心理的；精神上的</div><div class="vex">psychologist n. / psychology n.[U]</div></div>
+    <div class="vcard"><div class="vword">aggressive<span class="vpos">adj.</span></div><div class="vmean">積極的；具侵略性的</div><div class="vex">aggressively adv. / passive aggression</div></div>
+    <div class="vcard"><div class="vword">customize<span class="vpos">vt.</span></div><div class="vmean">客製化；量身訂做</div><div class="vex">customized adj. / customizable adj.</div></div>
+  </div>
+</div>
+
+<div class="sec-lbl"><span class="sl-text sl-pur">Unit 15 · A Red Light for Coffee</span><div class="sl-line"></div></div>
+<div class="card">
+  <div class="ctit">⭐ 高頻核心字</div>
+  <div class="vgrid">
+    <div class="vcard"><div class="vword">insomnia<span class="vpos">n.[U]</span></div><div class="vmean">失眠症</div><div class="vex">fall victim to insomnia</div></div>
+    <div class="vcard"><div class="vword">moderate<span class="vpos">adj.</span></div><div class="vmean">適度的；溫和的</div><div class="vex">moderation n. / in moderation</div></div>
+    <div class="vcard"><div class="vword">withdrawal<span class="vpos">n.</span></div><div class="vmean">戒斷症狀；提款；撤回</div><div class="vex">withdrawal symptom 戒斷症狀</div></div>
+    <div class="vcard"><div class="vword">substitute<span class="vpos">n./vt.</span></div><div class="vmean">代替的人或物；代替</div><div class="vex">= replace / replacement n.</div></div>
+    <div class="vcard"><div class="vword">cease<span class="vpos">vt./vi.</span></div><div class="vmean">停止（較正式）</div><div class="vex">cease-fire 停戰 / commence 開始</div></div>
+    <div class="vcard"><div class="vword">tendency<span class="vpos">n.[C]</span></div><div class="vmean">習慣；傾向</div><div class="vex">have a tendency to V. / tend vi.</div></div>
+    <div class="vcard"><div class="vword">commit<span class="vpos">vt./vi.</span></div><div class="vmean">承諾；犯罪；投注</div><div class="vex">commitment n. / committed adj.</div></div>
+    <div class="vcard"><div class="vword">miserable<span class="vpos">adj.</span></div><div class="vmean">悲慘的；不幸的</div><div class="vex">misery n. / miserly adj.（吝嗇的）</div></div>
+    <div class="vcard"><div class="vword">adolescent<span class="vpos">n./adj.</span></div><div class="vmean">青少年；青春期的</div><div class="vex">adolescence n. [U] 青春期</div></div>
+    <div class="vcard"><div class="vword">monitor<span class="vpos">vt./n.</span></div><div class="vmean">監控；監測；螢幕</div><div class="vex">keep tabs on = 密切注意</div></div>
+  </div>
+</div>
+<div class="note"><strong>⚠️ 易混：</strong>awake（adj. 醒著的 / vt. 醒來）vs awake to（意識到）vs keep sb. awake（使某人保持清醒）</div>
+</section>
+
+<!-- ═══ S2: Ch12 形容詞 ═══ -->
+<section class="sec" id="s2">
+<div class="ph"><div class="ph-eye">Chapter 12</div><h2>形容詞 (Adjective)</h2></div>
+
+<div class="card al">
+  <div class="star-tit">⭐ 形容詞的四種位置</div>
+  <table class="tbl">
+    <thead><tr><th>位置</th><th>說明</th><th>例句</th></tr></thead>
+    <tbody>
+      <tr><td><strong>名詞前</strong></td><td>修飾後面的名詞</td><td>She is a <span class="hl">friendly</span> lady.</td></tr>
+      <tr><td><strong>名詞後</strong>（後位修飾）</td><td>修飾不定代名詞（somebody/anyone…）或接子句/片語</td><td>Did you see anything <span class="hl">strange</span>?</td></tr>
+      <tr><td><strong>be / 連綴動詞後</strong></td><td>作主詞補語，修飾主詞</td><td>The movie is <span class="hl">exciting</span>.</td></tr>
+      <tr><td><strong>受詞後</strong></td><td>作受詞補語（S+V+O+OC）</td><td>The noise drove me <span class="hl">crazy</span>.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="note"><strong>⚠️ 後位修飾必考：</strong>somebody / anyone / nothing / everything… 等不定代名詞，形容詞必須放後面！<br>
+I need <span class="hlr">someone responsible</span>. ✓ &nbsp;&nbsp; <span class="hlr">responsible someone</span> ✗</div>
+
+<hr class="dv">
+<div class="card">
+  <div class="ctit">以 a- 開頭的形容詞 — 只能放 be 動詞後，不能放名詞前！</div>
+  <div class="chips">
+    <span class="chip c-no">afraid</span><span class="chip c-no">alike</span><span class="chip c-no">alive</span>
+    <span class="chip c-no">alone</span><span class="chip c-no">asleep</span><span class="chip c-no">awake</span>
+    <span class="chip c-no">aware</span><span class="chip c-no">ashamed</span>
+  </div>
+  <div class="ex"><span class="hlg">✓ That baby is asleep.</span> &nbsp;&nbsp; <span class="hlr">✗ It is an asleep baby.</span></div>
+</div>
+
+<hr class="dv">
+<div class="card al">
+  <div class="star-tit">⭐ 數量形容詞 — 最常考的分類</div>
+  <table class="tbl">
+    <thead><tr><th>類型</th><th>許多；大量</th><th>一些</th><th>（很）少</th></tr></thead>
+    <tbody>
+      <tr><td><strong>可數複數</strong></td><td>many / quite a few / a large number of</td><td>a few / several</td><td>few（幾乎沒有）/ a small number of</td></tr>
+      <tr><td><strong>不可數</strong></td><td>much / a great deal of / a large amount of / <span class="hl">a large sum of</span>（金額）</td><td>a little</td><td>little（幾乎沒有）</td></tr>
+      <tr><td><strong>兩者皆可</strong></td><td>a lot of / lots of / plenty of</td><td>some</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><strong>⚠️ the number of + 複數N → 單數動詞 &nbsp;|&nbsp; a number of + 複數N → 複數動詞</strong></div>
+</div>
+
+<hr class="dv">
+<div class="card pl">
+  <div class="star-tit">⭐ 複合形容詞 — 期末必考！</div>
+  <div class="comp-grid">
+    <div class="comp-card">
+      <div class="comp-head">N + V-ing（主動）</div>
+      <div class="comp-row"><span class="comp-f">heart<b>breaking</b></span><span class="comp-c">令人心碎的</span></div>
+      <div class="comp-row"><span class="comp-f">eye<b>-catching</b></span><span class="comp-c">引人注目的</span></div>
+      <div class="comp-row"><span class="comp-f">time<b>-consuming</b></span><span class="comp-c">耗時的</span></div>
+      <div class="comp-note">N 是動作的受詞，動作主動進行</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-head">N + p.p.（被動）</div>
+      <div class="comp-row"><span class="comp-f">hand<b>-made</b></span><span class="comp-c">手工製作的</span></div>
+      <div class="comp-row"><span class="comp-f">heart<b>-broken</b></span><span class="comp-c">心碎的（人）</span></div>
+      <div class="comp-row"><span class="comp-f">state<b>-run</b></span><span class="comp-c">國營的</span></div>
+      <div class="comp-note">N 是動作施事者，動作被動完成</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-head">Adj. + N-ed</div>
+      <div class="comp-row"><span class="comp-f">long<b>-haired</b></span><span class="comp-c">長髮的</span></div>
+      <div class="comp-row"><span class="comp-f">kind<b>-hearted</b></span><span class="comp-c">好心腸的</span></div>
+      <div class="comp-row"><span class="comp-f">good<b>-tempered</b></span><span class="comp-c">好脾氣的</span></div>
+      <div class="comp-note">= a person with adj. + N</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-head">Adv. + V-ing / p.p.</div>
+      <div class="comp-row"><span class="comp-f">hard<b>-working</b></span><span class="comp-c">努力工作的</span></div>
+      <div class="comp-row"><span class="comp-f">well<b>-educated</b></span><span class="comp-c">受良好教育的</span></div>
+      <div class="comp-row"><span class="comp-f">privately<b>-run</b></span><span class="comp-c">私人經營的</span></div>
+      <div class="comp-note">V-ing=主動 / p.p.=被動（最常考）</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-head">Adj. + V-ing / p.p.</div>
+      <div class="comp-row"><span class="comp-f">good<b>-looking</b></span><span class="comp-c">好看的</span></div>
+      <div class="comp-row"><span class="comp-f">old<b>-fashioned</b></span><span class="comp-c">過時的</span></div>
+      <div class="comp-row"><span class="comp-f">ready<b>-made</b></span><span class="comp-c">現成的</span></div>
+      <div class="comp-note">Adj. 修飾後面的分詞</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-head">N + Adj.</div>
+      <div class="comp-row"><span class="comp-f">bullet<b>-proof</b></span><span class="comp-c">防彈的</span></div>
+      <div class="comp-row"><span class="comp-f">user<b>-friendly</b></span><span class="comp-c">易用的</span></div>
+      <div class="comp-row"><span class="comp-f">life<b>-long</b></span><span class="comp-c">終生的</span></div>
+      <div class="comp-note">N + Adj. 整體作形容詞</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S3: Ch12 副詞 ═══ -->
+<section class="sec" id="s3">
+<div class="ph"><div class="ph-eye">Chapter 12</div><h2>副詞 (Adverb)</h2></div>
+
+<div class="card al">
+  <div class="star-tit">⭐ 副詞的種類與位置</div>
+  <table class="tbl">
+    <thead><tr><th>種類</th><th>位置</th><th>例句</th></tr></thead>
+    <tbody>
+      <tr><td><strong>狀態副詞</strong></td><td>動詞片語前或動詞後</td><td>He ran <span class="hl">quickly</span>.</td></tr>
+      <tr><td><strong>時間副詞</strong></td><td>句首或句尾；前面<span class="hlr">不加介系詞</span></td><td>I'll see you <span class="hl">tomorrow</span>.<br><span class="hlr">✗ in next year</span> → <span class="hlg">✓ next year</span></td></tr>
+      <tr><td><strong>地方副詞</strong></td><td>常置句尾</td><td>Let's go <span class="hl">outside</span>.</td></tr>
+      <tr><td><strong>頻率副詞</strong></td><td>be/助動詞後，一般動詞前</td><td>She <span class="hl">always</span> is late. ✗<br>She is <span class="hl">always</span> late. ✓</td></tr>
+      <tr><td><strong>程度副詞</strong></td><td>被修飾字之前（except <span class="hlr">enough → 字後</span>）</td><td>She is <span class="hl">very</span> kind. / old <span class="hl">enough</span> to go.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<hr class="dv">
+<div class="card rl">
+  <div class="star-tit">⭐ 易混淆副詞對 — 必考！</div>
+  <table class="tbl">
+    <thead><tr><th>副詞 A</th><th>意思</th><th>副詞 B</th><th>意思</th></tr></thead>
+    <tbody>
+      <tr><td><strong>hard</strong></td><td>努力地</td><td><strong>hardly</strong></td><td>幾乎不</td></tr>
+      <tr><td><strong>high</strong></td><td>高（指具體高度）</td><td><strong>highly</strong></td><td>很；非常；高度地</td></tr>
+      <tr><td><strong>deep</strong></td><td>深地（指物理深度）</td><td><strong>deeply</strong></td><td>深切地；強烈地</td></tr>
+      <tr><td><strong>late</strong></td><td>晚地；遲地</td><td><strong>lately</strong></td><td>最近（= recently）</td></tr>
+      <tr><td><strong>close</strong></td><td>靠近地</td><td><strong>closely</strong></td><td>嚴密地；密切地</td></tr>
+      <tr><td><strong>near</strong></td><td>靠近地</td><td><strong>nearly</strong></td><td>幾乎（= almost）</td></tr>
+      <tr><td><strong>wide</strong></td><td>寬地（張開嘴巴）</td><td><strong>widely</strong></td><td>廣泛地</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><strong>例句：</strong>He works <span class="hlg">hard</span> every day. / I could <span class="hlg">hardly</span> stand after work.</div>
+</div>
+
+<hr class="dv">
+<div class="card">
+  <div class="ctit">轉折語分類（重點！）</div>
+  <table class="tbl">
+    <thead><tr><th>功能</th><th>常用轉折語</th></tr></thead>
+    <tbody>
+      <tr><td>說明順序</td><td>first of all / firstly / next / furthermore / moreover / finally / last but not least</td></tr>
+      <tr><td>列舉例子</td><td>for example / for instance / such as（= like）/ Take...for example.</td></tr>
+      <tr><td>解釋前句</td><td><strong>in other words</strong> / that is (to say) / namely</td></tr>
+      <tr><td>顯示對比</td><td><strong>however</strong> / nevertheless / nonetheless / still / (and) yet</td></tr>
+      <tr><td>表因果</td><td><strong>therefore</strong> / thus / hence / consequently / <strong>as a result</strong> / accordingly</td></tr>
+      <tr><td>另一方面</td><td>on the other hand / in/by contrast / on the contrary（正好相反）</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><strong>⚠️ however / besides / consequently 不是連接詞！</strong>不能直接用逗號連接兩個完整句子。<br>✗ He failed, however he tried again. &nbsp; ✓ He failed; however, he tried again.</div>
+</div>
+</section>
+
+<!-- ═══ S4: Ch12 比較句型 ═══ -->
+<section class="sec" id="s4">
+<div class="ph"><div class="ph-eye">Chapter 12</div><h2>比較句型</h2></div>
+
+<div class="card al">
+  <div class="star-tit">⭐ 原級比較</div>
+  <div class="form">句型一：S + V + <span class="ka">as</span> + adj./adv. + <span class="ka">as</span>... （和……一樣）<br>句型二：S + V + <span class="kr">not</span> + as/so + adj./adv. + <span class="ka">as</span>... （不如……）<br>句型三：S + V + as + <span class="ka">much/many</span> + N + as... （和……一樣多）<br>句型四：S + V + as + adj. + as + <span class="ka">possible / one can</span>（盡可能……）</div>
+  <div class="ex">Amy is <span class="hl">as beautiful as</span> Alison. &nbsp;|&nbsp; She cooks <span class="hl">as well as</span> my mom. &nbsp;|&nbsp; Run <span class="hl">as fast as possible</span>.</div>
+</div>
+
+<div class="card al">
+  <div class="star-tit">⭐ 比較級句型（7大句型）</div>
+  <div class="form">① S + be + <span class="ka">adj.-er / more adj.</span> + than... （比……更……）</div>
+  <div class="form">② S + be + <span class="ka">the</span> + 比較級 + of the two（兩者中較……的）</div>
+  <div class="form">③ <span class="ka">Adj.-er and adj.-er / more and more</span> + adj.（越來越……）</div>
+  <div class="form">④ <span class="ka">The</span> + 比較級..., <span class="ka">the</span> + 比較級...（越……越……）</div>
+  <div class="form">⑤ <span class="ka">superior / inferior / senior / junior</span> + <span class="kr">to</span>（不用 than！）</div>
+  <div class="form">⑥ S + had <span class="ka">no sooner</span> + p.p. ... <span class="ka">than</span> + 過去式（一……就……）</div>
+  <div class="form">⑦ S + <span class="ka">know better</span> + than to V（不會笨到去做……）</div>
+  <div class="note"><strong>⚠️ 比較級前可加 much / far / even / still / a lot 加強；絕對不能加 very！</strong></div>
+</div>
+
+<div class="card al">
+  <div class="star-tit">⭐ 最高級句型</div>
+  <div class="form">S + V + <span class="ka">the</span> + adj.-est / most adj. + among/of + 範圍（在……中最……）</div>
+  <div class="form">by far the + 最高級（強調程度最強的說法）</div>
+  <div class="note"><strong>⚠️ 比較級表最高級：</strong>heavier than any other + 單數N &nbsp;|&nbsp; No other student is as heavy as Piggy.</div>
+</div>
+
+<div class="two">
+  <div class="card">
+    <div class="ctit">形容詞比較級構成（規則）</div>
+    <table class="tbl">
+      <thead><tr><th>類型</th><th>比較級</th><th>最高級</th></tr></thead>
+      <tbody>
+        <tr><td>一般（tall）</td><td>tall<b>er</b></td><td>(the) tall<b>est</b></td></tr>
+        <tr><td>字尾 -e（cute）</td><td>cut<b>er</b></td><td>(the) cut<b>est</b></td></tr>
+        <tr><td>短母+子音（big）</td><td>big<b>ger</b></td><td>(the) big<b>gest</b></td></tr>
+        <tr><td>子音+y（happy）</td><td>happ<b>ier</b></td><td>(the) happ<b>iest</b></td></tr>
+        <tr><td>多音節（beautiful）</td><td><b>more</b> beautiful</td><td>(the) <b>most</b> beautiful</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ctit">不規則變化</div>
+    <table class="tbl">
+      <thead><tr><th>原級</th><th>比較級</th><th>最高級</th></tr></thead>
+      <tbody>
+        <tr><td>good / well</td><td>better</td><td>(the) best</td></tr>
+        <tr><td>bad / ill</td><td>worse</td><td>(the) worst</td></tr>
+        <tr><td>little</td><td>less</td><td>(the) least</td></tr>
+        <tr><td>many / much</td><td>more</td><td>(the) most</td></tr>
+        <tr><td>old</td><td>older / elder</td><td>oldest / eldest</td></tr>
+        <tr><td>far</td><td>farther / further</td><td>farthest / furthest</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</section>
+
+<!-- ═══ S5: L8-1 Only ═══ -->
+<section class="sec" id="s5">
+<div class="ph"><div class="ph-eye">L8-1</div><h2>Only 的倒裝句</h2></div>
+
+<div class="card al">
+  <div class="star-tit">⭐ 核心規則：什麼情況倒裝？</div>
+  <p style="font-size:14px;margin-bottom:.75rem">Only 引導<strong>副詞修飾語</strong>（介系詞片語、副詞子句、時間副詞）放在句首時，<strong>主句動詞需要倒裝</strong>。</p>
+  <div class="chips">
+    <span class="chip c-ok">✓ Only when/after/if… 子句</span>
+    <span class="chip c-ok">✓ Only + 介系詞片語（by/in/at…）</span>
+    <span class="chip c-ok">✓ Only then / at that moment</span>
+    <span class="chip c-no">✗ Only + 主詞 → 不倒裝！</span>
+  </div>
+  <div class="note">Only my boyfriend can kiss me. → boyfriend 是主詞，不倒裝！</div>
+</div>
+
+<div class="card">
+  <div class="ctit">三種動詞的倒裝方式</div>
+  <table class="tbl">
+    <thead><tr><th>動詞類型</th><th>倒裝方式</th><th>例句</th></tr></thead>
+    <tbody>
+      <tr><td><strong>一般動詞</strong></td><td>do / does / did + S + 原V</td><td>Only when you lose health <span class="hl">do you realize</span> its value.</td></tr>
+      <tr><td><strong>Be 動詞</strong></td><td>be + S</td><td>Only after they turn 20 <span class="hl">are citizens</span> allowed to vote.</td></tr>
+      <tr><td><strong>助動詞</strong></td><td>助動詞 + S + 原V</td><td>Only by working hard <span class="hl">can we succeed</span>.</td></tr>
+      <tr><td><strong>Not until</strong></td><td>同一般動詞規則</td><td>Not until mom came home <span class="hl">did I do</span> homework.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="note"><strong>⚠️ Only when 子句本身不倒裝！</strong>Only when 後面的子句語序正常，只有主句才倒裝。<br>Only when <span class="hlg">you lose health</span> <span class="hl">do you realize</span>... ← 子句正常，主句倒裝</div>
+</section>
+
+<!-- ═══ S6: L8-2 倍數 ═══ -->
+<section class="sec" id="s6">
+<div class="ph"><div class="ph-eye">L8-2</div><h2>倍數表達法</h2></div>
+
+<div class="card gl">
+  <div class="star-tit">⭐ 兩大句型 — 意思完全相同</div>
+  <div class="two">
+    <div>
+      <div class="form"><span class="kg">N times</span> + as + <span class="kg">原級</span> + as</div>
+      <div class="ex">Tom is <span class="hlg">three times as tall as</span> Peter.</div>
+    </div>
+    <div>
+      <div class="form"><span class="kg">N times</span> + <span class="kg">比較級</span> + than</div>
+      <div class="ex">Tom is <span class="hlg">three times taller than</span> Peter.</div>
+    </div>
+  </div>
+  <div class="note"><strong>⚠️ as...as 中間放原級（絕對不能 -er！）</strong></div>
+</div>
+
+<div class="two">
+  <div class="card">
+    <div class="ctit">倍數說法</div>
+    <table class="tbl">
+      <thead><tr><th>倍數</th><th>說法</th></tr></thead>
+      <tbody>
+        <tr><td>2 倍</td><td><strong>twice</strong>（特殊字，不用 two times）</td></tr>
+        <tr><td>3 倍以上</td><td><strong>three / four / ten... times</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ctit">可數 vs 不可數</div>
+    <div class="ex">He has <span class="hl">twice as <u>much</u> money</span> as I do.<br>（money 不可數 → much）</div>
+    <div class="ex">She has <span class="hl">twice as <u>many</u> books</span> as he does.<br>（books 可數 → many）</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ctit">倍數 + 名詞句型（Adj.→N 轉換）</div>
+  <table class="tbl">
+    <thead><tr><th>形容詞</th><th>對應名詞</th><th>例</th></tr></thead>
+    <tbody>
+      <tr><td>old</td><td>age</td><td>He's <span class="hl">twice my age</span>. ✓ &nbsp; <span class="hlr">twice the age of me</span> ✗</td></tr>
+      <tr><td>tall / high</td><td>height</td><td>five times the height of</td></tr>
+      <tr><td>expensive</td><td>price</td><td>four times the price of</td></tr>
+      <tr><td>heavy</td><td>weight</td><td>three times the weight of</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ═══ S7: L9-1 ═══ -->
+<section class="sec" id="s7">
+<div class="ph"><div class="ph-eye">L9-1</div><h2>助動詞 — 對未知情況的推測</h2></div>
+
+<div class="card">
+  <div class="ctit">推測強弱程度（由強→弱）</div>
+  <div class="sbar">
+    <div class="sb-item" style="background:#1A3FA0;color:#fff">must<br><small>一定（最確定）</small></div>
+    <div class="sb-item" style="background:#0A6E40;color:#fff">may<br><small>可能</small></div>
+    <div class="sb-item" style="background:#7A5200;color:#fff">might<br><small>可能（略低）</small></div>
+    <div class="sb-item" style="background:#5A5650;color:#fff">could<br><small>可能（最低）</small></div>
+  </div>
+</div>
+
+<div class="two">
+  <div class="card al">
+    <div class="star-tit">① 推測現在 / 未來</div>
+    <div class="form">S + <span class="ka">must/may/might/could</span> + <span class="ka">原V</span></div>
+    <div class="ex">Tom is still studying. There <span class="hl">must be</span> an important test tomorrow.<br>（推測現在/未來的事）</div>
+  </div>
+  <div class="card al">
+    <div class="star-tit">② 推測現在進行</div>
+    <div class="form">S + <span class="ka">must/may/might</span> + <span class="ka">be + V-ing</span></div>
+    <div class="ex">Tina practices day and night. She <span class="hl">must be preparing</span> for a contest.<br>（推測現在正在進行的動作）</div>
+  </div>
+</div>
+<div class="card al">
+  <div class="star-tit">③ 推測過去 — 最常考！</div>
+  <div class="form">S + <span class="ka">must/may/might/could</span> + <span class="ka">have + p.p.</span></div>
+  <div class="ex">I called many times, no one answered. They <span class="hl">must have gone</span> on vacation.</div>
+  <div class="ex">The house is a mess. Someone <span class="hl">must have broken in</span> last night.</div>
+</div>
+<div class="note"><strong>⚠️ 判斷現在 vs 過去 vs 進行的關鍵：看線索！</strong><br>
+• 發現了結果/痕跡（過去）→ must have + p.p.<br>
+• 現在還在做（進行）→ must be + V-ing<br>
+• 推測現在或未來的狀態 → must + 原V</div>
+</section>
+
+<!-- ═══ S8: L7-1 ═══ -->
+<section class="sec" id="s8">
+<div class="ph"><div class="ph-eye">L7-1</div><h2>假設語氣延伸 — 要不是…</h2></div>
+
+<div class="card al">
+  <div class="star-tit">⭐ 兩大句型對照</div>
+  <table class="tbl">
+    <thead><tr><th></th><th>與現在事實相反</th><th>與過去事實相反</th></tr></thead>
+    <tbody>
+      <tr><td><strong>If 句型</strong></td><td>If it <span class="hl">were not for</span> + N,<br>S + would/could/should/might + 原V</td><td>If it <span class="hl">had not been for</span> + N,<br>S + would/could/should/might + have p.p.</td></tr>
+      <tr><td><strong>= But for</strong></td><td>But for + N, S + would + 原V</td><td>But for + N, S + would + have p.p.</td></tr>
+      <tr><td><strong>= Without</strong></td><td>Without + N, S + would + 原V</td><td>Without + N, S + would + have p.p.</td></tr>
+      <tr><td><strong>倒裝句</strong></td><td><span class="hl">Were</span> it not for + N, ...</td><td><span class="hl">Had</span> it not been for + N, ...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="two">
+  <div class="card gl">
+    <div class="ctit">現在相反 — 例句</div>
+    <div class="ex">If it <span class="hlg">were not for</span> your help, I <span class="hlg">would fail</span>.<br>= <span class="hlg">But for</span> your help, I would fail.<br>= <span class="hlg">Without</span> your help, I would fail.<br>= <span class="hlg">Were it not for</span> your help, I would fail.</div>
+  </div>
+  <div class="card rl">
+    <div class="ctit">過去相反 — 例句</div>
+    <div class="ex">If it <span class="hlr">had not been for</span> your help, I <span class="hlr">would have failed</span>.<br>= <span class="hlr">But for</span> your help, I would have failed.<br>= <span class="hlr">Without</span> your help, I would have failed.<br>= <span class="hlr">Had it not been for</span> your help, I would have failed.</div>
+  </div>
+</div>
+
+<div class="note"><strong>⚠️ 倒裝方式：</strong>砍掉 If，把 were / had 移到主詞前面。<br>
+現在：If it <u>were</u> not for → <strong>Were</strong> it not for<br>
+過去：If it <u>had</u> not been for → <strong>Had</strong> it not been for</div>
+
+<hr class="dv">
+<div class="card">
+  <div class="ctit">複習：基本假設語氣</div>
+  <table class="tbl">
+    <thead><tr><th>類型</th><th>If 子句</th><th>主句</th></tr></thead>
+    <tbody>
+      <tr><td><strong>現在相反</strong></td><td>If + S + <span class="hl">were/V-ed</span></td><td>S + <span class="hl">would/could + 原V</span></td></tr>
+      <tr><td><strong>過去相反</strong></td><td>If + S + <span class="hl">had + p.p.</span></td><td>S + <span class="hl">would/could + have p.p.</span></td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ═══ S9: 易錯總整理 ═══ -->
+<section class="sec" id="s9">
+<div class="ph"><div class="ph-eye">全範圍</div><h2>⭐ 易錯重點總整理</h2></div>
+
+<div class="card rl">
+  <div class="star-tit" style="color:var(--red)">🚨 最常錯 Top 10</div>
+  <table class="tbl">
+    <thead><tr><th>#</th><th>考點</th><th>錯誤示範</th><th>正確答案</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>形容詞後位修飾</td><td>responsible someone</td><td><span class="hlg">someone responsible</span></td></tr>
+      <tr><td>2</td><td>senior/junior 接 to</td><td>senior than me</td><td><span class="hlg">senior to me</span></td></tr>
+      <tr><td>3</td><td>比較級前加強詞</td><td>very harder</td><td><span class="hlg">much harder / far harder</span></td></tr>
+      <tr><td>4</td><td>the + 比較級 of the two</td><td>taller of the two</td><td><span class="hlg">the taller of the two</span></td></tr>
+      <tr><td>5</td><td>any other + 單數N</td><td>heavier than any other students</td><td><span class="hlg">heavier than any other student</span></td></tr>
+      <tr><td>6</td><td>had no sooner...than</td><td>had no sooner...when</td><td><span class="hlg">had no sooner + p.p. ... than</span></td></tr>
+      <tr><td>7</td><td>複合形容詞 adv.+p.p.</td><td>good-educated</td><td><span class="hlg">well-educated</span>（good 是形容詞，需副詞 well）</td></tr>
+      <tr><td>8</td><td>不可數大量詞</td><td>a large number of money</td><td><span class="hlg">a large sum/amount of money</span></td></tr>
+      <tr><td>9</td><td>Only 倒裝 — only when 主句</td><td>Only when I got sick I realized</td><td><span class="hlg">Only when I got sick did I realize</span></td></tr>
+      <tr><td>10</td><td>倍數 as...as 中用原級</td><td>twice as taller as</td><td><span class="hlg">twice as tall as</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="ctit">假設語氣快速判斷</div>
+  <table class="tbl">
+    <thead><tr><th>時間線索</th><th>If 子句</th><th>主句</th><th>Were/Had 倒裝</th></tr></thead>
+    <tbody>
+      <tr><td>現在（today/now）</td><td>If it <span class="hl">were not for</span></td><td>would + 原V</td><td>Were it not for</td></tr>
+      <tr><td>過去（yesterday/last…）</td><td>If it <span class="hl">had not been for</span></td><td>would have + p.p.</td><td>Had it not been for</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="ctit">助動詞推測快速判斷</div>
+  <table class="tbl">
+    <thead><tr><th>情境</th><th>句型</th><th>例</th></tr></thead>
+    <tbody>
+      <tr><td>推測<strong>現在</strong>狀態/未來</td><td>must/may + 原V</td><td>must <span class="hl">be</span> tired</td></tr>
+      <tr><td>推測<strong>現在進行</strong></td><td>must/may + be + V-ing</td><td>must <span class="hl">be preparing</span></td></tr>
+      <tr><td>推測<strong>過去</strong>發生</td><td>must/may + have + p.p.</td><td>must <span class="hl">have left</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="ctit">Only 倒裝快速判斷</div>
+  <table class="tbl">
+    <thead><tr><th>Only 後面是…</th><th>是否倒裝</th><th>如何倒裝</th></tr></thead>
+    <tbody>
+      <tr><td>主詞（人名/代名詞）</td><td>❌ 不倒裝</td><td>語序正常</td></tr>
+      <tr><td>介系詞片語（by/in/at…）</td><td>✅ 倒裝</td><td>助動詞/be動詞移前；一般動詞用 do/does/did</td></tr>
+      <tr><td>when/after/if 子句</td><td>主句倒裝，子句不倒裝</td><td>Only when 子句正常，主句倒裝</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<footer>期末總複習 — Units 11–15 單字 + Ch12 / L7-1 / L8-1 / L8-2 / L9-1 文法 · 完整版整理</footer>
+
+<script>
+function sw(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  if(btn)btn.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
