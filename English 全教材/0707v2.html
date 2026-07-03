@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<nav style="background-color: #007bff; padding: 12px;">
+  <div style="max-width: 1000px; margin: 0 auto; display: flex; gap: 20px;">
+    <a href="index.html" style="color: white; font-weight: bold; text-decoration: none;">首頁</a>
+    <a href="0707.html" style="color: white; font-weight: bold; text-decoration: none;">7/7 課程內容</a>
+    <a href="0707v2.html" style="color: white; font-weight: bold; text-decoration: none;">7/7遊戲互動</a>
+    <a href="0722v3.html" style="color: white; font-weight: bold; text-decoration: none;">7/22上課內容</a>
+    <a href="備審資料/2.html" style="color: white; font-weight: bold; text-decoration: none;">建築系備審準備</a>  
+</div>
+</nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英文寫作線上教材：颱風假該不該放？(互動版)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
+
+        body {
+            font-family: 'Roboto', 'Noto Sans TC', sans-serif;
+            line-height: 1.8;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+        header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            font-size: 2.25rem;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+        h2 {
+            font-size: 1.8rem;
+            color: #34495e;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #1abc9c;
+        }
+        h3 {
+            font-size: 1.3rem;
+            color: #2980b9;
+            margin-top: 2rem;
+            font-weight: 700;
+        }
+        p, li {
+            font-size: 1.05rem;
+        }
+        .intro-box {
+            background-color: #e8f6f3;
+            border-left: 5px solid #1abc9c;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            background-color: #f4faff;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+        
+        /* Interactive Quiz Styles */
+        .quiz-item {
+            background: #fdfdfd;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .quiz-item h3 {
+            margin-top: 0;
+        }
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        .option {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .option p {
+            margin-top: 0;
+            font-style: italic;
+            color: #555;
+        }
+        .option-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: background-color 0.2s;
+        }
+        .option-btn:hover {
+            background-color: #2980b9;
+        }
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none; /* Hidden by default */
+        }
+        .feedback.correct {
+            background-color: #e8f8f5;
+            border-left: 5px solid #2ecc71;
+            display: block;
+        }
+        .feedback.incorrect {
+            background-color: #fdedec;
+            border-left: 5px solid #e74c3c;
+            display: block;
+        }
+        
+        .final-task {
+            background-color: #fdf2f2;
+            border-left: 5px solid #e74c3c;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        .final-task ul {
+            list-style-type: '✓ ';
+        }
+
+        @media (min-width: 768px) {
+            .options-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .container { padding: 1rem; margin: 1rem; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>英文寫作線上教材：颱風假該不該放？</h1>
+            <p>一份引導你深度思考與實踐的寫作指南 (互動版)</p>
+        </header>
+
+        <main>
+            <section id="intro">
+                <h2>一、啟程：什麼是「有說服力」的文章？</h2>
+                <div class="intro-box">
+                    <p>颱風假，一個讓人心情複雜的存在。如果現在要你用英文寫一篇文章來討論這個主題，你會如何下筆，才能讓你的觀點不只被「看見」，更能「說服」人呢？</p>
+                </div>
+                <p>一篇有力的英文論說文，始於一個強大的核心：<strong>Thesis Statement (主題句)</strong>。它就像文章的「GPS導航」，清楚地告訴讀者：「這篇文章要去哪裡？我的核心觀點是什麼？」</p>
+            </section>
+
+            <section id="interactive-quiz">
+                <h2>二、互動式診斷：好壞文章大挑戰</h2>
+                <p>接下來，請你扮演法官，判斷下面幾個挑戰中，哪一個選項寫得更好。點擊你認為較佳的選項，看看會發生什麼事！</p>
+
+                <div class="quiz-item">
+                    <h3>挑戰一：哪個「主題句」更清楚有力？</h3>
+                    <div class="options-container">
+                        <div class="option" id="q1-a">
+                            <p>"While typhoon holidays offer a welcome break, they should be implemented with caution due to their significant negative impacts on the economy and public safety."</p>
+                            <button class="option-btn" onclick="checkAnswer(1, 'A')">選擇 A</button>
+                        </div>
+                        <div class="option" id="q1-b">
+                            <p>"Typhoon holidays are okay. Sometimes I like them, but sometimes they are bad. It has good things and bad things."</p>
+                            <button class="option-btn" onclick="checkAnswer(1, 'B')">選擇 B</button>
+                        </div>
+                    </div>
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <div class="quiz-item">
+                    <h3>挑戰二：哪個「理由」更具體有說服力？</h3>
+                    <div class="options-container">
+                        <div class="option" id="q2-a">
+                            <p>"The primary concern is economic disruption. For many small businesses, like local restaurants and retail shops, an unscheduled day off means a direct loss of income."</p>
+                            <button class="option-btn" onclick="checkAnswer(2, 'A')">選擇 A</button>
+                        </div>
+                        <div class="option" id="q2-b">
+                            <p>"It is bad for the economy. A lot of money is lost when people don't go to work. This is a very big problem for the country."</p>
+                            <button class="option-btn" onclick="checkAnswer(2, 'B')">選擇 B</button>
+                        </div>
+                    </div>
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <div class="quiz-item">
+                    <h3>挑戰三：哪個「邏輯」更通順連貫？</h3>
+                    <div class="options-container">
+                        <div class="option" id="q3-a">
+                            <p>"I can sleep late and play video games all day. But sometimes the power goes out. Then I cannot play my computer."</p>
+                            <button class="option-btn" onclick="checkAnswer(3, 'A')">選擇 A</button>
+                        </div>
+                        <div class="option" id="q3-b">
+                            <p>"Although staying home keeps people safe from the storm, it can also encourage risky behaviors. For instance, some people might go to the beach to watch the waves, which is extremely dangerous."</p>
+                            <button class="option-btn" onclick="checkAnswer(3, 'B')">選擇 B</button>
+                        </div>
+                    </div>
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+            </section>
+
+            <section id="evaluation">
+                <h2>三、深入剖析：好壞句子的秘密</h2>
+                <p>一個好句子，通常具備三個特質：文法正確 (Correct Grammar)、結構清晰 (Clear Structure)、內容具體 (Specific Content)。剛剛的挑戰，是不是讓你更有感覺了呢？</p>
+            </section>
+            
+            <section id="expansion">
+                <h2>四、技巧升級：從簡單句到精彩句</h2>
+                <p>好的句子不是天生的，而是可以透過練習「養」出來的。我們來試試看：</p>
+                <blockquote>Students, <strong>who are often burdened with heavy homework</strong>, appreciate typhoon holidays because they get an unexpected day to rest and catch up.</blockquote>
+            </section>
+
+            <section id="writing-task">
+                <h2>五、換你動手寫！</h2>
+                <div class="final-task">
+                    <h3>你的寫作挑戰</h3>
+                    <p><strong>題目：</strong> Do you support or oppose having typhoon holidays?</p>
+                    <p><strong>要求：</strong>約 <strong>100 字</strong>，包含清楚的<strong>主題句</strong>、一個<strong>具體理由</strong>、和一個<strong>過渡詞</strong>。</p>
+                </div>
+            </section>
+             
+            <section id="self-check">
+                <h2>六、自我檢視與下一步</h2>
+                <p>完成寫作後，恭喜你！請用以下清單來檢視一下自己的文章：</p>
+                <ul>
+                    <li>我的文章有明確的主題句嗎？</li>
+                    <li>我提出的理由是具體的例子，還是空泛的感覺？</li>
+                    <li>如果讓我重寫一次，我最想修改的是哪一句話？為什麼？</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+<script>
+    // A map to hold the feedback for each question
+    const feedbackTexts = {
+        1: {
+            A: "<strong>答對了！</strong> 選項 A 是一個優秀的主題句。它不僅提出了明確的立場（應謹慎實施），還預告了文章將要討論的兩個方面（經濟和安全），展現了平衡的思維。",
+            B: "<strong>再想一想！</strong> 選項 B 比較像個人感受的抒發，它說了有好有壞，但沒有提出一個清晰、可以被證明的核心論點。讀者看完後，仍然不確定作者到底想說什麼。"
+        },
+        2: {
+            A: "<strong>答對了！</strong> 選項 A 提供了非常具體的例子（地方餐廳、零售店），讓「經濟損失」這個概念變得真實可感，更有說服力。",
+            B: "<strong>再想一想！</strong> 選項 B 的問題在於太過空泛。「很多錢」、「很大的問題」這些詞語缺乏具體細節，無法給讀者留下深刻印象。"
+        },
+        3: {
+            B: "<strong>答對了！</strong> 選項 B 使用了 'Although...' 和 'For instance...' 這些詞語，清晰地展示了「讓步轉折」和「舉例說明」的邏輯關係，讓句子讀起來非常通順。",
+            A: "<strong>再想一想！</strong> 選項 A 的兩句話雖然都跟颱風假有關，但它們之間缺少邏輯連接詞，像是兩個獨立的想法被硬湊在一起，讀起來有點跳躍。"
+        }
+    };
+
+    // A map to hold the correct answer for each question
+    const correctAnswers = {
+        1: 'A',
+        2: 'A',
+        3: 'B'
+    };
+
+    function checkAnswer(questionId, chosenOption) {
+        const feedbackEl = document.getElementById('feedback' + questionId);
+        const correctAnswer = correctAnswers[questionId];
+        
+        if (chosenOption === correctAnswer) {
+            feedbackEl.innerHTML = feedbackTexts[questionId][chosenOption];
+            feedbackEl.className = 'feedback correct';
+        } else {
+            feedbackEl.innerHTML = feedbackTexts[questionId][chosenOption];
+            feedbackEl.className = 'feedback incorrect';
+        }
+    }
+</script>
+
+</body>
+</html>

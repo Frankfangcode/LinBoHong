@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英文寫作精準度練習 (第二回)</title>
+    <style>
+        /* CSS 樣式開始 */
+        :root {
+            --background-color: #1a1a1a;
+            --surface-color: #2c2c2c;
+            --primary-text-color: #e0e0e0;
+            --secondary-text-color: #a0a0a0;
+            --primary-color: #4a90e2;
+            --primary-hover-color: #5aa1f2;
+            --correct-bg: #2a4c3a;
+            --correct-border: #3c763d;
+            --correct-text: #a7d7a7;
+            --incorrect-bg: #5a2a2a;
+            --incorrect-border: #a94442;
+            --incorrect-text: #f2aaaa;
+            --btn-bg: #3a3a3a;
+            --btn-border: #555;
+            --btn-hover-bg: #4a4a4a;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, '蘋方-繁', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--background-color);
+            color: var(--primary-text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .app-container {
+            background-color: var(--surface-color);
+            width: 100%;
+            max-width: 700px;
+            border-radius: 15px;
+            padding: 30px 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border: 1px solid #444;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            border-bottom: 2px solid #444;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .quiz-container, .result-container {
+            padding: 10px;
+        }
+
+        .question {
+            font-size: 1.3em;
+            font-weight: 500;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .answer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: var(--btn-bg);
+            border: 1px solid var(--btn-border);
+            color: var(--primary-text-color);
+            border-radius: 8px;
+            padding: 18px;
+            font-size: 1.05em;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn:hover:not([disabled]) {
+            background-color: var(--btn-hover-bg);
+            border-color: #777;
+        }
+
+        .btn.correct {
+            background-color: var(--correct-bg);
+            color: var(--correct-text);
+            border-color: var(--correct-border);
+            font-weight: bold;
+        }
+
+        .btn.incorrect {
+            background-color: var(--incorrect-bg);
+            color: var(--incorrect-text);
+            border-color: var(--incorrect-border);
+        }
+
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .rationale {
+            font-size: 0.9em;
+            color: var(--secondary-text-color);
+            text-align: left;
+            padding: 10px 18px;
+            margin-top: -10px;
+            border-radius: 0 0 8px 8px;
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        #next-btn, #restart-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            width: auto;
+            min-width: 130px;
+            transition: background-color 0.2s;
+        }
+
+        #next-btn:hover, #restart-btn:hover {
+            background-color: var(--primary-hover-color);
+        }
+
+        .result-container h2 {
+            color: #63d471;
+        }
+        
+        #feedback-section {
+            text-align: left;
+            background-color: var(--btn-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid var(--primary-color);
+        }
+        /* CSS 樣式結束 */
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- HTML 結構開始 -->
+        <h1>英文寫作精準度練習 (第二回)</h1>
+        <div class="quiz-container">
+            <div id="question-container" class="question">問題載入中...</div>
+            <div id="answer-buttons" class="answer-grid">
+            </div>
+            <button id="next-btn" style="display: none;">下一題</button>
+        </div>
+        <div id="result-container" class="result-container" style="display: none;">
+            <h2>測驗完成！</h2>
+            <p id="score-text">你的分數是：</p>
+            <div id="feedback-section">
+                <h3>分析與建議：</h3>
+                <div id="feedback-content"></div>
+            </div>
+            <button id="restart-btn">再試一次</button>
+        </div>
+        <!-- HTML 結構結束 -->
+    </div>
+
+    <script>
+        // JavaScript 互動功能開始
+        const questionContainer = document.getElementById('question-container');
+        const answerButtons = document.getElementById('answer-buttons');
+        const nextButton = document.getElementById('next-btn');
+        const quizContainer = document.querySelector('.quiz-container');
+        const resultContainer = document.getElementById('result-container');
+        const scoreText = document.getElementById('score-text');
+        const feedbackContent = document.getElementById('feedback-content');
+        const restartButton = document.getElementById('restart-btn');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const questions = [
+            {
+                question: "原句：The teacher gave us some useful ___ about the project. <br><br>'information' (資訊) 這個字，在英文中屬於不可數名詞，應該用哪一個選項？",
+                answers: [
+                    { text: "informations", correct: false, rationale: "這個詞是不可數的，所以通常不會在字尾加上 's' 來表示複數。" },
+                    { text: "information", correct: true, rationale: "正確！作為一個不可數名詞，無論資訊多寡，這個字都會維持原形。" },
+                    { text: "an information", correct: false, rationale: "不可數名詞前面不能加上不定冠詞 'a' 或 'an'。" },
+                    { text: "many information", correct: false, rationale: "'many' 用來修飾可數名詞，修飾不可數名詞時，通常會用 'much' 或 'a lot of'。" }
+                ]
+            },
+            {
+                question: "原句：Each of the students ___ a different book to read. <br><br>當主詞是 'Each' (每一個) 的時候，動詞應該用單數還是複數形式呢？",
+                answers: [
+                    { text: "have", correct: false, rationale: "這個動詞形式通常用於複數主詞（如 they, we）或第一、二人稱主詞之後。" },
+                    { text: "has", correct: true, rationale: "完全正確！雖然後面接著 'students'，但句子的核心主詞是 'Each'，它被視為第三人稱單數。" },
+                    { text: "are having", correct: false, rationale: "這是現在進行式，通常表示「正在擁有」，在語意上不太適合這個句子。" },
+                    { text: "is have", correct: false, rationale: "動詞 'is' 和 'have' 不能這樣直接連用。" }
+                ]
+            },
+            {
+                question: "原句：She finished her homework ___ so she could watch TV. <br><br>為了修飾「完成」(finished) 這個動作，應該用形容詞還是副詞？",
+                answers: [
+                    { text: "quick", correct: false, rationale: "這個詞是形容詞，通常用來描述名詞的狀態，而不是修飾動作。" },
+                    { text: "quickly", correct: true, rationale: "是的！這個以 -ly 結尾的詞是副詞，用來描述動作發生的方式，說明「如何」完成作業。" },
+                    { text: "more quick", correct: false, rationale: "這是比較級的用法，但句子中沒有進行比較。" },
+                    { text: "quickness", correct: false, rationale: "這個詞是名詞，意思是「迅速」這個特質，詞性不符合句子結構。" }
+                ]
+            },
+            {
+                question: "原句：Yesterday, we ___ pizza for dinner.<br><br>動詞 'eat' (吃) 的過去式是什麼？",
+                answers: [
+                    { text: "eat", correct: false, rationale: "這是動詞的原形，用於現在式。" },
+                    { text: "eated", correct: false, rationale: "這是一個不規則動詞，它的過去式不是直接在字尾加上 -ed。" },
+                    { text: "ate", correct: true, rationale: "答對了！這是 'eat' 正確的不規則過去式動詞。" },
+                    { text: "eaten", correct: false, rationale: "這是過去分詞，通常與 'have', 'has', 'had' 一起使用構成完成式。" }
+                ]
+            },
+            {
+                question: "原句：The bad weather will ___ our plans for the picnic.<br><br>在「影響」這個意思上，動詞應該用 affect 還是 effect？",
+                answers: [
+                    { text: "effect", correct: false, rationale: "這個詞通常當作名詞使用，意思是「效果、影響」，例如 'the effect of the weather'。" },
+                    { text: "affect", correct: true, rationale: "沒錯！這個詞是動詞，意思是「影響、對...產生作用」，符合句子中需要的詞性。" },
+                    { text: "effects", correct: false, rationale: "這是名詞的複數形式。" },
+                    { text: "affects", correct: false, rationale: "動詞加上 's' 是用在主詞為第三人稱單數時，而這裡的主詞 'The bad weather' 之後有助動詞 'will'，所以後面應接原形動詞。" }
+                ]
+            }
+        ];
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            nextButton.innerHTML = "下一題";
+            resultContainer.style.display = 'none';
+            quizContainer.style.display = 'block';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            resetState();
+            let currentQuestion = questions[currentQuestionIndex];
+            questionContainer.innerHTML = currentQuestion.question;
+
+            let shuffledAnswers = [...currentQuestion.answers].sort(() => Math.random() - 0.5);
+
+            shuffledAnswers.forEach(answer => {
+                const button = document.createElement("button");
+                button.innerHTML = answer.text;
+                button.classList.add("btn");
+                button.dataset.correct = answer.correct;
+                button.dataset.rationale = answer.rationale;
+                answerButtons.appendChild(button);
+                button.addEventListener("click", selectAnswer);
+            });
+        }
+
+        function resetState() {
+            nextButton.style.display = "none";
+            while (answerButtons.firstChild) {
+                answerButtons.removeChild(answerButtons.firstChild);
+            }
+        }
+
+        function selectAnswer(e) {
+            const selectedBtn = e.target;
+            const isCorrect = selectedBtn.dataset.correct === "true";
+            
+            if (isCorrect) {
+                score++;
+            }
+
+            Array.from(answerButtons.children).forEach(button => {
+                if (button.dataset.correct === "true") {
+                    button.classList.add("correct");
+                } else {
+                    button.classList.add("incorrect");
+                }
+                button.disabled = true;
+
+                const rationaleDiv = document.createElement('div');
+                rationaleDiv.innerText = button.dataset.rationale;
+                rationaleDiv.classList.add('rationale');
+                button.parentNode.insertBefore(rationaleDiv, button.nextSibling);
+            });
+
+            nextButton.style.display = "block";
+        }
+
+        function showResults() {
+            quizContainer.style.display = 'none';
+            resultContainer.style.display = 'block';
+            scoreText.innerText = `你的分數是： ${score} / ${questions.length}`;
+            
+            let feedbackHTML = '';
+            if (score === questions.length) {
+                feedbackHTML += `<p><strong>太棒了，全部答對！</strong><br>你對這些文法和用字的細節掌握得非常精準，繼續保持！</p>`;
+            } else {
+                feedbackHTML += `<p><strong>很不錯！</strong><br>這次的練習幫助你再次鞏固了重要的文法觀念，多練習幾次就會更熟悉了！</p>`;
+            }
+            feedbackContent.innerHTML = feedbackHTML;
+        }
+
+        function handleNextButton() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        nextButton.addEventListener("click", handleNextButton);
+        restartButton.addEventListener("click", startQuiz);
+
+        startQuiz();
+        // JavaScript 互動功能結束
+    </script>
+</body>
+</html>

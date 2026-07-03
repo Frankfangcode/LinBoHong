@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+    <nav style="background-color: #007bff; padding: 12px;">
+  <div style="max-width: 1000px; margin: 0 auto; display: flex; gap: 20px;">
+    <a href="index.html" style="color: white; font-weight: bold; text-decoration: none;">首頁</a>
+   <a href="0707.html" style="color: white; font-weight: bold; text-decoration: none;">7/7 課程內容</a>
+    <a href="0707v2.html" style="color: white; font-weight: bold; text-decoration: none;">遊戲互動</a>
+    <a href="0722v3.html" style="color: white; font-weight: bold; text-decoration: none;">7/22上課內容</a>
+    <a href="備審資料/2.html" style="color: white; font-weight: bold; text-decoration: none;">建築系備審準備</a>
+</div>
+</nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7/7 課程內容</title>
+    <style>
+
+        .hamburger-structure {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Noto Sans TC', sans-serif;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    overflow: hidden;
+    background: white;
+}
+
+.hamburger-layer {
+    padding: 12px 20px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.hamburger-layer:hover {
+    transform: scale(1.02);
+}
+
+/* 上層麵包 */
+.top-bun {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-radius: 15px 15px 0 0;
+    color: #7c2d12;
+    padding: 15px 20px;
+}
+
+/* 中間餡料 */
+.filling {
+    background: linear-gradient(135deg, #86efac, #4ade80);
+    border-top: 3px dashed #16a34a;
+    border-bottom: 3px dashed #16a34a;
+    padding: 18px 20px;
+    color: #14532d;
+}
+
+/* 下層麵包 */
+.bottom-bun {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-radius: 0 0 15px 15px;
+    color: #7c2d12;
+    padding: 15px 20px;
+}
+
+.layer-title {
+    font-size: 1.0em;
+    font-weight: bold;
+    margin: 0 0 6px 0;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.layer-subtitle {
+    font-size: 0.85em;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    opacity: 0.9;
+}
+
+.layer-description {
+    font-size: 0.75em;
+    margin: 0;
+    opacity: 0.8;
+    line-height: 1.3;
+}
+
+.filling-details {
+    margin: 12px 0 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    font-size: 0.7em;
+}
+
+.filling-details li {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 4px 6px;
+    border-radius: 10px;
+    border: 1px solid rgba(22, 163, 74, 0.3);
+}
+
+/* 響應式設計 */
+@media (max-width: 480px) {
+    .hamburger-structure {
+        max-width: 320px;
+    }
+    
+    .hamburger-layer {
+        padding: 15px;
+    }
+    
+    .filling-details {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 添加一些動畫效果 */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hamburger-structure {
+    animation: slideInUp 0.6s ease-out;
+}
+
+/* 互動效果 */
+.hamburger-layer {
+    cursor: pointer;
+}
+
+.hamburger-layer:active {
+    transform: scale(0.98);
+}
+
+/* 添加小裝飾元素 */
+.top-bun::before,
+.bottom-bun::before {
+    content: '🍞';
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 1.2em;
+    opacity: 0.6;
+}
+
+.filling::before {
+    content: '🥬';
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 1.2em;
+    opacity: 0.7;
+}
+        /* 網站整體風格設計 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", "Noto Sans TC";
+            background-color: #f8f9fa;
+            color: #343a40;
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* 網站主標題 */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #0056b3;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        /* 主內容區 */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* "教學圖卡" 的核心樣式 */
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            padding: 30px;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 卡片內的標題 */
+        .card h2 {
+            font-size: 1.8em;
+            color: #0056b3;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 15px;
+            margin-top: 0;
+        }
+
+        .card h3 {
+            font-size: 1.4em;
+            color: #17a2b8;
+            margin-top: 25px;
+        }
+        
+        .card h4 {
+            font-size: 1.2em;
+            color: #28a745;
+            margin-top: 20px;
+        }
+
+        /* 列表樣式 */
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* 區塊引言、範例文字樣式 */
+        blockquote {
+            background-color: #e9ecef;
+            border-left: 5px solid #17a2b8;
+            margin: 20px 0;
+            padding: 15px 20px;
+            font-style: italic;
+        }
+        
+        .example-wrong blockquote {
+             border-left-color: #dc3545;
+        }
+
+        .example-correct blockquote {
+             border-left-color: #28a745;
+        }
+
+        /* 圖片佔位符 */
+        .image-placeholder {
+            width: 100%;
+            height: 150px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            color: #6c757d;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* 表格樣式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        /* 教學註記樣式 */
+        .teaching-note {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+ 
+        /* 紅色強調文字樣式 */
+        .highlight-red {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        /* 頁腳 */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>7/7 課程內容</h1>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>學測英文作文：考的是作文，還是段落？</h2>
+            
+            <h3>課程目錄 (Table of contents)</h3>
+            <ul>
+                <li>01 學測作文介紹</li>
+                <li>02 教學段落寫作</li>
+                <li>04 ChatGPT批改</li>
+            </ul>
+            <div class="teaching-note">
+                <strong>引導問題：</strong> 在開始我們的旅程前，先想一想，一篇高分的英文作文，它的靈魂到底是一氣呵成的長篇大論，還是一個個結構精準、論點清晰的「段落」呢？
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>01. 學測英文作文介紹</h2>
+            <h3>A. 命題趨勢：連續五年的「文圖寫作」</h3>
+            <ul>
+                <li><strong>109年 (雙圖):</strong>一圖顯示某家賣場週年慶大批人潮等候開門,另一圖顯示顧客在賣場內搶購衣物。考生須「<span class="highlight-red">描述</span>」兩張圖片呈現的場景以及發生的事件,並「<span class="highlight-red">記敘</span>」該事件接下來的發展和結果。</li>
+                <li><strong>110年 (單圖):</strong> 為遊客參觀室外花展的新聞畫面,呈現幾位遊客在花圖內踐踏花坪自拍的行為。考生須「<span class="highlight-red">描述</span>」圖片中的人、事、物、「<span class="highlight-red">記敘</span>」事件發生的經過,並以遊客或場所主人的立場「<span class="highlight-red">說明</span>」自己對此現象的看法。</li>
+                <li><strong>111年 (雙圖):</strong> 展示兩種不同性質的公園(綠色公園和休閒公園)。考生須「<span class="highlight-red">描述</span>」圖A和圖B中的公園各有何特色,並「<span class="highlight-red">說明</span>」自己心目中理想公園的樣貌與特色,且須解釋理由。 </li>
+                <li><strong>112年 (多圖):</strong> 提供四幅表情符號圖片。考生須「<span class="highlight-red">說明</span>」人們何以喜歡使用表情符號,並從圖片中舉例「<span class="highlight-red">說明</span>」表情符號在溝通上有何功能。接著「<span class="highlight-red">記敘</span>」個人或親友的經驗,「<span class="highlight-red">說明</span>」表情符號在溝通時可能造成的誤會或困擾,以及化解的方法。 13</li>
+                <li><strong>113年 (多圖):</strong> 設想機器人小幫手解決青少年問題，<span class="highlight-red">說明</span>選擇原因、機器人特質及分工合作方式。</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h3>B. 結構為王：學測作文的「兩段式鐵則」</h3>
+            <p><strong>核心：</strong> 不是寫3-5段的paragraph essay，而是文分兩段,<span class="highlight-red">第一段</span>………,<span class="highlight-red">第二段</span>寫…,必須寫好兩個段落</p>
+            <ul>
+                <li><strong>109年雙圖:</strong> 文分兩段,<span class="highlight-red">第一段</span>描述兩張圖片中所呈現的場景,以及正在發生的狀況或事件;<span class="highlight-red">第二段</span>則敘述該事件(或故事)接下來的發展和結果。</li>
+                <li><strong>110年單圖:</strong> 請根據此圖片,寫一篇英文作文。文分兩段,<span class="highlight-red">第一段</span>描述圖片的內容,包括其中人、事、物以及發生的事情;<span class="highlight-red">第二段</span>則以遊客或場所主人的立場,表達你對這件事情的看法。</li>
+                <li><strong>111年雙圖:</strong> 寫一篇英文作文,文分兩段。<span class="highlight-red">第一段</span>描述圖A和圖B中的公園各有何特色,<span class="highlight-red">第二段</span>則說明你心目中理想公園的樣貌與特色,並解釋你的理由。</li>
+                <li><strong>112年多圖:</strong> 請參考下列表情符號,寫一篇英文作文,文分兩段。<span class="highlight-red">第一段</span>說明人們何以喜歡使用表情符號,並從下列的表情符號中舉一至二例,說明表情符號在溝通上有何功能。<span class="highlight-red">第二段</span>則以個人或親友的經驗為例,討論表情符號在訊息表達或解讀上可能造成的誤會或困擾,並提出可以化解的方法。</li>
+                <li><strong>113年多圖:</strong> 請寫一篇英文作文,文分兩段,<span class="highlight-red">第一段</span>說明你最想解決哪一個問題,並解釋原因。<span class="highlight-red">第二段</span>說明你希望這個機器人小幫手具備什麼特質或能力,可以如何和你分工合作來解決此問題。</li>
+            </ul>
+            
+            <h3>C. 評分標準：我們追求的四大面向</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>評分項目</th>
+                        <th>分數</th>
+                        <th>關鍵要求</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>內容</strong></td>
+                        <td>5分</td>
+                        <td>主題清楚、相關細節支持</td>
+                    </tr>
+                    <tr>
+                        <td><strong>組織</strong></td>
+                        <td>5分</td>
+                        <td>開頭、發展、結尾，連貫一致、轉承語</td>
+                    </tr>
+                    <tr>
+                        <td><strong>文法句構</strong></td>
+                        <td>5分</td>
+                        <td>文法格式標點無誤、句型結構有變化</td>
+                    </tr>
+                    <tr>
+                        <td><strong>字彙拼字</strong></td>
+                        <td>5分</td>
+                        <td>用字精確無誤、無拼字錯誤</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>思維轉換：從「先鋪陳」到「開門見山」</h2>
+            <div class="teaching-note">
+                <strong>教學重點：</strong> 這是寫好英文作文最關鍵的心法轉變！英文寫作習慣開門見山，先說重點，再給細節。
+            </div>
+            
+            <h4>案例分析：學習語言的困難</h4>
+            
+            <div class="example-wrong">
+                <h4>What's the problem with this paragraph? (中式間接寫法)</h4>
+                <blockquote>There are many kind of races in the world. And each has its language. But most of the languages are different only a few languages are similar. Today when we say "beautiful" in English, Spain, Japan or Chinese are different. Just in Chinese there are many kinds of pronunciations to speak it. So today when we learn a new language, we may have all kinds of problems. First we can find it is difficult to pronounce a little that you has never learned. Then you may also find there are many dictions you must know before you can write sentences. At the same time, there are many slangs in each language. So it's difficult to learn a new language. But as long as we never give up, some day we will conquer all the problems and learn a language well.</blockquote>
+            </div>
+
+            <div class="example-correct">
+                <h4>ChatGPT revised paragraph (英文直接寫法)</h4>
+                <blockquote>Learning a new language presents several challenges, but with persistence, these can be overcome. One of the primary difficulties is mastering pronunciation, especially when encountering sounds that don't exist in one's native language. Additionally, understanding the numerous vocabulary and grammatical rules of a new language can be daunting. This task is further complicated by the presence of slang and idiomatic expressions, which vary widely between languages. For instance, a word as simple as 'beautiful' has different equivalents and nuances in English, Spanish, Japanese, and Chinese, with the latter having multiple pronunciations. Despite these hurdles, consistent effort and dedication can enable anyone to surmount these language barriers and achieve fluency.</blockquote>
+            </div>
+        </section>
+        
+        <section class="card">
+            <h2>02. 教學段落寫作：英文段落的黃金結構</h2>
+            <div class="max-w-md mx-auto text-center bg-white rounded-2xl overflow-hidden shadow-2xl">
+<div class="hamburger-structure">
+    <div class="hamburger-layer top-bun">
+        <h4 class="layer-title">上層麵包 (開頭)</h4>
+        <p class="layer-subtitle">主題句 (Topic Sentence)</p>
+        <p class="layer-description">點出段落中心思想</p>
+    </div>
+    
+    <div class="hamburger-layer filling">
+        <h4 class="layer-title">中間餡料 (發展)</h4>
+        <p class="layer-subtitle">支持句 (Supporting Sentences)</p>
+        <p class="layer-description">提供細節、解釋、範例來豐富主題句</p>
+        <ul class="filling-details">
+            <li>explanations: 解釋說明</li>
+            <li>facts: 事實</li>
+            <li>reasons: 原因</li>
+            <li>examples: 舉例</li>
+            <li>statistics: 統計數字</li>
+        </ul>
+    </div>
+    
+    <div class="hamburger-layer bottom-bun">
+        <h4 class="layer-title">下層麵包 (結尾)</h4>
+        <p class="layer-subtitle">結論句 (Concluding Sentence)</p>
+        <p class="layer-description">總結前文、重申主旨</p>
+    </div>
+</div>
+            <ul>
+                <li><strong>開頭 / 主題句 (Topic Sentence):</strong> 點明段落核心思想。</li>
+                <li><strong>發展 / 支持句 (Supporting Sentences):</strong> 用細節來支撐主題句。
+                    <ul>
+                        <li>explanations: 解釋說明</li>
+                        <li>facts: 事實</li>
+                        <li>reasons: 原因</li>
+                        <li>incidents: 事件</li>
+                        <li>examples: 舉例</li>
+                        <li>statistics: 統計數字</li>
+                    </ul>
+                </li>
+                <li><strong>結尾 / 結論句 (Concluding Sentence):</strong> 重述、摘要或評論主題句。</li>
+            </ul>
+        </section>
+        
+        <section class="card">
+             <h2>與 AI 協作：下達精準的指令</h2>
+            <div class="teaching-note">
+                <strong>教學重點：</strong> 指令越清晰，AI 的回饋越有用。我們可以透過「CEFR 語言分級」來向 AI 要求不同難度的句子。
+            </div>
+             <h4>情境：103年指考圖表寫作</h4>
+             <img src="77 figure.png" alt="103年指考圖表寫作範例" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin: 20px 0; display: block; margin-left: auto; margin-right: auto;">
+             <blockquote><strong>指令：</strong> 「下圖呈現的是某國高中生每天進行各項活動的時間分配，第一段描述該圖所呈現之一般性現象，不必提及特定數據。請用A2及B1的英文程度各寫5個句子。」</blockquote>
+            
+            <h4>AI 生成結果分析：</h4>
+            <h5>A2 Level (初級)</h5>
+            <ul>
+                <li>The chart shows different activities students do every day.</li>
+                <li>Some activities take more time than others.</li>
+                <li>Every activity has a bar to show time.</li>
+                <li>Students spend time on many things.</li>
+                <li>The chart uses bars to show information.</li>
+            </ul>
+
+            <h5>B1 Level (中級)</h5>
+            <ul>
+                <li>The bar chart illustrates the average daily time allocation by students for a range of activities.</li>
+                <li>It appears that students engage in a variety of tasks throughout the day.</li>
+                <li>The lengths of the bars represent how much time is spent on each activity.</li>
+                <li>The chart provides a visual comparison of time dedicated to different activities.</li>
+                <li>This graphical representation helps to understand students' time management.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>從 AI 回應中，提煉核心主題句</h2>
+            <h4>情境：103年看圖寫作</h4>
+            <img src="77 figure 2.png" alt="103年指考圖表寫作範例" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin: 20px 0; display: block; margin-left: auto; margin-right: auto;">
+            <blockquote><strong>指令：</strong> 「請為此四格漫畫故事寫5個主題句」</blockquote>
+
+            <h4>較難的主題句 (適合進階思考)</h4>
+            <ul>
+                <li>"In an interconnected world, distraction can disconnect us from the reality of our actions and their consequences"</li>
+                <li>"Technology, when not managed mindfully, can lead us astray from the path of safety and responsibility"</li>
+                <li>"The digital age brings conveniences and perils, often blurring the line between virtual engagement and physical presence."</li>
+                <li>"Our immersion in the virtual world should not eclipse the importance of attentiveness to our immediate environment."</li>
+                <li>"A moment's inattention can unravel the fabric of caution, leading to unintended journeys and lessons learned the hard way."</li>
+            </ul>
+
+            <h4>較易的主題句 (適合建立信心)</h4>
+            <ul>
+                <li>"Paying attention is very important, especially when you're walking and using your phone"</li>
+                <li>"Looking where you're going can keep you out of trouble"</li>
+                <li>"Phones can take your mind off what's happening around you."</li>
+                <li>"Being careful is better than having an accident."</li>
+                <li>"Sometimes, we need to put down our phones to see the world and stay safe."</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>實戰拆解：112年表情符號作文 (第一段)</h2>
+            <img src="77 figure 3.png" alt="103年指考圖表寫作範例" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin: 20px 0; display: block; margin-left: auto; margin-right: auto;">
+            <blockquote><strong>題目：</strong> 隨著社群媒體的普及,表情符號(emoji)的使用也極為普遍。請參考下列表情符號,寫一篇英文作文,文分兩段。第一段說明人們何以喜歡使用表情符號,並從下列的表情符號中舉一至二例,說明表情符號在溝通上有何功能。第二段則以個人或親友的經驗為例,討論表情符號在訊息表達或解讀上可能造成的誤會或困擾,並提出可以化解的方法。</blockquote>
+            
+            <h4>第一步：選擇最佳主題句</h4>
+            <div class="teaching-note">
+                <p><strong>問題：</strong> 根據第一段的任務，下列何者為合適的主題句？</p>
+                <ul>
+                    <li>A. There are two reasons why people like to use emojis.</li>
+                    <li>B. Emojis are very useful to convey our emotions and feelings.</li>
+                    <li>C. Emojis are small icons used to represent people's emotions.</li>
+                    <li>D. Because we're not familiar with some emojis, we tend to use them inappropriately.</li>
+                </ul>
+                <p><strong>分析：</strong> B選項最能涵蓋「功能」與「為何喜歡」(因為能傳達情感) 這兩個核心任務。</p>
+            </div>
+
+            <h4>第二步：範文逐句賞析</h4>
+            <p><strong>引言:</strong> <em>Emojis emerged more than twenty years ago, and as a result of social media's rapid growth ever since, sending emojis has become a global trend.</em></p>
+            <p><strong>主題句:</strong> <em>There are two reasons why people worldwide like to use emojis.</em></p>
+            <p><strong>功能一 (方便省時)+舉例:</strong> <em>First, emojis are simple and convenient and can save a lot of time. For example, when people feel happy, warm, and positive about something, they can just send a smiling face with smiling eyes.</em></p>
+            <p><strong>功能二 (取代視覺線索)+舉例:</strong> <em>Second, emojis can replace visual cues found in face-to-face communication. When people use computers and networks to communicate with one another, they cannot use facial expressions and body language to express their emotions. Instead, they can use emojis to fill such needs. A good example is the "face with tears of joy" emoji, which represents someone laughing so hard that tears are streaming down their face. This emoji is often used to signify that something is very funny or embarrassing.</em></p>
+        </section>
+
+        <section class="card">
+            <h2>實戰拆解：112年表情符號作文 (第二段)</h2>
+            <blockquote><strong>任務：</strong> 討論誤會或困擾 + 以個人經驗為例 + 提出化解方法。</blockquote>
+
+            <h4>第一步：選擇最佳主題句</h4>
+            <div class="teaching-note">
+                <p><strong>問題：</strong> 下列何者為合適的轉折主題句？</p>
+                <ul>
+                    <li>A. Some people use emojis all the time to express their emotions.</li>
+                    <li>B. Using emojis can help us better connect with others.</li>
+                    <li>C. However, there are also some disadvantages to using emojis that can lead to misunderstandings.</li>
+                    <li>D. There are some popular emojis that people use them all the time.</li>
+                </ul>
+                <p><strong>分析：</strong> C選項是最佳的轉折句，完美地承接第一段的優點，並開啟第二段要討論的缺點。</p>
+            </div>
+
+            <h4>第二步：範文逐句賞析 (完整故事)</h4>
+            <p><strong>主題句:</strong> <em>However, there are also some disadvantages to using emojis that can lead to misunderstandings.</em></p>
+            <p><strong>闡述問題:</strong> <em>Some emojis are ambiguous and can be interpreted in multiple ways. In addition, not everyone is familiar with the meanings of all emojis, so different people may interpret the same emoji very differently. These issues can all result in communication problems and may damage relationships.</em></p>
+            <p><strong>舉例記敘 (個人經驗):</strong> <em>Quite a few times, my parents sent me emojis that did not match the emotions they were trying to convey. Once, I was texting my mother about the food I was eating. I told her how fantastic it was, and she was happy to hear that. Then, out of the blue, she sent me a smiling pile of poo emoji because she thought the cartoon eyes and large smile were very cute. She didn't know that the coiled pile represented poo; otherwise, she would not have sent it to me while I was eating.</em></p>
+            <p><strong>如何化解:</strong> <em>To avoid misunderstandings or misinterpretation of emojis, the best thing to do is use words when we really want our meaning to be clear. We can use emojis to reinforce what we're writing rather than to convey messages on their own.</em></p>
+            <p><strong>結論:</strong> <em>This way, we can ensure there will be no confusion caused by an emoji's ambiguity.</em></p>
+        </section>
+
+        <section class="card">
+            <h2>整合練習：109年指考「校園安全」作文</h2>
+            <img src="77 figure 4.png" alt="103年指考圖表寫作範例" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin: 20px 0; display: block; margin-left: auto; margin-right: auto;">
+            <blockquote><strong>題目：</strong> 校園安全是校內全體成員的共同責任。請以此為題,寫一篇英文作文,討論校園安全的重要性及維護之道。文分兩段。第一段說明校園安全的重要性及校園內可能發生的安全問題;第二段說明身為校園的一份子,你覺得校內成員應該採取那些作為以維護校園安全。</blockquote>
+            
+            <h4>寫作鷹架 (Framework)</h4>
+            <h5>第一段架構：</h5>
+            <ul>
+                <li><strong>主題句：</strong> 闡述校園不安全會產生的問題。</li>
+                <li><strong>支持句：</strong>
+                    <ul>
+                        <li>安全問題一 (例如：校園霸凌)</li>
+                        <li>安全問題二 (例如：實驗室意外)</li>
+                    </ul>
+                </li>
+            </ul>
+            <h5>第二段架構：</h5>
+            <ul>
+                <li><strong>主題句：</strong> 說明校內成員可以採取的作為。</li>
+                <li><strong>支持句：</strong>
+                    <ul>
+                        <li>第1件可做的事，並說明其必要性。</li>
+                        <li>第2件可做的事，並說明其必要性。</li>
+                        <li>第3件可做的事，並說明其必要性。</li>
+                    </ul>
+                </li>
+                <li><strong>結論句：</strong> 呼籲大家共同努力，打造一個更安全的學習環境。</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 澤享的教學內容. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
