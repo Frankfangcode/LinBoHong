@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第五招 講生動：感官描寫與精準用字</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #fdf6e9;
+            color: #5f4b32;
+        }
+        .book-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            background-color: #fff;
+            border: 1px solid #dcdcdc;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 2rem 3rem;
+            border-radius: 8px;
+        }
+        h1, h2, h3 { font-weight: 700; }
+        .main-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 3px solid #e0cda8;
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .main-title-circle {
+            width: 120px;
+            height: 120px;
+            border: 8px solid #c97d6d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #5f4b32;
+            margin-right: 1.5rem;
+        }
+        .main-title-text { font-size: 3.5rem; letter-spacing: 0.1em; }
+        .chapter-title {
+            color: #5a8a72;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-left: 5px solid #5a8a72;
+            padding-left: 1rem;
+        }
+        .section-title {
+            color: #c97d6d;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .content-box {
+            background-color: #f9f5ed;
+            border: 1px solid #e0cda8;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .five-senses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .sense-card {
+            border: 2px solid #e0cda8;
+            border-radius: 8px;
+            padding: 1rem;
+            background-color: #fff;
+        }
+        .sense-card h4 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #c97d6d;
+            margin-bottom: 0.5rem;
+        }
+        .vocab-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+        .vocab-table th, .vocab-table td {
+            border: 1px solid #e0cda8;
+            padding: 0.8rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        .vocab-table th { background-color: #f9f5ed; font-weight: bold; }
+        .vocab-table ul { list-style-position: inside; padding-left: 0; }
+        .exercise-prompt {
+            background-color: #e6f0e9;
+            border-left: 4px solid #5a8a72;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .interactive-input {
+            border: 1px solid #c0c0c0;
+            border-radius: 4px;
+            padding: 0.3rem 0.5rem;
+            background-color: #fff;
+            width: 120px;
+        }
+        .draggable {
+            cursor: grab;
+            background-color: #fff;
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            user-select: none;
+        }
+        .draggable:hover { background-color: #f0f0f0; }
+        .drop-target {
+            min-height: 100px;
+            border: 2px dashed #a0a0a0;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            padding: 0.5rem;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .drop-target.over {
+            background-color: #d4e3dc;
+            border-color: #5a8a72;
+        }
+        .drop-target-inline {
+            display: inline-block;
+            width: 120px;
+            height: 38px;
+            border: 2px dashed #a0a0a0;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            margin: 0 5px;
+            vertical-align: middle;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .drop-target-inline.over {
+            background-color: #d4e3dc;
+            border-color: #5a8a72;
+        }
+        .drop-target-inline .draggable {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .check-btn {
+            background-color: #5a8a72;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: none;
+            margin-top: 1rem;
+            margin-right: 0.5rem;
+        }
+        .check-btn:hover { background-color: #486e5b; }
+        .feedback { font-weight: bold; margin-left: 10px; }
+        .feedback.correct { color: green; }
+        .feedback.incorrect { color: red; }
+        .simile-box {
+            background-color: #fff8e1;
+            border: 1px solid #ffe082;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .simile-box li { list-style-type: disc; margin-left: 20px; }
+        blockquote {
+            border-left: 4px solid #ccc;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+            color: #777;
+        }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
+        .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: 8px; position: relative; }
+        .close-btn { color: #aaa; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .modal-content h3 { color: #5a8a72; border-bottom: 2px solid #e0cda8; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="book-container">
+        
+        <header class="main-title-container">
+            <div class="main-title-circle">講</div>
+            <h1 class="main-title-text">生動</h1>
+        </header>
+        <p class="text-center text-xl mb-8">第五招 | 感官描寫、精準用字</p>
+        
+        <!-- 第一式 -->
+        <section>
+            <h2 class="chapter-title">【第一式 有聲有色】五種感官的描寫</h2>
+            <p>當我們形容一篇文章寫得「生動」，指的是寫作靈活而不呆板，紙張上的文字一躍而起，帶著讀者經歷了一趟感官旅程，在心中留下深刻的印象。在這一招，我們將練習五感的描寫 (sensory description) 以及精準的用字 (word choice)，透過這兩式讓文字動起來！</p>
+            <p class="mt-4">感官細節的描寫能使故事栩栩如生，讀者藉由文字看到、聽到、聞到、品嚐和觸摸，像是親身體驗一場音樂會、品嚐一道美食，或者是經歷一場比賽、一個意外。</p>
+            <p class="mt-4">要做到五感的描寫並不容易，有兩個前提條件：一是在日常生活中要把五官打開，練習「感受」；二是腦袋裡要儲存描述感官的字詞，以便隨時派上用場。我們先來看五感的描寫指的是什麼。</p>
+            
+            <div class="five-senses-grid mt-6">
+                <div class="sense-card"><h4>👁️ Sight (視覺)</h4><p>描寫眼睛看到的內容，包括顏色、大小、形狀、明暗度等，是最常使用到的一個感官，例如 shimmering (閃爍的)、dim (昏暗的) 等。</p></div>
+                <div class="sense-card"><h4>👂 Sound (聽覺)</h4><p>描寫耳朵聽到的聲音，如高低、強弱、音色等，例如 screeching (尖銳刺耳的聲音)；也可善用擬聲詞，例如 hiss (蛇的嘶嘶聲)、roar (獅吼聲) 等。</p></div>
+                <div class="sense-card"><h4>👃 Smell (嗅覺)</h4><p>描寫鼻子聞到的氣味，例如 aromatic (芳香的)；也可以拿具體的事物來比喻抽象的氣味，例如：The beach air smelled of seaweed and salt. (海邊的空氣有海草與鹽的味道。)</p></div>
+                <div class="sense-card"><h4>👅 Taste (味覺)</h4><p>描寫嚐到的甜、鹹、苦、酸和鮮味等，味覺與嗅覺緊密相關，許多字能同時形容兩者，例如 sweet (甜味)、sour (酸味)。</p></div>
+                <div class="sense-card"><h4>🖐️ Touch (觸覺)</h4><p>描寫觸摸時的感覺，如質地、溫度等，例如 coarse (粗糙的)、smooth (光滑的)；也可以是身體感受的描寫，例如 a pounding heart (心怦怦跳)。</p></div>
+            </div>
+
+            <div class="content-box mt-8">
+                <p>請仔細閱讀下面這段文字，一邊讀一邊圈出屬於五感的描寫。</p>
+                <blockquote class="mt-4">
+                    Kate and her family were dining in a <strong>wooden beach cottage</strong>. They could smell the <strong>salty tang of sea air</strong> from their window. Suddenly <strong>the floor started to vibrate</strong> and a <strong>light rumbling grew louder</strong>. <strong>Whoosh!</strong> <strong>Brown water</strong> gushed out of a <strong>burst pipe</strong> outside the window and the house was swaying like a <strong>palm tree in the wind</strong>. Kate's sandwich now <strong>tasted like sand</strong> and her <strong>mouth went dry with fear</strong>. <strong>"Take cover, everybody!"</strong> she shouted. It was an earthquake.
+                </blockquote>
+                <p class="mt-4">文章描寫 Kate 與家人在海邊木屋用餐時突然地震發生，寫作上提供了許多感官細節，讓讀者閱讀時有畫面出現在眼前，彷彿身臨其境。</p>
+            </div>
+            
+            <h3 class="section-title mt-8">好用的五感字彙</h3>
+            <table class="vocab-table">
+                <thead>
+                    <tr><th>五感</th><th>字彙</th><th>字彙</th><th>字彙</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>👁️ <strong>視覺</strong></td>
+                        <td><ul><li>gigantic (a.) 巨大的</li><li>teeny-tiny (a.) 微小的</li><li>sparkling (a.) 發亮的</li><li>shadowy (a.) 陰暗的</li><li>vibrant (a.) 鮮豔的</li><li>drab (a.) 缺乏色彩的</li></ul></td>
+                        <td><ul><li>circular (a.) 環形的</li><li>triangular (a.) 三角形的</li><li>turquoise (a.) 藍綠色的</li><li>crimson (a.) 緋紅色的</li><li>freckled (a.) 有雀斑的</li><li>wrinkled (a.) 長皺紋的</li></ul></td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        <td>👂 <strong>聽覺</strong></td>
+                        <td><ul><li>deafening (a.) 震耳欲聾的</li><li>piercing (a.) 刺耳的</li><li>squeaky (a.) 嘎吱響的</li><li>soothing (a.) 舒緩的</li><li>mumble (v./n.) (發出)咕嚕聲</li><li>thump (v./n.) (發出)重擊聲</li></ul></td>
+                        <td><ul><li>plop (v./n.) (發出)撲通聲</li><li>rustle (v./n.) (發出)沙沙作響聲</li><li>twitter (v./n.) (發出)啁啾聲</li><li>jingle (v./n.) (發出)叮噹聲</li><li>boom (v./n.) (發出)低沉隆隆聲</li><li>splash (v./n.) (發出)水潑濺聲</li></ul></td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        <td>👃 <strong>嗅覺</strong></td>
+                        <td><ul><li>fragrant (a.) 芳香的</li><li>perfumed (a.) 芳香的</li><li>flowery (a.) 花香的</li><li>scented (a.) 有香味的</li><li>musky (a.) 麝香的</li><li>smoky (a.) 煙燻味的</li></ul></td>
+                        <td><ul><li>stinky (a.) 惡臭的</li><li>rotten (a.) 腐爛惡臭的</li><li>stale (a.) 食物走味的</li><li>rancid (a.) 酸敗味的</li><li>pungent (a.) 刺鼻的</li><li>stagnant (a.) (水)發臭的</li></ul></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>👅 <strong>味覺</strong></td>
+                        <td><ul><li>bland (a.) 無滋味的</li><li>zesty (a.) 風味十足的</li><li>plain (a.) 清淡的</li><li>refreshing (a.) 清爽的</li><li>sweet and sour (a.) 酸酸甜甜的</li><li>bittersweet (a.) 苦中帶甜的</li></ul></td>
+                        <td><ul><li>greasy (a.) 油膩的</li><li>spicy (a.) 辛辣的</li><li>creamy (a.) 綿密(似乳脂)的</li><li>ice-cold (a.) 冰冷的</li><li>elastic (a.) 有彈性的</li></ul></td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        <td>🖐️ <strong>觸覺</strong></td>
+                        <td><ul><li>sting (v./n.) (使)刺痛</li><li>tickle (v./n.) (使)發癢</li><li>damp (a.) 潮濕的</li><li>drenched (a.) 溼透的</li><li>scorching (a.) 灼熱的</li><li>lukewarm (a.) 微溫的</li></ul></td>
+                        <td><ul><li>fluffy (a.) 蓬鬆的</li><li>chewy (a.) 有嚼勁的</li><li>slimy (a.) 黏糊糊的</li><li>chilly (a.) 涼颼颼的</li><li>feathery (a.) 羽毛似的</li><li>metallic (a.) 金屬質感的</li><li>powdery (a.) 粉狀的</li></ul></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-title">✍️ 你試試看 A</h3>
+            <div class="exercise-prompt">
+                <p>請將適當的字拖曳到下列描寫感官細節的句子中。</p>
+                <div id="word-bank-A" class="my-4 p-4 bg-yellow-100 border border-yellow-300 rounded-lg flex flex-wrap justify-center gap-2 drop-target">
+                    <div class="draggable" draggable="true" data-word="rustle">rustle</div>
+                    <div class="draggable" draggable="true" data-word="pungent">pungent</div>
+                    <div class="draggable" draggable="true" data-word="feathery">feathery</div>
+                    <div class="draggable" draggable="true" data-word="turquoise">turquoise</div>
+                    <div class="draggable" draggable="true" data-word="rancid">rancid</div>
+                    <div class="draggable" draggable="true" data-word="chewy">chewy</div>
+                    <div class="draggable" draggable="true" data-word="deafening">deafening</div>
+                    <div class="draggable" draggable="true" data-word="stinging">stinging</div>
+                    <div class="draggable" draggable="true" data-word="refreshing">refreshing</div>
+                    <div class="draggable" draggable="true" data-word="wrinkled">wrinkled</div>
+                </div>
+                <ol id="exerciseA" class="list-decimal list-inside space-y-4">
+                    <li>It's wonderful to snorkel in the clear <span class="drop-target-inline" data-answer="turquoise"></span> waters of the Caribbean.</li>
+                    <li>If I get old and <span class="drop-target-inline" data-answer="wrinkled"></span>, will you still love me?</li>
+                    <li>The police officer heard a <span class="drop-target-inline" data-answer="deafening"></span> gunshot and found a man lying in a pool of blood.</li>
+                    <li>All was silent except for the soft <span class="drop-target-inline" data-answer="rustle"></span> of the leaves in the gentle breeze.</li>
+                    <li>Take a sniff. The milk in your carton smells <span class="drop-target-inline" data-answer="rancid"></span>. Don't drink it.</li>
+                    <li>The kitchen is filled with the <span class="drop-target-inline" data-answer="pungent"></span> smell of frying onions and spices.</li>
+                    <li>Beef can become very tough and <span class="drop-target-inline" data-answer="chewy"></span> if it is roasted too long.</li>
+                    <li>Mint leaves have been used for centuries to make <span class="drop-target-inline" data-answer="refreshing"></span> drinks.</li>
+                    <li>Jessica bit her lower lip, trying to hold back the <span class="drop-target-inline" data-answer="stinging"></span> tears in the corners of her eyes.</li>
+                    <li>We took a walk under a blue sky dotted with <span class="drop-target-inline" data-answer="feathery"></span> white clouds.</li>
+                </ol>
+                <button class="check-btn" onclick="checkDragDropSingleAnswer('exerciseA')">檢查答案</button>
+            </div>
+            
+            <h3 class="section-title">✍️ 你試試看 B</h3>
+            <div class="exercise-prompt">
+                <p>請查字典找出下列10個五感字彙的中文意思，並從右側A~J中找到意思相近的詞配成一對，填入相近詞代碼。</p>
+                <table class="vocab-table bg-white" id="exerciseB_match">
+                    <thead><tr><th>五感</th><th>英文</th><th>中文</th><th>相近詞代碼</th><th>回饋</th></tr></thead>
+                    <tbody>
+                        <tr><td>👁️</td><td>① dazzling</td><td><input type="text" class="interactive-input w-full" placeholder="耀眼的"></td><td><input data-answer="G" type="text" class="interactive-input w-16"></td><td class="feedback"></td></tr>
+                        <tr><td>👁️</td><td>② massive</td><td><input type="text" class="interactive-input w-full" placeholder="巨大的"></td><td><input data-answer="B" type="text" class="interactive-input w-16"></td><td class="feedback"></td></tr>
+                        <tr><td>👂</td><td>③ mutter</td><td><input type="text" class="interactive-input w-full" placeholder="咕噥；低聲說"></td><td><input data-answer="E" type="text" class="interactive-input w-16"></td><td class="feedback"></td></tr>
+                        <tr><td>👂</td><td>④ chirp</td><td><input type="text" class="interactive-input w-full" placeholder="鳥叫；啁啾"></td><td><input data-answer="C" type="text" class="interactive-input w-16"></td><td class="feedback"></td></tr>
+                        <tr><td>👃</td><td>⑤ aromatic</td><td><input type="text" class="interactive-input w-full" placeholder="芬芳的"></td><td><input data-answer="I" type="text" class="interactive-input w-16"></td><td class="feedback"></td></tr>
+                        <tr><td>👃</td><td>⑥ decayed</td><td><input type="text" class="interactive-input w-full" placeholder="腐爛的"></td><td><input data-answer="A" type="text" class="interactive-input w-16"></td><td class="feedback"></td></tr>
+                        <tr><td>👅</td><td>⑦ savory</td><td><input type="text" class="interactive-input w-full" placeholder="鹹香的；美味的"></td><td><input data-answer="J" type="text" class="interactive-input w-16"></td><td class="feedback"></td></tr>
+                        <tr><td>👅</td><td>⑧ flavorless</td><td><input type="text" class="interactive-input w-full" placeholder="無味的"></td><td><input data-answer="F" type="text" class="interactive-input w-16"></td><td class="feedback"></td></tr>
+                        <tr><td>🖐️</td><td>⑨ moist</td><td><input type="text" class="interactive-input w-full" placeholder="濕潤的"></td><td><input data-answer="D" type="text" class="interactive-input w-16"></td><td class="feedback"></td></tr>
+                        <tr><td>🖐️</td><td>⑩ sizzling</td><td><input type="text" class="interactive-input w-full" placeholder="灼熱的"></td><td><input data-answer="H" type="text" class="interactive-input w-16"></td><td class="feedback"></td></tr>
+                    </tbody>
+                </table>
+                 <div class="mt-4 p-4 bg-yellow-100 border border-yellow-300 rounded-lg">
+                    <strong>相近詞選項:</strong>
+                    A. rotten, B. gigantic, C. twitter, D. damp, E. mumble, F. bland, G. sparkling, H. scorching, I. fragrant, J. zesty
+                </div>
+                <button class="check-btn" onclick="checkMatching('exerciseB_match')">檢查答案</button>
+            </div>
+            
+            <h3 class="section-title">✍️ 你試試看 C</h3>
+            <div class="exercise-prompt">
+                 <p>請查字典找出下列12個五感字彙的中文意思，並將單字拖曳分類填入下方欄位。（請注意，一個字彙有可能可以填入兩個五感分類）</p>
+                <div id="word-bank-C" class="my-4 p-4 bg-yellow-100 border border-yellow-300 rounded-lg flex flex-wrap justify-center gap-2 drop-target">
+                    <div class="draggable" draggable="true" data-word="glowing">glowing</div>
+                    <div class="draggable" draggable="true" data-word="coarse">coarse</div>
+                    <div class="draggable" draggable="true" data-word="tangy">tangy</div>
+                    <div class="draggable" draggable="true" data-word="rotten">rotten</div>
+                    <div class="draggable" draggable="true" data-word="earsplitting">earsplitting</div>
+                    <div class="draggable" draggable="true" data-word="shriek">shriek</div>
+                    <div class="draggable" draggable="true" data-word="blurry">blurry</div>
+                    <div class="draggable" draggable="true" data-word="putrid">putrid</div>
+                    <div class="draggable" draggable="true" data-word="chatter">chatter</div>
+                    <div class="draggable" draggable="true" data-word="moldy">moldy</div>
+                    <div class="draggable" draggable="true" data-word="slimy">slimy</div>
+                    <div class="draggable" draggable="true" data-word="chilled">chilled</div>
+                </div>
+                <div id="exerciseC_drag" class="grid grid-cols-5 gap-2 text-center">
+                    <div>👁️ 視覺 <div class="drop-target mt-1" data-sense="sight"></div></div>
+                    <div>👂 聽覺 <div class="drop-target mt-1" data-sense="sound"></div></div>
+                    <div>👃 嗅覺 <div class="drop-target mt-1" data-sense="smell"></div></div>
+                    <div>👅 味覺 <div class="drop-target mt-1" data-sense="taste"></div></div>
+                    <div>🖐️ 觸覺 <div class="drop-target mt-1" data-sense="touch"></div></div>
+                </div>
+                 <button class="check-btn" onclick="checkDragDrop('exerciseC_drag')">檢查答案</button>
+            </div>
+
+            <h3 class="section-title">✍️ 你試試看 D</h3>
+            <div class="exercise-prompt">
+                 <p>請閱讀以下短文，參考本招介紹的五感字彙，填入適當的字描寫感官細節，讓文章變生動。</p>
+                 <blockquote id="exerciseD_fill" class="mt-4 bg-white p-4 rounded">
+                     I went to the beach a few weeks ago. As I walked along the seawall, I tried to block the 
+                     <input data-answer="dazzling|scorching" placeholder="視覺" type="text" class="interactive-input"> sunlight with my hands. Soon I took off my shoes, touching the 
+                     <input data-answer="coarse|powdery" placeholder="觸覺" type="text" class="interactive-input"> sand with my bare feet. The 
+                     <input data-answer="scorching|sizzling" placeholder="觸覺" type="text" class="interactive-input"> air and the 
+                     <input data-answer="damp|moist" placeholder="觸覺" type="text" class="interactive-input"> sand not only made me sweat but also made my hair and skin sticky. "The sea is just a few steps away," I said to myself. The thought made me start to run and then I jumped into the sea. I was then embraced by the 
+                     <input data-answer="chilled|ice-cold" placeholder="觸覺" type="text" class="interactive-input"> water and the 
+                     <input data-answer="soothing|deafening" placeholder="聽覺" type="text" class="interactive-input"> sound of waves. All I could see was the 
+                     <input data-answer="sparkling|glowing" placeholder="視覺" type="text" class="interactive-input"> sea. Not knowing how long I had stayed in the water, I swam back to the beach. My clothes were soaking wet and I felt as if I were carrying blocks of stone. Suddenly, I shivered a little as a blast of 
+                     <input data-answer="chilly" placeholder="觸覺" type="text" class="interactive-input"> wind whipped through my wet shirt. I changed into dry clothes and headed back home, finishing my wonderful summer trip to the beach.
+                 </blockquote>
+                <button class="check-btn" onclick="checkAnswers('exerciseD_fill')">檢查答案</button>
+                <button class="check-btn" style="background-color:#c97d6d;" onclick="showModal('modalB')">查看參考答案</button>
+            </div>
+            
+            <h3 class="section-title">✍️ 生動寫字</h3>
+            <div class="exercise-prompt">
+                 <p>請發揮聯想力，為下列場景加上感官細節，讓場景的描寫更生動。請先閱讀範例。</p>
+                 <div class="content-box my-4">
+                     <strong>範例一:</strong> My first day of school was exciting. <br>
+                     <strong>改寫:</strong> My first day of school was exciting. When I walked onto the campus, the school buildings seemed to be <strong>sparkling</strong> under the cloudless sky.
+                 </div>
+                  <div class="content-box my-4">
+                     <strong>範例二:</strong> My first day of school was exciting. The whole classroom was noisy. <br>
+                     <strong>改寫:</strong> My first day of school was exciting. <strong>Chatting, whispering and giggling</strong>, the whole class was filled with excitement.
+                 </div>
+                 <div class="mt-6">
+                    <p><strong>第一題：</strong>I'm tired of eating the same lunch every day. (提供嗅覺與味覺的描寫)</p>
+                    <textarea class="w-full p-2 border rounded mt-2" rows="3" placeholder="改寫句子..."></textarea>
+                 </div>
+                  <div class="mt-4">
+                    <p><strong>第二題：</strong>I was at the stadium for a baseball game. (自行造句，提供嗅覺與聽覺的描寫)</p>
+                    <textarea class="w-full p-2 border rounded mt-2" rows="3" placeholder="改寫句子..."></textarea>
+                 </div>
+            </div>
+
+        </section>
+
+        <section>
+             <h3 class="section-title">🧗 師父有交代：進階篇 (Simile 明喻)</h3>
+             <p>描述感官細節時，有一種進階的修辭手法可以讓文章增色——simile (明喻)，利用 as 或 like 將具有某種共同特徵的不同事物連在一起，句子會變得生動又有趣。</p>
+             <div class="simile-box">
+                 <ul>
+                     <li>The streets glistened <strong>like</strong> jewels after the rain.</li>
+                     <li>Her rosy cheeks went <strong>as</strong> crimson <strong>as</strong> a blooming rose.</li>
+                     <li>The branches started clicking <strong>like</strong> the tail of a rattlesnake.</li>
+                     <li>The topping on the cupcake is <strong>as</strong> fluffy <strong>as</strong> a cloud.</li>
+                 </ul>
+             </div>
+             <p>以110年的學測作文為例，若能以明喻描寫，文章更能引人入勝。例如，描寫人群湧入花田可以說 people swarm inside the flower field <strong>like bees</strong>；描寫花的香氣可以說 the flowers smell <strong>like sweet, warm sugar cookies</strong>；描寫花瓣的質地可以說 the petals feel <strong>as soft as a kitten's ear</strong>。</p>
+        </section>
+        
+        <section>
+            <h3 class="section-title">✍️ 換你試試看 E</h3>
+             <div class="exercise-prompt">
+                <p>以109年的學測作文為例，為這兩張圖片提供視覺、聽覺、嗅覺及觸覺的細節，句子要含 like 或 as，練習明喻。</p>
+                <div class="flex justify-around my-4"><img src="https://i.imgur.com/kP8tJ5g.png" alt="商場週年慶人潮" class="w-2/5 rounded shadow-md"><img src="https://i.imgur.com/8QjP9fL.png" alt="商場內擁擠的人群" class="w-2/5 rounded shadow-md"></div>
+                <p class="mt-4"><strong>視覺：</strong></p><textarea class="w-full p-2 border rounded" rows="2" placeholder="e.g., People swarmed inside the shopping mall like hungry animals..."></textarea>
+                <p class="mt-4"><strong>聽覺：</strong></p><textarea class="w-full p-2 border rounded" rows="2" placeholder="e.g., The impatient customers were making noise as loudly as bees..."></textarea>
+                <p class="mt-4"><strong>嗅覺：</strong></p><textarea class="w-full p-2 border rounded" rows="2" placeholder="e.g., The sweaty smell... was as awful as rotten cheese."></textarea>
+                <p class="mt-4"><strong>觸覺：</strong></p><textarea class="w-full p-2 border rounded" rows="2" placeholder="e.g., People were squashed like sardines..."></textarea>
+             </div>
+        
+            <div class="content-box">
+                <h4>比較範文 A 與 B</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><h5 class="font-bold">[Passage A]</h5><p>Anna and her kids were standing in the crowd... In the cosmetics section, salesmen and saleswomen were shouting and customers were pushing one another.</p></div>
+                    <div><h5 class="font-bold">[Passage B]</h5><p>Anna and her kids were standing in the crowd... The moment the doors opened, <u>people swarmed inside the shopping mall like hungry animals waiting to be fed</u>. ...<u>People were squashed like sardines...</u> ...<u>the impatient customers were making noise as loudly as bees buzzing around a hive</u>. <u>The sweaty smell of the eager shoppers was as awful as rotten cheese</u>.</p></div>
+                </div>
+            </div>
+
+            <h3 class="section-title">✍️ 換你試試看 F</h3>
+            <div class="exercise-prompt">
+                <p>請使用本章第一式說明的五感描寫與明喻的技巧，以下圖為主題，寫一個大約100字的段落，描寫一個令你感到寧靜、放鬆的場景。</p>
+                <img src="https://i.imgur.com/3sJ3d7E.jpeg" alt="沙灘上的腳印與夕陽" class="w-full md:w-3/4 mx-auto rounded shadow-md my-4">
+                <p>When I am asked to visualize a peaceful and relaxing setting, oftentimes I will imagine myself....</p>
+                <textarea class="w-full p-2 border rounded mt-2" rows="6" placeholder="開始寫作..."></textarea>
+            </div>
+        </section>
+        
+        <!-- 第二式 -->
+        <section class="mt-12">
+            <h2 class="chapter-title">【第二式 一語中的】精準到位的用字</h2>
+            <div class="grid md:grid-cols-2 gap-6 mt-4">
+                <div class="content-box"><h5 class="font-bold">[Passage A]</h5><p>I can still vividly remember the first time I practiced playing volleyball... When the ball fell on my wrists, it was terrible. After the practice, I felt very tired. My wrists hurt. I looked at my wrists and saw red dots on them.</p></div>
+                <div class="content-box"><h5 class="font-bold">[Passage B]</h5><p>I can still vividly remember the first time I practiced playing volleyball... When the ball hit my wrists, it was <u>excruciatingly painful</u>. After the practice, I felt so <u>exhausted</u>... My wrists were <u>swollen and stiff</u>. Turning my wrists gently, I found <u>patches of red dots</u> on them <u>as if I had just been bitten by an army of crazy ants</u>.</p></div>
+            </div>
+            
+            <h3 class="section-title mt-8">準確的動詞</h3>
+            <table class="vocab-table">
+                <thead><tr><th>一般字</th><th colspan="3">生動字</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>look 看</strong></td><td>stare 盯、瞪</td><td>scrutinize 細看、審視</td><td>peep 窺視</td></tr>
+                    <tr><td><strong>walk 走</strong></td><td>march 齊步走</td><td>stride 大步走</td><td>lumber 緩慢而笨拙地挪動</td></tr>
+                    <tr><td><strong>talk 說話</strong></td><td>murmur 低語</td><td>bellow 大聲喝道</td><td>stutter 結巴地說</td></tr>
+                    <tr><td><strong>take 拿、取</strong></td><td>grab 抓</td><td>snatch 奪走</td><td>seize 抓住</td></tr>
+                </tbody>
+            </table>
+            
+            <h3 class="section-title mt-8">強而有力的形容詞</h3>
+             <table class="vocab-table">
+                <thead><tr><th>一般字</th><th colspan="2">生動字</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>fat 胖的</strong></td><td>overweight 超重的</td><td>obese 肥胖的</td></tr>
+                    <tr><td><strong>thin 瘦的</strong></td><td>slender 窈窕的</td><td>skinny 骨瘦如柴的</td></tr>
+                    <tr><td><strong>pretty 美的</strong></td><td>stunning 極漂亮的</td><td>gorgeous 美麗動人的</td></tr>
+                    <tr><td><strong>happy 開心的</strong></td><td>delighted 興高采烈的</td><td>thrilled 非常興奮的</td></tr>
+                    <tr><td><strong>sad 難過的</strong></td><td>gloomy 沮喪的</td><td>distressed 憂慮的</td></tr>
+                    <tr><td><strong>good 好的</strong></td><td>marvelous 絕妙的</td><td>exceptional 卓越的</td></tr>
+                    <tr><td><strong>tired 累的</strong></td><td>fatigued 疲倦的</td><td>exhausted 精疲力竭的</td></tr>
+                    <tr><td><strong>angry 生氣的</strong></td><td>enraged 非常憤怒的</td><td>resentful 憤恨的</td></tr>
+                </tbody>
+            </table>
+            
+            <h3 class="section-title">✍️ 換你試試看 G</h3>
+            <div class="exercise-prompt" id="exerciseG">
+                <p class="font-bold">選出較精準或生動的用字，完成以下句子。</p>
+                <ol class="list-decimal list-inside mt-4 space-y-4">
+                    <li>We (<span class="option">went</span>/<span class="option correct">marched</span>) up the hill.</li>
+                    <li>I was (<span class="option correct">starving</span>/<span class="option">hungry</span>) and freezing to death.</li>
+                    <li>The audio quality of the home theater system was absolutely (<span class="option">good</span>/<span class="option correct">mind-blowing</span>)!</li>
+                    <li>If your shirt is (<span class="option">dirty</span>/<span class="option correct">stained</span>) with paint, wash it immediately.</li>
+                    <li>I remember Mom as a (<span class="option">small</span>/<span class="option correct">petite</span>) and elegant woman.</li>
+                    <li>The movie was so (<span class="option correct">hilarious</span>/<span class="option">funny</span>) that I almost fell off my seat laughing.</li>
+                </ol>
+            </div>
+            
+            <h3 class="section-title">✍️ 換你試試看 H</h3>
+            <div class="exercise-prompt">
+                <p>選出適合的動詞填入空格，完成以下段落，請記得做適當的動詞變化。</p>
+                <div class="my-4 p-4 bg-yellow-100 border border-yellow-300 rounded-lg flex flex-wrap justify-center gap-2">
+                    <strong>catch, fall, paddle, run, signal, twinkle</strong>
+                </div>
+                <div id="exerciseH" class="bg-white p-4 rounded">
+                I <input data-answer="paddled" class="interactive-input"> a canoe before dawn on the Pacific Ocean. A handful of stars <input data-answer="twinkled" class="interactive-input"> from light years away. The sky was dark and still, the air fresh and calm. The waves hitting my canoe, small drops of icy water <input data-answer="fell" class="interactive-input"> on my skin. Suddenly, the tip of the sun <input data-answer="signaled" class="interactive-input"> the horizon. The ocean <input data-answer="caught" class="interactive-input"> its light, and glittering streaks of orange <input data-answer="ran" class="interactive-input"> across the black surface. The creeping warmth of the sun a new day. It felt good to be alive.
+                </div>
+                 <button class="check-btn" onclick="checkAnswers('exerciseH')">檢查答案</button>
+            </div>
+
+            <h3 class="section-title">✍️ 換你試試看 I</h3>
+            <div class="exercise-prompt">
+                <p>請查字典找出下列形容詞的中文意思，並將同一組字（意義相近）拖曳到正面、中立、負面的分類中。</p>
+                <div id="word-bank-I" class="my-4 p-4 bg-yellow-100 border border-yellow-300 rounded-lg space-y-2 drop-target">
+                    <div><strong>好奇:</strong> <span class="draggable" draggable="true">curious</span> <span class="draggable" draggable="true">nosy</span> <span class="draggable" draggable="true">interested</span></div>
+                    <div><strong>慢:</strong> <span class="draggable" draggable="true">lazy</span> <span class="draggable" draggable="true">relaxed</span> <span class="draggable" draggable="true">slow</span></div>
+                    <div><strong>勇敢:</strong> <span class="draggable" draggable="true">courageous</span> <span class="draggable" draggable="true">daring</span> <span class="draggable" draggable="true">foolhardy</span></div>
+                    <div><strong>有名:</strong> <span class="draggable" draggable="true">famous</span> <span class="draggable" draggable="true">notorious</span> <span class="draggable" draggable="true">renowned</span></div>
+                    <div><strong>自信:</strong> <span class="draggable" draggable="true">assertive</span> <span class="draggable" draggable="true">confident</span> <span class="draggable" draggable="true">pushy</span></div>
+                </div>
+                <table id="exerciseI" class="vocab-table bg-white">
+                     <thead><tr><th>正面 Positive</th><th>中立 Neutral</th><th>負面 Negative</th></tr></thead>
+                     <tbody>
+                        <tr><td class="drop-target"></td><td class="drop-target"></td><td class="drop-target"></td></tr>
+                        <tr><td class="drop-target"></td><td class="drop-target"></td><td class="drop-target"></td></tr>
+                        <tr><td class="drop-target"></td><td class="drop-target"></td><td class="drop-target"></td></tr>
+                        <tr><td class="drop-target"></td><td class="drop-target"></td><td class="drop-target"></td></tr>
+                        <tr><td class="drop-target"></td><td class="drop-target"></td><td class="drop-target"></td></tr>
+                     </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">✍️ 換你試試看 J</h3>
+            <div class="exercise-prompt">
+                <p>選出較精準或生動的用字，完成以下段落。</p>
+                <div id="exerciseJ" class="bg-white p-4 rounded">
+                    We woke up to the sound of a bear outside our tent in the middle of the night. The brown bear (<select class="border rounded p-1"><option>smelled</option><option selected>sniffed</option></select>) the air hungrily. His shaggy coat made him look like a tramp. My father (<select class="border rounded p-1"><option>said</option><option selected>murmured</option></select>) that we should be quiet. I (<select class="border rounded p-1"><option selected>trembled</option><option>moved</option></select>) under my warm sleeping bag, imagining the bear attacking us and (<select class="border rounded p-1"><option>eating</option><option selected>devouring</option></select>) us all. That beast was certainly (<select class="border rounded p-1"><option>terrible</option><option selected>terrifying</option></select>)! The bear slowly (<select class="border rounded p-1"><option>walked</option><option selected>lumbered</option></select>) his way to the campfire. Suddenly, he (<select class="border rounded p-1"><option selected>grabbed</option><option>took</option></select>) our bag of marshmallows and disappeared into the darkness.
+                </div>
+            </div>
+
+        </section>
+
+        <section>
+            <h3 class="section-title">🧗 師父有交代：進階篇</h3>
+            <div class="content-box">
+                <p><strong>1. Exposition:</strong> Anna and her kids were standing in the crowd...</p>
+                <p class="mt-2"><strong>2. Rising Action:</strong> The moment the doors opened, <u>people swarmed inside...like hungry animals...</u> ...<u>People were squashed like sardines...</u> ...the <u>impatient</u> customers were <u>making noise as loudly as bees...</u></p>
+                <p class="mt-2"><strong>3. Climax:</strong> <u>Thrilled and agitated</u>, Anna was busy bargaining... "Jessica! Jessica!" Anna <u>bellowed frantically</u>. She <u>squeezed</u> through the crowd... <u>Crying and sniffling...</u> <u>Shivers went down her spine...</u></p>
+                <p class="mt-2"><strong>4. Falling Action:</strong> <u>Devastated</u>, Anna decided to search for her kids...</p>
+                <p class="mt-2"><strong>5. Resolution:</strong> All of a sudden, she saw her kids... Anna <u>burst into tears</u>. She vowed to herself that she would never be such an irresponsible mother again.</p>
+            </div>
+             <div class="content-box mt-6">
+                <h4 class="font-bold text-lg">小叮嚀</h4>
+                <ul class="list-disc list-inside mt-2 space-y-1">
+                    <li>將五感的描寫放入故事或個人經驗的描述，能夠讓情節變得有溫度，是厲害的寫作技巧。</li>
+                    <li>描述一個場景時，練習從五個感官中挑選兩到三個進行描寫，增加文章的生動性。</li>
+                    <li>練習生動寫作時如果不知從何下手，可以從動作的描寫開始，將短句加長，讓細節變豐富。</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section>
+            <h3 class="section-title">✍️ 總練習</h3>
+            <div class="exercise-prompt">
+                <p><strong>提示：</strong>食物除了填飽肚子，更具有情感聯繫的功能。請寫一篇200字以上的作文，主題是一道讓你難忘的菜餚，以一個親身經歷的故事說明這道菜何以令你難忘。</p>
+                <textarea class="w-full p-2 border rounded mt-4" rows="15" placeholder="開始寫作..."></textarea>
+                <div class="mt-4 p-4 border-t-2 border-dashed border-gray-400">
+                    <h4 class="font-bold">寫作重點檢核：</h4>
+                    <div class="flex flex-wrap gap-x-6 gap-y-2 mt-2">
+                       <label><input type="checkbox"> 視覺</label>
+                       <label><input type="checkbox"> 聽覺</label>
+                       <label><input type="checkbox"> 嗅覺</label>
+                       <label><input type="checkbox"> 味覺</label>
+                       <label><input type="checkbox"> 觸覺</label>
+                       <label><input type="checkbox"> 明喻</label>
+                       <label><input type="checkbox"> 準確的動詞</label>
+                       <label><input type="checkbox"> 強而有力的形容詞</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for Exercise D answers -->
+    <div id="modalB" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modalB')">&times;</span><h3>練習 D 參考答案</h3><p class="mt-4">...block the <strong>dazzling</strong> sunlight... touching the <strong>coarse</strong> sand... The <strong>scorching</strong> air and the <strong>damp</strong> sand... embraced by the <strong>chilled</strong> water and the <strong>soothing</strong> sound of waves. All I could see was the <strong>sparkling</strong> sea... a blast of <strong>chilly</strong> wind...</p></div></div>
+
+    <script>
+        function checkAnswers(exerciseId) {
+            document.querySelectorAll(`#${exerciseId} input[data-answer]`).forEach(input => {
+                const correctAnswer = input.dataset.answer.toLowerCase();
+                const userAnswer = input.value.trim().toLowerCase();
+                const feedbackEl = input.nextElementSibling || input.parentElement.querySelector('.feedback');
+                if (!feedbackEl) return;
+                if (userAnswer === '') { feedbackEl.textContent = ''; input.style.borderColor = '#c0c0c0'; return; }
+                const possibleAnswers = correctAnswer.split('|');
+                if (possibleAnswers.includes(userAnswer)) {
+                    feedbackEl.textContent = '✔️'; feedbackEl.className = 'feedback correct'; input.style.borderColor = 'green';
+                } else {
+                    feedbackEl.textContent = '❌'; feedbackEl.className = 'feedback incorrect'; input.style.borderColor = 'red';
+                }
+            });
+        }
+        function checkMatching(tableId) {
+            document.querySelectorAll(`#${tableId} tbody tr`).forEach(row => {
+                const input = row.querySelector('input[data-answer]');
+                const feedbackEl = row.querySelector('.feedback');
+                if (input.value.trim().toUpperCase() === input.dataset.answer) {
+                    feedbackEl.textContent = '✔️'; feedbackEl.className = 'feedback correct'; input.style.borderColor = 'green';
+                } else {
+                    feedbackEl.textContent = '❌'; feedbackEl.className = 'feedback incorrect'; input.style.borderColor = 'red';
+                }
+            });
+        }
+        
+        function checkDragDropSingleAnswer(containerId) {
+            document.querySelectorAll(`#${containerId} .drop-target-inline`).forEach(zone => {
+                const droppedEl = zone.querySelector('.draggable');
+                zone.style.borderColor = '#a0a0a0'; // Reset border color
+                if (droppedEl) {
+                    const word = droppedEl.dataset.word;
+                    const answer = zone.dataset.answer;
+                    if (word === answer) {
+                        droppedEl.style.backgroundColor = '#d4edda'; // green
+                    } else {
+                        droppedEl.style.backgroundColor = '#f8d7da'; // red
+                    }
+                } else {
+                    zone.style.borderColor = '#dc2626'; // red-600 for missing answer
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const exerciseG = document.getElementById('exerciseG');
+            if(exerciseG) {
+                exerciseG.querySelectorAll('.option').forEach(option => {
+                    option.style.cursor = 'pointer';
+                    option.addEventListener('click', () => {
+                        const parentLi = option.closest('li');
+                        parentLi.querySelectorAll('.option').forEach(opt => {
+                            opt.style.backgroundColor = 'transparent'; opt.style.fontWeight = 'normal';
+                            if (opt.nextElementSibling && opt.nextElementSibling.classList.contains('feedback')) { opt.nextElementSibling.remove(); }
+                        });
+                        option.style.backgroundColor = '#e6f0e9'; option.style.fontWeight = 'bold';
+                        const isCorrect = option.classList.contains('correct');
+                        const feedback = document.createElement('span');
+                        feedback.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+                        feedback.textContent = isCorrect ? '✔️' : '❌';
+                        option.insertAdjacentElement('afterend', feedback);
+                    });
+                });
+            }
+
+            let draggedItem = null;
+            document.querySelectorAll('.draggable').forEach(item => {
+                item.addEventListener('dragstart', (e) => { 
+                    draggedItem = e.target; 
+                    // Reset background color on drag start
+                    draggedItem.style.backgroundColor = '#fff';
+                });
+            });
+            document.querySelectorAll('.drop-target, .drop-target-inline').forEach(zone => {
+                zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('over'); });
+                zone.addEventListener('dragleave', () => { zone.classList.remove('over'); });
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('over');
+                    if(draggedItem) { 
+                        // For single-answer drop zones, swap items if occupied
+                        if (zone.classList.contains('drop-target-inline') && zone.children.length > 0) {
+                           const existingItem = zone.firstElementChild;
+                           const originalParent = document.getElementById('word-bank-A'); // Or find a better way to get original parent
+                           originalParent.appendChild(existingItem);
+                        }
+                        zone.appendChild(draggedItem); 
+                        draggedItem = null; 
+                    }
+                });
+            });
+        });
+
+        const correctAnswersC = {
+            sight: ["glowing", "blurry", "moldy"],
+            sound: ["earsplitting", "shriek", "chatter"],
+            smell: ["tangy", "rotten", "putrid", "moldy"],
+            taste: ["tangy", "rotten", "moldy"],
+            touch: ["coarse", "slimy", "chilled"]
+        };
+        function checkDragDrop(containerId) {
+            document.querySelectorAll(`#${containerId} .drop-target`).forEach(zone => {
+                const sense = zone.dataset.sense;
+                const correctWords = correctAnswersC[sense];
+                zone.querySelectorAll('.draggable').forEach(wordEl => {
+                    if (correctWords.includes(wordEl.dataset.word)) {
+                        wordEl.style.backgroundColor = '#d4edda'; // green
+                    } else {
+                        wordEl.style.backgroundColor = '#f8d7da'; // red
+                    }
+                });
+            });
+        }
+
+        function showModal(modalId) { document.getElementById(modalId).style.display = 'block'; }
+        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+        window.onclick = function(event) { if (event.target.classList.contains('modal')) { event.target.style.display = "none"; } }
+    </script>
+</body>
+</html>
+

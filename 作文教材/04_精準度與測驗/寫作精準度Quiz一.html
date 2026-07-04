@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英文寫作精準度練習 (暗色模式)</title>
+    <style>
+        /* CSS 樣式開始 */
+        :root {
+            --background-color: #1a1a1a;
+            --surface-color: #2c2c2c;
+            --primary-text-color: #e0e0e0;
+            --secondary-text-color: #a0a0a0;
+            --primary-color: #4a90e2;
+            --primary-hover-color: #5aa1f2;
+            --correct-bg: #2a4c3a;
+            --correct-border: #3c763d;
+            --correct-text: #a7d7a7;
+            --incorrect-bg: #5a2a2a;
+            --incorrect-border: #a94442;
+            --incorrect-text: #f2aaaa;
+            --btn-bg: #3a3a3a;
+            --btn-border: #555;
+            --btn-hover-bg: #4a4a4a;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, '蘋方-繁', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--background-color);
+            color: var(--primary-text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .app-container {
+            background-color: var(--surface-color);
+            width: 100%;
+            max-width: 700px;
+            border-radius: 15px;
+            padding: 30px 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border: 1px solid #444;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            border-bottom: 2px solid #444;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .quiz-container, .result-container {
+            padding: 10px;
+        }
+
+        .question {
+            font-size: 1.3em;
+            font-weight: 500;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .answer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: var(--btn-bg);
+            border: 1px solid var(--btn-border);
+            color: var(--primary-text-color);
+            border-radius: 8px;
+            padding: 18px;
+            font-size: 1.05em;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn:hover:not([disabled]) {
+            background-color: var(--btn-hover-bg);
+            border-color: #777;
+        }
+
+        .btn.correct {
+            background-color: var(--correct-bg);
+            color: var(--correct-text);
+            border-color: var(--correct-border);
+            font-weight: bold;
+        }
+
+        .btn.incorrect {
+            background-color: var(--incorrect-bg);
+            color: var(--incorrect-text);
+            border-color: var(--incorrect-border);
+        }
+
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .rationale {
+            font-size: 0.9em;
+            color: var(--secondary-text-color);
+            text-align: left;
+            padding: 10px 18px;
+            margin-top: -10px;
+            border-radius: 0 0 8px 8px;
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        #next-btn, #restart-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            width: auto;
+            min-width: 130px;
+            transition: background-color 0.2s;
+        }
+
+        #next-btn:hover, #restart-btn:hover {
+            background-color: var(--primary-hover-color);
+        }
+
+        .result-container h2 {
+            color: #63d471;
+        }
+        
+        #feedback-section {
+            text-align: left;
+            background-color: var(--btn-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid var(--primary-color);
+        }
+        /* CSS 樣式結束 */
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- HTML 結構開始 -->
+        <h1>英文寫作精準度練習</h1>
+        <div class="quiz-container">
+            <div id="question-container" class="question">問題載入中...</div>
+            <div id="answer-buttons" class="answer-grid">
+            </div>
+            <button id="next-btn" style="display: none;">下一題</button>
+        </div>
+        <div id="result-container" class="result-container" style="display: none;">
+            <h2>測驗完成！</h2>
+            <p id="score-text">你的分數是：</p>
+            <div id="feedback-section">
+                <h3>分析與建議：</h3>
+                <div id="feedback-content"></div>
+            </div>
+            <button id="restart-btn">再試一次</button>
+        </div>
+        <!-- HTML 結構結束 -->
+    </div>
+
+    <script>
+        // JavaScript 互動功能開始
+        const questionContainer = document.getElementById('question-container');
+        const answerButtons = document.getElementById('answer-buttons');
+        const nextButton = document.getElementById('next-btn');
+        const quizContainer = document.querySelector('.quiz-container');
+        const resultContainer = document.getElementById('result-container');
+        const scoreText = document.getElementById('score-text');
+        const feedbackContent = document.getElementById('feedback-content');
+        const restartButton = document.getElementById('restart-btn');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+
+        const questions = [
+            {
+                question: "原句：...saving ___ to do meaningful things... <br><br>在描述「時間」這個抽象概念時，應該使用哪個選項？",
+                answers: [
+                    { text: "times", correct: false, rationale: "這個詞通常指「次數」或「倍數」，而不是抽象的「時間」。" },
+                    { text: "time", correct: true, rationale: "正確！當指稱「時間」這個不可數的、流逝的概念時，這個單字是標準用法。" },
+                    { text: "the times", correct: false, rationale: "這個詞組通常指「時代」或「時光」，例如 'the good old times'。" },
+                    { text: "a time", correct: false, rationale: "這個用法通常指「某一段時間」或「某個時刻」，但在原句的語意下不是最適合的。" }
+                ]
+            },
+            {
+                question: "原句：...when ___ with my friends... <br><br>句中的主詞是單數的「一場爭論」，動詞應該如何變化才是正確的？",
+                answers: [
+                    { text: "argument happen", correct: false, rationale: "主詞是單數，但動詞沒有跟著變化，且缺少了冠詞。" },
+                    { text: "an argument happens", correct: true, rationale: "完全正確！主詞是單數，動詞也使用了正確的第三人稱單數形式，並且有冠詞。" },
+                    { text: "arguments happens", correct: false, rationale: "主詞使用了複數，但動詞卻是單數形式，兩者不一致。" },
+                    { text: "an argument happen", correct: false, rationale: "雖然使用了正確的冠詞，但動詞形式沒有與單數主詞保持一致。" }
+                ]
+            },
+            {
+                question: "原句：For example, I remember once I ___ emoji to my friend by mistake. <br><br>這句話在描述一件過去發生的事，且 'angry' 是母音開頭，哪個選項才是正確的？",
+                answers: [
+                    { text: "send a angry", correct: false, rationale: "動詞時態不對，且冠詞 'a' 用於子音開頭的單字後。" },
+                    { text: "sended an angry", correct: false, rationale: "'send' 的過去式是不規則變化，不是加 -ed。" },
+                    { text: "sent a angry", correct: false, rationale: "動詞時態正確，但冠詞 'a' 沒有對應到母音開頭的 'angry'。" },
+                    { text: "sent an angry", correct: true, rationale: "答對了！動詞使用了正確的過去式，冠詞 'an' 也正確地搭配了母音開頭的 'angry'。" }
+                ]
+            },
+            {
+                question: "原句：This ___ how emojis can cause misunderstanding sometime. <br><br>當主詞是 'This' (這件事) 時，後面的動詞應該是什麼形式？",
+                answers: [
+                    { text: "show", correct: false, rationale: "這個動詞形式通常用於第一人稱、第二人稱或複數主詞之後。" },
+                    { text: "shows", correct: true, rationale: "是的！當主詞是第三人稱單數（如 he, she, it, this）時，現在式的動詞需要這個變化。" },
+                    { text: "is showing", correct: false, rationale: "這是現在進行式，表示「正在展示」，與原句想表達的「這件事說明了...」的語意不符。" },
+                    { text: "have shown", correct: false, rationale: "這是現在完成式，需要一個複數主詞或第一、二人稱主詞。" }
+                ]
+            },
+            {
+                question: "原句：...we should ___ emojis very ___. <br><br>哪個動詞比「增加」(add) 更貼切？同時，為了修飾動詞，應該用形容詞還是副詞？",
+                answers: [
+                    { text: "add / careful", correct: false, rationale: "動詞的選擇可以更精確，且修飾動詞的詞性不對。" },
+                    { text: "use / careful", correct: false, rationale: "動詞的選擇很貼切，但用來修飾動詞的詞性是形容詞。" },
+                    { text: "use / carefully", correct: true, rationale: "完美！動詞的選擇精準，且使用了正確的副詞詞性來修飾動詞。" },
+                    { text: "add / carefully", correct: false, rationale: "修飾動詞的詞性正確，但動詞的選擇可以更精準。" }
+                ]
+            },
+            {
+                question: "原句：...without ___ too many words... <br><br>在鍵盤或手機上「打字」，用哪個單字比 'tapping' (輕點) 更標準、更精確？",
+                answers: [
+                    { text: "tapping", correct: false, rationale: "這個詞的意思是「輕敲、輕點」，但它不是指「打字」這個完整的動作。" },
+                    { text: "typing", correct: true, rationale: "沒錯！這個詞專門指透過鍵盤或類似裝置「輸入文字、打字」的動作。" },
+                    { text: "touching", correct: false, rationale: "這個詞是「觸摸」，語意太廣泛，不夠精確。" },
+                    { text: "writing", correct: false, rationale: "這個詞通常指「書寫」，例如用筆寫字，與鍵盤輸入的情境不同。" }
+                ]
+            },
+            {
+                question: "原句中反覆使用了 'express my feeling'。<br><br>除了 'express my feeling'，下面哪個選項也能貼切地表達「傳達我的情緒」，並讓用字更多元？",
+                answers: [
+                    { text: "convey my emotions", correct: true, rationale: "很棒的選擇！動詞 'convey' 的意思是「傳達、傳遞」，能精準地表達此意，是用詞升級的好選擇。" },
+                    { text: "give my feelings", correct: false, rationale: "這個組合在英文中不常用來表達「傳達情緒」。" },
+                    { text: "do my emotions", correct: false, rationale: "這個動詞和名詞的搭配是不正確的。" },
+                    { text: "say my feeling", correct: false, rationale: "這個說法比較口語，且 'feeling' 通常會用複數 'feelings'。" }
+                ]
+            }
+        ];
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            nextButton.innerHTML = "下一題";
+            resultContainer.style.display = 'none';
+            quizContainer.style.display = 'block';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            resetState();
+            let currentQuestion = questions[currentQuestionIndex];
+            questionContainer.innerHTML = currentQuestion.question;
+
+            let shuffledAnswers = [...currentQuestion.answers].sort(() => Math.random() - 0.5);
+
+            shuffledAnswers.forEach(answer => {
+                const button = document.createElement("button");
+                button.innerHTML = answer.text;
+                button.classList.add("btn");
+                button.dataset.correct = answer.correct;
+                button.dataset.rationale = answer.rationale;
+                answerButtons.appendChild(button);
+                button.addEventListener("click", selectAnswer);
+            });
+        }
+
+        function resetState() {
+            nextButton.style.display = "none";
+            while (answerButtons.firstChild) {
+                answerButtons.removeChild(answerButtons.firstChild);
+            }
+        }
+
+        function selectAnswer(e) {
+            const selectedBtn = e.target;
+            const isCorrect = selectedBtn.dataset.correct === "true";
+            const rationaleText = selectedBtn.dataset.rationale;
+            
+            if (isCorrect) {
+                score++;
+            }
+
+            Array.from(answerButtons.children).forEach(button => {
+                if (button.dataset.correct === "true") {
+                    button.classList.add("correct");
+                } else {
+                    button.classList.add("incorrect");
+                }
+                button.disabled = true;
+
+                // 顯示解釋
+                const rationaleDiv = document.createElement('div');
+                rationaleDiv.innerText = button.dataset.rationale;
+                rationaleDiv.classList.add('rationale');
+                button.parentNode.insertBefore(rationaleDiv, button.nextSibling);
+            });
+
+            nextButton.style.display = "block";
+        }
+
+        function showResults() {
+            quizContainer.style.display = 'none';
+            resultContainer.style.display = 'block';
+            scoreText.innerText = `你的分數是： ${score} / ${questions.length}`;
+            
+            let feedbackHTML = '';
+            if (score === questions.length) {
+                feedbackHTML += `<p><strong>太棒了，全部答對！</strong><br>你對這些文法和用字的細節掌握得非常精準，繼續保持！</p>`;
+            } else {
+                feedbackHTML += `<p><strong>很不錯！</strong><br>讓我們看看可以再進步的地方：</p><ul>`;
+                userAnswers.forEach((answer) => {
+                    if (!answer.correct) {
+                        const questionText = answer.question.split('<br>')[0];
+                        feedbackHTML += `<li><strong>關於「${questionText}」：</strong><br>這是個常見的易錯點，多練習幾次就會更熟悉了！</li>`;
+                    }
+                });
+                feedbackHTML += `</ul>`;
+            }
+            feedbackContent.innerHTML = feedbackHTML;
+        }
+
+        function handleNextButton() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        nextButton.addEventListener("click", handleNextButton);
+        restartButton.addEventListener("click", startQuiz);
+
+        startQuiz();
+        // JavaScript 互動功能結束
+    </script>
+</body>
+</html>

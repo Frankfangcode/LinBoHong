@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>孝澤的學測終極戰術板</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        /* 自定義強調區塊 */
+        .tactic-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .tactic-badge.blue { background-color: #dbeafe; color: #1e40af; }
+        .tactic-badge.green { background-color: #dcfce7; color: #166534; }
+        .tactic-badge.red { background-color: #fee2e2; color: #991b1b; }
+
+        .arrow-down {
+            display: flex;
+            justify-content: center;
+            padding: 0.5rem 0;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen pb-12 text-slate-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:max-w-4xl">
+        
+        <!-- Header: 建築師思維 -->
+        <header class="text-center py-8 mb-6">
+            <div class="inline-flex items-center justify-center p-4 bg-white rounded-full shadow-sm mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                </svg>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-2">孝澤的考前戰術板</h1>
+            <p class="text-slate-600 font-medium text-lg">Writing like an Architect: Structure First, Detail Later.</p>
+        </header>
+
+        <!-- 核心心法：三大原則 -->
+        <div class="mb-10">
+            <div class="bg-indigo-600 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                <!-- 裝飾背景 -->
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-indigo-500 rounded-full opacity-50 blur-xl"></div>
+                
+                <h2 class="text-xl font-bold mb-6 flex items-center relative z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    考場生存法則 (Survival Rules)
+                </h2>
+                
+                <div class="grid sm:grid-cols-3 gap-4 text-center relative z-10">
+                    <div class="bg-indigo-700/50 backdrop-blur-sm p-4 rounded-xl border border-indigo-500/30">
+                        <span class="block text-3xl font-bold mb-1">流暢 > 難字</span>
+                        <span class="text-indigo-200 text-sm font-medium">卡住就用 B 計畫單字</span>
+                    </div>
+                    <div class="bg-indigo-700/50 backdrop-blur-sm p-4 rounded-xl border border-indigo-500/30">
+                        <span class="block text-3xl font-bold mb-1">結構 > 內容</span>
+                        <span class="text-indigo-200 text-sm font-medium">先填好漢堡結構再動筆</span>
+                    </div>
+                    <div class="bg-indigo-700/50 backdrop-blur-sm p-4 rounded-xl border border-indigo-500/30">
+                        <span class="block text-3xl font-bold mb-1">完稿 > 完美</span>
+                        <span class="text-indigo-200 text-sm font-medium">醜陋的初稿勝過空白考卷</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main class="space-y-10">
+            
+            <!-- 戰術一：句子擴充術 -->
+            <section class="card p-6 sm:p-8 border-l-8 border-l-blue-500 relative">
+                <div class="flex flex-wrap items-center justify-between mb-6 gap-2">
+                    <div>
+                        <span class="tactic-badge blue">戰術一：句子太短</span>
+                        <h3 class="text-2xl font-bold text-slate-800">擴充外掛：把地基變成大樓</h3>
+                    </div>
+                    <a href="Unit2_3腦力激盪_句子加長.html" class="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 bg-blue-50 px-3 py-1 rounded-full transition">
+                        複習 Unit 2&3
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+
+                <div class="bg-slate-50 rounded-xl p-6 space-y-2 border border-slate-200">
+                    
+                    <!-- Level 1 -->
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold text-sm mr-3">1</div>
+                        <div class="flex-1">
+                            <p class="text-xs text-slate-500 mb-0.5">Level 1: 原始死魚句 (太短)</p>
+                            <p class="font-bold text-slate-400 line-through decoration-red-500">The library is quiet.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pl-4 border-l-2 border-dashed border-slate-300 ml-4 py-2">
+                        <span class="text-xs text-blue-500 bg-blue-50 px-2 py-0.5 rounded">加上原因 Because...</span>
+                    </div>
+
+                    <!-- Level 2 -->
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm mr-3">2</div>
+                        <div class="flex-1">
+                            <p class="text-xs text-slate-500 mb-0.5">Level 2: 加上強調與原因</p>
+                            <p class="font-medium text-slate-800">The library is <span class="text-blue-600 font-bold">extremely</span> quiet <span class="text-blue-600 font-bold">because strict rules are enforced there.</span></p>
+                        </div>
+                    </div>
+
+                    <div class="pl-4 border-l-2 border-dashed border-slate-300 ml-4 py-2">
+                         <span class="text-xs text-green-500 bg-green-50 px-2 py-0.5 rounded">加上細節 Result / Detail...</span>
+                    </div>
+
+                    <!-- Level 3 -->
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold text-sm mr-3">3</div>
+                        <div class="flex-1">
+                            <p class="text-xs text-slate-500 mb-0.5">Level 3: 加上具體細節 (滿分句)</p>
+                            <p class="font-medium text-slate-800">The library is extremely quiet because strict rules are enforced there, <span class="text-green-600 font-bold">making it a perfect place for students to prepare for exams.</span></p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 戰術二：邏輯導航 -->
+            <section class="card p-6 sm:p-8 border-l-8 border-l-emerald-500">
+                 <div class="flex flex-wrap items-center justify-between mb-6 gap-2">
+                    <div>
+                        <span class="tactic-badge green">戰術二：寫作卡彈</span>
+                        <h3 class="text-2xl font-bold text-slate-800">導航系統：轉折詞先行</h3>
+                    </div>
+                    <a href="Unit4轉折詞.html" class="inline-flex items-center text-sm font-medium text-emerald-600 hover:text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full transition">
+                        複習 Unit 4
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+                
+                <p class="text-slate-600 mb-6 bg-emerald-50 p-3 rounded-lg border border-emerald-100">
+                    🧠 <strong>大腦駭客技巧：</strong>看到句點 (.)，馬上寫下轉折詞。這會強迫你的大腦自動尋找下一個邏輯點，減少發呆時間。
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- +1 -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-white hover:border-emerald-400 transition group">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">繼續補充 (+1)</div>
+                            <svg class="w-5 h-5 text-emerald-300 group-hover:text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        </div>
+                        <ul class="text-slate-700 space-y-2 font-medium">
+                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-2"></span>Furthermore,</li>
+                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-2"></span>In addition,</li>
+                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-2"></span>Moreover,</li>
+                        </ul>
+                    </div>
+
+                    <!-- -1 -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-white hover:border-red-400 transition group">
+                         <div class="flex items-center justify-between mb-3">
+                            <div class="font-bold text-red-600 bg-red-50 px-2 py-1 rounded">轉個彎講 (-1)</div>
+                            <svg class="w-5 h-5 text-red-300 group-hover:text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        </div>
+                        <ul class="text-slate-700 space-y-2 font-medium">
+                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-red-400 rounded-full mr-2"></span>However,</li>
+                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-red-400 rounded-full mr-2"></span>On the other hand,</li>
+                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-red-400 rounded-full mr-2"></span>Nevertheless,</li>
+                        </ul>
+                    </div>
+
+                    <!-- = -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-white hover:border-blue-400 transition group">
+                         <div class="flex items-center justify-between mb-3">
+                            <div class="font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">下結論 (=)</div>
+                            <svg class="w-5 h-5 text-blue-300 group-hover:text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <ul class="text-slate-700 space-y-2 font-medium">
+                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></span>Therefore,</li>
+                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></span>As a result,</li>
+                            <li class="flex items-center"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></span>For this reason,</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 戰術三：安全檢查清單 -->
+            <section class="card p-6 sm:p-8 border-l-8 border-l-rose-500">
+                <div class="flex flex-wrap items-center justify-between mb-6 gap-2">
+                    <div>
+                        <span class="tactic-badge red">戰術三：交卷前 3 分鐘</span>
+                        <h3 class="text-2xl font-bold text-slate-800">安全檢查：不要白白送分</h3>
+                    </div>
+                     <a href="0728quiz.html" class="inline-flex items-center text-sm font-medium text-rose-600 hover:text-rose-800 bg-rose-50 px-3 py-1 rounded-full transition">
+                        複習精準度
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+
+                <div class="bg-rose-50/50 rounded-xl p-2 border border-rose-100">
+                    <ul class="divide-y divide-rose-100">
+                        <li class="p-4 flex items-start hover:bg-white rounded-lg transition cursor-pointer group">
+                            <div class="flex-shrink-0 pt-0.5">
+                                <input type="checkbox" class="w-5 h-5 text-rose-600 rounded border-gray-300 focus:ring-rose-500 cursor-pointer">
+                            </div>
+                            <div class="ml-4">
+                                <span class="block text-lg font-bold text-slate-800 group-hover:text-rose-700">時態一致性 (Tense Consistency)</span>
+                                <p class="text-sm text-slate-600 mt-1">
+                                    <span class="bg-gray-200 px-1.5 py-0.5 rounded text-xs font-bold mr-1">記敘文</span> 故事用過去式？ 
+                                    <span class="bg-gray-200 px-1.5 py-0.5 rounded text-xs font-bold mx-1">論說文</span> 觀點用現在式？
+                                </p>
+                            </div>
+                        </li>
+                        
+                        <li class="p-4 flex items-start hover:bg-white rounded-lg transition cursor-pointer group">
+                            <div class="flex-shrink-0 pt-0.5">
+                                <input type="checkbox" class="w-5 h-5 text-rose-600 rounded border-gray-300 focus:ring-rose-500 cursor-pointer">
+                            </div>
+                            <div class="ml-4">
+                                <span class="block text-lg font-bold text-slate-800 group-hover:text-rose-700">動詞大體檢 (Verb Check)</span>
+                                <p class="text-sm text-slate-600 mt-1">
+                                    He <strong>has</strong>? They <strong>have</strong>? 過去分詞 (Vpp) 拼對了嗎？有沒有漏掉 be 動詞？
+                                </p>
+                            </div>
+                        </li>
+                        
+                        <li class="p-4 flex items-start hover:bg-white rounded-lg transition cursor-pointer group">
+                            <div class="flex-shrink-0 pt-0.5">
+                                <input type="checkbox" class="w-5 h-5 text-rose-600 rounded border-gray-300 focus:ring-rose-500 cursor-pointer">
+                            </div>
+                            <div class="ml-4">
+                                <span class="block text-lg font-bold text-slate-800 group-hover:text-rose-700">避免斷頭句 (Fragments)</span>
+                                <p class="text-sm text-slate-600 mt-1">
+                                    每一句都有「主詞」和「動詞」嗎？如果沒有，請用連接詞把它黏起來。
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 連結回首頁 -->
+            <div class="text-center pt-8">
+                <a href="index.html" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-xl text-white bg-slate-800 hover:bg-slate-700 hover:shadow-lg transition transform hover:-translate-y-1">
+                    回到課程總覽
+                </a>
+                <p class="mt-6 text-slate-400 font-mono text-sm">Good luck, Future Architect.</p>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>

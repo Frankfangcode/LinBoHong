@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學測英文作文高頻文法鞏固卷</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 45px;
+        }
+        h3 {
+            color: #e74c3c;
+            font-size: 1.3em;
+            margin-top: 40px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 12px;
+        }
+        p.instructions {
+            text-align: center;
+            color: #555;
+            margin-bottom: 40px;
+        }
+        ol {
+            list-style-type: none;
+            padding-left: 0;
+            counter-reset: question-counter;
+        }
+        li {
+            background-color: #ffffff;
+            margin-bottom: 22px;
+            padding: 18px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            counter-increment: question-counter;
+            position: relative;
+        }
+        li::before {
+            content: counter(question-counter) ". ";
+            font-weight: bold;
+            color: #3498db;
+            font-size: 1.1em;
+            margin-right: 5px;
+        }
+        .word-bank {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .word-bank-item {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 0.95em;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        }
+        .blank-container {
+            display: inline-block;
+            position: relative;
+            text-align: center;
+        }
+        .blank {
+            border-bottom: 1.5px solid #7f8c8d;
+            padding: 0 5px;
+            color: transparent;
+            user-select: none;
+            min-height: 24px;
+        }
+        .answer-text {
+            display: none;
+            color: #2980b9;
+            font-weight: bold;
+            padding: 2px 4px;
+            background-color: #eaf5ff;
+            border-radius: 4px;
+        }
+        .answer-text.revealed {
+            display: inline-block;
+        }
+        .translation-item .answer-text.revealed {
+            text-align: left;
+            width: 100%;
+        }
+        .hint-block {
+            display: block;
+            margin-top: 8px;
+            color: #6c757d;
+            font-style: italic;
+            font-size: 0.9em;
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .correction-box {
+            margin-top: 8px;
+        }
+        .correction-box .original {
+            color: #e74c3c;
+            text-decoration: line-through;
+        }
+        .toggle-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .toggle-btn.toggled {
+            background-color: #e74c3c;
+        }
+         .toggle-btn.toggled:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>學測英文作文高頻文法鞏固卷</h1>
+        <p class="instructions">思考答案，完成後點擊最下方按鈕以顯示或隱藏答案。</p>
+
+        <form id="quizForm">
+            
+            <section>
+                <h3>第一部分：針對錯題複習 (Targeted Error Review)</h3>
+                <ol>
+                    <li class="translation-item">
+                        <b>[改錯題]</b> 若非有你的幫助，我不可能完成這個艱鉅的任務。
+                        <div class="correction-box">
+                            原句: But for <span class="original">you</span> help, I <span class="original">can't finish</span> this hard <span class="original">mission</span>.
+                        </div>
+                        <div class="hint-block">(提示: 注意詞性和假設語氣的動詞時態)</div>
+                        <span class="blank-container"><span class="blank">But for your help, I could not have completed this difficult task.</span><span class="answer-text">But for <b>your</b> help, I <b>could not have completed</b> this difficult <b>task</b>.</span></span>
+                    </li>
+                    <li class="translation-item">
+                        <b>[改錯題]</b> 為了增進我的英文能力，我決定每天都聽英文廣播。
+                        <div class="correction-box">
+                            原句: In order to improve my <span class="original">ability of English</span>, I decided to <span class="original">hear</span> English radio every day.
+                        </div>
+                        <div class="hint-block">(提示: 注意名詞修飾與動詞選擇)</div>
+                        <span class="blank-container"><span class="blank">In order to improve my English ability, I decided to listen to English radio every day.</span><span class="answer-text">In order to improve my <b>English ability</b>, I decided to <b>listen to</b> English radio every day.</span></span>
+                    </li>
+                    <li class="translation-item">
+                        <b>[改錯題]</b> 我深信「有志者，事竟成」。
+                        <div class="correction-box">
+                            原句: I am convinced that <span class="original">the people who have motivation, they can make it</span>.
+                        </div>
+                        <div class="hint-block">(提示: 直接引用英文諺語)</div>
+                        <span class="blank-container"><span class="blank">I am convinced that "where there is a will, there is a way."</span><span class="answer-text">I am convinced that <b>"where there is a will, there is a way."</b></span></span>
+                    </li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>第二部分：動詞片語填充 (學測高頻)</h2>
+                <div class="word-bank">
+                    <span class="word-bank-item">figure out</span><span class="word-bank-item">go through</span><span class="word-bank-item">bring up</span><span class="word-bank-item">account for</span><span class="word-bank-item">look forward to</span><span class="word-bank-item">come up with</span><span class="word-bank-item">get rid of</span><span class="word-bank-item">contribute to</span>
+                </div>
+                <small style="display: block; margin-top: -5px; margin-bottom: 20px; color: #777;">(請注意動詞形式變化)</small>
+                <ol start="4">
+                    <li>It took me a while to <span class="blank-container"><span class="blank">figure out</span><span class="answer-text">figure out</span></span> the solution to this math problem.</li>
+                    <li>She has <span class="blank-container"><span class="blank">gone through</span><span class="answer-text">gone through</span></span> a lot of difficulties in her life.</li>
+                    <li>The scientist couldn't <span class="blank-container"><span class="blank">account for</span><span class="answer-text">account for</span></span> the strange results of the experiment.</li>
+                    <li>We need to <span class="blank-container"><span class="blank">come up with</span><span class="answer-text">come up with</span></span> a new plan to increase sales.</li>
+                    <li>Everyone's effort can <span class="blank-container"><span class="blank">contribute to</span><span class="answer-text">contribute to</span></span> the success of the project.</li>
+                    <li>He decided to clean his room and <span class="blank-container"><span class="blank">get rid of</span><span class="answer-text">get rid of</span></span> all the old stuff.</li>
+                    <li>I am really <span class="blank-container"><span class="blank">looking forward to</span><span class="answer-text">looking forward to</span></span> seeing you again soon.</li>
+                    <li>It's not always appropriate to <span class="blank-container"><span class="blank">bring up</span><span class="answer-text">bring up</span></span> sensitive topics during dinner.</li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>第三部分：轉承詞填充 (學測高頻)</h2>
+                 <div class="word-bank">
+                    <span class="word-bank-item">Consequently</span><span class="word-bank-item">In contrast</span><span class="word-bank-item">Namely</span><span class="word-bank-item">Above all</span><span class="word-bank-item">Meanwhile</span>
+                </div>
+                <ol start="12">
+                    <li>She forgot to set her alarm; <span class="blank-container"><span class="blank">consequently</span><span class="answer-text">consequently</span></span>, she was late for the meeting.</li>
+                    <li>My sister loves outdoor activities. <span class="blank-container"><span class="blank">In contrast</span><span class="answer-text">In contrast</span></span>, I prefer staying indoors and reading.</li>
+                    <li>To be a good leader, you need several qualities, <span class="blank-container"><span class="blank">namely</span><span class="answer-text">namely</span></span>, integrity, courage, and empathy.</li>
+                    <li>I was studying for my exam. <span class="blank-container"><span class="blank">Meanwhile</span><span class="answer-text">Meanwhile</span></span>, my roommate was watching TV loudly.</li>
+                    <li>You should eat healthily and exercise regularly. <span class="blank-container"><span class="blank">Above all</span><span class="answer-text">Above all</span></span>, you must get enough sleep.</li>
+                </ol>
+            </section>
+            
+            <section>
+                <h2>第四部分：文法與句型翻譯 (學測高頻)</h2>
+                <ol start="17">
+                    <li class="translation-item">看到一隻迷路的狗，那個善良的女孩決定帶牠回家。<div class="hint-block">(提示: 使用分詞構句 Seeing... 開頭)</div><span class="blank-container"><span class="blank">Seeing a lost dog, the kind girl decided to take it home.</span><span class="answer-text">Seeing a lost dog, the kind girl decided to take it home.</span></span></li>
+                    <li class="translation-item">我們絕不應該輕易放棄我們的夢想。<div class="hint-block">(提示: 使用倒裝句 On no account... 開頭)</div><span class="blank-container"><span class="blank">On no account should we give up our dreams easily.</span><span class="answer-text">On no account should we give up our dreams easily.</span></span></li>
+                    <li class="translation-item">受到美麗風景的啟發，那位藝術家畫了一幅傑作。<div class="hint-block">(提示: 使用分詞構句 Inspired by... 開頭)</div><span class="blank-container"><span class="blank">Inspired by the beautiful scenery, the artist painted a masterpiece.</span><span class="answer-text">Inspired by the beautiful scenery, the artist painted a masterpiece.</span></span></li>
+                    <li class="translation-item">他不僅聰明，而且也很努力。<div class="hint-block">(提示: 使用倒裝句 Not only... but... also... 句型)</div><span class="blank-container"><span class="blank">Not only is he smart, but he is also hardworking.</span><span class="answer-text">Not only is he smart, but he is also hardworking.</span></span></li>
+                    <li class="translation-item">我建議他應該要尋求專業的協助。<div class="hint-block">(提示: 使用 suggest that S + (should) + V... 句型)</div><span class="blank-container"><span class="blank">I suggest that he (should) seek professional help.</span><span class="answer-text">I suggest that he (should) seek professional help.</span></span></li>
+                     <li class="translation-item">王先生，我們的英文老師，總是鼓勵我們多閱讀。<div class="hint-block">(提示: 使用同位格 ... , our English teacher, ... )</div><span class="blank-container"><span class="blank">Mr. Wang, our English teacher, always encourages us to read more.</span><span class="answer-text">Mr. Wang, our English teacher, always encourages us to read more.</span></span></li>
+                </ol>
+            </section>
+
+            <button type="button" class="toggle-btn" id="toggleBtn" onclick="toggleAnswers()">顯示答案</button>
+
+        </form>
+    </div>
+
+    <script>
+        let answersVisible = false;
+
+        function toggleAnswers() {
+            const btn = document.getElementById('toggleBtn');
+            answersVisible = !answersVisible; 
+
+            const answerTexts = document.querySelectorAll('.answer-text');
+            const blanks = document.querySelectorAll('.blank');
+
+            if (answersVisible) {
+                answerTexts.forEach(el => el.classList.add('revealed'));
+                blanks.forEach(el => el.style.display = 'none');
+                btn.textContent = '隱藏答案';
+                btn.classList.add('toggled');
+            } else {
+                answerTexts.forEach(el => el.classList.remove('revealed'));
+                blanks.forEach(el => el.style.display = 'inline-block');
+                btn.textContent = '顯示答案';
+                btn.classList.remove('toggled');
+            }
+        }
+    </script>
+
+</body>
+</html>

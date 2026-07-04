@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>孝澤的作文批改 (Essay Review)</title>
+    <!-- 載入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 使用 Inter 字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 應用 Noto Sans TC 於中文，Inter 於英文 */
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            line-height: 1.7;
+        }
+        /* 修正 Tailwind 預設刪除線顏色 */
+        s {
+            text-decoration-color: #ef4444; /* red-500 */
+        }
+        /* 自定義筆記區塊樣式 */
+        .note {
+            display: block;
+            font-size: 0.9em;
+            color: #2563eb; /* blue-600 */
+            font-style: italic;
+            margin-top: 8px;
+            padding-left: 12px;
+            border-left: 3px solid #3b82f6; /* blue-500 */
+            background-color: #eff6ff; /* blue-50 */
+            padding-top: 4px;
+            padding-bottom: 4px;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 p-4 md:p-8">
+
+    <div class="container max-w-4xl mx-auto p-6 md:p-8 bg-white rounded-xl shadow-lg">
+        
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-blue-700 mb-6 pb-3 border-b-2 border-gray-200">
+            孝澤的作文批改與建議
+        </h1>
+
+        <!-- ==========================
+             1. 總體評價與分數
+             ========================== -->
+        <div class="feedback-summary bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+            <h3 class="text-xl font-bold text-blue-800 mb-3">建議</h3>
+            <blockquote class="italic text-gray-700 pl-4 border-l-4 border-blue-500 mb-5">
+                內容豐富、架構清楚、有邏輯連貫性。有理解題目要求，第一段比較兩個公園，第二段闡述「理想中的公園」。符合學測要求。
+            </blockquote>
+            
+            <!-- 分數區塊 -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mb-6 pt-4 border-t border-blue-200">
+                <div class="score-item bg-white p-3 rounded-lg shadow-sm">
+                    <span class="text-sm text-gray-600">內容 (Content)</span>
+                    <span class="text-3xl font-bold text-blue-700 block">4</span>
+                </div>
+                <div class="score-item bg-white p-3 rounded-lg shadow-sm">
+                    <span class="text-sm text-gray-600">組織 (Organization)</span>
+                    <span class="text-3xl font-bold text-blue-700 block">4</span>
+                </div>
+                <div class="score-item bg-white p-3 rounded-lg shadow-sm">
+                    <span class="text-sm text-gray-600">文法 (Grammar)</span>
+                    <span class="text-3xl font-bold text-red-600 block">3</span>
+                </div>
+                <div class="score-item bg-white p-3 rounded-lg shadow-sm">
+                    <span class="text-sm text-gray-600">拼字 (Spelling)</span>
+                    <span class="text-3xl font-bold text-red-600 block">3</span>
+                </div>
+            </div>
+            
+            <p class="font-semibold text-gray-800">待改進處：</p>
+            <ul class="list-disc list-outside pl-6 text-gray-700 space-y-1">
+                <li>文法錯誤較多，且集中在動詞形式與冠詞 (a/an/the) 使用。</li>
+                <li>句型變化不足，多為並列句或重複結構。</li>
+                <li>搭配詞 (collocation) 可以更自然。</li>
+                <li>字彙可以再提升層次。</li>
+            </ul>
+        </div>
+
+        <!-- ==========================
+             2. 作文逐句詳解
+             ========================== -->
+        <h2 class="text-2xl font-bold text-blue-600 mt-10 mb-5 pb-2 border-b border-gray-300">作文逐句詳解</h2>
+        
+        <div class="overflow-x-auto shadow-md rounded-lg">
+            <table class="w-full min-w-max border-collapse">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="w-1/2 p-4 text-left text-sm font-semibold text-gray-700">原文 (Original)</th>
+                        <th class="w-1/2 p-4 text-left text-sm font-semibold text-gray-700">修正與建議 (Corrections & Suggestions)</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <!-- 項目 1 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">There are variety of park, and it may presents in different appearance or feature.</td>
+                        <td class="p-4 align-top">
+                            There <s>are</s> <span class="text-green-600 font-bold">is a</span> variety of p<span class="text-green-600 font-bold">arks</span>, and <s>it</s> <span class="text-green-600 font-bold">they</span> may present<s>s</s> in different appearance<span class="text-green-600 font-bold">s</span> or feature<span class="text-green-600 font-bold">s</span>.
+                            <span class="note"><b>[文法]</b> <b>"a variety of + 複數名詞"</b> 是單數主詞 (is)；may 後面要接原形動詞 (present)。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 2 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">Picture A shows a entertaining park for the children.</td>
+                        <td class="p-4 align-top">
+                            Picture A shows <span class="text-green-600 font-bold">an</span> entertaining park for children.
+                            <span class="note"><b>[文法]</b> entertaining 是母音開頭，用 an；children 泛指兒童，不需加 the。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 3 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">The government place numerous facilities for kids to do their favorite pastime.</td>
+                        <td class="p-4 align-top">
+                            The government place<span class="text-green-600 font-bold">s</span> numerous facilities for kids to <span class="text-green-600 font-bold">enjoy</span> their favorite pastime<span class="text-green-600 font-bold">s</span>.
+                            <span class="note"><b>[文法]</b> 主詞 The government 是單數，動詞要加 s。<b>[用字]</b>「從事」休閒活動用 enjoy 比 do 更貼切。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 4 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">...there are a lot of vendors, rolling hotdogs...</td>
+                        <td class="p-4 align-top">
+                            ...there are a lot of vendors, <span class="text-green-600 font-bold">selling</span> hotdogs...
+                            <span class="note"><b>[用字]</b> 攤販是「販售」(selling) 熱狗，不是熱狗自己滾 (rolling)。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 5 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">...broaden their relationship of people, which can help them to grow up.</td>
+                        <td class="p-4 align-top">
+                            ...broaden their <span class="text-green-600 font-bold">social circles</span>, which can help them <span class="text-green-600 font-bold">grow</span>.
+                            <span class="note"><b>[用字]</b>「拓展人際關係」更自然的說法是 broaden their social circles；help them (to) grow 都可以。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 6 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">Picture B shows a tranquil park, the trees are planted everywhere, which can let people get close to nature.</td>
+                        <td class="p-4 align-top">
+                            Picture B shows a tranquil park. The trees <span class="text-green-600 font-bold">planted everywhere allow</span> people to get close to nature.
+                            <span class="note"><b>[句型]</b> 用分詞構句 (planted everywhere) 當形容詞，讓句子更簡潔有力。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 7 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">In addition, birds chisped cheerfully...</td>
+                        <td class="p-4 align-top">
+                            In addition, birds <span class="text-green-600 font-bold">chirped</span> cheerfully...
+                            <span class="note"><b>[拼字]</b> (鳥叫) 是 chirp。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 8 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">My idea park is that it can adapt to all kinds of people.</td>
+                        <td class="p-4 align-top">
+                            My <span class="text-green-600 font-bold">ideal</span> park is <span class="text-green-600 font-bold">one</span> that can <span class="text-green-600 font-bold">cater to</span> all kinds of people.
+                            <span class="note"><b>[用字]</b>「理想的」公園是 ideal；「迎合...的需求」用 cater to 比 adapt (適應) 更精準。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 9 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">There are divided into two parts.</td>
+                        <td class="p-4 align-top">
+                            <span class="text-green-600 font-bold">It is</span> divided into two parts.
+                            <span class="note"><b>[文法]</b> 句子需要主詞 (It)，指代的是「公園」。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 10 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">...the other one is for the people who want to relax and enjoy the nature.</td>
+                        <td class="p-4 align-top">
+                            ...the other <span class="text-green-600 font-bold">part</span> is for people who want to <span class="text-green-600 font-bold">unwind and immerse themselves in</span> nature.
+                            <span class="note"><b>[用字]</b>「放鬆並沉浸在...」 是更生動的表達。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 11 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">...a fabulous park need to consider anyone's feeling and need.</td>
+                        <td class="p-4 align-top">
+                            ...a fabulous park <span class="text-green-600 font-bold">needs</span> to consider anyone's feeling<span class="text-green-600 font-bold">s</span> and need<span class="text-green-600 font-bold">s</span>.
+                            <span class="note"><b>[文法]</b> 主詞 a park 是單數，動詞 (needs) 要加 s。feelings 和 needs 在此是可數名詞。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 12 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">...to make their childhood perfect.</td>
+                        <td class="p-4 align-top">
+                            ...to <span class="text-green-600 font-bold">create memorable childhood memories</span>.
+                            <span class="note"><b>[用字]</b> 讓童年「完美」(perfect) 太絕對，改成「創造難忘的童年回憶」更佳。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 13 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">...they must need to a space to relieve the stress.</td>
+                        <td class="p-4 align-top">
+                            ...they <s>must need to</s> <span class="text-green-600 font-bold">definitely need</span> a space to relieve <s>the</s> <span class="text-green-600 font-bold">their</span> stress.
+                            <span class="note"><b>[文法]</b> must 和 need to 語意重複；紓解「他們的」壓力，用 their stress。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 14 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">They can sit by the tree or under the tree.</td>
+                        <td class="p-4 align-top">
+                            They can sit <span class="text-green-600 font-bold">under the shade of a tree</span>.
+                            <span class="note"><b>[用字]</b>「坐在樹蔭下」 是更道地的說法。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 15 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">...listen to sound coming from the nature.</td>
+                        <td class="p-4 align-top">
+                            ...listen to <span class="text-green-600 font-bold">the sounds</span> coming from nature.
+                            <span class="note"><b>[文法]</b> 來自大自然的「各種聲音」是可數的 (sounds)；泛指「大自然」時，nature 前不加 the。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 16 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">All in all, my idea park is suitable to any people.</td>
+                        <td class="p-4 align-top">
+                            All in all, my <span class="text-green-600 font-bold">ideal</span> park is suitable <span class="text-green-600 font-bold">for all</span> people.
+                            <span class="note"><b>[用字]</b> 介系詞搭配：suitable <b>for</b>...</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 17 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">I hope that If I erect this park one day...</td>
+                        <td class="p-4 align-top">
+                            I hope that <span class="text-green-600 font-bold">if</span> this park is <span class="text-green-600 font-bold">built</span> one day...
+                            <span class="note"><b>[用字]</b> erect (豎立) 多用於紀念碑，蓋公園用 build 即可。<b>[文法]</b> 句中的 if 不需大寫。</span>
+                        </td>
+                    </tr>
+                    <!-- 項目 18 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 text-gray-600 align-top">...everyone's life can be better.</td>
+                        <td class="p-4 align-top">
+                            ...everyone's life <span class="text-green-600 font-bold">will be</span> better.
+                            <span class="note"><b>[文法]</b> 這是「未來」的假設，使用 will be (未來式) 更精確。</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ==========================
+             3. 重點學習
+             ========================== -->
+        <div class="learning-section mt-10">
+            <h2 class="text-2xl font-bold text-blue-600 mb-5 pb-2 border-b border-gray-300">重點學習：好用句型與替換詞</h2>
+
+            <!-- 3.1 好用句子 -->
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">高分搭配詞 (Collocations)</h3>
+            <ul class="list-none p-0 mb-6 grid grid-cols-1 md:grid-cols-2 gap-3">
+                <li class="bg-gray-50 border border-gray-200 rounded-lg p-3 shadow-sm">Take into account (考量到...)</li>
+                <li class="bg-gray-50 border border-gray-200 rounded-lg p-3 shadow-sm">expand one's social circle (拓展社交圈)</li>
+                <li class="bg-gray-50 border border-gray-200 rounded-lg p-3 shadow-sm">relieve one's stress (紓解壓力)</li>
+                <li class="bg-gray-50 border border-gray-200 rounded-lg p-3 shadow-sm">get close to nature (親近自然)</li>
+                <li class="bg-gray-50 border border-gray-200 rounded-lg p-3 shadow-sm">sit under the shade of a tree (坐在樹蔭下)</li>
+            </ul>
+
+            <!-- 3.2 進階句型 -->
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">進階句型 (Advanced Patterns)</h3>
+            <div class="space-y-4 mb-8">
+                <div class="pattern-box bg-gray-50 border border-dashed border-gray-300 p-4 rounded-lg">
+                    <span class="pattern-title font-bold text-blue-600">1. It is important that + S + (should) + V...</span>
+                    <p class="mt-1"><b>例句：</b>It is important that a park (should) <span class="text-green-600 font-medium">consider</span> everyone's needs.</p>
+                </div>
+                <div class="pattern-box bg-gray-50 border border-dashed border-gray-300 p-4 rounded-lg">
+                    <span class="pattern-title font-bold text-blue-600">2. S + V, so that + S + can + V...</span>
+                    <p class="mt-1"><b>例句：</b>Trees are planted everywhere <span class="text-green-600 font-medium">so that</span> people can enjoy the fresh air.</p>
+                </div>
+                <div class="pattern-box bg-gray-50 border border-dashed border-gray-300 p-4 rounded-lg">
+                    <span class="pattern-title font-bold text-blue-600">3. On one hand, ... On the other hand, ...</span>
+                    <p class="mt-1"><b>例句：</b><span class="text-green-600 font-medium">On one hand,</span> kids can play; <span class="text-green-600 font-medium">on the other hand,</span> adults can rest.</p>
+                </div>
+                <div class="pattern-box bg-gray-50 border border-dashed border-gray-300 p-4 rounded-lg">
+                    <span class="pattern-title font-bold text-blue-600">4. Not only... but also... (倒裝句)</span>
+                    <p class="mt-1"><b>例句：</b><span class="text-green-600 font-medium">Not only does</span> the park offer fun, <span class="text-green-600 font-medium">but it also provides</span> peace and relaxation.</p>
+                </div>
+            </div>
+
+            <!-- 3.3 詞彙升級 -->
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">詞彙升級 (Vocabulary Upgrade)</h3>
+            <div class="overflow-x-auto shadow-md rounded-lg mb-8">
+                <table class="w-full min-w-max">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="p-4 text-left text-sm font-semibold text-gray-700">基本詞</th>
+                            <th class="p-4 text-left text-sm font-semibold text-gray-700">可替換</th>
+                            <th class="p-4 text-left text-sm font-semibold text-gray-700">例句</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="p-4 font-medium text-red-600">good</td>
+                            <td class="p-4 font-medium text-green-600">beneficial / favorable / pleasant</td>
+                            <td class="p-4 text-sm">A park provides a beneficial environment for both mind and body.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium text-red-600">important</td>
+                            <td class="p-4 font-medium text-green-600">essential / significant / crucial</td>
+                            <td class="p-4 text-sm">It is crucial to design spaces that serve everyone's needs.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium text-red-600">happy</td>
+                            <td class="p-4 font-medium text-green-600">delighted / joyful / content</td>
+                            <td class="p-4 text-sm">Children feel joyful when playing with friends in the park.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium text-red-600">beautiful</td>
+                            <td class="p-4 font-medium text-green-600">picturesque / stunning / appealing</td>
+                            <td class="p-4 text-sm">The picturesque scenery makes visitors linger.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium text-red-600">people</td>
+                            <td class="p-4 font-medium text-green-600">visitors / citizens / residents</td>
+                            <td class="p-4 text-sm">The park attracts many visitors from nearby communities.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium text-red-600">help</td>
+                            <td class="p-4 font-medium text-green-600">enable / allow / contribute to</td>
+                            <td class="p-4 text-sm">Trees in the park contribute to a cleaner environment.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 3.4 實用片語 -->
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">實用片語 (Useful Phrases)</h3>
+            <div class="overflow-x-auto shadow-md rounded-lg">
+                <table class="w-full min-w-max">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="p-4 text-left text-sm font-semibold text-gray-700">搭配詞</th>
+                            <th class="p-4 text-left text-sm font-semibold text-gray-700">中文意思</th>
+                            <th class="p-4 text-left text-sm font-semibold text-gray-700">例句</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="p-4 font-medium text-blue-700">spend quality time</td>
+                            <td class="p-4 text-sm">共度美好時光</td>
+                            <td class="p-4 text-sm">Families can spend quality time together in the park.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium text-blue-700">take a stroll</td>
+                            <td class="p-4 text-sm">散步</td>
+                            <td class="p-4 text-sm">Elderly people enjoy taking a stroll along the path.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium text-blue-700">provide a sense of...</td>
+                            <td class="p-4 text-sm">提供一種...的感覺</td>
+                            <td class="p-4 text-sm">The park provides a sense of calm and belonging.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium text-blue-700">be surrounded by...</td>
+                            <td class="p-4 text-sm">被...圍繞</td>
+                            <td class="p-4 text-sm">The playground is surrounded by lush greenery.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium text-blue-700">get away from the hustle and bustle</td>
+                            <td class="p-4 text-sm">遠離塵囂</td>
+                            <td class="p-4 text-sm">Many people visit parks to get away from the hustle and bustle of city life.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-medium text-blue-700">serve as...</td>
+                            <td class="p-4 text-sm">作為...的用途</td>
+                            <td class="p-4 text-sm">The park serves as a natural classroom for children.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

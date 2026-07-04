@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>動詞片語總整理 | 學習與測驗 (完整版)</title>
+    <style>
+        :root {
+            --primary-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --border-color: #dee2e6;
+            --shadow-color: rgba(0,0,0,0.1);
+            --correct-color: #28a745;
+            --incorrect-color: #dc3545;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            text-align: center;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .verb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .verb-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .verb-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px var(--shadow-color);
+        }
+        .verb-card h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.5em;
+        }
+        .verb-card-content {
+            flex-grow: 1;
+        }
+        .verb-card ul {
+            padding-left: 20px;
+            list-style-type: '✓ ';
+        }
+        .verb-card li {
+            margin-bottom: 8px;
+        }
+        .verb-card .example {
+            background-color: #e9ecef;
+            border-left: 4px solid var(--primary-color);
+            padding: 10px;
+            margin-top: 15px;
+            font-style: italic;
+            border-radius: 4px;
+        }
+        .verb-card .example strong {
+            font-style: normal;
+        }
+        .quiz-section {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            text-align: center;
+        }
+        #quiz-container {
+            margin-top: 20px;
+            min-height: 200px;
+        }
+        #question-sentence {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        #options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 0 auto;
+            max-width: 400px;
+        }
+        .option-btn {
+            padding: 12px;
+            font-size: 1em;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            border-radius: 5px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .option-btn:hover:not(:disabled) {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+        .option-btn.correct {
+            background-color: var(--correct-color);
+            color: white;
+            border-color: var(--correct-color);
+        }
+        .option-btn.incorrect {
+            background-color: var(--incorrect-color);
+            color: white;
+            border-color: var(--incorrect-color);
+        }
+        #feedback {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        #feedback.correct {
+            color: var(--correct-color);
+        }
+        #feedback.incorrect {
+            color: var(--incorrect-color);
+        }
+        #next-question-btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+        #next-question-btn:hover {
+            background-color: #0056b3;
+        }
+        .score {
+            font-size: 1.1em;
+            margin-top: 15px;
+        }
+        .source-link {
+            text-align: center;
+            margin-bottom: 25px;
+            margin-top: -5px;
+            font-size: 0.9em;
+            color: var(--secondary-color);
+        }
+        .source-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .source-link a:hover {
+            text-decoration: underline;
+        }
+        #start-quiz-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: white;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        #start-quiz-btn:hover {
+            background-color: #0056b3; /* A darker shade of blue */
+            transform: translateY(-2px);
+        }
+
+        #start-quiz-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>動詞片語總整理 (完整版)</h1>
+        <p class="source-link">原始檔案：<a href="https://docs.google.com/document/d/1_qygiKgjQz78nT7Bs8KuKeFEDR1Op-cNafeaNazD4gM/edit?usp=sharing" target="_blank" rel="noopener noreferrer">下載</a></p>
+
+        <div class="quiz-section">
+            <h2>鞏固記憶小測驗</h2>
+            <p>在句子中填入最適合的動詞片語吧！</p>
+            <button id="start-quiz-btn">開始測驗 / 下一題</button>
+            <div id="quiz-container">
+                <p id="question-sentence"></p>
+                <div id="options-container"></div>
+                <p id="feedback"></p>
+            </div>
+            <p id="score" class="score">得分: 0 / 0</p>
+        </div>
+    </br>
+        <div class="verb-grid">
+            </div>
+    </div>
+
+    <script>
+        const verbData = [
+            { verb: "Account for", meanings: ["(1) 占有比例", "(2) 解釋"], synonyms: "compose, constitute, comprise, explain", examples: ["There is no accounting for tastes."] },
+            { verb: "Amount to", meanings: ["總數(量)高達"], synonyms: "", examples: [] },
+            { verb: "bring about", meanings: ["導致"], synonyms: "lead to, give rise to, result in", examples: [] },
+            { verb: "come about", meanings: ["發生 (happen)"], synonyms: "", examples: ["The opportunity like this didn’t come about by accident.", "Several major medical advances have come about in the last fifty years."] },
+            { verb: "Become of", meanings: ["發生(happen to sb)"], synonyms: "", examples: ["No one knows what became of him later on.", "I don’t dread to think what will become of them if they lose their home."] },
+            { verb: "Back up", meanings: ["(1) 倒退", "(2) 支持"], synonyms: "", examples: ["You need facts to back up your hypothesis."] },
+            { verb: "Blow up", meanings: ["爆炸"], synonyms: "", examples: ["The hijackers ultimately blow the plane up."] },
+            { verb: "Beat up", meanings: ["痛打一頓"], synonyms: "", examples: [] },
+            { verb: "Boil down to", meanings: ["總結來說"], synonyms: "", examples: ["My decision to stay at this awful job boils down to one thing--money."] },
+            { verb: "Break through", meanings: ["突破"], synonyms: "", examples: ["After the problem of tissue rejection is broken through, organ transplants will become more common."] },
+            { verb: "Break down", meanings: ["(1) 機械故障,壞掉 (out of order)", "(2) 情緒崩潰 (nervous breakdown)"], synonyms: "", examples: [] },
+            { verb: "Break out", meanings: ["(1) 爆發 (戰爭, 疾病)", "(2) 冒冷汗 (break out in a cold sweat)"], synonyms: "", examples: [] },
+            { verb: "Break up", meanings: ["分手"], synonyms: "", examples: ["he just had a bad break-up with his girlfriend.", "The demonstration was broken up by riot police."] },
+            { verb: "Bring up", meanings: ["(1) 撫養長大 (bring sb up)", "(2) 提出話題 (bring sth up)"], synonyms: "", examples: [] },
+            { verb: "Bring/put forth/forward", meanings: ["提出計畫"], synonyms: "", examples: [] },
+            { verb: "Carry out", meanings: ["執行計畫政策"], synonyms: "execute", examples: [] },
+            { verb: "Carry on", meanings: ["繼續"], synonyms: "carry on with N", examples: [] },
+            { verb: "Call off", meanings: ["取消"], synonyms: "cancel", examples: [] },
+            { verb: "put off", meanings: ["延期"], synonyms: "delay", examples: [] },
+            { verb: "Call on", meanings: ["(1) 呼籲採取行動 (call on sb to do sth)", "(2) 拜訪 (pay sb a visit, drop by)"], synonyms: "", examples: [] },
+            { verb: "Call for", meanings: ["呼籲要求事情"], synonyms: "", examples: [] },
+            { verb: "Call in", meanings: ["(1) 請求協助", "(2) 打電話請病假 (call in sick)"], synonyms: "", examples: ["call in the police to deal with the situation"] },
+            { verb: "Catch on", meanings: ["普及流行"], synonyms: "", examples: [] },
+            { verb: "Catch up with", meanings: ["趕上(程度/進度)他人"], synonyms: "", examples: [] },
+            { verb: "Catch up on", meanings: ["趕上(新聞時事/工作/流言)"], synonyms: "", examples: ["I have a lot of work to catch up on."] },
+            { verb: "Clean up", meanings: ["打掃乾淨 (clean up a place)", "替他人善後 (clean up after someone)"], synonyms: "", examples: [] },
+            { verb: "Clean out", meanings: ["清出 (房間, 垃圾)"], synonyms: "", examples: ["clean out a room", "clean out junk"] },
+            { verb: "Clear up", meanings: ["(1) 天氣放晴", "(2) 釐清誤解"], synonyms: "", examples: ["Unless it clears up, we’ll have to cancel the trip.", "It was a big misunderstanding, but it’s cleared up now."] },
+            { verb: "Care for", meanings: ["(1) 照顧 (take good care of /look after)", "(2) 喜歡 (用於否定句)"], synonyms: "", examples: [] },
+            { verb: "Count on", meanings: ["依賴"], synonyms: "rely on", examples: [] },
+            { verb: "Come in", meanings: ["以…形式出現"], synonyms: "", examples: [] },
+            { verb: "Come across", meanings: ["無意間找到看到"], synonyms: "", examples: ["come across some information online"] },
+            { verb: "Come up with", meanings: ["想出(主意, 解決方案)"], synonyms: "figure out", examples: [] },
+            { verb: "Come down with", meanings: ["生病"], synonyms: "fall sick/ill, contract some viruses", examples: ["Take off your wet shirt, or you ‘ll come down with pneumonia."] },
+            { verb: "Crack down upon", meanings: ["嚴格取締"], synonyms: "", examples: ["The chief of police said he was going to crack down on car theft."] },
+            { verb: "Cut down (back) on", meanings: ["減量"], synonyms: "", examples: [] },
+            { verb: "Do without", meanings: ["沒有...就將就過"], synonyms: "", examples: ["Washing your hair every day is something you have to do without when you go camping."] },
+            { verb: "Do away with", meanings: ["廢除", "除去人"], synonyms: "abolish, kill someone", examples: ["People thought that the use of robots would do away with boring low-paid factory jobs.", "do away with a person= kill him"] },
+            { verb: "Make do with", meanings: ["用...將就過"], synonyms: "", examples: ["I usually make do with a cup of coffee for breakfast."] },
+            { verb: "drop by / stop by", meanings: ["半途經過,順便"], synonyms: "", examples: [] },
+            { verb: "drop in on", meanings: ["順道拜訪"], synonyms: "call on", examples: [] },
+            { verb: "Find fault with", meanings: ["找...麻煩, 挑錯"], synonyms: "pick on sb", examples: [] },
+            { verb: "Fall out", meanings: ["吵架失和"], synonyms: "", examples: ["They fell out over some stupid little issue."] },
+            { verb: "get over", meanings: ["(1) 克服忘懷 (經驗, 失敗)", "(2) 傳遞訊息 (get the meaning across)"], synonyms: "", examples: ["It took me ages to get over the flu.", "It’s important we get this message over to young people."] },
+            { verb: "get it over with", meanings: ["結束, 把它弄完"], synonyms: "", examples: ["I cannot wait to get the interview over with."] },
+            { verb: "give in to", meanings: ["對…屈服"], synonyms: "submit to, succumb to, surrender to", examples: [] },
+            { verb: "give off", meanings: ["散發出(氣味)"], synonyms: "", examples: [] },
+            { verb: "Get along with", meanings: ["與人相處得來"], synonyms: "make friends with", examples: [] },
+            { verb: "Hand in / turn in", meanings: ["繳交 (作業)"], synonyms: "", examples: [] },
+            { verb: "Hang out with", meanings: ["和...一起玩"], synonyms: "", examples: [] },
+            { verb: "Hang around", meanings: ["在某地停留, 閒晃"], synonyms: "", examples: ["Whatever it was he was looking for, we didn’t hang around to find out."] },
+            { verb: "Hold up", meanings: ["(1) 耽擱", "(2) 支撐", "(3) 搶劫"], synonyms: "", examples: ["The roof is held up by massive stone pillars.", "They should have finished the job on Friday. What’s holding them up?", "Two armed men held up a downtown department store last night."] },
+            { verb: "Let up", meanings: ["減緩, 停止 (風雨)"], synonyms: "", examples: ["The wind has dropped and the rain gradually let up."] },
+            { verb: "Let on", meanings: ["透露訊息秘密"], synonyms: "", examples: ["I’m sure that he knows more than he lets on.", "Don’t let on that I told you the news."] },
+            { verb: "Lay off", meanings: ["裁員, 解雇"], synonyms: "downsize", examples: [] },
+            { verb: "Lag behind / fall behind", meanings: ["落後"], synonyms: "", examples: [] },
+            { verb: "Look into", meanings: ["調查"], synonyms: "", examples: [] },
+            { verb: "Look up to", meanings: ["尊重, 景仰"], synonyms: "respect, hold someone in high esteem/regard", examples: [] },
+            { verb: "Look down upon", meanings: ["鄙夷, 輕視"], synonyms: "despise", examples: [] },
+            { verb: "Look up", meanings: ["(1) 抬頭看", "(2) 查閱"], synonyms: "", examples: ["look up a word in the dictionary", "look up a term on the Internet"] },
+            { verb: "Look out for", meanings: ["(1) 小心, 注意", "(2) 找尋", "(3) 照顧"], synonyms: "watch out for, look for", examples: ["you should look out for pickpockets.", "Do look out for spelling mistakes in your work.", "Without your family nearby, you should look out for yourself from now on."] },
+            { verb: "Look over", meanings: ["很快瀏覽"], synonyms: "", examples: [] },
+            { verb: "Live up to", meanings: ["符合(期望, 標準)"], synonyms: "meet one’s standard, expectations", examples: [] },
+            { verb: "Make up", meanings: ["編造", "組成", "和好"], synonyms: "", examples: [] },
+            { verb: "Make up for", meanings: ["彌補"], synonyms: "compensate", examples: ["make up for the lost time"] },
+            { verb: "Make out", meanings: ["辨識出"], synonyms: "", examples: ["He could just make out a dark shape moving towards him.", "I couldn’t make out what he was saying."] },
+            { verb: "Pull over", meanings: ["路邊臨檢"], synonyms: "", examples: [] },
+            { verb: "Pull off", meanings: ["(1) 路邊停車", "(2) 成功做成(困難的事)"], synonyms: "", examples: ["We pulled off the road to get some food.", "He said he would get 5 sponsors for his project, but we never believed he could pull it off."] },
+            { verb: "Pull through", meanings: ["度過難關, 康復"], synonyms: "", examples: ["The doctor believed he could pull through given his age and health."] },
+            { verb: "Fall through", meanings: ["失敗, 未能實現"], synonyms: "", examples: ["Our plan fell through because of lack of money."] },
+            { verb: "Pass sth on", meanings: ["傳遞下去"], synonyms: "", examples: [] },
+            { verb: "Pass out", meanings: ["昏倒"], synonyms: "", examples: [] },
+            { verb: "Pass down to", meanings: ["傳承下去"], synonyms: "", examples: [] },
+            { verb: "Put up with", meanings: ["容忍"], synonyms: "", examples: [] },
+            { verb: "Put out", meanings: ["滅(火)"], synonyms: "", examples: ["Put out a fire"] },
+            { verb: "Speak ill of", meanings: ["說壞話"], synonyms: "", examples: [] },
+            { verb: "Speak highly of", meanings: ["評價很高"], synonyms: "", examples: [] },
+            { verb: "Stand for", meanings: ["代表, 意味"], synonyms: "", examples: [] },
+            { verb: "Stand up to", meanings: ["挺身力抗"], synonyms: "", examples: ["Stand up to a bully"] },
+            { verb: "Stand up for", meanings: ["力挺, 擁護"], synonyms: "", examples: [] },
+            { verb: "Stick to", meanings: ["堅守 (原則)"], synonyms: "abide by, conform to", examples: ["Stick to one’s principles"] },
+            { verb: "Set up", meanings: ["建立, 架設", "陷害 (frame sb)"], synonyms: "", examples: [] },
+            { verb: "Set off", meanings: ["(1) 施放 (煙火)", "(2) 出發"], synonyms: "set out for", examples: ["set off fireworks"] },
+            { verb: "Sort out", meanings: ["分類整理"], synonyms: "", examples: [] },
+            { verb: "take effect", meanings: ["(藥物)發揮作用", "(法規)生效"], synonyms: "kick in, be put into effect", examples: [] },
+            { verb: "Take in", meanings: ["(1) 吸收(知識)", "(2) 盡收眼底(風景)", "(3) 收留人"], synonyms: "absorb, shelter", examples: [] },
+            { verb: "Take on", meanings: ["接受(挑戰, 責任)"], synonyms: "assume the responsibility", examples: ["take on a difficult task"] },
+            { verb: "Take up", meanings: ["(1) 發展嗜好", "(2) 占(時間, 空間)"], synonyms: "", examples: ["take up a new hobby", "take up too much of my time"] },
+            { verb: "Take over", meanings: ["接管"], synonyms: "succeed sb", examples: [] },
+            { verb: "Turn up", meanings: ["出現"], synonyms: "show up", examples: [] },
+            { verb: "Turn down", meanings: ["拒絕"], synonyms: "reject", examples: [] },
+            { verb: "Turn out to be", meanings: ["結果是..."], synonyms: "", examples: [] },
+            { verb: "turn into", meanings: ["演變成"], synonyms: "", examples: [] },
+            { verb: "Track down", meanings: ["追蹤"], synonyms: "", examples: ["Track down a criminal"] },
+            { verb: "Wear out", meanings: ["(1) 磨損", "(2) 使...筋疲力盡 (I am worn out)"], synonyms: "exhausted", examples: ["You’ll wear yourself out if you carry on working so hard."] },
+            { verb: "Wipe out", meanings: ["滅絕, 消滅"], synonyms: "terminate", examples: [] },
+            { verb: "Wrap up", meanings: ["(1) 包裝禮物", "(2) 結束"], synonyms: "", examples: ["wrap up a speech"] },
+            { verb: "Draw up", meanings: ["起草 (法律, 計畫)"], synonyms: "", examples: ["Draw up a law/a project"] },
+            { verb: "Pull up", meanings: ["停車"], synonyms: "stop", examples: ["I saw an ambulance pull up in front of my house."] },
+            { verb: "Come in handy", meanings: ["隨時可派上用場"], synonyms: "", examples: [] },
+            { verb: "Put sth into practice", meanings: ["實施"], synonyms: "carry out sth", examples: [] },
+            { verb: "Go off", meanings: ["(鬧鐘, 炸彈)響起, 爆炸"], synonyms: "", examples: ["the fireworks/ the bomb/the alarm go off"] },
+            { verb: "Slack off", meanings: ["鬆懈, 散漫"], synonyms: "", examples: [] },
+            { verb: "Lounge around / idle away", meanings: ["閒晃, 懶散"], synonyms: "fool around", examples: [] },
+            { verb: "Set out to do sth", meanings: ["開始著手做事"], synonyms: "embark on", examples: [] },
+            { verb: "come of age", meanings: ["成年"], synonyms: "reach adulthood", examples: [] }
+        ];
+
+        // 渲染動詞卡片
+        const verbGrid = document.querySelector('.verb-grid');
+        verbData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'verb-card';
+
+            let meaningsHTML = '<ul>';
+            item.meanings.forEach(m => {
+                meaningsHTML += `<li>${m}</li>`;
+            });
+            if (item.synonyms) {
+                meaningsHTML += `<li><strong>同義詞:</strong> ${item.synonyms}</li>`;
+            }
+            meaningsHTML += '</ul>';
+            
+            let examplesHTML = '';
+            if (item.examples && item.examples.length > 0) {
+                 item.examples.forEach(ex => {
+                    examplesHTML += `<div class="example"><strong>例句:</strong> ${ex}</div>`;
+                 });
+            }
+
+            card.innerHTML = `
+                <h3>${item.verb}</h3>
+                <div class="verb-card-content">
+                    ${meaningsHTML}
+                </div>
+                ${examplesHTML}
+            `;
+            verbGrid.appendChild(card);
+        });
+
+        // 測驗功能
+        const quizData = verbData.filter(item => item.examples && item.examples.length > 0 && item.verb.includes(' '));
+
+        const startBtn = document.getElementById('start-quiz-btn');
+        const questionSentenceEl = document.getElementById('question-sentence');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackEl = document.getElementById('feedback');
+        const scoreEl = document.getElementById('score');
+
+        let currentQuestion = {};
+        let score = 0;
+        let questionsAsked = 0;
+        let acceptingAnswers = false;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function loadQuestion() {
+            feedbackEl.textContent = '';
+            feedbackEl.className = '';
+            optionsContainer.innerHTML = '';
+            
+            if (quizData.length === 0) {
+                questionSentenceEl.textContent = "沒有足夠的題目來進行測驗！";
+                return;
+            }
+
+            // 隨機選一個問題
+            const questionIndex = Math.floor(Math.random() * quizData.length);
+            currentQuestion = quizData[questionIndex];
+
+            // 隨機選一個例句
+            const randomExample = currentQuestion.examples[Math.floor(Math.random() * currentQuestion.examples.length)];
+            const sentence = randomExample.replace(new RegExp(currentQuestion.verb.split(' ')[0] + '\\s' + currentQuestion.verb.split(' ')[1], 'i'), '_______');
+            questionSentenceEl.textContent = sentence;
+            
+            // 準備選項
+            const options = [currentQuestion.verb];
+            const tempQuizData = [...quizData];
+            while (options.length < 4) {
+                const randomVerbIndex = Math.floor(Math.random() * tempQuizData.length);
+                const randomVerb = tempQuizData[randomVerbIndex].verb;
+                if (!options.includes(randomVerb)) {
+                    options.push(randomVerb);
+                }
+            }
+            
+            shuffleArray(options).forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.addEventListener('click', selectAnswer);
+                optionsContainer.appendChild(button);
+            });
+            
+            acceptingAnswers = true;
+        }
+
+        function selectAnswer(e) {
+            if (!acceptingAnswers) return;
+            acceptingAnswers = false;
+            questionsAsked++;
+
+            const selectedBtn = e.target;
+            const selectedAnswer = selectedBtn.textContent;
+            
+            Array.from(optionsContainer.children).forEach(button => {
+                button.disabled = true;
+                if (button.textContent === currentQuestion.verb) {
+                    button.classList.add('correct');
+                }
+            });
+
+            if (selectedAnswer === currentQuestion.verb) {
+                feedbackEl.textContent = '答對了！🎉';
+                feedbackEl.className = 'correct';
+                score++;
+            } else {
+                selectedBtn.classList.add('incorrect');
+                feedbackEl.textContent = `答錯了... 正確答案是 "${currentQuestion.verb}"`;
+                feedbackEl.className = 'incorrect';
+            }
+            
+            scoreEl.textContent = `得分: ${score} / ${questionsAsked}`;
+        }
+
+        startBtn.addEventListener('click', loadQuestion);
+
+    </script>
+</body>
+</html>

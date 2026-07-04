@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>澤享的不定詞魔法實驗室</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f0f9ff;
+            scroll-behavior: smooth;
+        }
+        .magic-card {
+            transition: all 0.3s ease;
+        }
+        .magic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .trap-box[open] summary ~ * {
+            animation: sweep .5s ease-in-out;
+        }
+        @keyframes sweep {
+            0%    {opacity: 0; margin-top: -10px}
+            100%  {opacity: 1; margin-top: 10px}
+        }
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 0 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .wrong-mark {
+            text-decoration: line-through;
+            color: #ef4444;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <!-- 導航列 -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i data-lucide="flask-conical" class="text-blue-500 w-8 h-8"></i>
+                <h1 class="text-xl font-bold text-slate-800">澤享的魔法實驗室</h1>
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-medium text-slate-600">
+                <a href="#intro" class="hover:text-blue-500 transition">變身原理</a>
+                <a href="#noun" class="hover:text-blue-500 transition">名詞變身</a>
+                <a href="#adj" class="hover:text-blue-500 transition">形容詞標籤</a>
+                <a href="#adv" class="hover:text-blue-500 transition">副詞箭頭</a>
+                <a href="#traps" class="text-red-500 hover:text-red-700 font-bold transition">⚠️ 五大爆炸區</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header 區塊 -->
+    <header class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20 px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">不定詞 (To V) 完全攻略</h1>
+        <p class="text-xl opacity-90 mb-8">歡迎來到澤享的實驗室！<br>在這裡，文法不是枯燥的公式，而是神奇的積木組合。</p>
+        <a href="#intro" class="bg-white text-blue-600 px-8 py-3 rounded-full font-bold hover:bg-yellow-300 hover:text-blue-800 transition shadow-lg inline-block">
+            開始實驗 🚀
+        </a>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-12 space-y-20">
+
+        <!-- 1. 變身原理 -->
+        <section id="intro" class="text-center">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center justify-center gap-3">
+                <i data-lucide="sparkles" class="text-yellow-500"></i>
+                什麼是「不定詞」？
+            </h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+                <p class="text-lg leading-relaxed">
+                    想像動詞原本是一個活潑亂跳的動作（比如「跑」 Run）。<br>
+                    但有時候，我們想把它變成一個「東西」或「目的」。<br>
+                    這時候，只要給它穿上一件 <span class="highlight">To 的魔法斗篷</span>，它就變身了！
+                </p>
+                <div class="mt-8 flex justify-center items-center gap-4 text-2xl font-bold">
+                    <div class="bg-gray-100 p-4 rounded-lg">🏃 Run (跑)</div>
+                    <i data-lucide="arrow-right" class="text-slate-400"></i>
+                    <div class="bg-blue-100 text-blue-600 p-4 rounded-lg border-2 border-blue-200">
+                        To Run (跑步這件事)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 名詞變身 -->
+        <section id="noun">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                <i data-lucide="box" class="text-blue-500"></i>
+                變身術 1：變成名詞積木
+            </h2>
+            <p class="mb-6 text-slate-600">當動詞穿上斗篷變成「名詞」，它就可以放在句子的這兩個位置：</p>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- 卡片 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm magic-card border-t-4 border-blue-400">
+                    <h3 class="text-xl font-bold mb-3">🚂 火車頭 (當主詞)</h3>
+                    <p class="text-slate-600 mb-4">把「做某件事」放在句子最前面，當作主角。</p>
+                    <div class="bg-slate-50 p-4 rounded-lg text-sm">
+                        <p class="mb-2"><span class="font-bold text-blue-600">To master English</span> is my goal.</p>
+                        <p class="text-gray-500 text-xs">（精通英文是我的目標）</p>
+                    </div>
+                    
+                    <div class="mt-4 bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                        <h4 class="font-bold text-yellow-700 text-sm mb-1">💡 替身演員法則 (虛主詞 It)</h4>
+                        <p class="text-xs text-yellow-800">
+                            如果主角太長了（頭重腳輕），我們會請一個替身 <span class="font-bold">It</span> 站前面，真主角躲到後面去。
+                        </p>
+                        <p class="mt-2 text-sm font-bold text-slate-700">It is hard <span class="text-red-500">for</span> me <span class="text-blue-600">to get up early</span>.</p>
+                    </div>
+                </div>
+
+                <!-- 卡片 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm magic-card border-t-4 border-purple-400">
+                    <h3 class="text-xl font-bold mb-3">🎁 禮物盒 (當受詞)</h3>
+                    <p class="text-slate-600 mb-4">放在「想要、計畫、決定」這類動詞的後面，當作目標。</p>
+                    <div class="bg-slate-50 p-4 rounded-lg text-sm">
+                        <p class="mb-2">I <span class="font-bold text-purple-600">plan</span> <span class="font-bold text-blue-600">to travel</span>.</p>
+                        <p class="text-gray-500 text-xs">（我計畫去旅行 → 計畫還沒發生的事）</p>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-xs font-bold text-slate-500 mb-2">👇 只有這些動詞接受這個禮物：</p>
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded">Want (想要)</span>
+                            <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded">Hope (希望)</span>
+                            <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded">Decide (決定)</span>
+                            <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded">Plan (計畫)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 形容詞變身 -->
+        <section id="adj">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                <i data-lucide="tag" class="text-green-500"></i>
+                變身術 2：變成便利貼 (形容詞)
+            </h2>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 bg-green-100 w-40 h-40 rounded-full opacity-50"></div>
+                
+                <h3 class="text-xl font-bold mb-4">📌 貼在名詞的「背面」</h3>
+                <p class="mb-6">英文的便利貼很特別，它必須貼在名詞的屁股後面，用來解釋「這個東西要拿來幹嘛」。</p>
+
+                <div class="flex flex-col md:flex-row gap-8 items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">💧</div>
+                        <div class="bg-slate-100 px-4 py-2 rounded-lg">
+                            Water <span class="text-green-600 font-bold">to drink</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">（要喝的水）</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">📝</div>
+                        <div class="bg-slate-100 px-4 py-2 rounded-lg">
+                            Homework <span class="text-green-600 font-bold">to do</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">（要做的作業）</p>
+                    </div>
+                </div>
+
+                <!-- 膠水警告 -->
+                <div class="mt-8 bg-red-50 border-l-4 border-red-500 p-4">
+                    <h4 class="font-bold text-red-700 flex items-center gap-2">
+                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                        小心！隱形膠水不見了？
+                    </h4>
+                    <p class="text-sm text-red-800 mt-1">
+                        如果那個動作沒辦法直接作用在東西上（不及物動詞），你必須加上「介系詞」當作膠水，不然貼紙會掉下來！
+                    </p>
+                    <div class="mt-3 flex gap-4 text-sm">
+                        <div>
+                            <span class="wrong-mark text-gray-400">A pen to write</span> ❌
+                            <br>
+                            <span class="font-bold text-green-600">A pen to write with</span> ✅
+                            <div class="text-xs text-gray-500">(用筆寫 -> write with)</div>
+                        </div>
+                        <div>
+                            <span class="wrong-mark text-gray-400">A chair to sit</span> ❌
+                            <br>
+                            <span class="font-bold text-green-600">A chair to sit on</span> ✅
+                            <div class="text-xs text-gray-500">(坐在椅子上 -> sit on)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 副詞變身 -->
+        <section id="adv">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                <i data-lucide="arrow-right-circle" class="text-orange-500"></i>
+                變身術 3：變成方向箭頭 (副詞)
+            </h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="font-bold text-lg mb-2 text-orange-600">🎯 目的箭頭 (為了...)</h3>
+                    <p class="text-sm text-slate-600 mb-4">告訴別人你做這件事是為了得到什麼寶藏。</p>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-2">
+                            <span class="bg-orange-100 px-2 rounded font-mono">To</span>
+                            <span>study hard.</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="bg-orange-100 px-2 rounded font-mono">In order to</span>
+                            <span>study hard. (更強調)</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="bg-orange-100 px-2 rounded font-mono">So as to</span>
+                            <span>study hard. (比較正式)</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="font-bold text-lg mb-2 text-orange-600">😲 驚喜結局 (結果卻...)</h3>
+                    <p class="text-sm text-slate-600 mb-4">本來想要 A，結果打開盒子發現是 B (通常是失望)。</p>
+                    <div class="bg-slate-50 p-3 rounded border-l-4 border-orange-300">
+                        I ran to the station, <span class="font-bold text-orange-600">only to find</span> the train had left.
+                        <p class="text-xs text-gray-500 mt-1">（我跑去車站，結果卻發現火車開走了...）</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 陷阱區 (互動) -->
+        <section id="traps" class="bg-red-50 p-8 rounded-3xl">
+            <h2 class="text-3xl font-bold text-red-600 mb-2 flex items-center gap-3 justify-center">
+                <i data-lucide="bomb" class="text-red-600"></i>
+                危險！五大爆炸區
+            </h2>
+            <p class="text-center text-red-800 mb-8">點擊下方的箱子來拆除炸彈，看看你是不是真的懂了！</p>
+
+            <div class="space-y-4">
+                <!-- 陷阱 1 -->
+                <details class="trap-box bg-white p-4 rounded-xl shadow-sm cursor-pointer group">
+                    <summary class="font-bold text-lg text-slate-700 flex justify-between items-center list-none">
+                        <span class="flex items-center gap-2"><span class="bg-red-100 text-red-600 px-2 rounded text-sm">陷阱 1</span> 不要做某事 (Not 的位置)</span>
+                        <i data-lucide="chevron-down" class="text-slate-400 group-open:rotate-180 transition"></i>
+                    </summary>
+                    <div class="mt-4 border-t pt-4 text-slate-600">
+                        <p class="mb-2">❌ 錯誤：I decided <span class="line-through">to not go</span>.</p>
+                        <p class="mb-2">✅ 正確：I decided <span class="font-bold text-green-600">not to go</span>.</p>
+                        <p class="text-sm bg-yellow-50 p-2 rounded text-yellow-800">💡 記住：<span class="font-bold">Not</span> 永遠是守門員，要擋在 <span class="font-bold">To</span> 的前面！</p>
+                    </div>
+                </details>
+
+                <!-- 陷阱 2 -->
+                <details class="trap-box bg-white p-4 rounded-xl shadow-sm cursor-pointer group">
+                    <summary class="font-bold text-lg text-slate-700 flex justify-between items-center list-none">
+                        <span class="flex items-center gap-2"><span class="bg-red-100 text-red-600 px-2 rounded text-sm">陷阱 2</span> 偽裝者 (With a view to)</span>
+                        <i data-lucide="chevron-down" class="text-slate-400 group-open:rotate-180 transition"></i>
+                    </summary>
+                    <div class="mt-4 border-t pt-4 text-slate-600">
+                        <p class="mb-2">❌ 錯誤：with a view to <span class="line-through">get</span> a job.</p>
+                        <p class="mb-2">✅ 正確：with a view to <span class="font-bold text-green-600">getting</span> a job.</p>
+                        <p class="text-sm bg-yellow-50 p-2 rounded text-yellow-800">💡 這裡的 To 不是不定詞斗篷，它是介系詞！所以後面要接名詞或 V-ing。</p>
+                    </div>
+                </details>
+
+                <!-- 陷阱 3 -->
+                <details class="trap-box bg-white p-4 rounded-xl shadow-sm cursor-pointer group">
+                    <summary class="font-bold text-lg text-slate-700 flex justify-between items-center list-none">
+                        <span class="flex items-center gap-2"><span class="bg-red-100 text-red-600 px-2 rounded text-sm">陷阱 3</span> 消失的膠水 (不及物動詞)</span>
+                        <i data-lucide="chevron-down" class="text-slate-400 group-open:rotate-180 transition"></i>
+                    </summary>
+                    <div class="mt-4 border-t pt-4 text-slate-600">
+                        <p class="mb-2">❌ 錯誤：a house to <span class="line-through">live</span>.</p>
+                        <p class="mb-2">✅ 正確：a house to <span class="font-bold text-green-600">live in</span>.</p>
+                        <p class="text-sm bg-yellow-50 p-2 rounded text-yellow-800">💡 你不能 Live a house，你要 Live IN a house。膠水不能省！</p>
+                    </div>
+                </details>
+
+                <!-- 陷阱 4 -->
+                <details class="trap-box bg-white p-4 rounded-xl shadow-sm cursor-pointer group">
+                    <summary class="font-bold text-lg text-slate-700 flex justify-between items-center list-none">
+                        <span class="flex items-center gap-2"><span class="bg-red-100 text-red-600 px-2 rounded text-sm">陷阱 4</span> 稱讚人還是事？ (For vs Of)</span>
+                        <i data-lucide="chevron-down" class="text-slate-400 group-open:rotate-180 transition"></i>
+                    </summary>
+                    <div class="mt-4 border-t pt-4 text-slate-600">
+                        <p class="mb-2">👉 講事情本身 (難、易、危險)：用 <span class="font-bold text-blue-500">For</span></p>
+                        <p class="text-xs text-slate-500 mb-2 pl-4">It is difficult <span class="font-bold">for</span> me.</p>
+                        <p class="mb-2">👉 講人的人品 (好心、禮貌、笨)：用 <span class="font-bold text-purple-500">Of</span></p>
+                        <p class="text-xs text-slate-500 pl-4">It is nice <span class="font-bold">of</span> you.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-white text-center py-8 mt-12">
+        <p class="opacity-80">Designed for Ze Xiang's Logic Lab © 2025</p>
+        <p class="text-sm opacity-50 mt-2">記得，英文就像拼積木，規則對了就穩了！</p>
+    </footer>
+
+    <script>
+        // 初始化圖標
+        lucide.createIcons();
+    </script>
+</body>
+</html>

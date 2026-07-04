@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作文煉金術：從範文到滿級分的句型實戰手冊</title>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header.site-header {
+            text-align: center;
+            padding: 50px 0 30px 0;
+            background-color: #ffffff;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        header.site-header h1 {
+            color: #343a40;
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav.main-nav {
+            background-color: #343a40;
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav.main-nav a {
+            color: #f8f9fa;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        nav.main-nav a:hover {
+            color: #1abc9c;
+        }
+
+        section.content-block {
+            background-color: #ffffff;
+            margin-top: 30px;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        section.content-block h2 {
+            margin-top: 0;
+            color: #1abc9c;
+            border-bottom: 2px solid #1abc9c;
+            padding-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        article.sentence-pattern {
+            border-left: 4px solid #1abc9c;
+            padding: 15px 20px;
+            margin-top: 25px;
+            background-color: #f8f9fa;
+            border-radius: 0 5px 5px 0;
+        }
+
+        article.sentence-pattern h3 {
+            margin-top: 0;
+            color: #2980b9;
+            font-size: 1.2rem;
+        }
+        
+        article.sentence-pattern p, article.sentence-pattern ul {
+            margin-bottom: 0;
+            color: #555; /* 翻譯文字顏色 */
+        }
+
+        h4 {
+            color: #34495e;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        ul.custom-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        ul.custom-list li {
+            background-color: #f8f9fa;
+            padding: 12px 18px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #e9ecef;
+        }
+
+        footer.site-footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+         footer.site-footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+
+        /* --- 隨機練習區塊樣式 --- */
+        #random-practice .practice-area {
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: #f8f9fa;
+            border: 1px dashed #ced4da;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        #practice-item-display h3 {
+            color: #2980b9;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        #practice-item-display p {
+            color: #555;
+            font-size: 1.1rem;
+            transition: opacity 0.3s ease;
+        }
+        #practice-item-display p.hidden {
+            opacity: 0;
+        }
+        .practice-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .practice-controls button {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0 5px;
+            transition: background-color 0.2s;
+        }
+        .practice-controls button:hover {
+            background-color: #16a085;
+        }
+        .practice-controls button#toggle-translation-btn {
+            background-color: #3498db;
+        }
+        .practice-controls button#toggle-translation-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <h1>作文煉金術</h1>
+        <p>你的高分寫作素材庫</p>
+    </header>
+
+    <nav class="main-nav">
+        <a href="#home">首頁</a>
+        <a href="#narrative">記敘文</a>
+        <a href="#expository">說明/論說文</a>
+    </nav>
+
+    <div class="container">
+        <section id="random-practice" class="content-block">
+            <h2>每日一句隨機練習</h2>
+            <div class="practice-area">
+                <div id="practice-item-display">
+                    <p>點擊按鈕開始練習！</p>
+                </div>
+            </div>
+            <div class="practice-controls">
+                <button id="next-item-btn">換一句/換一詞</button>
+                <button id="toggle-translation-btn">顯示/隱藏英文</button>
+            </div>
+        </section>
+        <main>
+            <section id="home" class="content-block">
+                <h2>歡迎來到作文煉金術 1.2</h2>
+                <p>你好，我是澤享。這個網站的初衷，是希望將複雜的寫作技巧，拆解成一個個清晰、可複製、可實踐的「句型框架」。</p>
+                <p>在這裡，你可以找到各種作文題型的範文、句型、詞彙和寫作技巧，幫助你在學測英文作文中取得高分。</p>
+            </section>
+            
+            <section id="narrative" class="content-block">
+                <h2>記敘文寫作技巧</h2>
+                
+                <h3 style="color:#2c3e50;">A) 記敘文破題萬用佳句</h3>
+                <article class="sentence-pattern"><h3>I still have vivid memories of...</h3><p>我對...仍然記憶猶新。</p></article>
+                <article class="sentence-pattern"><h3>The memories of... often recur to me.</h3><p>...的回憶經常浮現在我腦海。</p></article>
+                <article class="sentence-pattern"><h3>...remains firmly in my memory.</h3><p>...牢牢地留在我的記憶中。</p></article>
+                <article class="sentence-pattern"><h3>To the best of my memory,...</h3><p>就我記憶所及，...</p></article>
+                <article class="sentence-pattern"><h3>Memories of... haunt me.</h3><p>...的記憶縈繞在我心中。</p></article>
+                <article class="sentence-pattern"><h3>...is inscribed on my heart.</h3><p>...銘記在我心中。</p></article>
+                <article class="sentence-pattern"><h3>Looking back on..., I have a feeling of...</h3><p>回顧...，我覺得...。</p></article>
+                <article class="sentence-pattern"><h3>When it comes to..., I am overwhelmed with...</h3><p>當提到...時，我就感到不勝...</p></article>
+                <article class="sentence-pattern"><h3>Whenever recalling..., I cannot but feel...</h3><p>每次回想...時，我不禁感到...</p></article>
+                <article class="sentence-pattern"><h3>No matter when I think of..., I cannot help...</h3><p>每當我想起...，我不禁...</p></article>
+
+                <h3 style="color:#2c3e50; margin-top: 40px;">B) 記敘文中有關時間的轉折語</h3>
+                <ul class="custom-list">
+                    <li><b>有一回, 有一次:</b> on one occasion</li>
+                    <li><b>起初, 一開始:</b> at first / in the beginning</li>
+                    <li><b>後來; 其後:</b> later (on) / and then / afterwards</li>
+                    <li><b>同時, 於此際:</b> at the same time / in the meantime / meanwhile / simultaneously</li>
+                    <li><b>不久:</b> before long / by and by / soon (after)</li>
+                    <li><b>立刻, 馬上:</b> at once / in a second / in no time / right away / without delay / directly / immediately / instantly</li>
+                    <li><b>最後, 終於:</b> at last / at length / eventually / finally / in the end / in the long run</li>
+                    <li><b>從那時起:</b> from then on / from that time on</li>
+                </ul>
+
+                <h3 style="color:#2c3e50; margin-top: 40px;">C) 記敘文中產生強烈轉折語氣的萬用佳句</h3>
+                <article class="sentence-pattern"><h3>For the first time in my life, I experienced...</h3><p>我生平第一次體驗...。</p></article>
+                <article class="sentence-pattern"><h3>This... turned out to be a bitter experience.</h3><p>這次的...結果竟是一次痛苦的經歷。</p></article>
+                <article class="sentence-pattern"><h3>Against/Contrary to (all) expectations,...</h3><p>出乎意料地，...。</p></article>
+                <article class="sentence-pattern"><h3>Much to my + [心情名詞], ... / To my great + [心情名詞], ...</h3><p>令我十分...地，...。</p></article>
+                <article class="sentence-pattern"><h3>It was a bolt from / out of the blue.</h3><p>...有如晴天霹靂。</p></article>
+                <article class="sentence-pattern"><h3>I jumped with joy when...</h3><p>當...時，我快樂地手舞足蹈。</p></article>
+                <article class="sentence-pattern"><h3>Instead of feeling delighted, I was tortured by...</h3><p>並不感到高興，...卻折磨著我。</p></article>
+                <article class="sentence-pattern"><h3>At that time I even wanted to abandon the hope of...</h3><p>在那時，我甚至想放棄...的希望。</p></article>
+                <article class="sentence-pattern"><h3>When I was depressed, ... inspired my hope.</h3><p>當我消沈時，...喚起我的希望。</p></article>
+                <article class="sentence-pattern"><h3>...made a sharp contrast with...</h3><p>...與...形成強烈的對比。</p></article>
+                
+                <h3 style="color:#2c3e50; margin-top: 40px;">D) 描述心情的形容詞</h3>
+                <p>amazed (吃驚的), annoyed (氣惱的), anxious (焦慮的), astonished (驚愕的), astounded (震驚的), awkward (侷促不安的), blessed (幸福的), calm (鎮定的), cheerful (興高采烈的), confused (困惑的), delighted (高興的), depressed (沮喪的,消沉的), discouraged (氣餒的), ecstatic (狂喜的), embarrassed (尷尬的), excited (興奮的), fearful (害怕的), frightened (受驚嚇的), frustrated (沮喪的), furious (狂怒的), grievous (悲痛的), hesitant (遲疑的), hostile (有敵意的), horrified (覺得恐怖的), humiliated (屈辱的), indifferent (漠不關心的,冷淡的), indignant (憤慨的), joyful (充滿喜悅的), moody (悶悶不樂的), nervous (緊張不安的), passionate (熱情的), perplexed (困惑的), pleased (高兴的), ashamed (羞恥的), arrogant (自大的), relieved (放心的), satisfied (滿意的), scared (恐懼的), stunned (驚呆的), surprised (感到意外的), terrified (恐懼的), thrilled (十分興奮的), uncomfortable (不自在的), upset (心煩意亂的), vexed (苦惱的), worried (擔心的).</p>
+
+                <h3 style="color:#2c3e50; margin-top: 40px;">E) 描述心情與情緒反應的萬用佳句</h3>
+                <ul class="custom-list">
+                    <li>I am radiant with joy. (我洋溢著喜悅。)</li>
+                    <li>My face lights up with joy. (我因欣喜而容光煥發。)</li>
+                    <li>I am all smiles when... (當...時,我笑容滿面。)</li>
+                    <li>I am intoxicated by... (...令我陶醉。)</li>
+                    <li>I am in an ecstasy over... (...讓我欣喜若狂。)</li>
+                    <li>My heart bounds with joy. (我因喜悅而雀躍不已。)</li>
+                    <li>I give a triumphant shout. (我得意洋洋地大叫。)</li>
+                    <li>I laugh with delight when... (當...時,我開心地笑了。)</li>
+                    <li>...gives me an immense thrill. (...給我極大的快感。)</li>
+                    <li>I shed tears of joy/sorrow/pity. / I weep for joy/sorrow/pity. (我流下開心/悲傷/同情的眼淚。)</li>
+                    <li>I am overwhelmed with joy/grief. (我喜不自勝/不勝悲傷。)</li>
+                    <li>I burst into laughter/burst out laughing. (我突然笑了起來,放聲大笑。)</li>
+                    <li>I burst into tears/burst out crying. (我突然哭了起來,放聲大哭。)</li>
+                    <li>Tears stream down my cheeks. (淚水沿著我的雙頰流下來。)</li>
+                    <li>I often keep my sorrow in my bosom. (我常會把憂傷藏在內心。)</li>
+                    <li>I am trembling with rage. (我氣得發抖。)</li>
+                    <li>I choke with rage. (我氣得說不出話來。)</li>
+                    <li>...inflames me with anger. (...激起我的怒火。)</li>
+                    <li>Fear suddenly possesses me. (恐懼突然攫獲我。)</li>
+                    <li>I am rigid with fear. (我恐懼得人都僵了。)</li>
+                    <li>I am pale and trembling with shock. (我臉色蒼白,嚇得全身發抖。)</li>
+                    <li>I am shivering with fright at the thought of... (我害怕得發抖。)</li>
+                    <li>The thought... sends a shiver down my spine. (那個想法使我毛骨悚然。)</li>
+                    <li>I am too scared to move. (我嚇得不敢動。)</li>
+                    <li>...sends a chill to my heart. (...使我感到心寒。)</li>
+                    <li>I am tortured by guilt. (罪惡感折磨著我。)</li>
+                    <li>I shed repentant tears. (我流下懺悔的眼淚。)</li>
+                    <li>I blush with embarrassment. (我尷尬地臉紅。)</li>
+                    <li>I hang my head in shame. (我羞愧地低下頭。)</li>
+                    <li>Pity melts my heart. (憐憫使我心軟。)</li>
+                    <li>...throws me into despair. (...使我陷入絕望。)</li>
+                    <li>I experience a feeling of total isolation. (我感受到徹底的孤寂感。)</li>
+                    <li>My mind goes blank. (我的腦袋一片空白。)</li>
+                    <li>I am seized with jealousy. (我妒火中燒。)</li>
+                    <li>I have an overwhelming desire to... (我有一股不可抗拒的衝動想...)</li>
+                    <li>...takes a load off my mind. (...使我卸下心中重擔。)</li>
+                    <li>I sigh with relief. / I give a sigh of relief. / I let out a sigh of relief. (我鬆了一口氣。)</li>
+                    <li>I feel relieved of the burden. (我覺得如釋重負。)</li>
+                    <li>...makes me achieve inward peace. (...令我得到內心的安寧。)</li>
+                    <li>I am strongly affected by... (...使我大為感動。)</li>
+                </ul>
+
+                <h3 style="color:#2c3e50; margin-top: 40px;">F) 描述景緻的萬用佳句</h3>
+                <article class="sentence-pattern"><h3>The charm of... lies in its unspoiled beauty.</h3><p>...的迷人之處在於其未遭破壞的美。</p></article>
+                <article class="sentence-pattern"><h3>Beautiful scenes delight the eye.</h3><p>美麗的景色賞心悅目。</p></article>
+                <article class="sentence-pattern"><h3>The fabulous/magnificent/majestic landscape leaves me breathless.</h3><p>極佳的/壯麗的/雄偉的景觀讓我屏息。</p></article>
+                <article class="sentence-pattern"><h3>The view from the top of... is quite spectacular/splendid.</h3><p>從...的頂端望出去的景色相當壯觀。</p></article>
+                <article class="sentence-pattern"><h3>The stream is as clear as crystal.</h3><p>這條小溪如水晶般清澈。</p></article>
+                <article class="sentence-pattern"><h3>The breeze sends ripples across the lake.</h3><p>微風使湖面泛起漣漪。</p></article>
+                <article class="sentence-pattern"><h3>There is complete silence deep in the forest.</h3><p>森林深處一片寂靜。</p></article>
+                <article class="sentence-pattern"><h3>I love the restful sound of the wind in the trees.</h3><p>我喜愛林間寂靜的風聲。</p></article>
+                <article class="sentence-pattern"><h3>As lovely cool breezes blow, the leaves rustle.</h3><p>當宜人的涼風吹來,樹葉沙沙作響。</p></article>
+                <article class="sentence-pattern"><h3>Moonlight/Sunlight is streaming in through the leaves.</h3><p>月光/日光從樹葉流瀉而入。</p></article>
+
+                <h3 style="color:#2c3e50; margin-top: 40px;">G) 記敘文結論萬用佳句</h3>
+                <article class="sentence-pattern"><h3>This has been the [最高級形容詞] experience so far in my life.</h3><p>這是我這輩子至今最...的經歷。</p></article>
+                <article class="sentence-pattern"><h3>This is the [最高級形容詞] experience I will remember forever.</h3><p>這是我會永遠記得的最...的經歷。</p></article>
+                <article class="sentence-pattern"><h3>...left a lasting impression on me.</h3><p>...令我永難忘懷。</p></article>
+                <article class="sentence-pattern"><h3>After this..., I became [比較級形容詞] than ever before.</h3><p>在這...之後,我變得比以前更...</p></article>
+                <article class="sentence-pattern"><h3>This... made me perfectly aware that...</h3><p>這...使我完全意識到...</p></article>
+                <article class="sentence-pattern"><h3>Thanks to this..., I have become... since then.</h3><p>因為這...，自從那時起,我變得...</p></article>
+                <article class="sentence-pattern"><h3>It was not until... that I realized the importance/significance/value of...</h3><p>就是直到...我才領悟到...的重要性。</p></article>
+                <article class="sentence-pattern"><h3>But for this..., I would still be ignorant of...</h3><p>若非這...，我現在仍然不知道...</p></article>
+                <article class="sentence-pattern"><h3>This... opened my mind and broadened my horizon.</h3><p>這...使我心胸開放並開闊我的眼界。</p></article>
+                <article class="sentence-pattern"><h3>After..., I had a completely different perspective/outlook on life.</h3><p>在...之後,我對於人生的看法完全不同。</p></article>
+                <article class="sentence-pattern"><h3>This... taught me a useful lesson; now I do not... any more.</h3><p>這...給我一個有益的教訓;現在我再也不...</p></article>
+                <article class="sentence-pattern"><h3>From..., I learned a lesson that + [佳句 or 成語].</h3><p>從...中,我得到了一個...的教訓。</p></article>
+                <article class="sentence-pattern"><h3>Since..., I have always lived in the shadow of it.</h3><p>自從...起,我一直活在其陰影下。</p></article>
+                <article class="sentence-pattern"><h3>If only I could get rid of the bitter memories of...</h3><p>但願我能擺脫...的痛苦的回憶。</p></article>
+                <article class="sentence-pattern"><h3>How I wish... in my lifetime!</h3><p>我真希望...在我這一輩子...了!</p></article>
+            </section>
+            
+            <section id="expository" class="content-block">
+                <h2>說明文及論說文寫作技巧</h2>
+
+                <h3 style="color:#2c3e50;">A) 說明影響的萬用佳句</h3>
+                <ul class="custom-list">
+                    <li>...always have/has a great effect on me. (一直對我有很大的影響。)</li>
+                    <li>...have/has a great influence on me. (對我有很大的影響。)</li>
+                    <li>...have/has a great impact on me. (對我有很大的影響。)</li>
+                    <li>...lets me have a good insight into... (...讓我洞察...)</li>
+                    <li>...lets me comprehend the true meaning of... (...讓我了解...的真諦。)</li>
+                    <li>...made a radical change to my life. (...使我的人生有徹底的改變。)</li>
+                    <li>...made me have a thoroughly different perspective/outlook on life. (...使我有徹底不同的人生觀。)</li>
+                    <li>...makes me assume/take a positive attitude toward life. (...使我對人生採取積極的態度。)</li>
+                    <li>...inspires me to greater efforts. (...激勵我更加努力。)</li>
+                    <li>...urges me to turn over a new leaf. (...驅策我改過自新。)</li>
+                </ul>
+
+                <h3 style="color:#2c3e50; margin-top: 40px;">B) 說明重要性的萬用佳句</h3>
+                <ul class="custom-list">
+                    <li>...plays an essential/indispensable part/role in our daily lives. (在我們的日常生活中扮演不可或缺的角色。)</li>
+                    <li>...is so valuable that we must cherish it. (...是如此地寶貴,我們必定得珍惜。)</li>
+                    <li>Nothing is as/so [形容詞] as... (沒有任何一件事能與...一樣地...)</li>
+                    <li>Nothing is as/so worthy of being cherished as... (沒有任何一件事會與...一樣地值得珍惜。)</li>
+                    <li>...is priceless. Only fools think nothing of it. (...是無價。只有傻子才會認為它沒有價值。)</li>
+                    <li>Without..., we would feel that there is something lacking in life. (假如沒有...,我們將覺得人生中缺少了什麼。)</li>
+                    <li>But for..., our lives would be monotonous and dull. (要不是...,我們的生活將單調且乏味。)</li>
+                    <li>We would lead a meaningless existence if there were no... (如果沒有...,我們將過著無意義的生活。)</li>
+                    <li>Were it not for..., we could not lead a life full of pleasure. (若非...,我們就無法過著充滿樂趣的生活。)</li>
+                    <li>...is a blessing. (...就是福。)</li>
+                </ul>
+                
+                <h3 style="color:#2c3e50; margin-top: 40px;">C) 說明益處的萬用佳句</h3>
+                <ul class="custom-list">
+                    <li>...is beneficial to good health. (有益健康。)</li>
+                    <li>By..., I am able to maintain health. (藉由...,我能夠保持健康。)</li>
+                    <li>I enjoy good health because I... (我因為...而享有健康。)</li>
+                    <li>I... several times a week to promote/improve my health. (我每週...數次以增進健康。)</li>
+                    <li>...helps me exercise my body and mind. (有助於鍛鍊我的身心。)</li>
+                    <li>...helps me keep/retain the balance of my body and mind. (助我保持身心的平衡。)</li>
+                    <li>...makes me keep an open mind. (使我保持開放的心胸。)</li>
+                    <li>...broadens the mind. (開闊心胸。)</li>
+                    <li>I cultivate my mind by... (我藉...來陶冶心性。)</li>
+                    <li>...enriches the mind. (充實心靈。)</li>
+                    <li>...helps me find peace of mind. (助我找到內心的平靜。)</li>
+                    <li>...makes me feel at ease. (使我感到自在。)</li>
+                    <li>...gives me great pleasure and satisfaction. (帶給我很大的快樂及滿足。)</li>
+                    <li>I find immense enjoyment in... (我從...中得到莫大的樂趣。)</li>
+                    <li>I derive much amusement from... (我從...中得到許多樂趣。)</li>
+                    <li>...gives me a sense of achievement. (帶給我成就感。)</li>
+                    <li>I get/obtain great relief from... (我從...中得到極大的寬慰。)</li>
+                    <li>I can leave all my worries behind by... (我藉由...忘卻所有的煩惱。)</li>
+                    <li>When..., I can allow my fancy to roam. (當...時,我可以任憑我的想像漫遊。)</li>
+                    <li>As I feel..., ...will revive me. (當我覺得...時, ...使我恢復精神。)</li>
+                    <li>...always can refresh me. (...總能使我神清氣爽。)</li>
+                    <li>...is educational as well as entertaining. (...寓教於樂。)</li>
+                    <li>...is both interesting and highly informative. (...既有趣又非常有教育價值。)</li>
+                    <li>...can ward off ill feeling and tension. (...可以避免惡感和緊張。)</li>
+                    <li>...adds spice to our lives. (...為我們的生活增添了趣味。)</li>
+                    <li>...broadens/enlarges/expands/widens our horizons. (...擴展我們的視野。)</li>
+                    <li>By..., we can enlarge the horizon of knowledge. (藉著...,我們能擴展知識的範疇。)</li>
+                    <li>...makes me have more responsibility. (...使我更有責任感。)</li>
+                    <li>...makes our society agreeable and harmonious. (...使我們的社會宜人且和諧。)</li>
+                    <li>...makes the world wonderful. (...使世界美好。)</li>
+                </ul>
+                
+                <h3 style="color:#2c3e50; margin-top: 40px;">D) 闡述人生觀的萬用佳句</h3>
+                 <ul class="custom-list">
+                    <li>I set high standards for myself and aim at perfection in everything. (我為自己立下高標準並事事力求完美。)</li>
+                    <li>I cherish high ideals and endeavor to achieve my ambition. (我懷有崇高的理想並努力實現我的志向。)</li>
+                    <li>I cling to my beliefs and am never swayed by others. (我執著於我的信念,且從不被別人左右。)</li>
+                    <li>No matter what other people say, I have the courage of my convictions. (不管他人怎麼說,我有實踐自己信念的勇氣。)</li>
+                    <li>I will never abandon my hope of being a(n)... (我永不放棄當...的希望。)</li>
+                    <li>I am convinced that a bright future awaits me as long as I persevere. (我深信只要我堅持下去,一個光明的未來等著我。)</li>
+                    <li>I always look on the bright side of things. (我永遠對事情抱持樂觀的態度。)</li>
+                    <li>I always take a positive attitude and expect the best. (我總是抱著積極的態度並做最好的打算。)</li>
+                    <li>I always relish a challenge. (我總是從挑戰獲得樂趣。)</li>
+                    <li>I obey my conscience in doing everything. (我順從良心做每一件事。)</li>
+                    <li>I endeavor to make the best of a very difficult situation. (我努力去順應逆境。)</li>
+                    <li>I always show great resolution in facing difficulties. (我在面對困難時總表現得很果斷。)</li>
+                    <li>I do not waste my time in vain pleasures. (我不在空虛的歡樂中浪費光陰。)</li>
+                    <li>People who idle the hours away will not achieve anything. (虛度光陰的人將一事無成。)</li>
+                    <li>We are mortal, yet we should make good use of the time when we live. (我們都不免一死,但我們要善用活著的時光。)</li>
+                    <li>I believe in the proverb that where there is a will, there is a way. (我相信有志者事竟成這句成語。)</li>
+                    <li>Diligence is the key to success. (勤勉是成功之關鍵。)</li>
+                    <li>Success should be achieved by virtue of hard work rather than luck. (成功憑藉的是努力而非運氣。)</li>
+                    <li>By hard work we can achieve anything. (藉著努力我們能成就任何事。)</li>
+                    <li>Nothing important can be achieved without perseverance. (沒有毅力無法成就任何大事。)</li>
+                    <li>To succeed requires strong determination and perseverance. (成功需要強大的決心和毅力。)</li>
+                    <li>Diligent people will enjoy the fruits of their hard work and live with dignity. (勤勉的人會享受辛勤工作的果實並活得有尊嚴。)</li>
+                    <li>If we have courage, no matter how difficult the situation may be, we can do whatever we want with our lives. (如果我們有勇氣,無論情勢如何困難,我們能對人生做任何我們想做的事。)</li>
+                    <li>Life is compared to a voyage full of unpredictable challenges. (人生好比一趟充滿不可預測的挑戰的航行。)</li>
+                    <li>Money is not always a good criterion of real success in life. (金錢未必是衡量人生真正成功的好標準。)</li>
+                </ul>
+
+                 <h3 style="color:#2c3e50; margin-top: 40px;">E) 論說文常用佳句</h3>
+                 <h4>&lt;引出自己的看法&gt;</h4>
+                 <ul class="custom-list">
+                    <li>In my opinion/view,... (依我之見，...)</li>
+                    <li>I am firmly of the opinion that... (我堅決認為...)</li>
+                    <li>I take the view that... (我有...的看法。)</li>
+                    <li>From my perspective/viewpoint,... (就我的觀點來看，...)</li>
+                    <li>As far as I know,... (據我所知，...)</li>
+                    <li>To my way of thinking,... (我認為，...)</li>
+                    <li>It is my belief that... (我的看法是...)</li>
+                 </ul>
+                 <h4>&lt;舉證&gt;</h4>
+                 <ul class="custom-list">
+                    <li>For example / instance,... (例如...)</li>
+                    <li>Take... for example/instance/illustration. (拿...舉例。)</li>
+                    <li>Let me take an example. (讓我舉個例子。)</li>
+                    <li>Let me provide a convincing argument. (讓我提出一個有說服力的論點。)</li>
+                    <li>Let me give some examples to support my argument. (讓我舉一些例子來支持我的論點。)</li>
+                 </ul>
+                 <h4>&lt;引出作法&gt;</h4>
+                 <ul class="custom-list">
+                    <li>The following are the ways to fulfill it. First,... (以下是完成這件事情的方法。首先...)</li>
+                    <li>My ways are as follows. First,... (我的方式如下。首先...)</li>
+                    <li>We should do it in the following ways. First,... (我們應該以下列的方式來做。首先...)</li>
+                 </ul>
+                 <h4>&lt;陳述問題及現象&gt;</h4>
+                 <ul class="custom-list">
+                    <li>This problem has been a common phenomenon. (這個問題已經是一個常見的現象。)</li>
+                    <li>It is a thorny problem that requires urgent attention. (這是需要迫切注意的棘手的問題。)</li>
+                    <li>It is still a serious problem to solve. (這仍然是一個有待解決的嚴重的問題。)</li>
+                    <li>This problem constitutes/poses a threat to our society. (這個問題對我們的社會構成威脅。)</li>
+                    <li>This problem has aroused fear among the public. (這個問題已經激起大眾之間的憂慮。)</li>
+                    <li>The current situation shows little sign of improving. (目前的情況顯示有很少改善的跡象。)</li>
+                    <li>The situation has been deteriorating to a horrible extent. (這個情況已經惡化到可怕的程度。)</li>
+                    <li>The situation will soon reach crisis proportions. (這個情況將很快達到危機的程度。)</li>
+                    <li>This phenomenon is prevailing nowadays. (這個現象現今盛行中。)</li>
+                 </ul>
+                 <h4>&lt;提出解決之道&gt;</h4>
+                 <ul class="custom-list">
+                    <li>The authorities must take/adopt effective measures to solve this problem. (當局必須採取有效的措施去解決這個問題。)</li>
+                    <li>The government and civilians should cooperate fully to solve this problem. (政府和百姓應該充分合作去解決這個問題。)</li>
+                    <li>We should seek a solution to this problem. (我們應該尋求這個問題的解決辦法。)</li>
+                    <li>Stricter law should be enacted and enforced to ensure our safety. (更嚴格的法律應該被制定及執行以確保我們的安全。)</li>
+                    <li>Violators should suffer punishment. (違法者應該受處罰。)</li>
+                    <li>We should raise our standards of morality through education. (我們應該透過教育提升我們的道德水準。)</li>
+                    <li>We should raise/promote/increase public awareness of such an issue. (我們應該提升大眾對於這個問題的認知。)</li>
+                    <li>We should launch more campaigns to attract/capture public attention. (我們應該發起更多的活動來得到大眾的關注。)</li>
+                 </ul>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2025 澤享的思維創造. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+</body>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const practiceItems = [];
+        const displayElement = document.getElementById('practice-item-display');
+        const nextBtn = document.getElementById('next-item-btn');
+        const toggleBtn = document.getElementById('toggle-translation-btn');
+
+        // 1. 從頁面中收集所有句型和單字
+        document.querySelectorAll('article.sentence-pattern').forEach(item => {
+            const english = item.querySelector('h3').innerText;
+            const chinese = item.querySelector('p').innerText;
+            practiceItems.push({ english, chinese });
+        });
+
+        document.querySelectorAll('ul.custom-list li').forEach(item => {
+            const parts = item.innerText.split(':');
+            if (parts.length === 2) {
+                const english = parts[1].trim();
+                const chinese = parts[0].trim();
+                practiceItems.push({ english, chinese });
+            }
+        });
+
+        let currentEnglishElement;
+
+        // 2. 顯示隨機項目的函式 (邏輯修改)
+        function showRandomItem() {
+            if (practiceItems.length === 0) {
+                displayElement.innerHTML = '<p>沒有可練習的項目。</p>';
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * practiceItems.length);
+            const item = practiceItems[randomIndex];
+            
+            // 現在先顯示中文，英文隱藏
+            displayElement.innerHTML = `
+                <h3>${item.chinese}</h3>
+                <p class="hidden">${item.english}</p>
+            `;
+            currentEnglishElement = displayElement.querySelector('p');
+        }
+
+        // 3. 切換英文顯示/隱藏的函式 (邏輯修改)
+        function toggleEnglish() {
+            if (currentEnglishElement) {
+                currentEnglishElement.classList.toggle('hidden');
+            }
+        }
+
+        // 4. 綁定事件監聽器
+        nextBtn.addEventListener('click', showRandomItem);
+        toggleBtn.addEventListener('click', toggleEnglish);
+
+        // 5. 初始載入時顯示一個項目
+        showRandomItem();
+    });
+    </script>
+</html>

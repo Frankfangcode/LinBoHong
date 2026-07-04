@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英文作文診斷報告：Tourist Attraction Garden & Owner's Reaction</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&family=Noto+Serif+TC:wght@400;700&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f3f4f6; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        .font-serif { font-family: 'Noto Serif TC', serif; }
+        .card-hover:hover { transform: translateY(-2px); transition: all 0.2s; }
+        
+        /* Paper View Specific Styles */
+        .paper-del {
+            text-decoration: line-through;
+            color: #ef4444; /* red-500 */
+            text-decoration-thickness: 2px;
+            margin-right: 4px;
+            opacity: 0.7;
+        }
+        .paper-add {
+            color: #dc2626; /* red-600 */
+            font-weight: bold;
+            margin-right: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- Icons ---
+        const IconBase = ({ children, size = 24, className = "" }) => (
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width={size} 
+                height={size} 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className={className}
+            >
+                {children}
+            </svg>
+        );
+
+        const BookOpen = (props) => (
+            <IconBase {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></IconBase>
+        );
+        const AlertCircle = (props) => (
+            <IconBase {...props}><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></IconBase>
+        );
+        const FileText = (props) => (
+            <IconBase {...props}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></IconBase>
+        );
+        const ArrowRight = (props) => (
+            <IconBase {...props}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></IconBase>
+        );
+        const Award = (props) => (
+            <IconBase {...props}><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></IconBase>
+        );
+        const BarChart2 = (props) => (
+             <IconBase {...props}><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></IconBase>
+        );
+        const PenTool = (props) => (
+            <IconBase {...props}><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></IconBase>
+        );
+        const Edit3 = (props) => (
+            <IconBase {...props}><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></IconBase>
+        );
+        const Copy = (props) => (
+            <IconBase {...props}><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></IconBase>
+        );
+
+        // Data
+        const correctionData = {
+            title: "Tourist Attraction Garden & Owner's Reaction",
+            studentName: "Student",
+            score: {
+                total: "10-11",
+                max: 20,
+                breakdown: [
+                    { label: "內容 Content", score: 3, max: 5, status: "avg" },
+                    { label: "組織 Organization", score: 3, max: 5, status: "avg" },
+                    { label: "文法句構 Grammar", score: 2, max: 5, status: "warn" },
+                    { label: "字彙拼字 Vocabulary", score: 2, max: 5, status: "warn" }
+                ]
+            },
+            summary: "你的文章整體方向是正確的，兩段結構也符合題意，但重點稍微分散。讀者需要較快地理解圖片最核心的衝突（遊客破壞）。第二段雖然表達了園主的不滿，但在論述上情緒成分較多，若能更清楚地說明自己在意的是環境維護，文章會更具深度。整體而言，只要在文法（主詞動詞一致性、時態）與段落安排上加強，就能讓內容更完整，論述也會更成熟。",
+            corrections: [
+                { id: 1, original: "there must have", corrected: "there are usually", explanation: "句型錯誤。表示「有...」應使用 'There is/are'，不能用 'There have'。", type: "Grammar" },
+                { id: 2, original: "environment being damage", corrected: "environment from being damaged", explanation: "被動語態與介系詞。Prevent sb/sth 'from' V-ing，且環境是被破壞，需用 passive voice 'being damaged'。", type: "Grammar" },
+                { id: 3, original: "terrific", corrected: "beautiful", explanation: "選詞精準度。'Terrific' 語氣強烈且較口語，描述花園用 'beautiful' 或 'attractive' 較自然。", type: "Vocab" },
+                { id: 4, original: "toursits", corrected: "tourists", explanation: "拼字錯誤。", type: "Spelling" },
+                { id: 5, original: "paly", corrected: "play", explanation: "拼字錯誤。", type: "Spelling" },
+                { id: 6, original: "take a snap", corrected: "take photos", explanation: "搭配詞。'Take a snap' 較不自然，考試寫作建議用標準的 'take photos'。", type: "Vocab" },
+                { id: 7, original: "Everyone enjoy... come", corrected: "Everyone enjoys... comes", explanation: "主動詞一致性。Everyone 是單數代名詞，動詞需加 s。", type: "Grammar" },
+                { id: 8, original: "rule on the sign", corrected: "rule written on the sign", explanation: "語意完整性。加上 'written' (寫在...上) 會讓描述更清楚。", type: "Structure" },
+                { id: 9, original: "demostrate", corrected: "demonstrates", explanation: "拼字與單數動詞。拼字應為 demonstrate，且主詞 It 為單數。", type: "Spelling" },
+                { id: 10, original: "opt to neglect", corrected: "choose to ignore", explanation: "搭配詞。'Opt to neglect' 聽起來很生硬，'choose to ignore' 是最自然的說法。", type: "Vocab" },
+                { id: 11, original: "must lost", corrected: "will lose", explanation: "助動詞後接原形。Must/Will 後面動詞要還原，lost 是過去式/分詞，原形是 'lose'。此處語意用 'will' (將會) 較好。", type: "Grammar" },
+                { id: 12, original: "damage get", corrected: "damage really gets", explanation: "主動詞一致性。Damage 是不可數單數，動詞用 gets。", type: "Grammar" },
+                { id: 13, original: "dissapointed", corrected: "disappointed", explanation: "拼字錯誤。一個 s，兩個 p。", type: "Spelling" },
+                { id: 14, original: "every people", corrected: "everyone / the visitors", explanation: "文法錯誤。People 是複數，不能用 every (接單數)。可用 'everyone' 或 'all the people'。", type: "Grammar" },
+                { id: 15, original: "masterpiece", corrected: "work / creation", explanation: "語氣。'Masterpiece' (傑作) 自稱顯得太自負，用 'work' (心血/作品) 較恰當。", type: "Vocab" },
+                { id: 16, original: "put the fence beside", corrected: "put up a fence around", explanation: "片語搭配。架設圍籬用 'put up'，且是圍繞花園用 'around'。", type: "Vocab" },
+                { id: 17, original: "Despite ... but", corrected: "Although ...", explanation: "連接詞錯誤。Despite 是介系詞，不能接子句也不能跟 but 連用。改用 Although 引導子句。", type: "Grammar" },
+                { id: 18, original: "make up for me", corrected: "compensate me", explanation: "詞彙誤用。Make up for 是「彌補(過錯)」，賠償某人通常用 'compensate'。", type: "Vocab" },
+                { id: 19, original: "believed", corrected: "believe", explanation: "時態一致。整篇文章主要用現在式，這裡不需突兀地變成過去式。", type: "Grammar" }
+            ],
+            finalText: {
+                p1: "When we visit tourist attractions, there are usually some signs or rules to prevent the environment from being damaged. The picture shows a beautiful garden where the flowers are in full bloom. Many tourists are attracted to the garden because of its scenery. The children play with each other in the garden. At the same time, many couples take photos together. Everyone enjoys the pleasure that comes from the gorgeous atmosphere and scenery. Nonetheless, they forget one crucial thing. They don't follow the rule written on the sign. It demonstrates a clear statement: \"Tourists can't walk into the garden, but taking pictures is allowed.\" Maybe some people do notice it; however, they choose to ignore it. In this way, the garden will lose its beauty one day.",
+                p2: "As the owner of the garden, the damage really gets on my nerves. I make every effort to maintain the environment, and I also want to allow more people to admire the view. However, things often do not go as we wish, and I'm disappointed with the visitors who come to my garden. They don't respect my work, so I am determined to take some measures to protect my garden. For instance, I will put up a fence around the garden. Although this may add extra structures to my garden, it can effectively stop tourists from walking into it. On top of that, people who break into my garden and damage it should compensate me. Above all, I believe that these methods can help me solve the problem. To ensure everyone can have a good experience, I will try my best to improve the garden."
+            },
+            // Structured data for Paper View
+            paperData: [
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "When we visit the tourist attractions , there " },
+                            { text: "must have", type: "del" },
+                            { text: "are usually", type: "add" },
+                            { text: " some signs or rules " },
+                            { text: "about the spots ,", type: "del" },
+                            { text: " " },
+                            { text: "to prevent " },
+                            { text: "their", type: "del" },
+                            { text: " the", type: "add" },
+                            { text: " environment " },
+                            { text: "being damage", type: "del" },
+                            { text: "from being damaged", type: "add" },
+                            { text: ". " },
+                            { text: "Picture", type: "del" },
+                            { text: "The picture", type: "add" },
+                            { text: " shows that " },
+                            { text: "there is", type: "del" },
+                            { text: " " },
+                            { text: "a " },
+                            { text: "terrific", type: "del" },
+                            { text: "beautiful", type: "add" },
+                            { text: " garden " },
+                            { text: "and", type: "del" },
+                            { text: "where", type: "add" },
+                            { text: " the flowers are in full bloom. So many " },
+                            { text: "toursits", type: "del" },
+                            { text: "tourists", type: "add" },
+                            { text: " are attracted " },
+                            { text: "due to its scenery", type: "del" },
+                            { text: "to the garden because of its scenery", type: "add" },
+                            { text: ". The children " },
+                            { text: "paly", type: "del" },
+                            { text: "play", type: "add" },
+                            { text: " with each other in the garden. At the same time , " },
+                            { text: "numerous", type: "del" },
+                            { text: "many", type: "add" },
+                            { text: " couples " },
+                            { text: "take a snap", type: "del" },
+                            { text: "take photos", type: "add" },
+                            { text: " together. Everyone " },
+                            { text: "enjoy", type: "del" },
+                            { text: "enjoys", type: "add" },
+                            { text: " the pleasure that " },
+                            { text: "come", type: "del" },
+                            { text: "comes", type: "add" },
+                            { text: " from the gorgeous atmosphere and " },
+                            { text: "scenes", type: "del" },
+                            { text: "scenery", type: "add" },
+                            { text: ". Nonetheless , they forget one crucial thing. They don't follow the rule " },
+                            { text: "on", type: "del" },
+                            { text: "written on", type: "add" },
+                            { text: " the sign. It " },
+                            { text: "demostrate", type: "del" },
+                            { text: "demonstrates", type: "add" },
+                            { text: " an " },
+                            { text: "explicit", type: "del" },
+                            { text: "clear", type: "add" },
+                            { text: " statement, \" " },
+                            { text: "Toursits", type: "del" },
+                            { text: "Tourists", type: "add" },
+                            { text: " can't walk into the garden , but " },
+                            { text: "taking picture is fine", type: "del" },
+                            { text: "taking pictures is allowed", type: "add" },
+                            { text: ".\" Maybe some people " },
+                            { text: "have noticed that", type: "del" },
+                            { text: "do notice it", type: "add" },
+                            { text: ". However , they " },
+                            { text: "opt to neglect", type: "del" },
+                            { text: "choose to ignore", type: "add" },
+                            { text: " it. In this way , the garden " },
+                            { text: "must lost", type: "del" },
+                            { text: "will lose", type: "add" },
+                            { text: " its beauty one day." }
+                        ]
+                    ]
+                },
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "As the " },
+                            { text: "host", type: "del" },
+                            { text: "owner", type: "add" },
+                            { text: " of the garden , the damage " },
+                            { text: "get", type: "del" },
+                            { text: "really gets", type: "add" },
+                            { text: " on my nerves. " },
+                            { text: "Because", type: "del" },
+                            { text: " " },
+                            { text: "I make every effort to maintain the environment and I also want to allow more people to admire the view. " },
+                            { text: "But", type: "del" },
+                            { text: "However,", type: "add" },
+                            { text: " things often " },
+                            { text: "not", type: "del" },
+                            { text: "do not", type: "add" },
+                            { text: " go as we wish, " },
+                            { text: "I'm", type: "del" },
+                            { text: "and I'm", type: "add" },
+                            { text: " " },
+                            { text: "dissapointed", type: "del" },
+                            { text: "disappointed", type: "add" },
+                            { text: " with " },
+                            { text: "every people", type: "del" },
+                            { text: "the visitors", type: "add" },
+                            { text: " coming to my garden. They don't respect my " },
+                            { text: "masterpiece", type: "del" },
+                            { text: "work", type: "add" },
+                            { text: " , so I " },
+                            { text: "determine", type: "del" },
+                            { text: "am determined", type: "add" },
+                            { text: " to take some measures to protect my garden. For instance, I will put " },
+                            { text: "the fence beside", type: "del" },
+                            { text: "up a fence around", type: "add" },
+                            { text: " the garden. " },
+                            { text: "Despite adding spots in my garden , but", type: "del" },
+                            { text: "Although this may add extra structures to my garden,", type: "add" },
+                            { text: " it can " },
+                            { text: "stop the tourists walking into the garden effectively", type: "del" },
+                            { text: "effectively stop tourists from walking into it", type: "add" },
+                            { text: ". On top of that , " },
+                            { text: "if", type: "del" },
+                            { text: " " },
+                            { text: "people who break into my garden and damage it " },
+                            { text: "have to make up for me", type: "del" },
+                            { text: "should compensate me", type: "add" },
+                            { text: ". Above all, I " },
+                            { text: "believed", type: "del" },
+                            { text: "believe", type: "add" },
+                            { text: " that these methods can help me solve the " },
+                            { text: "problems", type: "del" },
+                            { text: "problem", type: "add" },
+                            { text: ". To ensure " },
+                            { text: "every people", type: "del" },
+                            { text: "everyone", type: "add" },
+                            { text: " can have a good experience , I will try my best to improve the garden." }
+                        ]
+                    ]
+                }
+            ]
+        };
+
+        const ScoreCard = ({ label, score, max, status }) => {
+            const width = (score / max) * 100 + '%';
+            return (
+                <div className="mb-4">
+                    <div className="flex justify-between text-sm font-medium mb-1 text-gray-700">
+                        <span>{label}</span>
+                        <span>{score} / {max}</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                        <div className={`h-2.5 rounded-full ${status === 'good' ? 'bg-green-500' : status === 'warn' ? 'bg-red-500' : 'bg-yellow-500'}`} style={{ width }}></div>
+                    </div>
+                </div>
+            );
+        };
+
+        const CorrectionCard = ({ item }) => (
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4 card-hover">
+                <div className="flex items-start gap-3">
+                    <div className={`mt-1 p-1.5 rounded-full shrink-0 ${item.type === 'Grammar' ? 'bg-blue-100 text-blue-600' : item.type === 'Spelling' ? 'bg-red-100 text-red-600' : 'bg-purple-100 text-purple-600'}`}>
+                        {item.type === 'Grammar' ? <BookOpen size={16} /> : item.type === 'Spelling' ? <AlertCircle size={16} /> : <FileText size={16} />}
+                    </div>
+                    <div className="flex-1">
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 mb-2">
+                            <div className="flex-1 bg-red-50 rounded px-3 py-2 text-red-800 line-through decoration-red-400 decoration-2 bg-opacity-20">
+                                {item.original}
+                            </div>
+                            <ArrowRight className="hidden md:block text-gray-400" size={20} />
+                            <div className="flex-1 bg-green-50 rounded px-3 py-2 text-green-800 font-medium border border-green-200">
+                                {item.corrected}
+                            </div>
+                        </div>
+                        <p className="text-gray-600 text-sm mt-2 flex items-start gap-2">
+                            <span className="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded uppercase tracking-wide font-bold mt-0.5">{item.type}</span>
+                            {item.explanation}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const PaperView = ({ data }) => (
+            <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8 md:p-12 overflow-hidden relative">
+                 <div className="absolute top-0 left-0 w-full h-2 bg-red-500 opacity-80"></div>
+                 <h2 className="text-2xl font-serif font-bold text-gray-800 mb-8 border-b border-gray-100 pb-4 text-center">Correction Paper</h2>
+                 
+                 <div className="font-serif text-lg leading-loose text-gray-800 space-y-6">
+                    {data.map((para, pIdx) => (
+                        <div key={pIdx}>
+                            {para.lines.map((line, lIdx) => (
+                                <span key={lIdx}>
+                                    {line.map((segment, sIdx) => {
+                                        if (segment.type === 'del') {
+                                            return <span key={sIdx} className="paper-del">{segment.text}</span>;
+                                        } else if (segment.type === 'add') {
+                                            return <span key={sIdx} className="paper-add">{segment.text}</span>;
+                                        } else {
+                                            return <span key={sIdx}>{segment.text}</span>;
+                                        }
+                                    })}
+                                    {/* Add space between sentences if not last line */}
+                                    {" "}
+                                </span>
+                            ))}
+                        </div>
+                    ))}
+                 </div>
+
+                 <div className="mt-12 pt-6 border-t border-gray-100 flex justify-end">
+                    <div className="text-right">
+                        <div className="text-red-600 font-handwriting text-4xl font-bold -rotate-12 inline-block border-4 border-red-600 rounded-full p-2 px-4 shadow-sm opacity-80">
+                            {correctionData.score.total}
+                        </div>
+                        <p className="text-red-500 font-serif text-sm mt-2">Score</p>
+                    </div>
+                 </div>
+            </div>
+        );
+        
+        const PracticeView = ({ paperData }) => {
+            const [originalText, setOriginalText] = useState('');
+            
+            useEffect(() => {
+                // Reconstruct original text from paperData
+                const text = paperData.map(para => {
+                    return para.lines.map(line => {
+                        return line.map(segment => {
+                            if (segment.type !== 'add') {
+                                return segment.text;
+                            }
+                            return '';
+                        }).join('');
+                    }).join(' ');
+                }).join('\n\n');
+                
+                setOriginalText(text);
+            }, [paperData]);
+
+            const copyToClipboard = () => {
+                navigator.clipboard.writeText(originalText);
+            };
+
+            return (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full">
+                        <div className="bg-gray-50 px-5 py-3 border-b border-gray-100 flex justify-between items-center">
+                            <h3 className="font-bold text-gray-700 flex items-center gap-2">
+                                <FileText size={18} className="text-gray-500"/> 原始文章 (Original)
+                            </h3>
+                            <button 
+                                onClick={copyToClipboard}
+                                className="text-gray-500 hover:text-blue-600 text-sm flex items-center gap-1 transition-colors"
+                                title="複製原文"
+                            >
+                                <Copy size={16}/> 複製
+                            </button>
+                        </div>
+                        <div className="p-6 font-serif text-lg leading-relaxed text-gray-800 whitespace-pre-wrap flex-1 overflow-y-auto">
+                            {originalText}
+                        </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full">
+                         <div className="bg-blue-50 px-5 py-3 border-b border-blue-100">
+                            <h3 className="font-bold text-blue-800 flex items-center gap-2">
+                                <Edit3 size={18} className="text-blue-600"/> 練習區 (Practice Here)
+                            </h3>
+                        </div>
+                        <textarea 
+                            className="w-full h-96 lg:h-full p-6 font-serif text-lg leading-relaxed text-gray-800 resize-none focus:outline-none focus:bg-gray-50 transition-colors"
+                            placeholder="請在此處試著重寫你的文章..."
+                        ></textarea>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('corrections'); // corrections, paper, final, practice
+
+            return (
+                <div className="max-w-6xl mx-auto p-4 md:p-8">
+                    {/* Header */}
+                    <header className="text-center mb-10">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">{correctionData.title}</h1>
+                        <p className="text-gray-500">作文批改與診斷報告</p>
+                    </header>
+
+                    {/* Dashboard Section */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        {/* Total Score */}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center">
+                            <div className="text-gray-500 font-medium mb-2">預估級分</div>
+                            <div className="text-5xl font-bold text-blue-600 mb-2">{correctionData.score.total}</div>
+                            <div className="text-sm text-gray-400">滿分 {correctionData.score.max}</div>
+                        </div>
+
+                        {/* Breakdown */}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:col-span-2">
+                            <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                <BarChart2 size={20} /> 評分細項
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                                {correctionData.score.breakdown.map((item, idx) => (
+                                    <ScoreCard key={idx} {...item} />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Summary Box */}
+                    <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 rounded-r-lg">
+                        <div className="flex items-start gap-3">
+                            <Award className="text-blue-600 shrink-0 mt-1" />
+                            <div>
+                                <h4 className="font-bold text-blue-800 mb-1">總評</h4>
+                                <p className="text-blue-800 text-opacity-80">{correctionData.summary}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Main Content Tabs */}
+                    <div className="mb-6 border-b border-gray-200 overflow-x-auto">
+                        <div className="flex gap-6 min-w-max">
+                            <button 
+                                onClick={() => setActiveTab('corrections')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'corrections' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><BookOpen size={18}/> 逐句批改診斷</span>
+                                {activeTab === 'corrections' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('paper')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'paper' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><PenTool size={18}/> 試卷批改模式</span>
+                                {activeTab === 'paper' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                             <button 
+                                onClick={() => setActiveTab('practice')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'practice' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><Edit3 size={18}/> 自我練習模式</span>
+                                {activeTab === 'practice' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('final')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'final' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><FileText size={18}/> 修正後範文</span>
+                                {activeTab === 'final' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Tab Content */}
+                    {activeTab === 'corrections' && (
+                        <div className="space-y-6">
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-xl font-bold text-gray-800">診斷與修正 ({correctionData.corrections.length})</h2>
+                                <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">紅色為原文錯誤，綠色為修正建議</span>
+                            </div>
+                            <div>
+                                {correctionData.corrections.map(item => (
+                                    <CorrectionCard key={item.id} item={item} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    
+                    {activeTab === 'paper' && (
+                        <PaperView data={correctionData.paperData} />
+                    )}
+                    
+                    {activeTab === 'practice' && (
+                        <PracticeView paperData={correctionData.paperData} />
+                    )}
+
+                    {activeTab === 'final' && (
+                        <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                            <div className="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                                <h2 className="font-bold text-gray-700">高分範文版 (Revised Version)</h2>
+                                <button className="text-blue-600 text-sm font-medium hover:underline" onClick={() => navigator.clipboard.writeText(correctionData.finalText.p1 + '\n\n' + correctionData.finalText.p2)}>複製全文</button>
+                            </div>
+                            <div className="p-8 leading-relaxed text-gray-800 text-lg space-y-6">
+                                <p>{correctionData.finalText.p1}</p>
+                                <p>{correctionData.finalText.p2}</p>
+                            </div>
+                            <div className="bg-blue-50 px-6 py-4 border-t border-blue-100">
+                                <p className="text-sm text-blue-800">💡 <strong>小提示：</strong> 閱讀範文時，請特別注意轉折詞 (On the one hand, Furthermore) 與動詞時態的使用。</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

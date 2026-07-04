@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英文作文診斷報告：Technology Replacing Human Services</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&family=Noto+Serif+TC:wght@400;700&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f3f4f6; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        .font-serif { font-family: 'Noto Serif TC', serif; }
+        .card-hover:hover { transform: translateY(-2px); transition: all 0.2s; }
+        
+        /* Paper View Specific Styles */
+        .paper-del {
+            text-decoration: line-through;
+            color: #ef4444; /* red-500 */
+            text-decoration-thickness: 2px;
+            margin-right: 4px;
+            opacity: 0.7;
+        }
+        .paper-add {
+            color: #dc2626; /* red-600 */
+            font-weight: bold;
+            margin-right: 2px;
+        }
+        
+        /* Toggle Switch Styles */
+        .toggle-btn {
+            @apply px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 border;
+        }
+        .toggle-btn-active {
+            @apply bg-blue-600 text-white border-blue-600 shadow-md;
+        }
+        .toggle-btn-inactive {
+            @apply bg-white text-gray-500 border-gray-200 hover:bg-gray-50;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- Icons ---
+        const IconBase = ({ children, size = 24, className = "" }) => (
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width={size} 
+                height={size} 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className={className}
+            >
+                {children}
+            </svg>
+        );
+
+        const BookOpen = (props) => (
+            <IconBase {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></IconBase>
+        );
+        const AlertCircle = (props) => (
+            <IconBase {...props}><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></IconBase>
+        );
+        const FileText = (props) => (
+            <IconBase {...props}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></IconBase>
+        );
+        const ArrowRight = (props) => (
+            <IconBase {...props}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></IconBase>
+        );
+        const Award = (props) => (
+            <IconBase {...props}><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></IconBase>
+        );
+        const BarChart2 = (props) => (
+             <IconBase {...props}><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></IconBase>
+        );
+        const PenTool = (props) => (
+            <IconBase {...props}><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></IconBase>
+        );
+        const Edit3 = (props) => (
+            <IconBase {...props}><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></IconBase>
+        );
+        const Copy = (props) => (
+            <IconBase {...props}><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></IconBase>
+        );
+        const CheckCircle = (props) => (
+            <IconBase {...props}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></IconBase>
+        );
+        const Sparkles = (props) => (
+            <IconBase {...props}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></IconBase>
+        );
+        const HelpCircle = (props) => (
+            <IconBase {...props}><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></IconBase>
+        );
+        const Rocket = (props) => (
+            <IconBase {...props}><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.1 4-1 4-1s.38 2.38-1 4z"></path><path d="M12 15v5s3.03-.55 4-2c1.1-1.62 1-4 1-4s-2.38-.38-4 1z"></path></IconBase>
+        );
+        const Target = (props) => (
+            <IconBase {...props}><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></IconBase>
+        );
+
+        // Data
+        const correctionData = {
+            title: "Technology Replacing Human Services: Self-Checkout Experience",
+            studentName: "澤享",
+            score: {
+                total: "12-14",
+                max: 20,
+                breakdown: [
+                    { label: "內容 Content", score: 4, max: 5, status: "good" },
+                    { label: "組織 Organization", score: 3, max: 5, status: "avg" },
+                    { label: "文法句構 Grammar", score: 2, max: 5, status: "warn" },
+                    { label: "字彙拼字 Vocabulary", score: 3, max: 5, status: "avg" }
+                ]
+            },
+            topic: {
+                title: "主題：AI 時代與科技取代人力 (Technology Replacing Human Services)",
+                description: [
+                    "AI時代來臨，生活中也出現愈來愈多科技取代人力的服務，像是自助點餐機、自助機場報到等。",
+                    "請寫一篇英文作文，文分兩段：",
+                    "第一段：舉例說明你觀察到生活中科技取代人力的現象。",
+                    "第二段：說明人力未來是否可能完全被科技取代，並提出理由支持你的看法。"
+                ]
+            },
+            summary: "內容切題且有具體生活經驗（自助結帳），立場明確。主要失分在於文法錯誤（被動語態、時態、主動詞一致性）及中式英文句構。若能修正這些基礎錯誤，分數將顯著提升。",
+            corrections: [
+                { id: 1, original: "technology take", corrected: "technology is taking", explanation: "主動詞與時態。Technology 是不可數名詞，且強調「正在發生」的趨勢，用 is taking (現在進行式) 較佳。", type: "Grammar" },
+                { id: 2, original: "Such as ... it change ... living way", corrected: "For example, ... have changed ... way of life", explanation: "句型與搭配。Such as 不能單獨引導主要子句。Living way 是中式英文，應為 way of life。", type: "Structure" },
+                { id: 3, original: "ingredient ... need ... would come", corrected: "ingredients ... needed ... were coming", explanation: "時態一致與複數。故事發生在過去，動詞用 needed；食材通常用複數 ingredients；were coming 表示過去進行式當未來用（當時即將發生）。", type: "Grammar" },
+                { id: 4, original: "Furthermore ... curios ... work", corrected: "Then ... curious ... worked", explanation: "轉折詞與拼字。敘事順序用 Then 較自然；拼字 curious；過去式 worked。", type: "Spelling" },
+                { id: 5, original: "standing on the counter", corrected: "standing behind the counter", explanation: "介系詞。店員是站在櫃檯「後面」(behind)，不是「上面」(on)。", type: "Vocab" },
+                { id: 6, original: "by the self-order machine", corrected: "using the self-checkout machine", explanation: "搭配詞。使用工具用 using；超市自助結帳機是 self-checkout machine。", type: "Vocab" },
+                { id: 7, original: "surprised to", corrected: "surprised by", explanation: "介系詞。Be surprised 搭配 by。", type: "Grammar" },
+                { id: 8, original: "after finished ... line up ... this the first time ... experienced", corrected: "after finishing ... lining up ... it was the first time ... had experienced", explanation: "文法綜合。After 接 V-ing；see sb V-ing；補上主詞動詞 it was；過去完成式 had experienced 表達「在此之前」。", type: "Grammar" },
+                { id: 9, original: "out of order", corrected: "broke down", explanation: "用字選擇。Broke down (故障) 在敘事中比 be out of order 更具動態感且自然。", type: "Vocab" },
+                { id: 10, original: "need to ... by the people", corrected: "had to ... with the help of a cashier", explanation: "過去式與搭配。Need 改 had to；by the people 不自然，改為 with the help of a cashier。", type: "Structure" },
+                { id: 11, original: "give ... to ... dissappointed", corrected: "gave ... of ... disappointed", explanation: "時態與拼字。過去式 gave；impression of；拼字 disappointed (1個s, 2個p)。", type: "Spelling" },
+                { id: 12, original: "we will not replace", corrected: "humans will not be replaced", explanation: "被動語態。人類是被取代，需用 will not be replaced；主詞用 humans 更精確。", type: "Grammar" },
+                { id: 13, original: "machine lack ... allow our life to be tedious", corrected: "machines lack ... can make our lives feel tedious", explanation: "單複數與語意。Machines 複數；allow...tedious 太直譯，改用 make...feel tedious。", type: "Grammar" },
+                { id: 14, original: "coming from the people ... feel the emotion", corrected: "from a real person ... feel warmth", explanation: "精確用字。Real person 強調真人；emotion 太空泛，warmth (溫度/人情味) 更貼切。", type: "Vocab" },
+                { id: 15, original: "When ... order. We still ... fix them", corrected: "when ... order, we still ... fix it", explanation: "句子結構與代名詞。將斷句合併；machine 單數用 it。", type: "Structure" },
+                { id: 16, original: "As the consequence", corrected: "As a consequence", explanation: "固定用法。不定冠詞 a。", type: "Vocab" },
+                { id: 17, original: "all the situation", corrected: "this situation", explanation: "指代。用 this 指代前述情況即可。", type: "Grammar" },
+                { id: 18, original: "decrease my willingness ... takes away the job", corrected: "be less willing ... take away opportunities for", explanation: "自然語氣。Decrease willingness 太生硬；take away opportunities 更符合語境。", type: "Vocab" },
+                { id: 19, original: "technology indeed improve", corrected: "technology indeed improves", explanation: "主動詞一致。Technology 單數，動詞加 s。", type: "Grammar" },
+                { id: 20, original: "Simultaneously ... bring", corrected: "At the same time ... brings", explanation: "轉折詞與單複數。Simultaneously 較學術，At the same time 較自然；it 後動詞加 s。", type: "Vocab" }
+            ],
+            minimalCorrections: [
+                { id: 1, original: "technology take", corrected: "technology is taking", explanation: "Technology 視為不可數，強調趨勢用進行式 is taking。", type: "Grammar" },
+                { id: 3, original: "ingredient ... need", corrected: "ingredients ... needed", explanation: "Ingredient 可數用複數；過去敘事用 needed。", type: "Grammar" },
+                { id: 4, original: "curios ... work", corrected: "curious ... worked", explanation: "拼字 curious；過去式 worked。", type: "Spelling" },
+                { id: 7, original: "surprised to", corrected: "surprised by", explanation: "固定搭配 be surprised by。", type: "Grammar" },
+                { id: 8, original: "after finished ... this the first time", corrected: "after finishing ... it was the first time", explanation: "After + V-ing；補上主詞動詞 it was。", type: "Grammar" },
+                { id: 10, original: "need to", corrected: "had to", explanation: "過去發生的事，必須用 had to。", type: "Grammar" },
+                { id: 11, original: "give ... dissappointed", corrected: "gave ... disappointed", explanation: "過去式 gave；拼字 disappointed。", type: "Spelling" },
+                { id: 12, original: "we will not replace", corrected: "humans will not be replaced", explanation: "被動語態，人類「被」取代。", type: "Grammar" },
+                { id: 13, original: "machine lack", corrected: "machines lack", explanation: "主詞複數 machines 搭配 lack。", type: "Grammar" },
+                { id: 15, original: "When ... order. We", corrected: "When ... order, we", explanation: "When 子句不能單獨存在，需用逗號連接主要子句。", type: "Structure" },
+                { id: 19, original: "improve", corrected: "improves", explanation: "主詞 Technology 單數，動詞加 s。", type: "Grammar" },
+                { id: 20, original: "bring", corrected: "brings", explanation: "主詞 it 單數，動詞加 s。", type: "Grammar" }
+            ],
+            finalText: {
+                p1: "Living in this fast-paced society, more and more technology is taking the place of human services. For example, unmanned taxis have changed our way of life a lot. On one occasion, my mother and I decided to buy some ingredients because we needed to prepare a hearty meal, and our relatives were coming to our house. Then, we went to an automatic supermarket, and we were curious about how the shop worked. When we stepped into the supermarket, we saw no one standing behind the counter. Everyone bought things using the self-checkout machine. We were surprised by the rapid development of technology. However, after finishing our shopping, we saw numerous people lining up to check out, but we still waited patiently because it was the first time we had experienced it. To make matters worse, the machine broke down unexpectedly. Eventually, we still had to check out with the help of a cashier. All in all, this experience gave me a bad impression of the self-checkout machine, and we were disappointed.",
+                p2: "I firmly believe that humans will not be replaced by technology. There are several reasons. Such machines lack interaction, which can make our lives feel tedious. We cannot see a friendly smile from a real person, and we also cannot feel warmth in the interaction. On top of that, when a machine is out of order, we still need staff to fix it. As a consequence, the process may become more complex. My past experience best exemplifies this situation. In the absence of human assistance, I would be less willing to make a purchase, and it would take away opportunities for human interaction. To put it in a nutshell, technology indeed improves our lifestyle a lot. At the same time, we cannot ignore the downsides that it brings."
+            },
+            paperData: [
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "Living in this fast-paced society, more and more " },
+                            { text: "technology take", type: "del" },
+                            { text: "technology is taking", type: "add" },
+                            { text: " the place of human services. " },
+                            { text: "Such as unmanned taxi, it change our living way", type: "del" },
+                            { text: "For example, unmanned taxis have changed our way of life", type: "add" },
+                            { text: " a lot. On one occasion, my mother and I " },
+                            { text: "were determined to purchase", type: "del" },
+                            { text: "decided to buy", type: "add" },
+                            { text: " some " },
+                            { text: "ingredient", type: "del" },
+                            { text: "ingredients", type: "add" },
+                            { text: " because we " },
+                            { text: "need", type: "del" },
+                            { text: "needed", type: "add" },
+                            { text: " to prepare " },
+                            { text: "for the", type: "del" },
+                            { text: "a", type: "add" },
+                            { text: " hearty meal, and " },
+                            { text: "all the", type: "del" },
+                            { text: "our", type: "add" },
+                            { text: " relatives " },
+                            { text: "would come", type: "del" },
+                            { text: "were coming", type: "add" },
+                            { text: " to our house. " },
+                            { text: "Furthermore", type: "del" },
+                            { text: "Then", type: "add" },
+                            { text: ", we went to " },
+                            { text: "a", type: "del" },
+                            { text: "an", type: "add" },
+                            { text: " automatic supermarket, and we were " },
+                            { text: "curios", type: "del" },
+                            { text: "curious", type: "add" },
+                            { text: " about how the shop " },
+                            { text: "work", type: "del" },
+                            { text: "worked", type: "add" },
+                            { text: ". When we stepped into the supermarket, we saw " },
+                            { text: "no one standing on the counter", type: "del" },
+                            { text: "no one standing behind the counter", type: "add" },
+                            { text: ". Everyone bought things " },
+                            { text: "by the self-order", type: "del" },
+                            { text: "using the self-checkout", type: "add" },
+                            { text: " machine. We were surprised " },
+                            { text: "to", type: "del" },
+                            { text: "by", type: "add" },
+                            { text: " the rapid development of technology. " },
+                            { text: "Nonetheless", type: "del" },
+                            { text: "However", type: "add" },
+                            { text: ", after " },
+                            { text: "finished the", type: "del" },
+                            { text: "finishing our", type: "add" },
+                            { text: " shopping, we saw numerous people " },
+                            { text: "line", type: "del" },
+                            { text: "lining", type: "add" },
+                            { text: " up to check out, but we still waited patiently because " },
+                            { text: "this", type: "del" },
+                            { text: "it was", type: "add" },
+                            { text: " the first time " },
+                            { text: "that we", type: "del" },
+                            { text: "we had", type: "add" },
+                            { text: " experienced it. " },
+                            { text: "What's worse, the machine was out of order", type: "del" },
+                            { text: "To make matters worse, the machine broke down", type: "add" },
+                            { text: " unexpectedly. Eventually, we " },
+                            { text: "still need", type: "del" },
+                            { text: "still had", type: "add" },
+                            { text: " to check out " },
+                            { text: "by the people", type: "del" },
+                            { text: "with the help of a cashier", type: "add" },
+                            { text: ". All in all, this experience " },
+                            { text: "give", type: "del" },
+                            { text: "gave", type: "add" },
+                            { text: " me a bad impression " },
+                            { text: "to the self-order", type: "del" },
+                            { text: "of the self-checkout", type: "add" },
+                            { text: " machine, and we were " },
+                            { text: "dissappointed", type: "del" },
+                            { text: "disappointed", type: "add" },
+                            { text: "." }
+                        ]
+                    ]
+                },
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "I firmly believe that " },
+                            { text: "we will not replace by the", type: "del" },
+                            { text: "humans will not be replaced by", type: "add" },
+                            { text: " technology. There are several reasons. " },
+                            { text: "The machine lack of", type: "del" },
+                            { text: "Such machines lack", type: "add" },
+                            { text: " interaction, which " },
+                            { text: "allow our life to be", type: "del" },
+                            { text: "can make our lives feel", type: "add" },
+                            { text: " tedious. We cannot see " },
+                            { text: "the smile coming from the people", type: "del" },
+                            { text: "a friendly smile from a real person", type: "add" },
+                            { text: ", and we also " },
+                            { text: "can't", type: "del" },
+                            { text: "cannot", type: "add" },
+                            { text: " feel " },
+                            { text: "the emotion", type: "del" },
+                            { text: "warmth in the interaction", type: "add" },
+                            { text: ". On top of that, " },
+                            { text: "When the", type: "del" },
+                            { text: "when a", type: "add" },
+                            { text: " machine is out of order" },
+                            { text: ".", type: "del" },
+                            { text: ",", type: "add" },
+                            { text: " " },
+                            { text: "We", type: "del" },
+                            { text: "we", type: "add" },
+                            { text: " still need " },
+                            { text: "people", type: "del" },
+                            { text: "staff", type: "add" },
+                            { text: " to fix " },
+                            { text: "them", type: "del" },
+                            { text: "it", type: "add" },
+                            { text: ". " },
+                            { text: "As the consequence ,", type: "del" },
+                            { text: "As a consequence,", type: "add" },
+                            { text: " the process may " },
+                            { text: "be", type: "del" },
+                            { text: "become", type: "add" },
+                            { text: " more complex. My past experience best exemplifies " },
+                            { text: "all the", type: "del" },
+                            { text: "this", type: "add" },
+                            { text: " situation. In the absence of human assistance , I would " },
+                            { text: "decrease my willingness to purchase", type: "del" },
+                            { text: "be less willing to make a purchase", type: "add" },
+                            { text: ", and it " },
+                            { text: "takes away the job of", type: "del" },
+                            { text: "would take away opportunities for", type: "add" },
+                            { text: " human interaction. To put it in a nutshell, technology indeed " },
+                            { text: "improve", type: "del" },
+                            { text: "improves", type: "add" },
+                            { text: " our lifestyle a lot. " },
+                            { text: "Simultaneously", type: "del" },
+                            { text: "At the same time", type: "add" },
+                            { text: ", we can't ignore the " },
+                            { text: "downside", type: "del" },
+                            { text: "downsides", type: "add" },
+                            { text: " that it " },
+                            { text: "bring", type: "del" },
+                            { text: "brings", type: "add" },
+                            { text: "." }
+                        ]
+                    ]
+                }
+            ],
+            minimalPaperData: [
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "Living in this fast-paced society, more and more " },
+                            { text: "technology take", type: "del" },
+                            { text: "technology is taking", type: "add" },
+                            { text: " the place of human services. Such as unmanned taxi, it change our living way a lot. On one occasion, my mother and I were determined to purchase some " },
+                            { text: "ingredient", type: "del" },
+                            { text: "ingredients", type: "add" },
+                            { text: " because we " },
+                            { text: "need", type: "del" },
+                            { text: "needed", type: "add" },
+                            { text: " to prepare for the hearty meal, and all the relatives would come to our house. Furthermore, we went to a automatic supermarket, and we were " },
+                            { text: "curios", type: "del" },
+                            { text: "curious", type: "add" },
+                            { text: " about how the shop " },
+                            { text: "work", type: "del" },
+                            { text: "worked", type: "add" },
+                            { text: ". When we stepped into the supermarket, we saw no one standing on the counter. Everyone bought things by the self-order machine. We were surprised " },
+                            { text: "to", type: "del" },
+                            { text: "by", type: "add" },
+                            { text: " the rapid development of technology. Nonetheless, after " },
+                            { text: "finished", type: "del" },
+                            { text: "finishing", type: "add" },
+                            { text: " the shopping, we saw numerous people line up to check out, but we still waited patiently because " },
+                            { text: "this", type: "del" },
+                            { text: "it was", type: "add" },
+                            { text: " the first time that we experienced it. What's worse, the machine was out of order unexpectedly. Eventually, we still " },
+                            { text: "need", type: "del" },
+                            { text: "had", type: "add" },
+                            { text: " to check out by the people. All in all, this experience " },
+                            { text: "give", type: "del" },
+                            { text: "gave", type: "add" },
+                            { text: " me a bad impression to the self-order machine, and we were " },
+                            { text: "dissappointed", type: "del" },
+                            { text: "disappointed", type: "add" },
+                            { text: "." }
+                        ]
+                    ]
+                },
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "I firmly believe that " },
+                            { text: "we will not replace", type: "del" },
+                            { text: "humans will not be replaced", type: "add" },
+                            { text: " by the technology. There are several reasons. The " },
+                            { text: "machine lack", type: "del" },
+                            { text: "machines lack", type: "add" },
+                            { text: " of interaction, which allow our life to be tedious. We cannot see the smile coming from the people, and we also can't feel the emotion. On top of that, " },
+                            { text: "When", type: "del" },
+                            { text: "when", type: "add" },
+                            { text: " the machine is out of order" },
+                            { text: ".", type: "del" },
+                            { text: ",", type: "add" },
+                            { text: " " },
+                            { text: "We", type: "del" },
+                            { text: "we", type: "add" },
+                            { text: " still need people to fix them. As the consequence , the process may be more complex. My past experience best exemplifies all the situation. In the absence of human assistance , I would decrease my willingness to purchase, and it takes away the job of human interaction. To put it in a nutshell, technology indeed " },
+                            { text: "improve", type: "del" },
+                            { text: "improves", type: "add" },
+                            { text: " our lifestyle a lot. Simultaneously, we can't ignore the downside that it " },
+                            { text: "bring", type: "del" },
+                            { text: "brings", type: "add" },
+                            { text: "." }
+                        ]
+                    ]
+                }
+            ],
+            // New improvement data
+            improvementData: {
+                structure: [
+                    {
+                        title: "1. 敘事邏輯優化 (Better Narrative Flow)",
+                        content: "原文明顯使用了過多的時間連接詞 (Furthermore, Then)，讀起來像流水帳。建議直接用故事邏輯來推進。",
+                        example: {
+                            before: "Furthermore, we went to a automatic supermarket...",
+                            after: "Curious about how it worked, we decided to try the automatic supermarket."
+                        }
+                    },
+                    {
+                        title: "2. 情緒轉折鋪陳 (Emotional Arc)",
+                        content: "在描述機器故障時，可以加強描寫當下的「挫折感」或「無助感」，讓讀者更能共情。",
+                        example: {
+                            before: "The machine was out of order.",
+                            after: "To our dismay, the screen froze just as we were about to pay, leaving us helpless without any staff around."
+                        }
+                    }
+                ],
+                arguments: [
+                    {
+                        title: "1. 深化「缺乏互動」的論點",
+                        content: "只說「沒看到微笑」有點表面。可以延伸到「機器無法理解複雜需求」或「無法提供客製化溫暖」。",
+                        example: "Machines can process transactions efficiently, but they cannot offer the warmth, empathy, and personalized care that human interaction provides."
+                    },
+                    {
+                        title: "2. 強化「人類不可被取代」的理由",
+                        content: "除了機器會壞掉之外，人類的價值還在於「解決突發狀況」和「創造連結」。",
+                        example: "While technology handles routine tasks, humans are indispensable for solving complex problems and building emotional connections."
+                    }
+                ],
+                vocabulary: [
+                    { word: "indispensable", meaning: "不可或缺的 (形容人類角色)", example: "Human staff remain indispensable in service industries." },
+                    { word: "efficiency vs. empathy", meaning: "效率 vs. 同理心 (對比核心)", example: "We shouldn't sacrifice empathy for the sake of efficiency." },
+                    { word: "alienation", meaning: "疏離感 (描述科技帶來的負面影響)", example: "Over-reliance on technology can lead to a sense of social alienation." }
+                ],
+                sentences: [
+                    "While technology offers undeniable convenience, it lacks the human touch that makes service truly satisfying.",
+                    "Technology should be viewed as a tool to assist humans, not a replacement for human connection.",
+                    "The efficiency of machines can never replicate the warmth of a genuine human smile."
+                ]
+            }
+        };
+
+        const ScoreCard = ({ label, score, max, status }) => {
+            const width = (score / max) * 100 + '%';
+            return (
+                <div className="mb-4">
+                    <div className="flex justify-between text-sm font-medium mb-1 text-gray-700">
+                        <span>{label}</span>
+                        <span>{score} / {max}</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                        <div className={`h-2.5 rounded-full ${status === 'good' ? 'bg-green-500' : status === 'warn' ? 'bg-red-500' : 'bg-yellow-500'}`} style={{ width }}></div>
+                    </div>
+                </div>
+            );
+        };
+
+        const CorrectionCard = ({ item }) => (
+            <div className={`bg-white rounded-lg shadow-sm border ${item.type === 'Good' ? 'border-green-200 bg-green-50' : 'border-gray-200'} p-4 mb-4 card-hover`}>
+                <div className="flex items-start gap-3">
+                    <div className={`mt-1 p-1.5 rounded-full shrink-0 ${item.type === 'Grammar' ? 'bg-blue-100 text-blue-600' : item.type === 'Spelling' ? 'bg-red-100 text-red-600' : item.type === 'Good' ? 'bg-green-100 text-green-600' : 'bg-purple-100 text-purple-600'}`}>
+                        {item.type === 'Grammar' ? <BookOpen size={16} /> : item.type === 'Spelling' ? <AlertCircle size={16} /> : item.type === 'Good' ? <CheckCircle size={16} /> : <FileText size={16} />}
+                    </div>
+                    <div className="flex-1">
+                        {item.type !== 'Good' ? (
+                            <div className="flex flex-col md:flex-row md:items-center gap-2 mb-2">
+                                <div className="flex-1 bg-red-50 rounded px-3 py-2 text-red-800 line-through decoration-red-400 decoration-2 bg-opacity-20">
+                                    {item.original}
+                                </div>
+                                <ArrowRight className="hidden md:block text-gray-400" size={20} />
+                                <div className="flex-1 bg-green-50 rounded px-3 py-2 text-green-800 font-medium border border-green-200">
+                                    {item.corrected}
+                                </div>
+                            </div>
+                        ) : (
+                             <div className="mb-2 bg-green-100 rounded px-3 py-2 text-green-800 font-medium border border-green-200">
+                                {item.original}
+                            </div>
+                        )}
+                        <p className="text-gray-600 text-sm mt-2 flex items-start gap-2">
+                            <span className={`text-xs px-2 py-0.5 rounded uppercase tracking-wide font-bold mt-0.5 ${item.type === 'Good' ? 'bg-green-200 text-green-700' : 'bg-gray-100 text-gray-500'}`}>{item.type === 'Good' ? 'Excellent' : item.type}</span>
+                            {item.explanation}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const TopicCard = ({ topic }) => (
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8 shadow-sm">
+                <h3 className="flex items-center gap-2 text-lg font-bold text-blue-900 mb-4">
+                    <HelpCircle className="text-blue-600" size={20} />
+                    題目說明 (Essay Prompt)
+                </h3>
+                <div className="bg-white rounded-lg p-4 border border-blue-100">
+                    <h4 className="font-bold text-gray-800 mb-2">{topic.title}</h4>
+                    <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm md:text-base">
+                        {topic.description.map((line, idx) => (
+                            <li key={idx} className="leading-relaxed">{line}</li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        );
+
+        const ContentUpgradeView = ({ data }) => (
+            <div className="space-y-8">
+                {/* Structure Section */}
+                <section>
+                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <Target className="text-blue-600" /> 1. 結構與邏輯優化
+                    </h3>
+                    <div className="grid gap-4">
+                        {data.structure.map((item, idx) => (
+                            <div key={idx} className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                                <h4 className="font-bold text-gray-700 mb-2">{item.title}</h4>
+                                <p className="text-gray-600 mb-3 text-sm">{item.content}</p>
+                                <div className="bg-gray-50 p-3 rounded-lg text-sm">
+                                    <div className="mb-1 text-red-500 line-through opacity-70">{item.example.before}</div>
+                                    <div className="text-green-600 font-medium">{item.example.after}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Arguments Section */}
+                <section>
+                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <BookOpen className="text-purple-600" /> 2. 論點深度提升
+                    </h3>
+                    <div className="grid gap-4">
+                        {data.arguments.map((item, idx) => (
+                            <div key={idx} className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm border-l-4 border-l-purple-500">
+                                <h4 className="font-bold text-gray-700 mb-2">{item.title}</h4>
+                                <p className="text-gray-600 mb-3 text-sm">{item.content}</p>
+                                <div className="bg-purple-50 p-3 rounded-lg text-sm text-purple-800 italic">
+                                    " {item.example} "
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Vocabulary & Sentences Section */}
+                <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <Sparkles className="text-yellow-500" /> 關鍵字彙 (Vocabulary)
+                        </h3>
+                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm h-full">
+                            <ul className="space-y-4">
+                                {data.vocabulary.map((vocab, idx) => (
+                                    <li key={idx} className="border-b border-gray-100 last:border-0 pb-2 last:pb-0">
+                                        <div className="font-bold text-gray-800">{vocab.word}</div>
+                                        <div className="text-xs text-gray-500 mb-1">{vocab.meaning}</div>
+                                        <div className="text-sm text-gray-600 italic">"{vocab.example}"</div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <Award className="text-red-500" /> 亮點句型 (Golden Sentences)
+                        </h3>
+                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm h-full">
+                            <ul className="space-y-3">
+                                {data.sentences.map((sent, idx) => (
+                                    <li key={idx} className="flex gap-2">
+                                        <span className="text-red-500 font-bold">★</span>
+                                        <span className="text-gray-700 text-sm leading-relaxed">{sent}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        );
+
+        const PaperView = ({ data, paperMode, setPaperMode }) => (
+            <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8 md:p-12 overflow-hidden relative">
+                 <div className="absolute top-0 left-0 w-full h-2 bg-red-500 opacity-80"></div>
+                 
+                 <div className="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-gray-100 pb-4">
+                    <h2 className="text-2xl font-serif font-bold text-gray-800">Correction Paper</h2>
+                    
+                    <div className="flex gap-2 mt-4 md:mt-0">
+                        <button 
+                            onClick={() => setPaperMode('full')}
+                            className={`toggle-btn ${paperMode === 'full' ? 'toggle-btn-active' : 'toggle-btn-inactive'}`}
+                        >
+                            完整批改版
+                        </button>
+                        <button 
+                            onClick={() => setPaperMode('minimal')}
+                            className={`toggle-btn ${paperMode === 'minimal' ? 'toggle-btn-active' : 'toggle-btn-inactive'}`}
+                        >
+                            ✨ 小幅度批改版
+                        </button>
+                    </div>
+                 </div>
+                 
+                 <div className="font-serif text-lg leading-loose text-gray-800 space-y-6">
+                    {data.map((para, pIdx) => (
+                        <div key={pIdx}>
+                            {para.lines.map((line, lIdx) => (
+                                <span key={lIdx}>
+                                    {line.map((segment, sIdx) => {
+                                        if (segment.type === 'del') {
+                                            return <span key={sIdx} className="paper-del">{segment.text}</span>;
+                                        } else if (segment.type === 'add') {
+                                            return <span key={sIdx} className="paper-add">{segment.text}</span>;
+                                        } else {
+                                            return <span key={sIdx}>{segment.text}</span>;
+                                        }
+                                    })}
+                                    {/* Add space between sentences if not last line */}
+                                    {" "}
+                                </span>
+                            ))}
+                        </div>
+                    ))}
+                 </div>
+
+                 <div className="mt-12 pt-6 border-t border-gray-100 flex justify-end">
+                    <div className="text-right">
+                        <div className="text-red-600 font-handwriting text-4xl font-bold -rotate-12 inline-block border-4 border-red-600 rounded-full p-2 px-4 shadow-sm opacity-80">
+                            {correctionData.score.total}
+                        </div>
+                        <p className="text-red-500 font-serif text-sm mt-2">Score</p>
+                    </div>
+                 </div>
+            </div>
+        );
+        
+        const PracticeView = ({ paperData }) => {
+            const [originalText, setOriginalText] = useState('');
+            
+            useEffect(() => {
+                // Reconstruct original text from paperData
+                const text = paperData.map(para => {
+                    return para.lines.map(line => {
+                        return line.map(segment => {
+                            if (segment.type !== 'add') {
+                                return segment.text;
+                            }
+                            return '';
+                        }).join('');
+                    }).join(' ');
+                }).join('\n\n');
+                
+                setOriginalText(text);
+            }, [paperData]);
+
+            const copyToClipboard = () => {
+                navigator.clipboard.writeText(originalText);
+            };
+
+            return (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full">
+                        <div className="bg-gray-50 px-5 py-3 border-b border-gray-100 flex justify-between items-center">
+                            <h3 className="font-bold text-gray-700 flex items-center gap-2">
+                                <FileText size={18} className="text-gray-500"/> 原始文章 (Original)
+                            </h3>
+                            <button 
+                                onClick={copyToClipboard}
+                                className="text-gray-500 hover:text-blue-600 text-sm flex items-center gap-1 transition-colors"
+                                title="複製原文"
+                            >
+                                <Copy size={16}/> 複製
+                            </button>
+                        </div>
+                        <div className="p-6 font-serif text-lg leading-relaxed text-gray-800 whitespace-pre-wrap flex-1 overflow-y-auto">
+                            {originalText}
+                        </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full">
+                         <div className="bg-blue-50 px-5 py-3 border-b border-blue-100">
+                            <h3 className="font-bold text-blue-800 flex items-center gap-2">
+                                <Edit3 size={18} className="text-blue-600"/> 練習區 (Practice Here)
+                            </h3>
+                        </div>
+                        <textarea 
+                            className="w-full h-96 lg:h-full p-6 font-serif text-lg leading-relaxed text-gray-800 resize-none focus:outline-none focus:bg-gray-50 transition-colors"
+                            placeholder="請在此處試著重寫你的文章..."
+                        ></textarea>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('minimal'); // Default to new tab: minimal, corrections, paper, final, practice, improvement
+            const [paperMode, setPaperMode] = useState('full'); // 'full' or 'minimal'
+
+            return (
+                <div className="max-w-6xl mx-auto p-4 md:p-8">
+                    {/* Header */}
+                    <header className="text-center mb-10">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">{correctionData.title}</h1>
+                        <p className="text-gray-500">作文批改與診斷報告</p>
+                    </header>
+
+                    {/* Topic Description Card */}
+                    {correctionData.topic && <TopicCard topic={correctionData.topic} />}
+
+                    {/* Dashboard Section */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        {/* Total Score */}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center">
+                            <div className="text-gray-500 font-medium mb-2">預估級分</div>
+                            <div className="text-5xl font-bold text-blue-600 mb-2">{correctionData.score.total}</div>
+                            <div className="text-sm text-gray-400">滿分 {correctionData.score.max}</div>
+                        </div>
+
+                        {/* Breakdown */}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:col-span-2">
+                            <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                <BarChart2 size={20} /> 評分細項
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                                {correctionData.score.breakdown.map((item, idx) => (
+                                    <ScoreCard key={idx} {...item} />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Summary Box */}
+                    <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 rounded-r-lg">
+                        <div className="flex items-start gap-3">
+                            <Award className="text-blue-600 shrink-0 mt-1" />
+                            <div>
+                                <h4 className="font-bold text-blue-800 mb-1">總評</h4>
+                                <p className="text-blue-800 text-opacity-80">{correctionData.summary}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Main Content Tabs */}
+                    <div className="mb-6 border-b border-gray-200 overflow-x-auto">
+                        <div className="flex gap-6 min-w-max">
+                            <button 
+                                onClick={() => setActiveTab('minimal')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'minimal' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><Sparkles size={18}/> 小幅度批改</span>
+                                {activeTab === 'minimal' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('corrections')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'corrections' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><BookOpen size={18}/> 完整詳解</span>
+                                {activeTab === 'corrections' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('paper')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'paper' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><PenTool size={18}/> 試卷模式</span>
+                                {activeTab === 'paper' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                             <button 
+                                onClick={() => setActiveTab('practice')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'practice' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><Edit3 size={18}/> 自我練習</span>
+                                {activeTab === 'practice' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('improvement')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'improvement' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><Rocket size={18}/> 內容升級</span>
+                                {activeTab === 'improvement' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('final')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'final' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><FileText size={18}/> 修正後範文</span>
+                                {activeTab === 'final' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Tab Content */}
+                    {activeTab === 'minimal' && (
+                        <div className="space-y-6">
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-xl font-bold text-gray-800">最小修改・詳細批改</h2>
+                                <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">保留原意，只修關鍵</span>
+                            </div>
+                            <div>
+                                {correctionData.minimalCorrections.map(item => (
+                                    <CorrectionCard key={item.id} item={item} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'corrections' && (
+                        <div className="space-y-6">
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-xl font-bold text-gray-800">診斷與修正 ({correctionData.corrections.length})</h2>
+                                <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">完整修改版本</span>
+                            </div>
+                            <div>
+                                {correctionData.corrections.map(item => (
+                                    <CorrectionCard key={item.id} item={item} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    
+                    {activeTab === 'paper' && (
+                        <PaperView 
+                            data={paperMode === 'full' ? correctionData.paperData : correctionData.minimalPaperData} 
+                            paperMode={paperMode}
+                            setPaperMode={setPaperMode}
+                        />
+                    )}
+                    
+                    {activeTab === 'practice' && (
+                        <PracticeView paperData={correctionData.paperData} />
+                    )}
+
+                    {activeTab === 'improvement' && (
+                        <ContentUpgradeView data={correctionData.improvementData} />
+                    )}
+
+                    {activeTab === 'final' && (
+                        <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                            <div className="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                                <h2 className="font-bold text-gray-700">高分範文版 (Revised Version)</h2>
+                                <button className="text-blue-600 text-sm font-medium hover:underline" onClick={() => navigator.clipboard.writeText(correctionData.finalText.p1 + '\n\n' + correctionData.finalText.p2)}>複製全文</button>
+                            </div>
+                            <div className="p-8 leading-relaxed text-gray-800 text-lg space-y-6">
+                                <p>{correctionData.finalText.p1}</p>
+                                <p>{correctionData.finalText.p2}</p>
+                            </div>
+                            <div className="bg-blue-50 px-6 py-4 border-t border-blue-100">
+                                <p className="text-sm text-blue-800">💡 <strong>小提示：</strong> 閱讀範文時，請特別注意轉折詞 (On the one hand, Furthermore) 與動詞時態的使用。</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

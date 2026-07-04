@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英文作文診斷報告：Caring What Others Think & Robot Helper</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&family=Noto+Serif+TC:wght@400;700&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f3f4f6; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        .font-serif { font-family: 'Noto Serif TC', serif; }
+        .card-hover:hover { transform: translateY(-2px); transition: all 0.2s; }
+        
+        /* Paper View Specific Styles */
+        .paper-del {
+            text-decoration: line-through;
+            color: #ef4444; /* red-500 */
+            text-decoration-thickness: 2px;
+            margin-right: 4px;
+            opacity: 0.7;
+        }
+        .paper-add {
+            color: #dc2626; /* red-600 */
+            font-weight: bold;
+            margin-right: 2px;
+        }
+        
+        /* Gradient Text */
+        .text-gradient-gold {
+            background: linear-gradient(to right, #b45309, #d97706, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- Icons ---
+        const IconBase = ({ children, size = 24, className = "" }) => (
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width={size} 
+                height={size} 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className={className}
+            >
+                {children}
+            </svg>
+        );
+
+        const BookOpen = (props) => (
+            <IconBase {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></IconBase>
+        );
+        const AlertCircle = (props) => (
+            <IconBase {...props}><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></IconBase>
+        );
+        const FileText = (props) => (
+            <IconBase {...props}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></IconBase>
+        );
+        const ArrowRight = (props) => (
+            <IconBase {...props}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></IconBase>
+        );
+        const Award = (props) => (
+            <IconBase {...props}><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></IconBase>
+        );
+        const BarChart2 = (props) => (
+             <IconBase {...props}><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></IconBase>
+        );
+        const PenTool = (props) => (
+            <IconBase {...props}><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></IconBase>
+        );
+        const Edit3 = (props) => (
+            <IconBase {...props}><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></IconBase>
+        );
+        const Copy = (props) => (
+            <IconBase {...props}><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></IconBase>
+        );
+        const TrendingUp = (props) => (
+            <IconBase {...props}><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></IconBase>
+        );
+        const ChevronDown = (props) => (
+            <IconBase {...props}><polyline points="6 9 12 15 18 9"></polyline></IconBase>
+        );
+        const ChevronUp = (props) => (
+            <IconBase {...props}><polyline points="18 15 12 9 6 15"></polyline></IconBase>
+        );
+
+        // --- Data ---
+        const correctionData = {
+            title: "Caring What Others Think & Robot Helper",
+            studentName: "孝澤",
+            score: {
+                total: "14-15",
+                max: 20,
+                breakdown: [
+                    { label: "內容 Content", score: 4, max: 5, status: "good" },
+                    { label: "組織 Organization", score: 4, max: 5, status: "good" },
+                    { label: "文法句構 Grammar", score: 3, max: 5, status: "avg" },
+                    { label: "字彙拼字 Vocabulary", score: 3, max: 5, status: "avg" }
+                ]
+            },
+            summary: "整體表現中上，完全切題且例子真實（不敢舉手發問）。主要失分在文法錯誤（時態、不定詞）與中式英文搭配詞。若能修正搭配詞與動詞形式，分數可更上一層樓。",
+            corrections: [
+                { id: 1, original: "have faced", corrected: "face", explanation: "時態選擇。描述普遍現象時，學測寫作偏好使用「現在簡單式」，不需要用到現在完成式。", type: "Grammar" },
+                { id: 2, original: "meet some difficulties... from any respect", corrected: "face difficulties... in many aspects of life", explanation: "搭配詞優化。'meet' 改為 'face' (面臨) 更有張力；'from any respect' 是中式英文，'in many aspects' 才是道地用法。", type: "Vocab" },
+                { id: 3, original: "solve the problems", corrected: "solve these problems", explanation: "語氣連貫。用 'these' 指代前述問題，比定冠詞 'the' 連結感更強。", type: "Vocab" },
+                { id: 4, original: "choose to solving", corrected: "choose to solve", explanation: "不定詞錯誤。'Choose' 後面接不定詞 (to V)，不可接 V-ing。", type: "Grammar" },
+                { id: 5, original: "problem about caring", corrected: "problem of caring", explanation: "介系詞搭配。'Problem of V-ing' 是標準用法。", type: "Grammar" },
+                { id: 6, original: "downside effect", corrected: "negative effect", explanation: "選字錯誤。'Downside' 本身就是名詞（缺點），不能當形容詞修飾 effect。應改用 'negative'。", type: "Vocab" },
+                { id: 7, original: "effect effect me a lots", corrected: "effect affects me a lot", explanation: "詞性與拼字。第一個 effect 贅字刪除；動詞應為 'affects' (影響，a開頭)。'a lots' 錯誤，應為 'a lot'。", type: "Spelling" },
+                { id: 8, original: "I afraid", corrected: "I am afraid", explanation: "缺動詞。'Afraid' 是形容詞，前面必須有 Be 動詞。", type: "Grammar" },
+                { id: 9, original: "approve my viewpoint", corrected: "approve of my viewpoint", explanation: "介系詞遺漏。'Approve of' (贊同) 才是正確片語搭配。", type: "Grammar" },
+                { id: 10, original: "so that everyone will get away", corrected: "which makes me worry that others may distance themselves", explanation: "邏輯語氣。原句 'so that' 因果太絕對。修改後更能表達「這件事導致我擔心...」的心理狀態。", type: "Structure" },
+                { id: 11, original: "in the class", corrected: "in class", explanation: "慣用語。'In class' (上課中) 不加定冠詞。", type: "Grammar" },
+                { id: 12, original: "put forward a question", corrected: "ask a question", explanation: "搭配詞。雖然 put forward 可用，但學生情境下 'ask a question' 最自然。", type: "Vocab" },
+                { id: 13, original: "get wrong", corrected: "get something wrong", explanation: "語意不全。'Get wrong' 需受詞，補上 'something' 才完整。", type: "Vocab" },
+                { id: 14, original: "all the students", corrected: "other students", explanation: "邏輯精確度。'All' 太絕對，'other students' (其他同學) 較合理。", type: "Vocab" },
+                { id: 15, original: "robot have", corrected: "robot has", explanation: "主動詞一致。主詞 robot 是單數，動詞用 has。", type: "Grammar" },
+                { id: 16, original: "Such as communication...", corrected: "These functions include...", explanation: "句構錯誤。原句是不完整的片語，需改成完整句子。", type: "Structure" },
+                { id: 17, original: "train my confidence", corrected: "develop my confidence", explanation: "搭配詞。自信通常是用 'build' 或 'develop'，'train' (訓練) 較少用。", type: "Vocab" },
+                { id: 18, original: "instructe", corrected: "instruct", explanation: "拼字錯誤。", type: "Spelling" },
+                { id: 19, original: "express bravely", corrected: "express myself bravely", explanation: "受詞遺漏。Express 當「表達」時，若是表達自己，需加反身代名詞 'myself'。", type: "Grammar" },
+                { id: 20, original: "many question", corrected: "many questions", explanation: "單複數。Many 後接複數。", type: "Grammar" },
+                { id: 21, original: "feeling and perspective", corrected: "feelings and perspectives", explanation: "單複數。通常有多種感覺與觀點，用複數較自然。", type: "Grammar" },
+                { id: 22, original: "don't care", corrected: "will not care", explanation: "時態一致。前句是 'will be'，後句應維持未來式 'will not'。", type: "Grammar" },
+                { id: 23, original: "never afraid", corrected: "will never be afraid", explanation: "缺動詞。補上 'will never be' 使句構完整。", type: "Grammar" }
+            ],
+            finalText: {
+                p1: "Leading a life in this fast-paced society, more and more teenagers face tremendous academic pressure. At the same time, they also face difficulties and challenges in many aspects of life. Therefore, we need to find ways to solve these problems. As a teenager, if I have a robot helping me get through a hardship, I would choose to solve the problem of caring too much about what others think. This negative effect affects me a lot in my daily life because I do not have enough confidence to express what I want to say, and I am afraid that people will not approve of my viewpoint, which makes me worry that others may distance themselves from me. For example, when I am in class, I never raise my hand or ask a question. If I get something wrong, I think other students will make fun of me. Above all, I want to overcome this drawback and enhance my confidence by using the robot.",
+                p2: "To help me build confidence, the robot has numerous functions. These functions include communication and interaction. To start with, I can make use of it to develop my confidence. It will be the best listener for me and instruct me on how to express myself bravely. The most important function is that it will ask me many questions at any time to motivate me to express my feelings and perspectives. In this way, I will be more confident and will not care about what others think. In a nutshell, I want to take advantage of the robot to solve my problem. I will gain more confidence and will never be afraid to express myself."
+            },
+            // Structured data for Paper View
+            paperData: [
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "Leading a life in this fast-paced society, more and more teenagers " },
+                            { text: "have faced", type: "del" },
+                            { text: "face", type: "add" },
+                            { text: " tremendous academic pressure. At the same time, they " },
+                            { text: "will also meet", type: "del" },
+                            { text: "also face", type: "add" },
+                            { text: " difficulties and challenges " },
+                            { text: "from any respect", type: "del" },
+                            { text: "in many aspects of life", type: "add" },
+                            { text: ". " },
+                            { text: "So", type: "del" },
+                            { text: "Therefore,", type: "add" },
+                            { text: " we need to find " },
+                            { text: "some ways", type: "del" },
+                            { text: "ways", type: "add" },
+                            { text: " to solve " },
+                            { text: "the", type: "del" },
+                            { text: "these", type: "add" },
+                            { text: " problems." }
+                        ]
+                    ]
+                },
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "As a teenager, if I have a robot helping me " },
+                            { text: "to get through one", type: "del" },
+                            { text: "get through a", type: "add" },
+                            { text: " hardship, I " },
+                            { text: "will", type: "del" },
+                            { text: "would", type: "add" },
+                            { text: " choose " },
+                            { text: "to solving", type: "del" },
+                            { text: "to solve", type: "add" },
+                            { text: " the problem " },
+                            { text: "about", type: "del" },
+                            { text: "of", type: "add" },
+                            { text: " " },
+                            { text: "caring what", type: "del" },
+                            { text: "caring too much about what", type: "add" },
+                            { text: " others think. This " },
+                            { text: "downside", type: "del" },
+                            { text: "negative", type: "add" },
+                            { text: " " },
+                            { text: "effect effect", type: "del" },
+                            { text: "effect affects", type: "add" },
+                            { text: " me " },
+                            { text: "a lots", type: "del" },
+                            { text: "a lot", type: "add" },
+                            { text: " in my daily life because I " },
+                            { text: "don’t", type: "del" },
+                            { text: "do not", type: "add" },
+                            { text: " have " },
+                            { text: "adequate", type: "del" },
+                            { text: "enough", type: "add" },
+                            { text: " confidence to express what I want to say, and I " },
+                            { text: "afraid", type: "del" },
+                            { text: "am afraid", type: "add" },
+                            { text: " that people will not approve " },
+                            { text: "my", type: "del" },
+                            { text: "of my", type: "add" },
+                            { text: " viewpoint " },
+                            { text: "so that everyone will get away from me", type: "del" },
+                            { text: ", which makes me worry that others may distance themselves from me", type: "add" },
+                            { text: "." }
+                        ]
+                    ]
+                },
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "For example, when I am " },
+                            { text: "in the class", type: "del" },
+                            { text: "in class", type: "add" },
+                            { text: ", I never raise my hand or " },
+                            { text: "put forward", type: "del" },
+                            { text: "ask", type: "add" },
+                            { text: " a question. If I " },
+                            { text: "get wrong", type: "del" },
+                            { text: "get something wrong", type: "add" },
+                            { text: ", I think " },
+                            { text: "all the", type: "del" },
+                            { text: "other", type: "add" },
+                            { text: " students will make fun of me. Above all, I want to overcome this drawback and enhance my confidence by using the robot." },
+                            { text: " I hope that it can help me.", type: "del" }
+                        ]
+                    ]
+                },
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "To help me " },
+                            { text: "to", type: "del" },
+                            { text: " build confidence, the robot " },
+                            { text: "have", type: "del" },
+                            { text: "has", type: "add" },
+                            { text: " numerous functions" },
+                            { text: ", such as such as communication , and interaction.", type: "del" },
+                            { text: ". These functions include communication and interaction.", type: "add" },
+                            { text: " To start with, I can make use of it to " },
+                            { text: "train", type: "del" },
+                            { text: "develop", type: "add" },
+                            { text: " my confidence. It will be the best listener for me and " },
+                            { text: "instructe", type: "del" },
+                            { text: "instruct", type: "add" },
+                            { text: " me " },
+                            { text: "how to express bravely", type: "del" },
+                            { text: "on how to express myself bravely", type: "add" },
+                            { text: ". The most important function is that it will ask me many " },
+                            { text: "question", type: "del" },
+                            { text: "questions", type: "add" },
+                            { text: " at any time to motivate me to express my " },
+                            { text: "feeling and perspective", type: "del" },
+                            { text: "feelings and perspectives", type: "add" },
+                            { text: ". In this way, I will be more confident and " },
+                            { text: "don’t", type: "del" },
+                            { text: "will not", type: "add" },
+                            { text: " care about what others think." }
+                        ]
+                    ]
+                },
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "In a nutshell, I want to take advantage of the robot to solve my problem. I will gain more confidence and " },
+                            { text: "never afraid", type: "del" },
+                            { text: "will never be afraid", type: "add" },
+                            { text: " to express myself." }
+                        ]
+                    ]
+                }
+            ]
+        };
+
+        const progressiveData = [
+            {
+                id: 1,
+                original: "Leading a life in this fast-paced society, more and more teenagers have faced tremendous academic pressure.",
+                level1: "Leading a life in this fast-paced society, more and more teenagers face tremendous academic pressure.",
+                level2: "In today's fast-paced society, an increasing number of teenagers are burdened with immense academic pressure.",
+                level3: "Living in a high-octane society, a growing cohort of adolescents grapple with overwhelming academic burdens.",
+                notes: "High-octane (快節奏/高能的)；grapple with (搏鬥/努力應對) 展現了壓力的強度。"
+            },
+            {
+                id: 2,
+                original: "At the same time, they will also meet difficulties and challenges from any respect.",
+                level1: "At the same time, they also face difficulties and challenges in many aspects of life.",
+                level2: "Simultaneously, they encounter obstacles across various facets of their lives.",
+                level3: "Concurrently, they are confronted with multifarious hurdles and tribulations in diverse spheres of existence.",
+                notes: "Concurrently (同時)；multifarious (各式各樣的)；tribulations (苦難/磨練)。"
+            },
+            {
+                id: 3,
+                original: "As a teenager, if I have a robot helping me to get through one hardship, I will choose to solving the problem about caring what others think.",
+                level1: "As a teenager, if I have a robot helping me get through a hardship, I would choose to solve the problem of caring too much about what others think.",
+                level2: "Given a robot assistant to overcome a hardship, I would opt to address my excessive concern for others' opinions.",
+                level3: "Were I equipped with a robotic aide to navigate a tribulation, I would elect to conquer my preoccupation with external validation.",
+                notes: "Preoccupation (全神貫注/執著)；external validation (外在認可) 是心理學常用高級詞彙。"
+            },
+            {
+                id: 4,
+                original: "This downside effect effect me a lots in my daily life because I don’t have adequate confidence...",
+                level1: "This negative effect affects me a lot in my daily life because I do not have enough confidence...",
+                level2: "This negativity significantly impacts my daily life, stemming from a lack of confidence.",
+                level3: "This detrimental tendency exerts a profound influence on my daily existence, primarily due to my insufficient self-assurance.",
+                notes: "Detrimental (有害的)；exerts a profound influence (施加深遠的影響)。"
+            },
+            {
+                id: 5,
+                original: "...and I afraid that people will not approve my viewpoint so that everyone will get away from me.",
+                level1: "...and I am afraid that people will not approve of my viewpoint, which makes me worry that others may distance themselves from me.",
+                level2: "Fearing disapproval of my viewpoints, I worry that I might alienate those around me.",
+                level3: "Apprehensive that my perspectives might incur disapproval, I harbor a deep-seated fear of social alienation.",
+                notes: "Apprehensive (憂慮的)；incur (招致)；social alienation (社會疏離)。"
+            },
+            {
+                id: 6,
+                original: "To help me to build confidence, the robot have numerous functions, such as such as communication , and interaction.",
+                level1: "To help me build confidence, the robot has numerous functions. These functions include communication and interaction.",
+                level2: "The robot possesses various functions, notably communication and interaction, to bolster my confidence.",
+                level3: "To cultivate my self-esteem, the robot is endowed with a plethora of capabilities, most notably communicative and interactive faculties.",
+                notes: "Bolster (增強/支持)；endowed with (被賦予)；plethora (豐富/過多)。"
+            },
+            {
+                id: 7,
+                original: "It will be the best listener for me and instructe me how to express bravely.",
+                level1: "It will be the best listener for me and instruct me on how to express myself bravely.",
+                level2: "Serving as an ideal listener, it would guide me in expressing myself with courage.",
+                level3: "Acting as a consummate listener, it would tutor me in the art of courageous self-expression.",
+                notes: "Consummate (完美的/至上的)；tutor (指導/家教)。"
+            }
+        ];
+
+        // --- Components ---
+        const ScoreCard = ({ label, score, max, status }) => {
+            const width = (score / max) * 100 + '%';
+            return (
+                <div className="mb-4">
+                    <div className="flex justify-between text-sm font-medium mb-1 text-gray-700">
+                        <span>{label}</span>
+                        <span>{score} / {max}</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                        <div className={`h-2.5 rounded-full ${status === 'good' ? 'bg-green-500' : status === 'warn' ? 'bg-red-500' : 'bg-yellow-500'}`} style={{ width }}></div>
+                    </div>
+                </div>
+            );
+        };
+
+        const CorrectionCard = ({ item }) => (
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4 card-hover">
+                <div className="flex items-start gap-3">
+                    <div className={`mt-1 p-1.5 rounded-full shrink-0 ${item.type === 'Grammar' ? 'bg-blue-100 text-blue-600' : item.type === 'Spelling' ? 'bg-red-100 text-red-600' : 'bg-purple-100 text-purple-600'}`}>
+                        {item.type === 'Grammar' ? <BookOpen size={16} /> : item.type === 'Spelling' ? <AlertCircle size={16} /> : <FileText size={16} />}
+                    </div>
+                    <div className="flex-1">
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 mb-2">
+                            <div className="flex-1 bg-red-50 rounded px-3 py-2 text-red-800 line-through decoration-red-400 decoration-2 bg-opacity-20">
+                                {item.original}
+                            </div>
+                            <ArrowRight className="hidden md:block text-gray-400" size={20} />
+                            <div className="flex-1 bg-green-50 rounded px-3 py-2 text-green-800 font-medium border border-green-200">
+                                {item.corrected}
+                            </div>
+                        </div>
+                        <p className="text-gray-600 text-sm mt-2 flex items-start gap-2">
+                            <span className="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded uppercase tracking-wide font-bold mt-0.5">{item.type}</span>
+                            {item.explanation}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const ProgressiveCard = ({ item }) => {
+            const [expanded, setExpanded] = useState(false);
+
+            return (
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6 transition-all duration-300 hover:shadow-md">
+                    <div className="p-5 border-b border-gray-100 bg-gray-50 cursor-pointer" onClick={() => setExpanded(!expanded)}>
+                        <div className="flex justify-between items-start mb-3">
+                            <span className="bg-red-100 text-red-600 text-xs font-bold px-2 py-1 rounded">原始句子 (Original)</span>
+                            <div className="text-gray-400">
+                                {expanded ? <ChevronUp size={20}/> : <ChevronDown size={20}/>}
+                            </div>
+                        </div>
+                        <p className="text-gray-500 line-through mb-4 font-mono text-sm">{item.original}</p>
+                        
+                        <div className="flex items-center gap-2 mb-1">
+                            <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">Level 1: 修正文法 (Grammar Fix)</span>
+                        </div>
+                        <p className="text-gray-800 font-medium text-lg border-l-4 border-green-500 pl-3 py-1">{item.level1}</p>
+                    </div>
+
+                    {expanded && (
+                        <div className="p-5 bg-white space-y-6 animate-in fade-in slide-in-from-top-4 duration-300">
+                            <div>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">Level 2: 句型變化 (Structure Change)</span>
+                                </div>
+                                <p className="text-gray-800 text-lg border-l-4 border-blue-500 pl-3 py-1 bg-blue-50 rounded-r-lg">{item.level2}</p>
+                            </div>
+                            <div>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded flex items-center gap-1">
+                                        <Award size={14}/> Level 3: 精準用字 (Precise Vocabulary)
+                                    </span>
+                                </div>
+                                <p className="font-serif text-xl border-l-4 border-amber-500 pl-3 py-2 bg-amber-50 rounded-r-lg text-gray-900 leading-relaxed">
+                                    {item.level3}
+                                </p>
+                            </div>
+                            <div className="mt-4 pt-4 border-t border-gray-100 text-sm text-gray-500 italic flex gap-2">
+                                <span className="text-amber-600 not-italic">💡 筆記：</span> {item.notes}
+                            </div>
+                        </div>
+                    )}
+                     {!expanded && (
+                        <div className="px-5 py-2 bg-white text-center text-sm text-gray-400 cursor-pointer hover:bg-gray-50 hover:text-blue-500 transition-colors" onClick={() => setExpanded(true)}>
+                            點擊展開進階改寫 (Level 2 & 3)
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const PaperView = ({ data }) => (
+            <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8 md:p-12 overflow-hidden relative">
+                 <div className="absolute top-0 left-0 w-full h-2 bg-red-500 opacity-80"></div>
+                 <h2 className="text-2xl font-serif font-bold text-gray-800 mb-8 border-b border-gray-100 pb-4 text-center">Correction Paper</h2>
+                 
+                 <div className="font-serif text-lg leading-loose text-gray-800 space-y-6">
+                    {data.map((para, pIdx) => (
+                        <div key={pIdx}>
+                            {para.lines.map((line, lIdx) => (
+                                <span key={lIdx}>
+                                    {line.map((segment, sIdx) => {
+                                        if (segment.type === 'del') {
+                                            return <span key={sIdx} className="paper-del">{segment.text}</span>;
+                                        } else if (segment.type === 'add') {
+                                            return <span key={sIdx} className="paper-add">{segment.text}</span>;
+                                        } else {
+                                            return <span key={sIdx}>{segment.text}</span>;
+                                        }
+                                    })}
+                                    {" "}
+                                </span>
+                            ))}
+                        </div>
+                    ))}
+                 </div>
+
+                 <div className="mt-12 pt-6 border-t border-gray-100 flex justify-end">
+                    <div className="text-right">
+                        <div className="text-red-600 font-handwriting text-4xl font-bold -rotate-12 inline-block border-4 border-red-600 rounded-full p-2 px-4 shadow-sm opacity-80">
+                            {correctionData.score.total}
+                        </div>
+                        <p className="text-red-500 font-serif text-sm mt-2">Score</p>
+                    </div>
+                 </div>
+            </div>
+        );
+        
+        const PracticeView = ({ paperData }) => {
+            const [originalText, setOriginalText] = useState('');
+            
+            useEffect(() => {
+                const text = paperData.map(para => {
+                    return para.lines.map(line => {
+                        return line.map(segment => {
+                            if (segment.type !== 'add') {
+                                return segment.text;
+                            }
+                            return '';
+                        }).join('');
+                    }).join(' ');
+                }).join('\n\n');
+                
+                setOriginalText(text);
+            }, [paperData]);
+
+            const copyToClipboard = () => {
+                navigator.clipboard.writeText(originalText);
+            };
+
+            return (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full">
+                        <div className="bg-gray-50 px-5 py-3 border-b border-gray-100 flex justify-between items-center">
+                            <h3 className="font-bold text-gray-700 flex items-center gap-2">
+                                <FileText size={18} className="text-gray-500"/> 原始文章 (Original)
+                            </h3>
+                            <button 
+                                onClick={copyToClipboard}
+                                className="text-gray-500 hover:text-blue-600 text-sm flex items-center gap-1 transition-colors"
+                                title="複製原文"
+                            >
+                                <Copy size={16}/> 複製
+                            </button>
+                        </div>
+                        <div className="p-6 font-serif text-lg leading-relaxed text-gray-800 whitespace-pre-wrap flex-1 overflow-y-auto">
+                            {originalText}
+                        </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full">
+                         <div className="bg-blue-50 px-5 py-3 border-b border-blue-100">
+                            <h3 className="font-bold text-blue-800 flex items-center gap-2">
+                                <Edit3 size={18} className="text-blue-600"/> 練習區 (Practice Here)
+                            </h3>
+                        </div>
+                        <textarea 
+                            className="w-full h-96 lg:h-full p-6 font-serif text-lg leading-relaxed text-gray-800 resize-none focus:outline-none focus:bg-gray-50 transition-colors"
+                            placeholder="請在此處試著重寫你的文章..."
+                        ></textarea>
+                    </div>
+                </div>
+            );
+        };
+
+        const ProgressiveView = () => (
+            <div className="max-w-4xl mx-auto">
+                <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-6 mb-8">
+                    <h3 className="text-xl font-bold text-amber-800 mb-2 flex items-center gap-2">
+                        <TrendingUp size={24}/> 三階段升級法 (The 3-Stage Upgrade)
+                    </h3>
+                    <p className="text-amber-900 mb-4 opacity-80">
+                        這是根據 IELTS Liz 老師的方法設計的特訓。我們不只求「改對」，更要求「升級」！
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div className="bg-white bg-opacity-60 p-3 rounded-lg border border-amber-100">
+                            <span className="text-green-600 font-bold block mb-1">Level 1: Fix Grammar</span>
+                            修正錯誤，確保文法正確 (基礎分)
+                        </div>
+                        <div className="bg-white bg-opacity-60 p-3 rounded-lg border border-amber-100">
+                            <span className="text-blue-600 font-bold block mb-1">Level 2: Change Structure</span>
+                            變換句型，展現靈活度 (加分)
+                        </div>
+                        <div className="bg-white bg-opacity-60 p-3 rounded-lg border border-amber-100">
+                            <span className="text-amber-600 font-bold block mb-1">Level 3: Precise Vocab</span>
+                            精準用字，展現單字量 (頂標)
+                        </div>
+                    </div>
+                </div>
+
+                {progressiveData.map(item => (
+                    <ProgressiveCard key={item.id} item={item} />
+                ))}
+            </div>
+        );
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('progressive');
+
+            return (
+                <div className="max-w-6xl mx-auto p-4 md:p-8">
+                    <header className="text-center mb-10">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">{correctionData.title}</h1>
+                        <p className="text-gray-500">作文批改與診斷報告：{correctionData.studentName}</p>
+                    </header>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center">
+                            <div className="text-gray-500 font-medium mb-2">預估級分</div>
+                            <div className="text-5xl font-bold text-blue-600 mb-2">{correctionData.score.total}</div>
+                            <div className="text-sm text-gray-400">滿分 {correctionData.score.max}</div>
+                        </div>
+
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:col-span-2">
+                            <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                <BarChart2 size={20} /> 評分細項
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                                {correctionData.score.breakdown.map((item, idx) => (
+                                    <ScoreCard key={idx} {...item} />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 rounded-r-lg">
+                        <div className="flex items-start gap-3">
+                            <Award className="text-blue-600 shrink-0 mt-1" />
+                            <div>
+                                <h4 className="font-bold text-blue-800 mb-1">總評</h4>
+                                <p className="text-blue-800 text-opacity-80">{correctionData.summary}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mb-6 border-b border-gray-200 overflow-x-auto">
+                        <div className="flex gap-6 min-w-max">
+                             <button 
+                                onClick={() => setActiveTab('progressive')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'progressive' ? 'text-amber-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><TrendingUp size={18}/> 三階段升級特訓 (Level Up)</span>
+                                {activeTab === 'progressive' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-600"></div>}
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('corrections')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'corrections' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><BookOpen size={18}/> 逐句批改診斷</span>
+                                {activeTab === 'corrections' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('paper')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'paper' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><PenTool size={18}/> 試卷批改模式</span>
+                                {activeTab === 'paper' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                             <button 
+                                onClick={() => setActiveTab('practice')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'practice' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><Edit3 size={18}/> 自我練習模式</span>
+                                {activeTab === 'practice' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('final')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'final' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><FileText size={18}/> 修正後範文</span>
+                                {activeTab === 'final' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                        </div>
+                    </div>
+
+                    {activeTab === 'corrections' && (
+                        <div className="space-y-6 animate-in fade-in duration-300">
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-xl font-bold text-gray-800">診斷與修正 ({correctionData.corrections.length})</h2>
+                                <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">紅色為原文錯誤，綠色為修正建議</span>
+                            </div>
+                            <div>
+                                {correctionData.corrections.map(item => (
+                                    <CorrectionCard key={item.id} item={item} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    
+                    {activeTab === 'progressive' && (
+                        <div className="animate-in fade-in duration-300">
+                            <ProgressiveView />
+                        </div>
+                    )}
+                    
+                    {activeTab === 'paper' && (
+                        <div className="animate-in fade-in duration-300">
+                            <PaperView data={correctionData.paperData} />
+                        </div>
+                    )}
+                    
+                    {activeTab === 'practice' && (
+                        <div className="animate-in fade-in duration-300">
+                            <PracticeView paperData={correctionData.paperData} />
+                        </div>
+                    )}
+
+                    {activeTab === 'final' && (
+                        <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden animate-in fade-in duration-300">
+                            <div className="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                                <h2 className="font-bold text-gray-700">高分範文版 (Revised Version)</h2>
+                                <button className="text-blue-600 text-sm font-medium hover:underline" onClick={() => navigator.clipboard.writeText(correctionData.finalText.p1 + '\n\n' + correctionData.finalText.p2)}>複製全文</button>
+                            </div>
+                            <div className="p-8 leading-relaxed text-gray-800 text-lg space-y-6">
+                                <p>{correctionData.finalText.p1}</p>
+                                <p>{correctionData.finalText.p2}</p>
+                            </div>
+                            <div className="bg-blue-50 px-6 py-4 border-t border-blue-100">
+                                <p className="text-sm text-blue-800">💡 <strong>小提示：</strong> 閱讀範文時，請特別注意轉折詞 (On the one hand, Furthermore) 與動詞時態的使用。</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

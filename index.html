@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>柏宏的作文教材庫</title>
+<style>
+  :root{
+    --primary:#111111; --primary-soft:#f2f2f2; --primary-ink:#000000;
+    --ink:#111111; --ink-2:#555555; --ink-3:#9e9e9e;
+    --bg:#fafafa; --card:#ffffff; --line:#e8e8e8;
+    --green:#111111; --green-soft:#f2f2f2;
+    --amber:#333333; --amber-soft:#f2f2f2;
+    --r-lg:20px; --r-md:12px; --r-sm:8px;
+    --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 16px rgba(16,24,40,.06);
+    --shadow-hover:0 4px 8px rgba(16,24,40,.06),0 12px 28px rgba(16,24,40,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;
+    -webkit-font-smoothing:antialiased;}
+
+  /* ── Hero ─────────────────────────── */
+  .hero{background:#111111;color:#fff;
+    padding:44px 24px 96px;text-align:center;}
+  .hero h1{font-size:clamp(1.5em,4vw,2em);font-weight:800;letter-spacing:.5px;}
+  .hero p{opacity:.85;margin-top:6px;font-size:.95em;}
+  .hero .links{margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+  .hero .links a{color:#fff;text-decoration:none;font-size:.88em;padding:9px 18px;
+    border:1px solid rgba(255,255,255,.4);border-radius:999px;backdrop-filter:blur(4px);
+    background:rgba(255,255,255,.12);transition:background .2s;}
+  .hero .links a:hover{background:rgba(255,255,255,.25);}
+
+  /* ── Progress panel (overlaps hero) ── */
+  .panel{max-width:1000px;margin:-62px auto 0;padding:0 20px;}
+  .panel-inner{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);
+    padding:20px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .ring{position:relative;width:72px;height:72px;flex-shrink:0;}
+  .ring svg{transform:rotate(-90deg);}
+  .ring .num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:.95em;color:var(--primary);}
+  .panel-txt{flex:1;min-width:200px;}
+  .panel-txt b{font-size:1.05em;}
+  .panel-txt .hint{color:var(--ink-2);font-size:.88em;margin-top:2px;}
+  .next-btn{background:var(--primary);color:#fff;text-decoration:none;padding:11px 20px;
+    border-radius:var(--r-md);font-size:.9em;font-weight:600;white-space:nowrap;
+    transition:transform .15s,box-shadow .15s;box-shadow:0 4px 12px rgba(0,0,0,.25);}
+  .next-btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.35);}
+
+  /* ── Toolbar: search + section pills ── */
+  .toolbar{max-width:1000px;margin:22px auto 6px;padding:0 20px;display:flex;gap:12px;
+    flex-wrap:wrap;align-items:center;position:sticky;top:0;z-index:20;
+    background:linear-gradient(var(--bg) 85%,transparent);padding-top:12px;padding-bottom:10px;}
+  .search-wrap{position:relative;flex:1;min-width:220px;}
+  .search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.4;}
+  #search{width:100%;padding:11px 16px 11px 40px;border:1.5px solid var(--line);
+    border-radius:var(--r-md);font-size:.95em;outline:none;background:var(--card);
+    transition:border-color .2s,box-shadow .2s;}
+  #search:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);}
+  .pills{display:flex;gap:6px;flex-wrap:wrap;}
+  .pills a{text-decoration:none;color:var(--ink-2);font-size:.82em;padding:7px 13px;
+    border-radius:999px;background:var(--card);border:1.5px solid var(--line);transition:all .15s;}
+  .pills a:hover{border-color:var(--primary);color:var(--primary);}
+
+  /* ── Sections ─────────────────────── */
+  main{max-width:1000px;margin:10px auto 40px;padding:0 20px;display:flex;flex-direction:column;gap:18px;}
+  section{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);
+    overflow:hidden;transition:box-shadow .2s;scroll-margin-top:80px;}
+  section:hover{box-shadow:var(--shadow-hover);}
+  .sec-head{display:flex;align-items:center;gap:14px;padding:18px 22px;cursor:pointer;user-select:none;}
+  .badge{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;
+    justify-content:center;font-size:1.35em;flex-shrink:0;background:var(--primary-soft);}
+  .sec-title{flex:1;}
+  .sec-title h2{font-size:1.02em;font-weight:700;}
+  .sec-title .desc{color:var(--ink-3);font-size:.82em;margin-top:1px;}
+  .sec-meta{display:flex;align-items:center;gap:12px;}
+  .sec-prog{font-size:.78em;color:var(--ink-2);background:var(--bg);
+    padding:4px 10px;border-radius:999px;font-variant-numeric:tabular-nums;}
+  .sec-prog.full{background:var(--green-soft);color:var(--green);font-weight:700;}
+  .chev{width:20px;height:20px;color:var(--ink-3);transition:transform .25s;}
+  section.open .chev{transform:rotate(180deg);}
+  .sec-body{display:none;border-top:1px solid var(--line);}
+  section.open .sec-body{display:block;}
+
+  ul{list-style:none;}
+  li{display:flex;align-items:center;gap:12px;padding:11px 22px;
+    border-bottom:1px solid #f3f4f6;transition:background .12s;}
+  li:last-child{border-bottom:none;}
+  li:hover{background:#f5f5f5;}
+  li a{color:var(--ink);text-decoration:none;flex:1;font-size:.92em;display:flex;
+    align-items:center;gap:8px;min-width:0;}
+  li a:hover{color:var(--primary);}
+  li.done a{color:var(--ink-3);}
+  .tag{font-size:.68em;font-weight:700;border-radius:5px;padding:1px 6px;flex-shrink:0;}
+  .tag.pdf{background:#f2f2f2;color:#555;border:1px solid #ddd;}
+  .tag.star{background:#111;color:#fff;}
+  .chk{width:22px;height:22px;min-width:22px;border:2px solid #cccccc;border-radius:50%;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:all .15s;color:transparent;}
+  .chk:hover{border-color:var(--primary);}
+  .chk.done{background:var(--green);border-color:var(--green);color:#fff;}
+  .chk svg{width:12px;height:12px;}
+
+  footer{text-align:center;color:var(--ink-3);font-size:.85em;padding:10px 20px 36px;}
+  .route{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 18px;}
+  .route b{color:var(--primary);}
+
+  @media (max-width:560px){
+    .hero{padding:32px 16px 88px;}
+    .panel-inner{padding:16px;}
+    li{padding:11px 16px;}
+    .sec-head{padding:15px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>✍️ 柏宏的作文教材庫</h1>
+  <p>學測英文作文 · 六關練成 · 2027/1/22 見真章</p>
+  <div class="links">
+    <a href="20260703/學測英文準備計畫.html">📋 學測準備計畫</a>
+    <a href="20260703/作文課綱_學測衝刺.html">🗓️ 28 週作文課綱</a>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-inner">
+    <div class="ring">
+      <svg width="72" height="72" viewBox="0 0 72 72">
+        <circle cx="36" cy="36" r="31" fill="none" stroke="#e8e8e8" stroke-width="7"/>
+        <circle id="ringFill" cx="36" cy="36" r="31" fill="none" stroke="#111111" stroke-width="7"
+          stroke-linecap="round" stroke-dasharray="194.8" stroke-dashoffset="194.8"
+          style="transition:stroke-dashoffset .5s"/>
+      </svg>
+      <div class="num" id="pct">0%</div>
+    </div>
+    <div class="panel-txt">
+      <b>已完成 <span id="pnum">0</span> / <span id="ptotal">0</span> 課</b>
+      <div class="hint" id="hintTxt">從第 1 關開始，看完一課點右邊圓圈打勾</div>
+    </div>
+    <a class="next-btn" id="nextBtn" href="#">▶ 繼續學習</a>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="search" type="search" placeholder="搜尋教材：時態、診斷、圖表…">
+  </div>
+  <nav class="pills">
+    <a href="#s1">1 段落</a><a href="#s2">2 句型</a><a href="#s3">3 題型</a>
+    <a href="#s4">4 精準度</a><a href="#s5">5 批改</a><a href="#s6">6 模考</a>
+  </nav>
+</div>
+
+<main>
+
+<section id="s1" class="open">
+  <div class="sec-head">
+    <div class="badge">🏗️</div>
+    <div class="sec-title"><h2>第 1 關 · 段落基礎</h2><div class="desc">漢堡寫法 · 主題句 · 句子加長</div></div>
+    <div class="sec-meta"><span class="sec-prog"></span>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+  </div>
+  <div class="sec-body"><ul>
+    <li><a href="作文教材/01_段落基礎/寫作入門_高分完全攻略.html">寫作入門｜高分完全攻略</a><span class="chk"></span></li>
+    <li><a href="作文教材/01_段落基礎/Unit1_完整精裝互動手冊.html">Unit 1｜完整精裝互動手冊</a><span class="chk"></span></li>
+    <li><a href="作文教材/01_段落基礎/Unit5_漢堡段落寫法.html">Unit 5｜漢堡段落寫法</a><span class="chk"></span></li>
+    <li><a href="作文教材/01_段落基礎/Unit5_英文作文這樣寫就OK.html">Unit 5｜英文作文這樣寫就OK</a><span class="chk"></span></li>
+    <li><a href="作文教材/01_段落基礎/腦力激盪_句子加長.html">腦力激盪 & 句子加長</a><span class="chk"></span></li>
+  </ul></div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <div class="badge">⚙️</div>
+    <div class="sec-title"><h2>第 2 關 · 句型與文法</h2><div class="desc">時態 · 轉承詞 · 分詞構句 · 萬用句型</div></div>
+    <div class="sec-meta"><span class="sec-prog"></span>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+  </div>
+  <div class="sec-body"><ul>
+    <li><a href="作文教材/02_句型文法工具/英文時態懶人包.html">英文時態懶人包</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/英文時態_互動式複習.html">英文時態｜互動式複習</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/Unit4轉折詞.html">Unit 4｜轉折詞</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/轉承詞大集合.html">轉承詞大集合（同義詞與片語寶典）</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/分詞構句.html">分詞構句</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/及物不及物.html">及物與不及物動詞</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/who-vs-whom.html">Who vs. Whom</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/動詞片語總整理.html">動詞片語總整理</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/萬用句.html">萬用句型</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/核心詞彙與句型複習.html">核心詞彙與句型複習</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/句型練習.html">句型練習 ①</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/句型練習2.html">句型練習 ②</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/句型系統化特訓地圖.html">句型系統化特訓地圖</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/句型寫作特訓_SRS.html">句型寫作特訓（SRS 重組版）</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/學測文法戰略手冊.html">學測文法戰略手冊</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/不定詞魔法實驗室.html">不定詞魔法實驗室</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/文法戰術中心.html">文法戰術中心</a><span class="chk"></span></li>
+    <li><a href="作文教材/02_句型文法工具/英文常用同義.pdf">英文常用同義 <span class="tag pdf">PDF</span></a><span class="chk"></span></li>
+  </ul></div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <div class="badge">🎯</div>
+    <div class="sec-title"><h2>第 3 關 · 題型攻略</h2><div class="desc">混合題 · 圖表題 · 敘述文 · 破題法</div></div>
+    <div class="sec-meta"><span class="sec-prog"></span>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+  </div>
+  <div class="sec-body"><ul>
+    <li><a href="作文教材/03_題型攻略/兩段式混合題型攻略.html">兩段式混合題型攻略 <span class="tag star">★ 主流題型</span></a><span class="chk"></span></li>
+    <li><a href="作文教材/03_題型攻略/學測五大題型總覽_互動完整版.html">學測五大題型總覽（互動完整版）</a><span class="chk"></span></li>
+    <li><a href="作文教材/03_題型攻略/破題法.html">破題法</a><span class="chk"></span></li>
+    <li><a href="作文教材/03_題型攻略/圖表題寫作技巧.html">圖表題寫作技巧</a><span class="chk"></span></li>
+    <li><a href="作文教材/03_題型攻略/感官描寫技巧.html">感官描寫技巧</a><span class="chk"></span></li>
+    <li><a href="作文教材/03_題型攻略/Unit6_敘述文.html">Unit 6｜敘述文</a><span class="chk"></span></li>
+    <li><a href="作文教材/03_題型攻略/範例練習_颱風假該不該放.html">範例練習｜颱風假該不該放？</a><span class="chk"></span></li>
+    <li><a href="作文教材/03_題型攻略/破題法.pdf">破題法講義 <span class="tag pdf">PDF</span></a><span class="chk"></span></li>
+    <li><a href="作文教材/03_題型攻略/圖表題寫作技巧.pdf">圖表題講義 <span class="tag pdf">PDF</span></a><span class="chk"></span></li>
+    <li><a href="作文教材/03_題型攻略/五種感官的描寫.pdf">五種感官的描寫 <span class="tag pdf">PDF</span></a><span class="chk"></span></li>
+    <li><a href="作文教材/03_題型攻略/記敘文寫作技巧.pdf">記敘文寫作技巧 <span class="tag pdf">PDF</span></a><span class="chk"></span></li>
+    <li><a href="作文教材/03_題型攻略/英文作文講義.pdf">英文作文講義 <span class="tag pdf">PDF</span></a><span class="chk"></span></li>
+  </ul></div>
+</section>
+
+<section id="s4">
+  <div class="sec-head">
+    <div class="badge">🔥</div>
+    <div class="sec-title"><h2>第 4 關 · 精準度訓練</h2><div class="desc">常見錯誤 · Quiz 測驗 · 弱點擊破</div></div>
+    <div class="sec-meta"><span class="sec-prog"></span>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+  </div>
+  <div class="sec-body"><ul>
+    <li><a href="作文教材/04_精準度與測驗/Unit7_弱點擊破.html">Unit 7｜弱點擊破</a><span class="chk"></span></li>
+    <li><a href="作文教材/04_精準度與測驗/寫作精準度Quiz一.html">寫作精準度 Quiz ①</a><span class="chk"></span></li>
+    <li><a href="作文教材/04_精準度與測驗/寫作精準度Quiz二.html">寫作精準度 Quiz ②</a><span class="chk"></span></li>
+    <li><a href="作文教材/04_精準度與測驗/GSAT弱點擊破v3.1.html">GSAT 弱點擊破 v3.1</a><span class="chk"></span></li>
+    <li><a href="作文教材/04_精準度與測驗/GSAT弱點擊破v3.2_HardMode.html">GSAT 弱點擊破 v3.2（Hard Mode）</a><span class="chk"></span></li>
+    <li><a href="作文教材/04_精準度與測驗/GSAT弱點擊破v4.0_FinalReview.html">GSAT 弱點擊破 v4.0（Final Review）</a><span class="chk"></span></li>
+    <li><a href="作文教材/04_精準度與測驗/英文考題產生器.html">英文考題產生器</a><span class="chk"></span></li>
+  </ul></div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <div class="badge">✍️</div>
+    <div class="sec-title"><h2>第 5 關 · 實戰批改</h2><div class="desc">診斷報告 · 範文分析 · 擺脫直翻</div></div>
+    <div class="sec-meta"><span class="sec-prog"></span>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+  </div>
+  <div class="sec-body"><ul>
+    <li><a href="作文教材/05_批改與診斷/作文批改評分單.html">作文批改評分單 <span class="tag star">★ 每篇必用</span></a><span class="chk"></span></li>
+    <li><a href="作文教材/05_批改與診斷/範文分析_作文煉金術.html">範文分析｜作文煉金術</a><span class="chk"></span></li>
+    <li><a href="作文教材/05_批改與診斷/擺脫直翻_建立英文思維.html">擺脫直翻｜建立英文思維</a><span class="chk"></span></li>
+    <li><a href="作文教材/05_批改與診斷/作文批改_表情符號的使用.html">作文批改｜表情符號的使用</a><span class="chk"></span></li>
+    <li><a href="作文教材/05_批改與診斷/孝澤作文批改合輯.html">作文批改合輯</a><span class="chk"></span></li>
+    <li><a href="作文教材/05_批改與診斷/診斷_公園設計.html">診斷｜公園設計</a><span class="chk"></span></li>
+    <li><a href="作文教材/05_批改與診斷/診斷_花園設計.html">診斷｜花園設計</a><span class="chk"></span></li>
+    <li><a href="作文教材/05_批改與診斷/診斷_RobotHelper.html">診斷｜Robot Helper</a><span class="chk"></span></li>
+    <li><a href="作文教材/05_批改與診斷/診斷_在家vs咖啡廳.html">診斷｜在家 vs 咖啡廳</a><span class="chk"></span></li>
+    <li><a href="作文教材/05_批改與診斷/診斷_畢業旅行計畫.html">診斷｜畢業旅行計畫</a><span class="chk"></span></li>
+    <li><a href="作文教材/05_批改與診斷/診斷_EducationVsSkills.html">診斷｜Education vs Skills</a><span class="chk"></span></li>
+    <li><a href="作文教材/05_批改與診斷/診斷_TechnologyReplacement.html">診斷｜Technology Replacement</a><span class="chk"></span></li>
+  </ul></div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <div class="badge">🏆</div>
+    <div class="sec-title"><h2>第 6 關 · 模擬考與戰術</h2><div class="desc">戰術板 · 鞏固卷 · 全真模擬</div></div>
+    <div class="sec-meta"><span class="sec-prog"></span>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+  </div>
+  <div class="sec-body"><ul>
+    <li><a href="作文教材/06_模擬考與戰術/學測終極戰術板_最新版.html">學測終極戰術板（最新版）</a><span class="chk"></span></li>
+    <li><a href="作文教材/06_模擬考與戰術/學測終極戰術板_20分鐘急救版.html">學測終極戰術板（20 分鐘急救版）</a><span class="chk"></span></li>
+    <li><a href="作文教材/06_模擬考與戰術/模擬考_0908.html">模擬考 0908</a><span class="chk"></span></li>
+    <li><a href="作文教材/06_模擬考與戰術/模擬考_0915_高頻考點鞏固卷.html">模擬考 0915｜高頻考點鞏固卷</a><span class="chk"></span></li>
+    <li><a href="作文教材/06_模擬考與戰術/模擬考_0922_高頻文法鞏固卷.html">模擬考 0922｜高頻文法鞏固卷</a><span class="chk"></span></li>
+    <li><a href="作文教材/06_模擬考與戰術/終極鞏固卷.html">終極鞏固卷</a><span class="chk"></span></li>
+    <li><a href="作文教材/06_模擬考與戰術/題庫練習_v7.html">題庫練習（v7 完整版）</a><span class="chk"></span></li>
+    <li><a href="作文教材/06_模擬考與戰術/英文作文題目.pdf">英文作文題目 <span class="tag pdf">PDF</span></a><span class="chk"></span></li>
+    <li><a href="作文教材/06_模擬考與戰術/0815作文題目.jpg">0815 作文題目（圖）</a><span class="chk"></span></li>
+  </ul></div>
+</section>
+
+</main>
+
+<footer>
+  <span class="route">建議路線　<b>1 段落</b> → <b>2 句型</b> → <b>3 題型</b> → <b>5 批改</b> → <b>4 精準度</b> → <b>6 模考</b></span>
+</footer>
+
+<script>
+(function(){
+  var KEY='essayHubDone', CIRC=194.8;
+  var done={};
+  try{done=JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){}
+  var checkSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  var items=[].slice.call(document.querySelectorAll('main li'));
+
+  function render(li,isDone){
+    var chk=li.querySelector('.chk');
+    li.classList.toggle('done',isDone);
+    chk.classList.toggle('done',isDone);
+    chk.innerHTML=isDone?checkSvg:'';
+  }
+  items.forEach(function(li){
+    var id=li.querySelector('a').getAttribute('href');
+    render(li,!!done[id]);
+    li.querySelector('.chk').addEventListener('click',function(e){
+      e.stopPropagation();
+      if(done[id]) delete done[id]; else done[id]=1;
+      localStorage.setItem(KEY,JSON.stringify(done));
+      render(li,!!done[id]); update();
+    });
+  });
+
+  // collapse / expand
+  document.querySelectorAll('.sec-head').forEach(function(h){
+    h.addEventListener('click',function(){h.parentElement.classList.toggle('open');});
+  });
+
+  function update(){
+    var t=items.length, d=items.filter(function(li){return li.classList.contains('done');}).length;
+    document.getElementById('pnum').textContent=d;
+    document.getElementById('ptotal').textContent=t;
+    var pct=t?Math.round(d/t*100):0;
+    document.getElementById('pct').textContent=pct+'%';
+    document.getElementById('ringFill').style.strokeDashoffset=CIRC*(1-(t?d/t:0));
+    document.querySelectorAll('main section').forEach(function(s){
+      var lis=s.querySelectorAll('li'), dd=s.querySelectorAll('li.done').length;
+      var p=s.querySelector('.sec-prog');
+      p.textContent=dd+' / '+lis.length;
+      p.classList.toggle('full',dd===lis.length);
+    });
+    // next up
+    var next=items.find(function(li){return !li.classList.contains('done');});
+    var btn=document.getElementById('nextBtn'), hint=document.getElementById('hintTxt');
+    if(next){
+      var a=next.querySelector('a');
+      btn.href=a.getAttribute('href');
+      btn.textContent='▶ 繼續學習';
+      hint.textContent='下一課：'+a.textContent.replace(/PDF|★ 主流題型|★ 每篇必用/g,'').trim();
+    }else{
+      btn.href='#s6'; btn.textContent='🎉 全部完成';
+      hint.textContent='六關全破，去寫歷屆題吧！';
+    }
+  }
+  update();
+
+  // search
+  document.getElementById('search').addEventListener('input',function(){
+    var q=this.value.trim().toLowerCase();
+    items.forEach(function(li){
+      li.style.display=li.textContent.toLowerCase().indexOf(q)>-1?'':'none';
+    });
+    document.querySelectorAll('main section').forEach(function(s){
+      var any=[].some.call(s.querySelectorAll('li'),function(li){return li.style.display!=='none';});
+      s.style.display=any?'':'none';
+      if(q) s.classList.add('open');
+    });
+    if(!q){document.querySelectorAll('main section').forEach(function(s,i){s.classList.toggle('open',i===0);});}
+  });
+})();
+</script>
+
+</body>
+</html>

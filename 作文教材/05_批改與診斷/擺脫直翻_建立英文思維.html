@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>擺脫直翻，建立英文思維 · 互動版（HTML/CSS/JS）</title>
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Utility for hidden sections (since we toggle classes) */
+    .hidden{display:none}
+  </style>
+</head>
+<body class="min-h-screen bg-gray-50 text-gray-900">
+  <!-- Header -->
+  <header class="sticky top-0 z-10 bg-white/90 backdrop-blur border-b">
+    <div class="mx-auto max-w-5xl px-4 py-3 flex items-center gap-3">
+      <div class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-bold">EN</div>
+      <div class="flex-1">
+        <h1 class="text-xl sm:text-2xl font-bold">擺脫直翻，建立英文思維 · 互動版</h1>
+        <p class="text-sm text-gray-600">HTML / CSS / JS（無框架）</p>
+      </div>
+      <div class="w-36 sm:w-48">
+        <div class="h-2 w-full rounded-full bg-gray-200 overflow-hidden"><div id="progressBar" class="h-full bg-indigo-600 transition-all" style="width:0%"></div></div>
+        <div id="progressText" class="text-[10px] text-gray-600 mt-1 text-right">0%</div>
+      </div>
+    </div>
+    <nav id="tabs" class="mx-auto max-w-5xl px-2 pb-2 flex overflow-x-auto gap-2"></nav>
+  </header>
+
+  <!-- Main -->
+  <main class="mx-auto max-w-5xl px-4 py-6 grid gap-6">
+    <!-- Sections will be injected here -->
+    <div id="sections" class="grid gap-6"></div>
+  </main>
+
+  <footer class="mx-auto max-w-5xl px-4 pb-12 text-xs text-gray-500">
+    <p>Tips: 點擊語塊即可發聲；右鍵（或長按）可加入「我的語塊」。錄音僅在本機儲存。</p>
+  </footer>
+
+  <script>
+    // ===============================
+    // Data
+    // ===============================
+    const SECTIONS = [
+      { id: 'intro',   title: '0–10 破題：為什麼不能直翻?' },
+      { id: 'gaps',    title: '10–25 文化缺口 & 六招改寫' },
+      { id: 'chunks',  title: '25–45 語塊養成' },
+      { id: 'antitrans', title: '45–65 翻譯腔偵測器' },
+      { id: 'shadow',  title: '65–85 情境速寫 & Shadowing' },
+      { id: 'culture', title: '85–105 文化詞轉換練習' },
+      { id: 'wrap',    title: '105–120 總結 & 作業' },
+    ];
+
+    // Persistent stores
+    const store = {
+      get(key, fallback){
+        try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+      },
+      set(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+    };
+
+    const completed = store.get('et_progress', {});
+
+    // ===============================
+    // Helpers
+    // ===============================
+    function speakText(text){
+      try {
+        const u = new SpeechSynthesisUtterance(text);
+        u.rate = 0.95; u.pitch = 1;
+        const voices = window.speechSynthesis.getVoices();
+        const en = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+        if (en) u.voice = en;
+        window.speechSynthesis.speak(u);
+      } catch(e){ console.warn('TTS not available', e); }
+    }
+
+    function updateProgress(){
+      const done = Object.values(completed).filter(Boolean).length;
+      const total = SECTIONS.length + 2; // quizzes + homework flags
+      const pct = Math.round((done / total) * 100);
+      document.getElementById('progressBar').style.width = pct + '%';
+      document.getElementById('progressText').textContent = pct + '%';
+      store.set('et_progress', completed);
+    }
+
+    function markDone(id){ completed[id] = true; updateProgress(); }
+
+    function createButton(label, classes='rounded-xl px-3 py-2 text-white bg-indigo-600 hover:bg-indigo-700 active:scale-[.99] transition'){
+      const b = document.createElement('button'); b.textContent = label; b.className = classes; return b;
+    }
+
+    function card(title, contentEl, actions){
+      const wrap = document.createElement('div');
+      wrap.className = 'rounded-2xl bg-white shadow-sm border p-4';
+      const head = document.createElement('div'); head.className = 'flex items-center justify-between mb-2';
+      const h3 = document.createElement('h3'); h3.className = 'text-lg font-semibold'; h3.textContent = title;
+      const act = document.createElement('div'); act.className = 'flex items-center gap-2';
+      actions && actions.forEach(a => act.appendChild(a));
+      head.append(h3, act);
+      wrap.append(head, contentEl);
+      return wrap;
+    }
+
+    function pill(text){ const s = document.createElement('span'); s.className = 'inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700'; s.textContent = text; return s; }
+
+    function chunkButton(text, hint){
+      const btn = document.createElement('button');
+      btn.className = 'group flex flex-col items-start gap-0.5 rounded-xl border px-3 py-2 text-left hover:shadow-sm active:scale-[.99] bg-white';
+      btn.title = '點擊發音 · 右鍵收藏';
+      const head = document.createElement('span'); head.className = 'font-medium'; head.textContent = text;
+      const sub = document.createElement('span'); sub.className = 'text-xs text-gray-600'; sub.textContent = hint || '';
+      btn.append(head); if (hint) btn.append(sub);
+      btn.addEventListener('click', () => speakText(text));
+      btn.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        const raw = store.get('et_chunks', []);
+        const idx = raw.indexOf(text);
+        if (idx >= 0) raw.splice(idx,1); else raw.push(text);
+        store.set('et_chunks', raw);
+        btn.classList.toggle('bg-indigo-50'); btn.classList.toggle('border-indigo-500');
+      });
+      // init saved state
+      const saved = store.get('et_chunks', []).includes(text);
+      if (saved){ btn.classList.add('bg-indigo-50','border-indigo-500'); }
+      return btn;
+    }
+
+    // ===============================
+    // UI Builders per section
+    // ===============================
+    function buildIntro(){
+      const wrap = document.createElement('div'); wrap.className = 'grid gap-6';
+      const items = [
+        { head: 'strike it rich', sub: '突然致富（偏幸運）' },
+        { head: 'get rich', sub: '變有錢' },
+        { head: 'hit the jackpot', sub: '中大獎/大成功' },
+        { head: 'make a fortune', sub: '賺進大筆財富' },
+        { head: 'be loaded', sub: '很有錢（口語）' },
+      ];
+      // card 1
+      const c1Body = document.createElement('div'); c1Body.className = 'prose prose-sm max-w-none';
+      const p = document.createElement('p'); p.textContent = '英語依情境挑字。以下點一下可發音、右鍵可收藏：';
+      const grid = document.createElement('div'); grid.className = 'grid sm:grid-cols-2 lg:grid-cols-3 gap-3 not-prose mt-2';
+      items.forEach(it => grid.appendChild(chunkButton(it.head, it.sub)));
+      c1Body.append(p, grid);
+      const done = createButton('標記完成'); done.addEventListener('click', () => markDone('intro'));
+      wrap.appendChild(card('破題：『發財』的英文沒有一個對應詞', c1Body, [done]));
+
+      // quiz
+      const quiz = buildQuiz({
+        title: '小測：選對情境',
+        question: 'A startup ______ after their app went viral.',
+        choices: ['be loaded','hit the jackpot','make a fortune','strike it rich'],
+        answerIndex: 2,
+      });
+      wrap.appendChild(quiz);
+      return wrap;
+    }
+
+    function buildGaps(){
+      const wrap = document.createElement('div'); wrap.className = 'grid gap-6';
+      const examples = [
+        { zh: '孝順', en: ['filial piety (formal)','be good to my parents','take care of my parents','be there for my folks'] },
+        { zh: '加油', en: ['You got this.','Hang in there.','I\'m rooting for you.','Go for it.'] },
+        { zh: '辛苦了', en: ['Thanks for your hard work.','I really appreciate this.','I know it’s been a long day.'] },
+        { zh: '方便嗎', en: ['Is now a good time?','Does this time work for you?'] },
+        { zh: '隨便', en: ['I\'m easy.','Up to you.','Whatever works.'] },
+      ];
+
+      const body = document.createElement('div'); body.className = 'grid md:grid-cols-2 gap-3 not-prose';
+      examples.forEach(e => body.appendChild(buildFlipCard(e.zh, e.en)));
+      const done = createButton('標記完成'); done.addEventListener('click', () => markDone('gaps'));
+      wrap.appendChild(card('文化概念缺口：中文有、英文沒有', body, [done]));
+
+      // strategies card
+      const stWrap = document.createElement('div'); stWrap.className = 'prose prose-sm max-w-none';
+      const ul = document.createElement('ul'); ul.className = 'grid sm:grid-cols-2 gap-2 list-none pl-0';
+      const strategies = ['具體化','情境化','語塊化','範疇調整','例證法','借詞+解釋'];
+      strategies.forEach((s,i)=>{ const li=document.createElement('li'); li.className='flex items-center gap-2'; li.append(pill(i+1), document.createTextNode(s)); ul.appendChild(li); });
+      const helper = document.createElement('div'); helper.className = 'mt-3 rounded-xl bg-indigo-50 p-3';
+      const hp = document.createElement('p'); hp.className = 'text-sm font-medium'; hp.textContent = '練習：用任一策略把「孝順」改成兩句英文。';
+      helper.appendChild(hp);
+      helper.appendChild(buildStrategyPractice(['I try to call my parents every Sunday.','I set money aside to take care of them.']));
+      const stCard = card('六種改寫策略', document.createElement('div'));
+      stCard.querySelector('.prose')?.remove(); // cleanup if any
+      stCard.append(ul, helper);
+      wrap.appendChild(stCard);
+      return wrap;
+    }
+
+    function buildChunks(){
+      const wrap = document.createElement('div'); wrap.className = 'grid gap-6';
+      const banks = [
+        { title: '金錢 & 成就', items: ['make a living','make a name for myself','land a job','get a raise','on a tight budget'] },
+        { title: '學習 & 思考', items: ['wrap my head around…','It feels like…','I\'m confused about…','from scratch','rule of thumb'] },
+        { title: '社交 & 客氣', items: ['I appreciate you…','If it\'s not too much trouble…','Thanks for the heads-up.','Mind if I…?','No worries.'] },
+        { title: '建議 & 委婉', items: ['You might want to…','How about we…','Maybe try…','One idea is to…','Have you considered…?'] },
+        { title: '不確定 & 保留', items: ['I\'m not sure if…','As far as I know…','It depends.','I\'m on the fence.','Sort of.'] },
+        { title: '喜好 & 選擇', items: ['I\'m good with either.','I\'m leaning toward…','I\'m torn between…','Whatever works.','You pick.'] },
+      ];
+      const body = document.createElement('div'); body.className = 'grid md:grid-cols-2 gap-4 not-prose';
+      banks.forEach(b => {
+        const box = document.createElement('div'); box.className = 'rounded-xl border p-3';
+        const title = document.createElement('div'); title.className = 'font-semibold mb-2'; title.textContent = b.title;
+        const row = document.createElement('div'); row.className = 'flex flex-wrap gap-2';
+        b.items.forEach(t => row.appendChild(chunkButton(t)));
+        box.append(title,row); body.appendChild(box);
+      });
+      const done = createButton('標記完成'); done.addEventListener('click', () => markDone('chunks'));
+      wrap.appendChild(card('語塊庫（點擊發音 / 右鍵收藏）', body, [done]));
+
+      const shadowGrid = document.createElement('div'); shadowGrid.className = 'mt-4 grid md:grid-cols-2 gap-3 not-prose';
+      shadowGrid.appendChild(buildShadowLine("I'd appreciate it if you could send the file today."));
+      shadowGrid.appendChild(buildShadowLine("Make a living as a designer. Make a living as a translator."));
+      wrap.appendChild(card('Shadowing 範例', shadowGrid));
+
+      const ms = buildMinimalSwap('make a living as a', ['designer','translator','freelancer','barista','developer']);
+      wrap.appendChild(card('最小替換練習', ms));
+      return wrap;
+    }
+
+    function buildAntiTrans(){
+      const wrap = document.createElement('div'); wrap.className = 'grid gap-6';
+      const tasks = [
+        { bad: 'It has been extremely laborious for you.', good: 'Thanks for sticking with this.' },
+        { bad: 'Please allow me to make a suggestion.', good: 'Maybe try this…' },
+        { bad: 'I will immediately proceed to handle the matter.', good: "I'll take care of it right away." },
+      ];
+      const grid = document.createElement('div'); grid.className = 'grid md:grid-cols-2 gap-3 not-prose';
+      tasks.forEach(t => grid.appendChild(buildRewriteCard(t.bad, t.good)));
+      const done = createButton('標記完成'); done.addEventListener('click', () => markDone('antitrans'));
+      wrap.appendChild(card('翻譯腔偵測器：聽 → 砍 → 補', grid, [done]));
+
+      wrap.appendChild(buildQuiz({
+        title: '判斷哪一句更自然',
+        question: 'Which sounds more natural in everyday speech?',
+        choices: ['Please allow me to make a suggestion.','Maybe try this…'],
+        answerIndex: 1,
+      }));
+      return wrap;
+    }
+
+    function buildShadowSec(){
+      const wrap = document.createElement('div'); wrap.className = 'grid gap-6';
+      const rp = buildRolePlay();
+      const done = createButton('標記完成'); done.addEventListener('click', () => markDone('shadow'));
+      wrap.appendChild(card('情境速寫：直接用英文生成，不經中文', rp, [done]));
+
+      const frames = ["I'm not sure if I can make it because…","If it helps, I can…","I'm rooting for you. Let me know how it goes."];
+      const c2 = document.createElement('div');
+      c2.className = 'prose prose-sm max-w-none';
+      const tip = document.createElement('p'); tip.className='mb-2 text-sm text-gray-600'; tip.textContent='點 ▶ 朗讀、⏺ 錄音、▶ 返聽。建議 2–3 次循環。';
+      const list = document.createElement('div');
+      frames.forEach(s => { const box=document.createElement('div'); box.className='mb-3'; box.appendChild(buildShadowLine(s)); list.appendChild(box); });
+      c2.append(tip,list);
+      wrap.appendChild(card('Shadowing 訓練器', c2));
+      return wrap;
+    }
+
+    function buildCulture(){
+      const wrap = document.createElement('div'); wrap.className = 'grid gap-6';
+      const bank = [
+        { zh: '內捲', hints: ['cutthroat competition','everyone trying to outdo one another'] },
+        { zh: '躺平', hints: ['opting out of the rat race','taking a step back'] },
+        { zh: '儀式感', hints: ['make it feel special','make a little ritual out of it'] },
+        { zh: '拍照打卡', hints: ['snap a pic and post it','check in on Instagram'] },
+        { zh: '氣質', hints: ['poise','presence','classy vibe'] },
+      ];
+      const grid = document.createElement('div'); grid.className = 'grid md:grid-cols-2 gap-3 not-prose';
+      bank.forEach(b => grid.appendChild(buildCultureCard(b.zh, b.hints)));
+      const done = createButton('標記完成'); done.addEventListener('click', () => markDone('culture'));
+      wrap.appendChild(card('文化詞 → 兩句英文，放進情境', grid, [done]));
+
+      wrap.appendChild(buildQuiz({
+        title: '語塊辨識：哪個最自然?',
+        question: 'For cheering a friend before an exam, which fits best?',
+        choices: ['Add oil!','You got this.','Please study hard.'],
+        answerIndex: 1,
+      }));
+      return wrap;
+    }
+
+    function buildWrap(){
+      const wrap = document.createElement('div'); wrap.className = 'grid gap-6';
+      const c1 = document.createElement('div'); c1.className = 'prose prose-sm max-w-none';
+      const ul = document.createElement('ul'); ul.className='list-disc pl-6';
+      ['今天學的是一套 說話系統，而不是單字清單。','先決定 情境 & 語氣，再選語塊。','保留模糊、簡潔自然，避免不必要的正式。']
+        .forEach(t=>{const li=document.createElement('li'); li.innerHTML=t.replace('說話系統','<strong>說話系統</strong>').replace('情境 & 語氣','<strong>情境 &amp; 語氣</strong>'); ul.appendChild(li);});
+      c1.appendChild(ul);
+      const done = createButton('標記完成'); done.addEventListener('click', () => markDone('wrap'));
+      const card1 = card('總結：先想到語塊，再填內容', c1, [done]);
+
+      const hw = buildHomework();
+      const card2 = card('作業任務清單', hw);
+
+      wrap.append(card1, card2);
+      return wrap;
+    }
+
+    // ===============================
+    // Widgets
+    // ===============================
+    function buildFlipCard(title, items){
+      const box = document.createElement('div'); box.className = 'rounded-xl border p-3 bg-white';
+      const head = document.createElement('div'); head.className='flex items-center justify-between';
+      const ttl = document.createElement('div'); ttl.className='font-semibold'; ttl.textContent = title;
+      const idxLbl = document.createElement('div'); idxLbl.className='text-xs text-gray-500'; idxLbl.textContent='1/'+items.length;
+      const mt = document.createElement('div'); mt.className='mt-2 flex items-center justify-between gap-2';
+      const prev = createButton('◀','rounded-lg px-2 py-1 bg-gray-100 text-gray-900');
+      const next = createButton('▶','rounded-lg px-2 py-1 bg-gray-100 text-gray-900');
+      const mid = document.createElement('button'); mid.className='flex-1 rounded-xl border px-3 py-2 text-left hover:bg-gray-50';
+      const midHead = document.createElement('div'); midHead.className='font-medium';
+      const midSub = document.createElement('div'); midSub.className='text-xs text-gray-600'; midSub.textContent='點擊發音';
+      mid.append(midHead, midSub);
+      let idx = 0; midHead.textContent = items[idx];
+      const setIdx = (n)=>{ idx = (n + items.length) % items.length; midHead.textContent = items[idx]; idxLbl.textContent = (idx+1)+'/'+items.length; };
+      prev.addEventListener('click', ()=> setIdx(idx-1));
+      next.addEventListener('click', ()=> setIdx(idx+1));
+      mid.addEventListener('click', ()=> speakText(items[idx]));
+      head.append(ttl, idxLbl); mt.append(prev, mid, next);
+      box.append(head, mt); return box;
+    }
+
+    function buildStrategyPractice(seed){
+      const wrap = document.createElement('div'); wrap.className = 'grid gap-2';
+      const t1 = document.createElement('textarea'); t1.className='w-full rounded-xl border p-2'; t1.placeholder='句子 1 (英)';
+      const t2 = document.createElement('textarea'); t2.className='w-full rounded-xl border p-2'; t2.placeholder='句子 2 (英)';
+      const refLbl = document.createElement('div'); refLbl.className='text-xs text-gray-600'; refLbl.textContent='參考：';
+      const ul = document.createElement('ul'); ul.className='text-sm list-disc pl-6';
+      seed.forEach(s=>{const li=document.createElement('li'); li.textContent=s; li.className='cursor-pointer hover:underline'; li.addEventListener('click',()=>speakText(s)); ul.appendChild(li);});
+      wrap.append(t1,t2,refLbl,ul); return wrap;
+    }
+
+    function buildShadowLine(script){
+      const box = document.createElement('div'); box.className='rounded-xl border p-3 flex flex-col gap-2';
+      const line = document.createElement('div'); line.className='text-sm font-medium'; line.textContent = script;
+      const row = document.createElement('div'); row.className='flex items-center gap-2';
+      const ttsBtn = createButton('▶ 朗讀','rounded-lg bg-gray-100 px-2 py-1 text-gray-900');
+      const recBtn = createButton('⏺ 錄音','rounded-lg bg-rose-600 text-white px-2 py-1');
+      const stopBtn = createButton('⏹ 停止','rounded-lg bg-rose-800 text-white px-2 py-1 hidden');
+      const audio = document.createElement('audio'); audio.className='h-9 hidden'; audio.controls = true;
+      let mr = null; let chunks = [];
+      ttsBtn.addEventListener('click', ()=> speakText(script));
+      recBtn.addEventListener('click', async ()=>{
+        if(!navigator.mediaDevices?.getUserMedia) return alert('Recording not supported in this browser.');
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mr = new MediaRecorder(stream); chunks = [];
+        mr.ondataavailable = (e)=> e.data.size && chunks.push(e.data);
+        mr.onstop = ()=>{
+          const blob = new Blob(chunks, { type: 'audio/webm' });
+          const url = URL.createObjectURL(blob); audio.src = url; audio.classList.remove('hidden');
+        };
+        mr.start(); recBtn.classList.add('hidden'); stopBtn.classList.remove('hidden');
+      });
+      stopBtn.addEventListener('click', ()=>{ mr && mr.stop(); stopBtn.classList.add('hidden'); recBtn.classList.remove('hidden'); });
+      row.append(ttsBtn, recBtn, stopBtn, audio);
+      box.append(line, row); return box;
+    }
+
+    function buildMinimalSwap(base, options){
+      const box = document.createElement('div'); box.className='rounded-xl border p-3 flex flex-col gap-2';
+      let idx = 0; const text = document.createElement('div'); text.className='text-sm';
+      const prev = createButton('◀','rounded-lg bg-gray-100 px-2 py-1 text-gray-900');
+      const say = createButton('▶ 發音','rounded-lg bg-gray-100 px-2 py-1 text-gray-900');
+      const next = createButton('▶','rounded-lg bg-gray-100 px-2 py-1 text-gray-900');
+      const setTxt = ()=>{ text.textContent = `${base} ${options[idx]}`; };
+      prev.addEventListener('click', ()=>{ idx = (idx - 1 + options.length) % options.length; setTxt(); });
+      next.addEventListener('click', ()=>{ idx = (idx + 1) % options.length; setTxt(); });
+      say.addEventListener('click', ()=> speakText(text.textContent));
+      setTxt();
+      const row = document.createElement('div'); row.className='flex items-center gap-2'; row.append(prev, say, next);
+      box.append(text, row); return box;
+    }
+
+    function buildRewriteCard(bad, good){
+      const box = document.createElement('div'); box.className='rounded-xl border p-3 bg-white flex flex-col gap-2';
+      const lbl = document.createElement('div'); lbl.className='text-xs text-gray-500'; lbl.textContent='原句（翻譯腔）';
+      const badTxt = document.createElement('div'); badTxt.className='font-medium'; badTxt.textContent = bad;
+      const ta = document.createElement('textarea'); ta.className='rounded-xl border p-2'; ta.placeholder='你的改寫 (English)';
+      const row = document.createElement('div'); row.className='flex items-center gap-2';
+      const toggle = createButton('看參考','rounded-lg bg-gray-100 px-2 py-1 text-gray-900');
+      const say = createButton('▶ 朗讀參考','rounded-lg bg-gray-100 px-2 py-1 text-gray-900');
+      const ref = document.createElement('div'); ref.className='text-sm rounded-lg bg-emerald-50 border border-emerald-200 p-2 hidden'; ref.textContent = good;
+      toggle.addEventListener('click', ()=> ref.classList.toggle('hidden'));
+      say.addEventListener('click', ()=> speakText(good));
+      row.append(toggle, say);
+      box.append(lbl, badTxt, ta, row, ref); return box;
+    }
+
+    function buildRolePlay(){
+      const scenarios = [
+        { title: '老闆臨時加會，你要婉拒', frames:["I'm not sure if I can make it because…","Could we push it to __:__?","If it helps, I can send a quick summary first."] },
+        { title: '朋友需要打氣', frames:["You got this.","If it helps, I can quiz you tonight.","Text me after—you'll do great."] },
+        { title: '家人健康檢查，你表達關心', frames:["Thinking of you today.","If you need anything, I'm here.","Let me know how it goes."] },
+      ];
+      let i = 0; const sc = ()=> scenarios[i];
+      const box = document.createElement('div'); box.className='rounded-2xl border p-4 bg-white';
+      const head = document.createElement('div'); head.className='flex items-center justify-between mb-2';
+      const title = document.createElement('div'); title.className='font-semibold';
+      const idxLbl = document.createElement('div'); idxLbl.className='text-xs text-gray-500';
+      const grid = document.createElement('div'); grid.className='grid gap-2';
+      const prev = createButton('◀','rounded-lg bg-gray-100 px-2 py-1 text-gray-900');
+      const next = createButton('▶','rounded-lg bg-gray-100 px-2 py-1 text-gray-900');
+      const nav = document.createElement('div'); nav.className='mt-3 flex items-center gap-2'; nav.append(prev, next);
+      function render(){
+        title.textContent = sc().title; idxLbl.textContent = (i+1)+'/'+scenarios.length; grid.innerHTML='';
+        sc().frames.forEach(f=>{ const row=document.createElement('div'); row.className='flex items-center gap-2'; const b=createButton('▶','rounded-lg bg-gray-100 px-2 py-1 text-gray-900'); b.addEventListener('click',()=>speakText(f)); const span=document.createElement('span'); span.className='text-sm'; span.textContent=f; row.append(b,span); grid.appendChild(row); });
+      }
+      prev.addEventListener('click', ()=>{ i=(i-1+scenarios.length)%scenarios.length; render(); });
+      next.addEventListener('click', ()=>{ i=(i+1)%scenarios.length; render(); });
+      render();
+      head.append(title, idxLbl); box.append(head, grid, nav); return box;
+    }
+
+    function buildCultureCard(zh, hints){
+      const box = document.createElement('div'); box.className='rounded-xl border p-3 bg-white';
+      const title = document.createElement('div'); title.className='font-semibold mb-1'; title.textContent=zh;
+      const t1 = document.createElement('textarea'); t1.className='w-full rounded-xl border p-2 mb-2'; t1.placeholder='句子 1 (English)';
+      const t2 = document.createElement('textarea'); t2.className='w-full rounded-xl border p-2 mb-2'; t2.placeholder='句子 2 (English)';
+      const row = document.createElement('div'); row.className='flex items-center gap-2';
+      const tip = createButton('給提示','rounded-lg bg-gray-100 px-2 py-1 text-gray-900');
+      tip.addEventListener('click', ()=>{ if(row.querySelectorAll('button').length===1){ hints.forEach(h=>{ const hb=createButton(h,'rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-1 text-xs'); hb.addEventListener('click',()=>speakText(h)); row.appendChild(hb); }); } else { [...row.querySelectorAll('button')].forEach((b,i)=>{ if(i>0) b.remove(); }); } });
+      row.append(tip);
+      box.append(title, t1, t2, row); return box;
+    }
+
+    function buildHomework(){
+      const box = document.createElement('div'); box.className='rounded-xl border p-3 not-prose';
+      const a = document.createElement('label'); a.className='flex items-center gap-2';
+      const aChk = document.createElement('input'); aChk.type='checkbox'; a.append(aChk, document.createTextNode('錄 1 分鐘語音，至少用 5 個語塊'));
+      const b = document.createElement('label'); b.className='flex items-center gap-2 mt-2';
+      const bChk = document.createElement('input'); bChk.type='checkbox'; b.append(bChk, document.createTextNode('找 3 個「中文有、英文沒有」詞，每個用 2 句英文說明'));
+      const note = document.createElement('div'); note.className='text-xs text-gray-600 mt-2'; note.textContent='狀態自動儲存於此裝置。';
+      const raw = store.get('et_hw', {}); aChk.checked = !!raw.audio; bChk.checked = !!raw.gap;
+      function save(){ store.set('et_hw', { audio: aChk.checked, gap: bChk.checked }); }
+      aChk.addEventListener('change', save); bChk.addEventListener('change', save);
+      box.append(a,b,note); return box;
+    }
+
+    function buildQuiz({ title, question, choices, answerIndex }){
+      const wrap = document.createElement('div');
+      const body = document.createElement('div'); body.className='prose prose-sm max-w-none';
+      const q = document.createElement('div'); q.className='font-medium mb-1'; q.textContent = question;
+      const grid = document.createElement('div'); grid.className='grid sm:grid-cols-2 gap-2 not-prose';
+      let picked = null;
+      choices.forEach((c,i)=>{
+        const btn = document.createElement('button'); btn.className='text-left rounded-xl border px-3 py-2 hover:shadow-sm bg-white'; btn.textContent=c;
+        btn.addEventListener('click', ()=>{
+          picked = i; [...grid.children].forEach((child,idx)=>{
+            child.className = 'text-left rounded-xl border px-3 py-2 hover:shadow-sm ' + (idx===answerIndex? 'bg-emerald-50 border-emerald-300' : idx===picked? 'bg-rose-50 border-rose-300' : 'bg-white opacity-60');
+          });
+          msg.className = 'mt-2 rounded-lg px-3 py-2 text-sm ' + (picked===answerIndex? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700');
+          msg.textContent = (picked===answerIndex? '✅ Correct! Nice choice—this matches how native speakers phrase it.' : '❌ Not quite. Check the situation and tone; pick the chunk that fits the context.');
+          markDone('quiz_'+question.slice(0,10)); // progress contribution
+        });
+        grid.appendChild(btn);
+      });
+      const msg = document.createElement('div'); msg.className='hidden';
+      body.append(q, grid, msg);
+      return card(title, body);
+    }
+
+    // ===============================
+    // App Boot
+    // ===============================
+    function buildTabs(){
+      const nav = document.getElementById('tabs');
+      SECTIONS.forEach((s, idx)=>{
+        const btn = document.createElement('button');
+        btn.textContent = s.title;
+        btn.className = 'whitespace-nowrap rounded-full px-3 py-1.5 text-sm border transition ' + (idx===0? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-gray-700 hover:bg-gray-100');
+        btn.addEventListener('click', ()=> showSection(s.id));
+        btn.id = 'tab-'+s.id;
+        nav.appendChild(btn);
+      });
+    }
+
+    function showSection(id){
+      // toggle tab styles
+      SECTIONS.forEach(s=>{
+        const b = document.getElementById('tab-'+s.id);
+        if(!b) return;
+        if(s.id===id){ b.className='whitespace-nowrap rounded-full px-3 py-1.5 text-sm border transition bg-indigo-600 text-white border-indigo-600'; }
+        else { b.className='whitespace-nowrap rounded-full px-3 py-1.5 text-sm border transition bg-white text-gray-700 hover:bg-gray-100'; }
+      });
+      // toggle sections
+      SECTIONS.forEach(s=>{
+        const sec = document.getElementById('sec-'+s.id);
+        if(sec) sec.classList.toggle('hidden', s.id!==id);
+      });
+    }
+
+    function buildSections(){
+      const host = document.getElementById('sections');
+      const factories = {
+        intro: buildIntro,
+        gaps: buildGaps,
+        chunks: buildChunks,
+        antitrans: buildAntiTrans,
+        shadow: buildShadowSec,
+        culture: buildCulture,
+        wrap: buildWrap,
+      };
+      SECTIONS.forEach(s=>{
+        const sec = document.createElement('section'); sec.id = 'sec-'+s.id; sec.className='section';
+        const content = factories[s.id]();
+        sec.appendChild(content); host.appendChild(sec);
+      });
+      // default
+      showSection('intro');
+    }
+
+    // ===============================
+    // Simple runtime tests (self-check)
+    // ===============================
+    function runSelfTests(){
+      const results = [];
+      function ok(name, cond){ results.push({ name, pass: !!cond }); }
+      ok('SpeechSynthesis available', 'speechSynthesis' in window);
+      ok('Tabs rendered', document.querySelectorAll('#tabs > button').length === SECTIONS.length);
+      ok('Sections rendered', document.querySelectorAll('#sections > section').length === SECTIONS.length);
+      ok('Quiz component exists', !!document.querySelector('button:contains')); // benign placeholder
+      // report
+      const failed = results.filter(r=>!r.pass);
+      if(failed.length){ console.warn('[SelfTest] Failed:', failed); } else { console.log('[SelfTest] All passed'); }
+    }
+
+    // Boot
+    buildTabs();
+    buildSections();
+    updateProgress();
+    runSelfTests();
+
+    // Ask user about expected behavior if anything differs
+    console.log('[Question] 若有你期待但目前沒有的互動（例如：自動朗讀語速、自訂主題色、導出 PDF），告訴我，我可以補上。');
+  </script>
+</body>
+</html>

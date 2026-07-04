@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學測英文文法戰略手冊</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        .slide-up { animation: slideUp 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800">
+
+    <!-- Header -->
+    <header class="bg-indigo-600 text-white p-4 shadow-lg sticky top-0 z-10">
+        <div class="max-w-3xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold flex items-center gap-2">
+                    <i data-lucide="book" class="w-6 h-6"></i>
+                    學測英文文法戰略
+                </h1>
+                <p class="text-xs text-indigo-200 mt-1">澤享的專屬複習工具</p>
+            </div>
+            <div class="text-right">
+                <div class="text-sm font-semibold" id="progress-text">0% Mastered</div>
+                <div class="w-24 h-2 bg-indigo-800 rounded-full mt-1 overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-green-400 transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto p-4 pb-20">
+        
+        <!-- Navigation Tabs -->
+        <div class="flex bg-white rounded-lg shadow-sm p-1 mb-6">
+            <button onclick="app.switchTab('handbook')" id="tab-handbook" class="flex-1 py-2 rounded-md font-medium text-sm transition-colors flex items-center justify-center gap-2 bg-indigo-100 text-indigo-700">
+                <i data-lucide="book" class="w-4 h-4"></i>
+                句型目錄
+            </button>
+            <button onclick="app.switchTab('practice')" id="tab-practice" class="flex-1 py-2 rounded-md font-medium text-sm transition-colors flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50">
+                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                情境翻譯抽考
+            </button>
+        </div>
+
+        <!-- Handbook View -->
+        <div id="view-handbook" class="space-y-4 fade-in">
+            <!-- Content will be injected by JS -->
+        </div>
+
+        <!-- Practice View -->
+        <div id="view-practice" class="hidden flex flex-col items-center justify-center py-8 space-y-6 fade-in">
+            <!-- Content will be injected by JS -->
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-100 py-6 text-center text-slate-500 text-sm border-t border-slate-200">
+        <p>學測英文文法戰略手冊 v2.0</p>
+        <p class="text-xs mt-1">Practice Mode: Context-Based Translation</p>
+    </footer>
+
+    <script>
+        // --- Data Source ---
+        const grammarData = [
+            {
+                id: 1,
+                title: "Section 1：五大基本句型及其他句型",
+                description: "所有句子的骨架，寫作的根本。",
+                items: [
+                    { id: "1-1", content: "完全不及物動詞：S + Vi.", example: { zh: "意外發生在昨天深夜。", en: "The accident happened late last night." } },
+                    { id: "1-2", content: "不完全不及物動詞（連綴）：S + Vi + S.C.", example: { zh: "這湯嚐起來很美味。", en: "The soup tastes delicious." } },
+                    { id: "1-3", content: "完全及物動詞：S + Vt + O", example: { zh: "科技改變了我們的生活方式。", en: "Technology has changed our lifestyle." } },
+                    { id: "1-4", content: "授與動詞：S + Vt + I.O. + D.O.", example: { zh: "他給了我一些關於如何準備考試的建議。", en: "He gave me some advice on how to prepare for the exam." } },
+                    { id: "1-5", content: "不完全及物動詞：S + Vt + O + O.C.", example: { zh: "我們認為他是這份工作的最佳人選。", en: "We consider him the best candidate for the job." } },
+                    { id: "1-6", content: "疑問詞疑問句", example: { zh: "這到底這怎麼發生的？", en: "How on earth did this happen?" } },
+                    { id: "1-7", content: "是非問句", example: { zh: "你曾經去過歐洲嗎？", en: "Have you ever been to Europe?" } },
+                    { id: "1-8", content: "間接問句：...wh-/if + S + V...", example: { zh: "我想知道他是否會參加會議。", en: "I wonder if he will attend the meeting." } },
+                    { id: "1-9", content: "附加問句", example: { zh: "你是學生，對吧？", en: "You are a student, aren't you?" } }
+                ]
+            },
+            {
+                id: 2,
+                title: "Section 2：常見動詞的用法",
+                description: "學測填空與改錯的最愛。",
+                items: [
+                    { id: "2-1", content: "感官動詞：S + see/hear + O + V / V-ing", example: { zh: "我看見他在過馬路（正在進行）。", en: "I saw him crossing the street." } },
+                    { id: "2-2", content: "使役動詞：S + make + O + V (主動) / p.p. (被動)", example: { zh: "那個悲傷的故事讓每個人都哭了。", en: "The sad story made everyone cry." } },
+                    { id: "2-3", content: "表「花費」：It takes (time) / S spend (time/money)", example: { zh: "我花了好幾小時才解決這個問題。", en: "It took me several hours to solve the problem." } },
+                    { id: "2-4", content: "表「組成」：consist of / be composed of", example: { zh: "水是由氫和氧組成的。", en: "Water consists of hydrogen and oxygen." } },
+                    { id: "2-5", content: "認為/覺得：S + find + it + adj + to V...", example: { zh: "我覺得要精通一門外語很難。", en: "I find it difficult to master a foreign language." } },
+                    { id: "2-6", content: "視為：view/see/regard A as B", example: { zh: "許多人視健康為理所當然。", en: "Many people regard health as a matter of course (or take it for granted)." } },
+                    { id: "2-7", content: "避免/防止：keep/stop/prevent ... from V-ing", example: { zh: "大雨使我們無法去野餐。", en: "The heavy rain prevented us from going on a picnic." } },
+                    { id: "2-8", content: "接觸身體部位：pat/hit sb on the 部位", example: { zh: "他拍了拍我的肩膀。", en: "He patted me on the shoulder." } }
+                ]
+            },
+            {
+                id: 3,
+                title: "Section 3：連接句子結構的句型",
+                description: "讓你的作文從短句變長句的關鍵。",
+                items: [
+                    { id: "3-1", content: "列舉：one ... another ... the other", example: { zh: "我有三個姐姐：一位是醫生，一位是律師，另一位是老師。", en: "I have three sisters: one is a doctor, another is a lawyer, and the other is a teacher." } },
+                    { id: "3-2", content: "理由：for one thing ... for another", example: { zh: "我不買那輛車；一來它太貴，二來我不喜歡那個顏色。", en: "I won't buy that car; for one thing, it's too expensive, and for another, I don't like the color." } },
+                    { id: "3-3", content: "配對：neither A nor B (既不...也不...)", example: { zh: "他和我都不知道答案。", en: "Neither he nor I know the answer." } },
+                    { id: "3-4", content: "強調：not only A but also B", example: { zh: "他不只聰明，而且很勤奮。", en: "He is not only smart but also diligent." } },
+                    { id: "3-5", content: "讓步轉折：It is true that ... , but ...", example: { zh: "他的確很有錢，但他不快樂。", en: "It is true that he is rich, but he is not happy." } },
+                    { id: "3-6", content: "祈使句後果：V... , and (那麼) / or (否則)", example: { zh: "早點起床，這樣你就能趕上火車。", en: "Get up early, and you will catch the train." } },
+                    { id: "3-7", content: "轉折副詞：However (然而) / Therefore (因此)", example: { zh: "他生病了，因此他沒去上學。", en: "He was sick; therefore, he didn't go to school." } }
+                ]
+            },
+            {
+                id: 4,
+                title: "Section 4：名詞子句及 It 常用句型",
+                description: "高階寫作必備的「虛主詞」結構。",
+                items: [
+                    { id: "4-1", content: "名詞子句：that S + V ...", example: { zh: "我相信誠實是上策。", en: "I believe that honesty is the best policy." } },
+                    { id: "4-2", content: "有可能：It is likely that ...", example: { zh: "明天很可能會下雪。", en: "It is likely that it will snow tomorrow." } },
+                    { id: "4-3", content: "據報導/說：It is reported/said that ...", example: { zh: "據報導，颱風正在接近台灣。", en: "It is reported that the typhoon is approaching Taiwan." } },
+                    { id: "4-4", content: "似乎：It seems that ...", example: { zh: "他似乎對結果很滿意。", en: "It seems that he is satisfied with the result." } }
+                ]
+            },
+            {
+                id: 5,
+                title: "Section 5：不定詞及 It 相關句型",
+                description: "表達目的、評論與判斷。",
+                items: [
+                    { id: "5-1", content: "不定詞當主詞：To V ... is ...", example: { zh: "早起對健康有益。", en: "To get up early is good for health." } },
+                    { id: "5-2", content: "虛主詞描述事物：It is adj. (+ for sb) + to V", example: { zh: "對我們來說，一天內完成工作是不可能的。", en: "It is impossible for us to finish the work in a day." } },
+                    { id: "5-3", content: "描述人特質：It is + adj. + of sb + to V", example: { zh: "你真好，幫我這個忙。", en: "It is nice of you to do me this favor." } },
+                    { id: "5-4", content: "值得：It is worthwhile + to V / V-ing", example: { zh: "這部電影值得再看一次。", en: "It is worthwhile to see the movie again." } },
+                    { id: "5-5", content: "沒必要：There's no need to V", example: { zh: "沒必要擔心未來。", en: "There is no need to worry about the future." } },
+                    { id: "5-6", content: "只好：have no choice but to V", example: { zh: "我們別無選擇，只能接受他的提議。", en: "We have no choice but to accept his proposal." } },
+                    { id: "5-7", content: "獨立不定詞：To sum up (總而言之)", example: { zh: "總而言之，這個計畫失敗了。", en: "To sum up, the project was a failure." } }
+                ]
+            },
+            {
+                id: 6,
+                title: "Section 6：動名詞及相關句型",
+                description: "處理慣用語與動詞變化的重點。",
+                items: [
+                    { id: "6-2", content: "沒用：It is no use V-ing", example: { zh: "覆水難收（為打翻的牛奶哭泣是沒用的）。", en: "It is no use crying over spilt milk." } },
+                    { id: "6-3", content: "不可能：There is no V-ing", example: { zh: "不可能知道接下來會發生什麼。", en: "There is no knowing what will happen next." } },
+                    { id: "6-5", content: "做...有困難：have trouble/difficulty + V-ing", example: { zh: "我無法專注於我的學業。", en: "I have trouble focusing on my studies." } },
+                    { id: "6-6", content: "一...就...：On/Upon + V-ing, S + V", example: { zh: "一聽到這個消息，她就哭了起來。", en: "On hearing the news, she burst into tears." } },
+                    { id: "6-7", content: "想要：feel like + V-ing", example: { zh: "我現在想去散步。", en: "I feel like taking a walk now." } },
+                    { id: "6-8", content: "習慣於：be used to + V-ing", example: { zh: "我不習慣熬夜。", en: "I am not used to staying up late." } },
+                    { id: "6-9", content: "忍不住：can't help + V-ing", example: { zh: "我忍不住笑了。", en: "I couldn't help laughing." } }
+                ]
+            },
+            {
+                id: 7,
+                title: "Section 7：關係子句及相關句型",
+                description: "閱讀測驗長難句的核心。",
+                items: [
+                    { id: "7-1", content: "基本關代：N + who/which/that + V", example: { zh: "這就是我在找的那本書。", en: "This is the book that I have been looking for." } },
+                    { id: "7-2", content: "凡是...的人：Those who V...", example: { zh: "凡是自助者，天助之。", en: "Heaven helps those who help themselves." } },
+                    { id: "7-3", content: "補述用法：, which ... (指代前句)", example: { zh: "他沒通過考試，這讓他父母很失望。", en: "He failed the exam, which disappointed his parents." } },
+                    { id: "7-4", content: "關係副詞：The reason why ...", example: { zh: "那就是我遲到的原因。", en: "That is the reason why I was late." } },
+                    { id: "7-5", content: "只需做：All (that) you have to do is V", example: { zh: "你只需要盡力而為。", en: "All you have to do is do your best." } },
+                    { id: "7-6", content: "最不...：the last N + to V / that S V", example: { zh: "他是最不可能說謊的人。", en: "He is the last person to tell a lie." } }
+                ]
+            },
+            {
+                id: 8,
+                title: "Section 8：副詞子句及相關句型",
+                description: "豐富你的句意邏輯（時間、因果、條件）。",
+                items: [
+                    { id: "8-2", content: "時間：By the time S + V", example: { zh: "當你到達那裡時，電影將已經開始了。", en: "By the time you get there, the movie will have started." } },
+                    { id: "8-3", content: "一...就...：As soon as S + V", example: { zh: "我一到家就會打電話給你。", en: "I will call you as soon as I get home." } },
+                    { id: "8-4", content: "目的：so that (為了)", example: { zh: "他努力學習以便通過入學考試。", en: "He studied hard so that he could pass the entrance exam." } },
+                    { id: "8-5", content: "因果：Since/As (因為)", example: { zh: "既然你累了，你就該去休息。", en: "Since you are tired, you should go get some rest." } },
+                    { id: "8-6", content: "雖然/儘管：Although/Though", example: { zh: "雖然外面下著雨，他們還是出去玩了。", en: "Although it was raining, they still went out to play." } },
+                    { id: "8-7", content: "條件：As long as (只要)", example: { zh: "只要你答應要在天黑前回來，你就可以去。", en: "You can go as long as you promise to be back before dark." } },
+                    { id: "8-8", content: "彷彿：as if / as though", example: { zh: "他說起話來彷彿他是老闆一樣。", en: "He talks as if he were the boss." } }
+                ]
+            },
+            {
+                id: 9,
+                title: "Section 9：分詞及相關句型",
+                description: "作文加分利器，精簡句子的關鍵。",
+                items: [
+                    { id: "9-1", content: "分詞形容詞：V-ing (令人) vs p.p. (感到)", example: { zh: "這消息令人驚訝；我很驚訝。", en: "The news was surprising; I was surprised." } },
+                    { id: "9-2", content: "分詞構句（主詞相同省略）", example: { zh: "因為不知道該做什麼，她保持沉默。", en: "Not knowing what to do, she kept silent." } },
+                    { id: "9-4", content: "附帶狀況：with + O + V-ing/p.p.", example: { zh: "他閉著眼睛聽音樂。", en: "He listened to music with his eyes closed." } },
+                    { id: "9-6", content: "包含：including + N", example: { zh: "這團體由五人組成，包含我在內。", en: "The group consists of five people, including me." } },
+                    { id: "9-7", content: "慣用：Generally speaking (一般而言)", example: { zh: "一般而言，女性比男性長壽。", en: "Generally speaking, women live longer than men." } }
+                ]
+            },
+            {
+                id: 10,
+                title: "Section 10：比較相關的句型",
+                description: "圖表題寫作必備。",
+                items: [
+                    { id: "10-1", content: "原級：as ... as (像...一樣)", example: { zh: "這項任務不像我想像的那麼難。", en: "The task is not as difficult as I imagined." } },
+                    { id: "10-4", content: "倍數：A is 倍數 times as adj as B", example: { zh: "這房子的價格是那間的三倍。", en: "This house is three times as expensive as that one." } },
+                    { id: "10-5", content: "雙重比較：The more..., the more...", example: { zh: "你越努力練習，你的表現就會越好。", en: "The harder you practice, the better your performance will be." } },
+                    { id: "10-6", content: "與其說A不如說B：not so much A as B", example: { zh: "與其說他生氣，不如說他失望。", en: "He was not so much angry as disappointed." } },
+                    { id: "10-8", content: "寧願：would rather V1 than V2", example: { zh: "我寧願待在家也不要去看電影。", en: "I would rather stay home than go to the movies." } }
+                ]
+            },
+            {
+                id: 11,
+                title: "Section 11：與假設法相關的句型",
+                description: "表達遺憾、願望與非事實。",
+                items: [
+                    { id: "11-1", content: "與現在事實相反：If S were/V-ed..., S would V...", example: { zh: "如果我是你，我就會接受那個提議。", en: "If I were you, I would accept the offer." } },
+                    { id: "11-2", content: "與過去事實相反：If S had p.p., S would have p.p.", example: { zh: "如果我當時早點出發，我就不會錯過火車了。", en: "If I had started earlier, I would not have missed the train." } },
+                    { id: "11-4", content: "原本應該：should have p.p.", example: { zh: "你當時應該更小心的（但你沒有）。", en: "You should have been more careful." } },
+                    { id: "11-5", content: "希望：I wish (that) ...", example: { zh: "我希望我也能和你一起去。", en: "I wish I could go with you." } },
+                    { id: "11-6", content: "要不是：But for / Without", example: { zh: "要不是你的幫忙，我就失敗了。", en: "But for your help, I would have failed." } },
+                    { id: "11-7", content: "該是...的時候：It is high time that S V-ed", example: { zh: "該是你上床睡覺的時候了。", en: "It is high time that you went to bed." } }
+                ]
+            },
+            {
+                id: 12,
+                title: "Section 12：介系詞及相關句型",
+                description: "連接詞與介系詞的精準轉換。",
+                items: [
+                    { id: "12-1", content: "除了...還有：In addition to", example: { zh: "除了英文，他還會說流利的法文。", en: "In addition to English, he speaks fluent French." } },
+                    { id: "12-3", content: "儘管：Despite / In spite of", example: { zh: "儘管天氣很冷，他還是去游泳。", en: "Despite the cold weather, he went swimming." } },
+                    { id: "12-4", content: "而不是：instead of", example: { zh: "我們叫外送披薩而不是煮晚餐。", en: "We ordered pizza instead of cooking dinner." } },
+                    { id: "12-5", content: "為了：with a view to + V-ing", example: { zh: "他種樹是為了保護環境。", en: "He planted trees with a view to protecting the environment." } }
+                ]
+            },
+            {
+                id: 13,
+                title: "Section 13：強調用法的句型",
+                description: "增強語氣，讓論點更鮮明。",
+                items: [
+                    { id: "13-1", content: "分裂句：It is ... that ...", example: { zh: "打破窗戶的人就是湯姆。", en: "It was Tom that broke the window." } },
+                    { id: "13-2", content: "如此...以致於：so ... that ...", example: { zh: "她是如此忙碌，以致於沒時間吃午餐。", en: "She was so busy that she had no time for lunch." } },
+                    { id: "13-3", content: "太...而不能：too ... to ...", example: { zh: "這箱子太重了我搬不動。", en: "The box is too heavy for me to carry." } },
+                    { id: "13-5", content: "再...也不為過：cannot ... too ...", example: { zh: "我們再怎麼強調健康的重要性也不為過。", en: "We cannot overemphasize the importance of health." } }
+                ]
+            },
+            {
+                id: 14,
+                title: "Section 14：否定句與倒裝句",
+                description: "文章的亮點，展現高階文法能力。",
+                items: [
+                    { id: "14-1", content: "雙重否定：never ... without ...", example: { zh: "每次見到他，我都會想到他的父親。", en: "I never see him without thinking of his father." } },
+                    { id: "14-3", content: "否定副詞倒裝：Never/Seldom + 助 + S + V", example: { zh: "我從未見過如此美麗的日落。", en: "Never have I seen such a beautiful sunset." } },
+                    { id: "14-4", content: "Only倒裝：Only + 條件 + 助 + S + V", example: { zh: "只有透過努力工作，你才能成功。", en: "Only by working hard can you succeed." } },
+                    { id: "14-7", content: "也/也不：So / Neither + 助 + S", example: { zh: "我不喜歡胡蘿蔔，我妹妹也不喜歡。", en: "I don't like carrots, and neither does my sister." } },
+                    { id: "14-8", content: "假設法省略if倒裝：Were/Had/Should + S...", example: { zh: "如果我是你，我就不會那樣做。", en: "Were I you, I would not do that." } }
+                ]
+            }
+        ];
+
+        // --- Application State ---
+        const app = {
+            state: {
+                activeTab: 'handbook',
+                expandedSections: { 1: true },
+                masteredItems: JSON.parse(localStorage.getItem('grammarMastered')) || [],
+                quiz: {
+                    item: null,
+                    showAnswer: false,
+                    showHint: false
+                }
+            },
+
+            // --- Methods ---
+            
+            init() {
+                this.updateProgress();
+                this.renderHandbook();
+                this.renderPractice();
+                lucide.createIcons();
+            },
+
+            switchTab(tab) {
+                this.state.activeTab = tab;
+                
+                // Toggle UI
+                const handbookBtn = document.getElementById('tab-handbook');
+                const practiceBtn = document.getElementById('tab-practice');
+                const handbookView = document.getElementById('view-handbook');
+                const practiceView = document.getElementById('view-practice');
+
+                if (tab === 'handbook') {
+                    handbookBtn.className = "flex-1 py-2 rounded-md font-medium text-sm transition-colors flex items-center justify-center gap-2 bg-indigo-100 text-indigo-700";
+                    handbookBtn.querySelector('i').className = "w-4 h-4"; // preserve icon size
+                    
+                    practiceBtn.className = "flex-1 py-2 rounded-md font-medium text-sm transition-colors flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50";
+                    
+                    handbookView.classList.remove('hidden');
+                    practiceView.classList.add('hidden');
+                    
+                    // Re-render to ensure icons are there if needed
+                    this.renderHandbook();
+                } else {
+                    practiceBtn.className = "flex-1 py-2 rounded-md font-medium text-sm transition-colors flex items-center justify-center gap-2 bg-indigo-100 text-indigo-700";
+                    
+                    handbookBtn.className = "flex-1 py-2 rounded-md font-medium text-sm transition-colors flex items-center justify-center gap-2 text-slate-500 hover:bg-slate-50";
+                    
+                    practiceView.classList.remove('hidden');
+                    handbookView.classList.add('hidden');
+                    
+                    // Re-render practice to ensure proper state
+                    this.renderPractice();
+                }
+                
+                lucide.createIcons();
+            },
+
+            toggleSection(id) {
+                if (this.state.expandedSections[id]) {
+                    delete this.state.expandedSections[id];
+                } else {
+                    this.state.expandedSections[id] = true;
+                }
+                this.renderHandbook();
+                lucide.createIcons();
+            },
+
+            toggleMastered(id) {
+                if (this.state.masteredItems.includes(id)) {
+                    this.state.masteredItems = this.state.masteredItems.filter(item => item !== id);
+                } else {
+                    this.state.masteredItems.push(id);
+                }
+                localStorage.setItem('grammarMastered', JSON.stringify(this.state.masteredItems));
+                this.updateProgress();
+                this.renderHandbook();
+                lucide.createIcons();
+            },
+
+            updateProgress() {
+                const totalItems = grammarData.reduce((acc, curr) => acc + curr.items.length, 0);
+                const masteredCount = this.state.masteredItems.length;
+                const progress = Math.round((masteredCount / totalItems) * 100);
+                
+                document.getElementById('progress-text').textContent = `${progress}% Mastered`;
+                document.getElementById('progress-bar').style.width = `${progress}%`;
+            },
+
+            generateRandom() {
+                const allItems = grammarData.flatMap(section => 
+                    section.items.map(item => ({...item, sectionTitle: section.title}))
+                );
+                const random = allItems[Math.floor(Math.random() * allItems.length)];
+                
+                this.state.quiz = {
+                    item: random,
+                    showAnswer: false,
+                    showHint: false
+                };
+                
+                this.renderPractice();
+                lucide.createIcons();
+            },
+
+            showHint() {
+                this.state.quiz.showHint = true;
+                this.renderPractice();
+                lucide.createIcons();
+            },
+
+            showAnswer() {
+                this.state.quiz.showAnswer = true;
+                this.renderPractice();
+                lucide.createIcons();
+            },
+
+            // --- Rendering ---
+
+            renderHandbook() {
+                const container = document.getElementById('view-handbook');
+                let html = '';
+
+                grammarData.forEach(section => {
+                    const isExpanded = this.state.expandedSections[section.id];
+                    const chevronIcon = isExpanded ? 'chevron-up' : 'chevron-down';
+
+                    html += `
+                        <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+                            <button onclick="app.toggleSection(${section.id})" class="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors">
+                                <div>
+                                    <h3 class="font-bold text-slate-800">${section.title}</h3>
+                                    <p class="text-xs text-slate-500 mt-1">${section.description}</p>
+                                </div>
+                                <i data-lucide="${chevronIcon}" class="w-5 h-5 text-slate-400"></i>
+                            </button>
+                            
+                            ${isExpanded ? `
+                                <div class="bg-slate-50 p-2 border-t border-slate-100">
+                                    ${section.items.map(item => {
+                                        const isMastered = this.state.masteredItems.includes(item.id);
+                                        const containerClass = isMastered 
+                                            ? 'bg-green-50 border-green-200' 
+                                            : 'bg-white border-white hover:border-indigo-200 shadow-sm';
+                                        const iconClass = isMastered ? 'text-green-500' : 'text-slate-300 group-hover:text-indigo-300';
+                                        const textClass = isMastered ? 'text-slate-500 line-through' : 'text-indigo-700';
+
+                                        return `
+                                            <div onclick="app.toggleMastered('${item.id}')" class="cursor-pointer p-3 m-1 rounded-md transition-all border flex flex-col gap-2 group ${containerClass}">
+                                                <div class="flex items-start gap-3">
+                                                    <div class="mt-0.5 ${iconClass}">
+                                                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <span class="text-sm font-bold block ${textClass}">
+                                                            ${item.content}
+                                                        </span>
+                                                        <div class="mt-2 text-sm text-slate-600 pl-2 border-l-2 border-slate-200">
+                                                            <span class="block text-xs text-slate-400 mb-1">Example:</span>
+                                                            <div class="mb-1">${item.example.en}</div>
+                                                            <div class="text-xs text-slate-400">${item.example.zh}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+            },
+
+            renderPractice() {
+                const container = document.getElementById('view-practice');
+                const { item, showAnswer, showHint } = this.state.quiz;
+
+                if (!item) {
+                    // Start Screen
+                    container.innerHTML = `
+                        <div class="text-center space-y-4">
+                            <div class="bg-indigo-50 p-8 rounded-full inline-block animate-pulse">
+                                <i data-lucide="shuffle" class="w-12 h-12 text-indigo-500"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-700">準備好接受挑戰了嗎？</h3>
+                            <p class="text-slate-500 max-w-xs mx-auto">
+                                規則改變：我會給你一句<span class="text-indigo-600 font-bold">中文</span>。
+                                <br/>
+                                請你在腦中（或紙上）翻譯出包含指定句型的<span class="text-indigo-600 font-bold">英文</span>句子。
+                            </p>
+                            <button onclick="app.generateRandom()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-full font-bold shadow-lg transform active:scale-95 transition-all flex items-center gap-2 mx-auto">
+                                <i data-lucide="trophy" class="w-5 h-5"></i>
+                                開始抽題
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    // Quiz Card
+                    let hintHtml = '';
+                    if (!showAnswer && !showHint) {
+                        hintHtml = `
+                            <button onclick="app.showHint()" class="text-xs text-indigo-400 flex items-center justify-center gap-1 hover:text-indigo-600 transition-colors mb-4 w-full">
+                                <i data-lucide="lightbulb" class="w-3 h-3"></i>
+                                給點提示 (Hint)
+                            </button>
+                        `;
+                    } else if (showHint && !showAnswer) {
+                        hintHtml = `
+                            <div class="bg-yellow-50 text-yellow-700 px-4 py-2 rounded-md text-sm mb-4 fade-in">
+                                提示：使用 ${item.content.split('：')[0]}
+                            </div>
+                        `;
+                    }
+
+                    let answerHtml = '';
+                    let actionHtml = '';
+
+                    if (showAnswer) {
+                        answerHtml = `
+                            <div class="w-full space-y-4 slide-up">
+                                <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                                    <p class="text-lg text-indigo-900 font-medium">
+                                        ${item.example.en}
+                                    </p>
+                                </div>
+                                <div class="text-left text-xs text-slate-500 mt-4 border-t pt-4">
+                                    <span class="font-bold text-slate-700">對應句型：</span>
+                                    ${item.content}
+                                    <br/>
+                                    <span class="font-bold text-slate-700">章節：</span>
+                                    ${item.sectionTitle}
+                                </div>
+                            </div>
+                        `;
+                        actionHtml = `
+                            <button onclick="app.generateRandom()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 shadow-md">
+                                <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                                下一題
+                            </button>
+                        `;
+                    } else {
+                        actionHtml = `
+                            <button onclick="app.showAnswer()" class="w-full bg-white border-2 border-indigo-600 text-indigo-700 hover:bg-indigo-50 font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
+                                顯示答案
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        `;
+                    }
+
+                    container.innerHTML = `
+                        <div class="w-full max-w-md space-y-6 slide-up">
+                            <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden relative min-h-[300px] flex flex-col">
+                                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+                                
+                                <div class="p-8 flex-1 flex flex-col justify-center items-center text-center">
+                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 block">
+                                        Translate this into English
+                                    </span>
+                                    
+                                    <p class="text-2xl font-bold text-slate-800 leading-relaxed mb-6">
+                                        ${item.example.zh}
+                                    </p>
+
+                                    ${hintHtml}
+                                    ${answerHtml}
+                                </div>
+
+                                <div class="bg-slate-50 p-4 border-t border-slate-100">
+                                    ${actionHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>

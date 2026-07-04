@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學測高頻考點鞏固卷</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 45px;
+        }
+        h3 {
+            color: #e74c3c;
+            font-size: 1.3em;
+            margin-top: 40px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 12px;
+        }
+        p.instructions {
+            text-align: center;
+            color: #555;
+            margin-bottom: 40px;
+        }
+        ol {
+            list-style-type: none;
+            padding-left: 0;
+            counter-reset: question-counter;
+        }
+        li {
+            background-color: #ffffff;
+            margin-bottom: 22px;
+            padding: 18px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            counter-increment: question-counter;
+            position: relative;
+        }
+        li::before {
+            content: counter(question-counter) ". ";
+            font-weight: bold;
+            color: #3498db;
+            font-size: 1.1em;
+            margin-right: 5px;
+        }
+        .word-bank {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .word-bank-item {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 0.95em;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        }
+        .blank-container {
+            display: inline-block;
+            position: relative;
+            text-align: center;
+        }
+        .blank {
+            border-bottom: 1.5px solid #7f8c8d;
+            padding: 0 5px;
+            color: transparent;
+            user-select: none;
+            min-height: 24px;
+        }
+        .answer-text {
+            display: none;
+            color: #2980b9;
+            font-weight: bold;
+            padding: 2px 4px;
+            background-color: #eaf5ff;
+            border-radius: 4px;
+        }
+        .answer-text.revealed {
+            display: inline-block;
+        }
+        .translation-item .answer-text.revealed {
+            text-align: left;
+            width: 100%;
+        }
+        .hint-block {
+            display: block;
+            margin-top: 8px;
+            color: #6c757d;
+            font-style: italic;
+            font-size: 0.9em;
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .mc-options {
+            margin-top: 10px;
+        }
+        .mc-option {
+            display: inline-block;
+            margin-right: 15px;
+            padding: 5px 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            cursor: default;
+            transition: all 0.2s ease;
+        }
+        .mc-option.correct-choice {
+            background-color: #eaf5ff;
+            border-color: #3498db;
+            color: #2980b9;
+            font-weight: bold;
+        }
+        .mc-option.incorrect-choice {
+            color: #adb5bd;
+            background-color: #f1f3f5;
+        }
+        .correction-box {
+            margin-top: 8px;
+        }
+        .correction-box .original {
+            color: #e74c3c;
+            text-decoration: line-through;
+        }
+        .correction-box .corrected {
+            color: #27ae60;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .toggle-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .toggle-btn.toggled {
+            background-color: #e74c3c;
+        }
+         .toggle-btn.toggled:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>學測高頻考點鞏固卷</h1>
+        <p class="instructions">思考答案，完成後點擊最下方按鈕以顯示或隱藏答案。</p>
+
+        <form id="quizForm">
+            
+            <section>
+                <h3>第一部分：針對錯題複習 (Targeted Error Review)</h3>
+                <ol>
+                    <li>After being sick for a week, I had to study late every night to ______ my classmates.
+                        <div class="mc-options">
+                            <span class="mc-option" data-correct="true">(A) catch up with</span>
+                            <span class="mc-option">(B) catch up</span>
+                        </div>
+                    </li>
+                    <li>The doctor advised him to ______ smoking if he wanted to improve his health.
+                        <div class="mc-options">
+                             <span class="mc-option">(A) cut down</span>
+                             <span class="mc-option" data-correct="true">(B) cut down on</span>
+                        </div>
+                    </li>
+                    <li>Our school decided to ______ the old rule of having to wear uniforms on Saturdays.
+                        <div class="mc-options">
+                            <span class="mc-option">(A) carry out</span>
+                            <span class="mc-option" data-correct="true">(B) do away with</span>
+                        </div>
+                    </li>
+                    <li class="translation-item">
+                        <b>[改錯題]</b> 當我聽到那個令人寬慰的消息時，我深深地鬆了一口氣。
+                        <div class="correction-box">
+                            原句: When I <span class="original">heared</span> the <span class="original">admirable</span> news, I sighed with relief.
+                        </div>
+                        <div class="hint-block">(提示: 注意動詞三態與詞彙選擇)</div>
+                        <span class="blank-container"><span class="blank">When I heard the relieving news, I sighed with relief.</span><span class="answer-text">When I <b>heard</b> the <b>relieving</b> news, I sighed with relief.</span></span>
+                    </li>
+                     <li class="translation-item">
+                        <b>[改錯題]</b> 參與這個專案不僅擴展了我的視野，也讓我更有責任感。
+                        <div class="correction-box">
+                            原句: <span class="original">Participating this project</span> not only broadened my horrizons <span class="original">and</span> also <span class="original">let me have more</span> responsibility.
+                        </div>
+                        <div class="hint-block">(提示: 注意介係詞、連接詞與動詞用法)</div>
+                        <span class="blank-container"><span class="blank">Participating in this project not only broadened my horizon but also made me have more responsibility.</span><span class="answer-text">Participating <b>in</b> this project not only broadened my horizon <b>but</b> also <b>made me have more</b> responsibility.</span></span>
+                    </li>
+                     <li class="translation-item">
+                        <b>[改錯題]</b> 當提到公開演說時，我總是嚇得不敢動。
+                        <div class="correction-box">
+                            原句: When it comes to <span class="original">address in public</span>, I always <span class="original">scored to dare not</span> move.
+                        </div>
+                        <div class="hint-block">(提示: 使用 When it comes to + N/Ving... 句型)</div>
+                        <span class="blank-container"><span class="blank">When it comes to public speaking, I am always too scared to move.</span><span class="answer-text">When it comes to <b>public speaking</b>, I <b>am always too scared to</b> move.</span></span>
+                    </li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>第二部分：動詞片語填充 (學測高頻)</h2>
+                <div class="word-bank">
+                    <span class="word-bank-item">boil down to</span><span class="word-bank-item">account for</span><span class="word-bank-item">make up for</span><span class="word-bank-item">look down upon</span><span class="word-bank-item">bring about</span><span class="word-bank-item">put off</span><span class="word-bank-item">deal with</span><span class="word-bank-item">come across</span>
+                </div>
+                <small style="display: block; margin-top: -5px; margin-bottom: 20px; color: #777;">(請注意動詞形式變化)</small>
+                <ol start="7">
+                    <li>The manager asked him to <span class="blank-container"><span class="blank">account for</span><span class="answer-text">account for</span></span> the missing funds.</li>
+                    <li>The problem isn't easy, but we need to find a way to <span class="blank-container"><span class="blank">deal with</span><span class="answer-text">deal with</span></span> it.</li>
+                    <li>Technological innovation can <span class="blank-container"><span class="blank">bring about</span><span class="answer-text">bring about</span></span> significant changes in society.</li>
+                    <li>I happened to <span class="blank-container"><span class="blank">come across</span><span class="answer-text">come across</span></span> an old friend while shopping yesterday.</li>
+                    <li>The key to success often <span class="blank-container"><span class="blank">boils down to</span><span class="answer-text">boils down to</span></span> hard work and perseverance.</li>
+                    <li>Never <span class="blank-container"><span class="blank">put off</span><span class="answer-text">put off</span></span> until tomorrow what you can do today.</li>
+                    <li>He worked extra hours to <span class="blank-container"><span class="blank">make up for</span><span class="answer-text">make up for</span></span> the time he had lost.</li>
+                    <li>It is not right to <span class="blank-container"><span class="blank">look down upon</span><span class="answer-text">look down upon</span></span> those who are less fortunate.</li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>第三部分：轉承詞填充 (學測高頻)</h2>
+                 <div class="word-bank">
+                    <span class="word-bank-item">In contrast</span><span class="word-bank-item">As a result</span><span class="word-bank-item">For instance</span><span class="word-bank-item">Nevertheless</span><span class="word-bank-item">In addition</span>
+                </div>
+                <ol start="15">
+                    <li>He studied diligently for the exam. <span class="blank-container"><span class="blank">As a result</span><span class="answer-text">As a result</span></span>, he achieved the highest score in his class.</li>
+                    <li>The journey was long and exhausting. <span class="blank-container"><span class="blank">Nevertheless</span><span class="answer-text">Nevertheless</span></span>, it was an unforgettable experience.</li>
+                    <li>This restaurant is famous for its main courses. <span class="blank-container"><span class="blank">In addition</span><span class="answer-text">In addition</span></span>, its desserts are also highly recommended.</li>
+                    <li>My brother is very outgoing and sociable. <span class="blank-container"><span class="blank">In contrast</span><span class="answer-text">In contrast</span></span>, I am quite shy and reserved.</li>
+                    <li>There are many ways to stay healthy. <span class="blank-container"><span class="blank">For instance</span><span class="answer-text">For instance</span></span>, you can exercise regularly and maintain a balanced diet.</li>
+                </ol>
+            </section>
+            
+            <section>
+                <h2>第四部分：翻譯題 (學測高頻)</h2>
+                <ol start="20">
+                    <li class="translation-item">若非有你的幫助，我不可能完成這個艱鉅的任務。<div class="hint-block">(提示: 使用 But for... 句型)</div><span class="blank-container"><span class="blank">But for your help, I could not have completed this difficult task.</span><span class="answer-text">But for your help, I could not have completed this difficult task.</span></span></li>
+                    <li class="translation-item">就是直到我失去健康，我才了解到它的重要性。<div class="hint-block">(提示: 使用 It was not until... that... 句型)</div><span class="blank-container"><span class="blank">It was not until I lost my health that I realized its importance.</span><span class="answer-text">It was not until I lost my health that I realized its importance.</span></span></li>
+                    <li class="translation-item">這是我這輩子至今最難忘的一次經驗。<div class="hint-block">(提示: 使用 This has been the most + adj. + experience so far in my life. 句型)</div><span class="blank-container"><span class="blank">This has been the most unforgettable experience so far in my life.</span><span class="answer-text">This has been the most unforgettable experience so far in my life.</span></span></li>
+                    <li class="translation-item">這趟旅行開闊了我的眼界，也改變了我對人生的看法。<div class="hint-block">(提示: 使用 ...broadened my horizon and changed my perspective on life. 句型)</div><span class="blank-container"><span class="blank">This trip broadened my horizon and changed my perspective on life.</span><span class="answer-text">This trip broadened my horizon and changed my perspective on life.</span></span></li>
+                    <li class="translation-item">儘管面臨許多困難，他從未放棄他的夢想。<div class="hint-block">(提示: 使用 Despite... 或 In spite of... 開頭)</div><span class="blank-container"><span class="blank">Despite facing many difficulties, he never gave up on his dream.</span><span class="answer-text">Despite facing many difficulties, he never gave up on his dream.</span></span></li>
+                    <li class="translation-item">為了增進我的英文能力，我決定每天都聽英文廣播。<div class="hint-block">(提示: 使用 In order to... 句型)</div><span class="blank-container"><span class="blank">In order to improve my English ability, I decided to listen to English radio every day.</span><span class="answer-text">In order to improve my English ability, I decided to listen to English radio every day.</span></span></li>
+                    <li class="translation-item">我深信「有志者，事竟成」。<div class="hint-block">(提示: 使用 I am convinced that... 句型)</div><span class="blank-container"><span class="blank">I am convinced that "where there is a will, there is a way."</span><span class="answer-text">I am convinced that "where there is a will, there is a way."</span></span></li>
+                </ol>
+            </section>
+
+            <button type="button" class="toggle-btn" id="toggleBtn" onclick="toggleAnswers()">顯示答案</button>
+
+        </form>
+    </div>
+
+    <script>
+        let answersVisible = false;
+
+        function toggleAnswers() {
+            const btn = document.getElementById('toggleBtn');
+            answersVisible = !answersVisible; 
+
+            // Handle fill-in-the-blanks and translation
+            const answerTexts = document.querySelectorAll('.answer-text');
+            const blanks = document.querySelectorAll('.blank');
+
+            if (answersVisible) {
+                answerTexts.forEach(el => el.classList.add('revealed'));
+                blanks.forEach(el => el.style.display = 'none');
+                btn.textContent = '隱藏答案';
+                btn.classList.add('toggled');
+            } else {
+                answerTexts.forEach(el => el.classList.remove('revealed'));
+                blanks.forEach(el => el.style.display = 'inline-block');
+                btn.textContent = '顯示答案';
+                btn.classList.remove('toggled');
+            }
+            
+            // Handle multiple choice options
+            const mcOptions = document.querySelectorAll('.mc-option');
+            mcOptions.forEach(option => {
+                const isCorrect = option.getAttribute('data-correct') === 'true';
+                if (answersVisible) {
+                    if (isCorrect) {
+                        option.classList.add('correct-choice');
+                    } else {
+                        option.classList.add('incorrect-choice');
+                    }
+                } else {
+                    option.classList.remove('correct-choice', 'incorrect-choice');
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

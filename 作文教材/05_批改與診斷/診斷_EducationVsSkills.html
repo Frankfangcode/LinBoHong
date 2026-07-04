@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英文作文診斷報告：Finding a Good Job (Education vs. Skills)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&family=Noto+Serif+TC:wght@400;700&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f3f4f6; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        .font-serif { font-family: 'Noto Serif TC', serif; }
+        .card-hover:hover { transform: translateY(-2px); transition: all 0.2s; }
+        
+        /* Paper View Specific Styles */
+        .paper-del {
+            text-decoration: line-through;
+            color: #ef4444; /* red-500 */
+            text-decoration-thickness: 2px;
+            margin-right: 4px;
+            opacity: 0.7;
+        }
+        .paper-add {
+            color: #dc2626; /* red-600 */
+            font-weight: bold;
+            margin-right: 2px;
+        }
+        
+        /* Toggle Switch Styles */
+        .toggle-btn {
+            @apply px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 border;
+        }
+        .toggle-btn-active {
+            @apply bg-blue-600 text-white border-blue-600 shadow-md;
+        }
+        .toggle-btn-inactive {
+            @apply bg-white text-gray-500 border-gray-200 hover:bg-gray-50;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- Icons ---
+        const IconBase = ({ children, size = 24, className = "" }) => (
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width={size} 
+                height={size} 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className={className}
+            >
+                {children}
+            </svg>
+        );
+
+        const BookOpen = (props) => (
+            <IconBase {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></IconBase>
+        );
+        const AlertCircle = (props) => (
+            <IconBase {...props}><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></IconBase>
+        );
+        const FileText = (props) => (
+            <IconBase {...props}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></IconBase>
+        );
+        const ArrowRight = (props) => (
+            <IconBase {...props}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></IconBase>
+        );
+        const Award = (props) => (
+            <IconBase {...props}><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></IconBase>
+        );
+        const BarChart2 = (props) => (
+             <IconBase {...props}><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></IconBase>
+        );
+        const PenTool = (props) => (
+            <IconBase {...props}><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></IconBase>
+        );
+        const Edit3 = (props) => (
+            <IconBase {...props}><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></IconBase>
+        );
+        const Copy = (props) => (
+            <IconBase {...props}><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></IconBase>
+        );
+        const CheckCircle = (props) => (
+            <IconBase {...props}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></IconBase>
+        );
+        const Sparkles = (props) => (
+            <IconBase {...props}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></IconBase>
+        );
+
+        // Data
+        const correctionData = {
+            title: "Finding a Good Job: Education vs. Skills",
+            studentName: "澤享",
+            score: {
+                total: "14-15",
+                max: 20,
+                breakdown: [
+                    { label: "內容 Content", score: 5, max: 5, status: "good" },
+                    { label: "組織 Organization", score: 4, max: 5, status: "good" },
+                    { label: "文法句構 Grammar", score: 2.5, max: 5, status: "warn" },
+                    { label: "字彙拼字 Vocabulary", score: 3, max: 5, status: "avg" }
+                ]
+            },
+            summary: "內容豐富、邏輯清楚，已達「優等」水準（內容近滿分）。特別是第二段的對比結構（工程師 vs 新鮮人）非常有說服力。若能修正基本文法錯誤（如分詞構句、主動詞一致）並提升詞彙精確度，這篇作文絕對是高分範例。",
+            corrections: [
+                { id: 1, original: "Leading a life...", corrected: "In this fast-paced society...", explanation: "分詞構句邏輯。'Leading a life' 的主詞若是 people 雖然文法對，但稍顯累贅。直接用介系詞片語 'In this... society' 更俐落。", type: "Structure" },
+                { id: 2, original: "access to get", corrected: "way to get", explanation: "搭配詞。Access 通常接 to + N (地方/權利)，表示「方法」時用 'way to get' 較自然。", type: "Vocab" },
+                { id: 3, original: "curcial", corrected: "crucial", explanation: "拼字錯誤。", type: "Spelling" },
+                { id: 4, original: "as follow", corrected: "as follows", explanation: "固定用法。'as follows' 永遠加 s。", type: "Grammar" },
+                { id: 5, original: "high degree", corrected: "advanced degree", explanation: "用字精準度。學位高低通常用 'advanced' 或 'higher'。", type: "Vocab" },
+                { id: 6, original: "have ability of efficient learning", corrected: "have the ability to learn efficiently", explanation: "句構優化。'Ability to V' 是標準用法，副詞 efficiently 修飾動詞 learn 比名詞詞組更有動感。", type: "Structure" },
+                { id: 7, original: "adapt to taking over the job", corrected: "adapt to a new job", explanation: "搭配詞。'Adapt to a job' 即可，'taking over' 通常指接管職位，語意略有不同。", type: "Vocab" },
+                { id: 8, original: "educational degree not only show", corrected: "academic degree not only shows", explanation: "主動詞一致。Degree 是單數，動詞 show 要加 s。", type: "Grammar" },
+                { id: 9, original: "fabulous degree", corrected: "advanced / prestigious degree", explanation: "語域錯誤。'Fabulous' (極好的) 太口語且帶感情色彩，學術或正式寫作應用 'advanced'。", type: "Vocab" },
+                { id: 10, original: "many time to study", corrected: "a lot of time studying", explanation: "不可數名詞與動名詞。Time 當時間是不可數，用 much 或 a lot of；spend time + V-ing。", type: "Grammar" },
+                { id: 11, original: "determining fators", corrected: "determining factors", explanation: "拼字錯誤。", type: "Spelling" },
+                { id: 12, original: "educational extent", corrected: "academic qualifications", explanation: "搭配詞。'Educational extent' 不合語法習慣，學歷通常用 'academic qualifications' 或 'background'。", type: "Vocab" },
+                { id: 13, original: "indicate that the person work hard", corrected: "indicate that a person works hard", explanation: "主動詞一致。Person 單數，work 加 s。", type: "Grammar" },
+                { id: 14, original: "sovle", corrected: "solve", explanation: "拼字錯誤。", type: "Spelling" },
+                { id: 15, original: "While people graduate... don't experience", corrected: "By contrast, people who graduate... may not have experienced", explanation: "時態與連接詞。While 用於對比時易造成殘句，用 'By contrast' 更明確。經驗不足通常用完成式 'may not have experienced'。", type: "Grammar" },
+                { id: 16, original: "spend many time on finding", corrected: "spend a lot of time identifying", explanation: "動詞選擇。找出問題的根源用 'identifying' 比 'finding' 更專業。", type: "Vocab" }
+            ],
+            minimalCorrections: [
+                { id: 1, original: "Leading a life in this fast-paced society", corrected: "Living in this fast-paced society", explanation: "Leading a life 在這裡略顯冗贅，用 Living 更自然。", type: "Vocab" },
+                { id: 2, original: "access to get", corrected: "way to get", explanation: "搭配詞錯誤。學測常用 'the way to + V'。", type: "Vocab" },
+                { id: 3, original: "skill ... curcial ... your", corrected: "skills ... crucial ... (delete 'your')", explanation: "Skill 應為複數；拼字錯誤 curcial -> crucial；拿掉 your 避免人稱混亂。", type: "Grammar" },
+                { id: 4, original: "as follow", corrected: "as follows", explanation: "固定用法，必須加 s。", type: "Grammar" },
+                { id: 5, original: "To start with, they may believe that if a person has a high degree, he must possess a wealth of knowledge.", corrected: "To start with, they may believe that if a person has a high degree, he must possess a wealth of knowledge.", explanation: "這句語法正確，不需修改。", type: "Good" },
+                { id: 6, original: "have ability of efficient learning", corrected: "have the ability for efficient learning", explanation: "補冠詞 the；ability of 改為 ability for 較自然。", type: "Grammar" },
+                { id: 7, original: "adapt to taking over the job", corrected: "adapt to the job", explanation: "adapt to + 名詞即可，taking over 在此多餘。", type: "Vocab" },
+                { id: 8, original: "It ... show ... competence of learning", corrected: "it ... shows ... learning competence", explanation: "It 不可大寫；動詞需第三人稱 shows；competence of learning 改為 learning competence。", type: "Grammar" },
+                { id: 9, original: "have fabulous degree ... many time", corrected: "have a fabulous degree ... much time", explanation: "補冠詞 a；time 是不可數，用 much。spend time + V-ing。", type: "Grammar" },
+                { id: 10, original: "trait ... through the end", corrected: "traits ... through to the end", explanation: "trait 複數；片語 see sth through to the end。", type: "Grammar" },
+                { id: 11, original: "fators ... agree that", corrected: "factors ... agree with this", explanation: "拼字錯誤 factors；agree that 後面需完整子句，這裡改 agree with this。", type: "Spelling" },
+                { id: 12, original: "your skills ... is ... educational extent", corrected: "skills ... are ... educational background", explanation: "主詞複數用 are；educational extent 不自然，改 background。", type: "Grammar" },
+                { id: 13, original: "indicate ... work ... don't ... aduquate", corrected: "indicates ... works ... not ... adequate", explanation: "單數主詞動詞一致；may don't 錯 -> may not；拼字 adequate。", type: "Grammar" },
+                { id: 14, original: "sovle ... problems ... in few minutes", corrected: "solve ... problem ... in a few minutes", explanation: "拼字 solve；單數 problem；in a few minutes 為固定用法。", type: "Spelling" },
+                { id: 15, original: "don't experience", corrected: "have not experienced", explanation: "before 暗示經驗，應用現在完成式。", type: "Grammar" },
+                { id: 16, original: "many time ... solve", corrected: "much time ... solving", explanation: "many time -> much time；spend time + V-ing，故用 solving。", type: "Grammar" },
+                { id: 17, original: "As mentioned above, I believe that not only is an academic degree necessary for getting a job, but practical experience is also essential for long-term success.", corrected: "(Perfect!)", explanation: "這句是亮點句，完全正確，學測加分句型。", type: "Good" }
+            ],
+            finalText: {
+                p1: "In this fast-paced society, people hold different opinions about how to find a good job. Some believe that an academic background is the most important way to get a good job. Others think that skills are more crucial than an academic degree. The reasons why some people emphasize an educational background are as follows. To start with, they may believe that if a person has an advanced degree, they must possess a wealth of knowledge. Moreover, they also have the ability to learn efficiently. As a result, they can adapt to a new job easily. Moreover, it is vital that an academic degree not only shows a person’s ability to learn, but also suggests patience and perseverance. People who earn a degree must spend a lot of time studying. Without these traits, they can't see things through to the end. All in all, an educational background is one of the determining factors in finding a job, and many people agree with this view.",
+                p2: "On the contrary, some people think that skills and work experience are more important than academic qualifications. Although an academic background may indicate that a person works hard, they may not have adequate capability for the job. For instance, a senior engineer might solve a technical problem in a few minutes due to extensive work experience. By contrast, people who graduate with high academic qualifications may not have experienced this before. They need to spend a lot of time identifying the cause and solving it. As mentioned above, I believe that not only is an academic degree necessary for getting a job, but practical experience is also essential for long-term success."
+            },
+            paperData: [
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "Leading a life in this fast-paced society,", type: "del" },
+                            { text: "In this fast-paced society,", type: "add" },
+                            { text: " people " },
+                            { text: "have", type: "del" },
+                            { text: "hold", type: "add" },
+                            { text: " different opinions " },
+                            { text: "about finding", type: "del" },
+                            { text: "about how to find", type: "add" },
+                            { text: " a good job. Some believe that " },
+                            { text: "the educational", type: "del" },
+                            { text: "an academic", type: "add" },
+                            { text: " background is the most important " },
+                            { text: "access", type: "del" },
+                            { text: "way", type: "add" },
+                            { text: " to " },
+                            { text: "get", type: "del" },
+                            { text: "get", type: "add" },
+                            { text: " a " },
+                            { text: "job", type: "del" },
+                            { text: "good job", type: "add" },
+                            { text: ". " },
+                            { text: "While some people", type: "del" },
+                            { text: "Others", type: "add" },
+                            { text: " think that " },
+                            { text: "skill is", type: "del" },
+                            { text: "skills are", type: "add" },
+                            { text: " more " },
+                            { text: "curcial", type: "del" },
+                            { text: "crucial", type: "add" },
+                            { text: " than " },
+                            { text: "your educational", type: "del" },
+                            { text: "an academic", type: "add" },
+                            { text: " degree. The reasons why some people emphasize " },
+                            { text: "educational", type: "del" },
+                            { text: "an educational", type: "add" },
+                            { text: " background are " },
+                            { text: "as follow", type: "del" },
+                            { text: "as follows", type: "add" },
+                            { text: ". To start with, they may believe that if a person has a " },
+                            { text: "high", type: "del" },
+                            { text: "advanced", type: "add" },
+                            { text: " degree, " },
+                            { text: "he", type: "del" },
+                            { text: "they", type: "add" },
+                            { text: " must possess a wealth of knowledge. Moreover, they also " },
+                            { text: "have ability of efficient learning", type: "del" },
+                            { text: "have the ability to learn efficiently", type: "add" },
+                            { text: ". As a result, they can " },
+                            { text: "adapt to taking over the job", type: "del" },
+                            { text: "adapt to a new job", type: "add" },
+                            { text: " easily. " },
+                            { text: "Apart from these reasons, It", type: "del" },
+                            { text: "Moreover, it", type: "add" },
+                            { text: " is vital that " },
+                            { text: "the educational", type: "del" },
+                            { text: "an academic", type: "add" },
+                            { text: " degree not only " },
+                            { text: "show your competence of learning", type: "del" },
+                            { text: "shows a person’s ability to learn", type: "add" },
+                            { text: ", but also " },
+                            { text: "suggest your", type: "del" },
+                            { text: "suggests", type: "add" },
+                            { text: " patience and perseverance. People who " },
+                            { text: "have fabulous", type: "del" },
+                            { text: "earn a", type: "add" },
+                            { text: " degree must spend " },
+                            { text: "many time to study", type: "del" },
+                            { text: "a lot of time studying", type: "add" },
+                            { text: ". Without these " },
+                            { text: "trait", type: "del" },
+                            { text: "traits", type: "add" },
+                            { text: ", they can't " },
+                            { text: "see things through the end", type: "del" },
+                            { text: "see things through to the end", type: "add" },
+                            { text: ". All in all, " },
+                            { text: "the educational", type: "del" },
+                            { text: "an educational", type: "add" },
+                            { text: " background is one of " },
+                            { text: "determining fators to find", type: "del" },
+                            { text: "the determining factors in finding", type: "add" },
+                            { text: " a job, and many people " },
+                            { text: "agree that", type: "del" },
+                            { text: "agree with this view", type: "add" },
+                            { text: "." }
+                        ]
+                    ]
+                },
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "On the contrary, some people think that " },
+                            { text: "your skills and work experience is", type: "del" },
+                            { text: "skills and work experience are", type: "add" },
+                            { text: " more important than " },
+                            { text: "educational extent", type: "del" },
+                            { text: "academic qualifications", type: "add" },
+                            { text: ". Although " },
+                            { text: "the educational background indicate that the person work", type: "del" },
+                            { text: "an academic background may indicate that a person works", type: "add" },
+                            { text: " hard, " },
+                            { text: "they may don't have aduquate capability to fit the job", type: "del" },
+                            { text: "they may not have adequate capability for the job", type: "add" },
+                            { text: ". For instance, a senior engineer might " },
+                            { text: "sovle a technical problems in few minutes", type: "del" },
+                            { text: "solve a technical problem in a few minutes", type: "add" },
+                            { text: " due to " },
+                            { text: "his abundant", type: "del" },
+                            { text: "extensive", type: "add" },
+                            { text: " work experience. " },
+                            { text: "While people graduate with high academic qualifications, they don't experience this situation before", type: "del" },
+                            { text: "By contrast, people who graduate with high academic qualifications may not have experienced this before", type: "add" },
+                            { text: ". They need to spend " },
+                            { text: "many time on finding", type: "del" },
+                            { text: "a lot of time identifying", type: "add" },
+                            { text: " the cause and " },
+                            { text: "solve", type: "del" },
+                            { text: "solving", type: "add" },
+                            { text: " it. As mentioned above, I believe that not only is an academic degree necessary for getting a job, but practical experience is also essential for long-term success." }
+                        ]
+                    ]
+                }
+            ],
+            minimalPaperData: [
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "Leading a life", type: "del" },
+                            { text: "Living", type: "add" },
+                            { text: " in this fast-paced society, people have different opinions about finding a good job. Some believe that " },
+                            { text: "the educational", type: "del" },
+                            { text: "educational", type: "add" },
+                            { text: " background is the most important " },
+                            { text: "access", type: "del" },
+                            { text: "way", type: "add" },
+                            { text: " to get a job. While some people think that " },
+                            { text: "skill is", type: "del" },
+                            { text: "skills are", type: "add" },
+                            { text: " more " },
+                            { text: "curcial", type: "del" },
+                            { text: "crucial", type: "add" },
+                            { text: " than " },
+                            { text: "your", type: "del" },
+                            { text: " " },
+                            { text: "educational degree. The reasons why some people emphasize educational background are " },
+                            { text: "as follow", type: "del" },
+                            { text: "as follows", type: "add" },
+                            { text: ". To start with, they may believe that if a person has a high degree, he must possess a wealth of knowledge. Moreover, they also have " },
+                            { text: "ability of", type: "del" },
+                            { text: "the ability for", type: "add" },
+                            { text: " efficient learning. As a result, they can adapt to " },
+                            { text: "taking over the job", type: "del" },
+                            { text: "the job", type: "add" },
+                            { text: " easily. Apart from these reasons, " },
+                            { text: "It", type: "del" },
+                            { text: "it", type: "add" },
+                            { text: " is vital that the educational degree not only " },
+                            { text: "show", type: "del" },
+                            { text: "shows", type: "add" },
+                            { text: " your " },
+                            { text: "competence of learning", type: "del" },
+                            { text: "learning competence", type: "add" },
+                            { text: ", but also suggest your patience and perseverance. People who have " },
+                            { text: "fabulous", type: "del" },
+                            { text: "a fabulous", type: "add" },
+                            { text: " degree must spend " },
+                            { text: "many time to study", type: "del" },
+                            { text: "much time studying", type: "add" },
+                            { text: ". Without these " },
+                            { text: "trait", type: "del" },
+                            { text: "traits", type: "add" },
+                            { text: ", they can't see things through " },
+                            { text: "the", type: "del" },
+                            { text: "to the", type: "add" },
+                            { text: " end. All in all, the educational background is one of determining " },
+                            { text: "fators", type: "del" },
+                            { text: "factors", type: "add" },
+                            { text: " to find a job, and many people " },
+                            { text: "agree that", type: "del" },
+                            { text: "agree with this", type: "add" },
+                            { text: "." }
+                        ]
+                    ]
+                },
+                {
+                    type: 'paragraph',
+                    lines: [
+                        [
+                            { text: "On the contrary, some people think that " },
+                            { text: "your", type: "del" },
+                            { text: " " },
+                            { text: "skills and work experience " },
+                            { text: "is", type: "del" },
+                            { text: "are", type: "add" },
+                            { text: " more important than " },
+                            { text: "educational extent", type: "del" },
+                            { text: "educational background", type: "add" },
+                            { text: ". Although the educational background " },
+                            { text: "indicate", type: "del" },
+                            { text: "indicates", type: "add" },
+                            { text: " that the person " },
+                            { text: "work", type: "del" },
+                            { text: "works", type: "add" },
+                            { text: " hard, they may " },
+                            { text: "don't", type: "del" },
+                            { text: "not", type: "add" },
+                            { text: " have " },
+                            { text: "aduquate", type: "del" },
+                            { text: "adequate", type: "add" },
+                            { text: " capability to fit the job. For instance, a senior engineer might " },
+                            { text: "sovle", type: "del" },
+                            { text: "solve", type: "add" },
+                            { text: " a technical " },
+                            { text: "problems", type: "del" },
+                            { text: "problem", type: "add" },
+                            { text: " in " },
+                            { text: "few", type: "del" },
+                            { text: "a few", type: "add" },
+                            { text: " minutes due to his abundant work experience. While people graduate with high academic qualifications, they " },
+                            { text: "don't experience", type: "del" },
+                            { text: "have not experienced", type: "add" },
+                            { text: " this situation before. They need to spend " },
+                            { text: "many time", type: "del" },
+                            { text: "much time", type: "add" },
+                            { text: " on finding the cause and " },
+                            { text: "solve", type: "del" },
+                            { text: "solving", type: "add" },
+                            { text: " it. As mentioned above, I believe that not only is an academic degree necessary for getting a job, but practical experience is also essential for long-term success." }
+                        ]
+                    ]
+                }
+            ]
+        };
+
+        const ScoreCard = ({ label, score, max, status }) => {
+            const width = (score / max) * 100 + '%';
+            return (
+                <div className="mb-4">
+                    <div className="flex justify-between text-sm font-medium mb-1 text-gray-700">
+                        <span>{label}</span>
+                        <span>{score} / {max}</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                        <div className={`h-2.5 rounded-full ${status === 'good' ? 'bg-green-500' : status === 'warn' ? 'bg-red-500' : 'bg-yellow-500'}`} style={{ width }}></div>
+                    </div>
+                </div>
+            );
+        };
+
+        const CorrectionCard = ({ item }) => (
+            <div className={`bg-white rounded-lg shadow-sm border ${item.type === 'Good' ? 'border-green-200 bg-green-50' : 'border-gray-200'} p-4 mb-4 card-hover`}>
+                <div className="flex items-start gap-3">
+                    <div className={`mt-1 p-1.5 rounded-full shrink-0 ${item.type === 'Grammar' ? 'bg-blue-100 text-blue-600' : item.type === 'Spelling' ? 'bg-red-100 text-red-600' : item.type === 'Good' ? 'bg-green-100 text-green-600' : 'bg-purple-100 text-purple-600'}`}>
+                        {item.type === 'Grammar' ? <BookOpen size={16} /> : item.type === 'Spelling' ? <AlertCircle size={16} /> : item.type === 'Good' ? <CheckCircle size={16} /> : <FileText size={16} />}
+                    </div>
+                    <div className="flex-1">
+                        {item.type !== 'Good' ? (
+                            <div className="flex flex-col md:flex-row md:items-center gap-2 mb-2">
+                                <div className="flex-1 bg-red-50 rounded px-3 py-2 text-red-800 line-through decoration-red-400 decoration-2 bg-opacity-20">
+                                    {item.original}
+                                </div>
+                                <ArrowRight className="hidden md:block text-gray-400" size={20} />
+                                <div className="flex-1 bg-green-50 rounded px-3 py-2 text-green-800 font-medium border border-green-200">
+                                    {item.corrected}
+                                </div>
+                            </div>
+                        ) : (
+                             <div className="mb-2 bg-green-100 rounded px-3 py-2 text-green-800 font-medium border border-green-200">
+                                {item.original}
+                            </div>
+                        )}
+                        <p className="text-gray-600 text-sm mt-2 flex items-start gap-2">
+                            <span className={`text-xs px-2 py-0.5 rounded uppercase tracking-wide font-bold mt-0.5 ${item.type === 'Good' ? 'bg-green-200 text-green-700' : 'bg-gray-100 text-gray-500'}`}>{item.type === 'Good' ? 'Excellent' : item.type}</span>
+                            {item.explanation}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const PaperView = ({ data, paperMode, setPaperMode }) => (
+            <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8 md:p-12 overflow-hidden relative">
+                 <div className="absolute top-0 left-0 w-full h-2 bg-red-500 opacity-80"></div>
+                 
+                 <div className="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-gray-100 pb-4">
+                    <h2 className="text-2xl font-serif font-bold text-gray-800">Correction Paper</h2>
+                    
+                    <div className="flex gap-2 mt-4 md:mt-0">
+                        <button 
+                            onClick={() => setPaperMode('full')}
+                            className={`toggle-btn ${paperMode === 'full' ? 'toggle-btn-active' : 'toggle-btn-inactive'}`}
+                        >
+                            完整批改
+                        </button>
+                        <button 
+                            onClick={() => setPaperMode('minimal')}
+                            className={`toggle-btn ${paperMode === 'minimal' ? 'toggle-btn-active' : 'toggle-btn-inactive'}`}
+                        >
+                             小改版
+                        </button>
+                    </div>
+                 </div>
+                 
+                 <div className="font-serif text-lg leading-loose text-gray-800 space-y-6">
+                    {data.map((para, pIdx) => (
+                        <div key={pIdx}>
+                            {para.lines.map((line, lIdx) => (
+                                <span key={lIdx}>
+                                    {line.map((segment, sIdx) => {
+                                        if (segment.type === 'del') {
+                                            return <span key={sIdx} className="paper-del">{segment.text}</span>;
+                                        } else if (segment.type === 'add') {
+                                            return <span key={sIdx} className="paper-add">{segment.text}</span>;
+                                        } else {
+                                            return <span key={sIdx}>{segment.text}</span>;
+                                        }
+                                    })}
+                                    {/* Add space between sentences if not last line */}
+                                    {" "}
+                                </span>
+                            ))}
+                        </div>
+                    ))}
+                 </div>
+
+                 <div className="mt-12 pt-6 border-t border-gray-100 flex justify-end">
+                    <div className="text-right">
+                        <div className="text-red-600 font-handwriting text-4xl font-bold -rotate-12 inline-block border-4 border-red-600 rounded-full p-2 px-4 shadow-sm opacity-80">
+                            {correctionData.score.total}
+                        </div>
+                        <p className="text-red-500 font-serif text-sm mt-2">Score</p>
+                    </div>
+                 </div>
+            </div>
+        );
+        
+        const PracticeView = ({ paperData }) => {
+            const [originalText, setOriginalText] = useState('');
+            
+            useEffect(() => {
+                // Reconstruct original text from paperData
+                const text = paperData.map(para => {
+                    return para.lines.map(line => {
+                        return line.map(segment => {
+                            if (segment.type !== 'add') {
+                                return segment.text;
+                            }
+                            return '';
+                        }).join('');
+                    }).join(' ');
+                }).join('\n\n');
+                
+                setOriginalText(text);
+            }, [paperData]);
+
+            const copyToClipboard = () => {
+                navigator.clipboard.writeText(originalText);
+            };
+
+            return (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full">
+                        <div className="bg-gray-50 px-5 py-3 border-b border-gray-100 flex justify-between items-center">
+                            <h3 className="font-bold text-gray-700 flex items-center gap-2">
+                                <FileText size={18} className="text-gray-500"/> 原始文章 (Original)
+                            </h3>
+                            <button 
+                                onClick={copyToClipboard}
+                                className="text-gray-500 hover:text-blue-600 text-sm flex items-center gap-1 transition-colors"
+                                title="複製原文"
+                            >
+                                <Copy size={16}/> 複製
+                            </button>
+                        </div>
+                        <div className="p-6 font-serif text-lg leading-relaxed text-gray-800 whitespace-pre-wrap flex-1 overflow-y-auto">
+                            {originalText}
+                        </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full">
+                         <div className="bg-blue-50 px-5 py-3 border-b border-blue-100">
+                            <h3 className="font-bold text-blue-800 flex items-center gap-2">
+                                <Edit3 size={18} className="text-blue-600"/> 練習區 (Practice Here)
+                            </h3>
+                        </div>
+                        <textarea 
+                            className="w-full h-96 lg:h-full p-6 font-serif text-lg leading-relaxed text-gray-800 resize-none focus:outline-none focus:bg-gray-50 transition-colors"
+                            placeholder="請在此處試著重寫你的文章..."
+                        ></textarea>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('minimal'); // Default to new tab: minimal, corrections, paper, final, practice
+            const [paperMode, setPaperMode] = useState('full'); // 'full' or 'minimal'
+
+            return (
+                <div className="max-w-6xl mx-auto p-4 md:p-8">
+                    {/* Header */}
+                    <header className="text-center mb-10">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">{correctionData.title}</h1>
+                        <p className="text-gray-500">作文批改與診斷報告</p>
+                    </header>
+
+                    {/* Dashboard Section */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        {/* Total Score */}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center justify-center">
+                            <div className="text-gray-500 font-medium mb-2">預估級分</div>
+                            <div className="text-5xl font-bold text-blue-600 mb-2">{correctionData.score.total}</div>
+                            <div className="text-sm text-gray-400">滿分 {correctionData.score.max}</div>
+                        </div>
+
+                        {/* Breakdown */}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:col-span-2">
+                            <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                <BarChart2 size={20} /> 評分細項
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                                {correctionData.score.breakdown.map((item, idx) => (
+                                    <ScoreCard key={idx} {...item} />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Summary Box */}
+                    <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 rounded-r-lg">
+                        <div className="flex items-start gap-3">
+                            <Award className="text-blue-600 shrink-0 mt-1" />
+                            <div>
+                                <h4 className="font-bold text-blue-800 mb-1">總評</h4>
+                                <p className="text-blue-800 text-opacity-80">{correctionData.summary}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Main Content Tabs */}
+                    <div className="mb-6 border-b border-gray-200 overflow-x-auto">
+                        <div className="flex gap-6 min-w-max">
+                            <button 
+                                onClick={() => setActiveTab('minimal')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'minimal' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><Sparkles size={18}/> 小幅度批改</span>
+                                {activeTab === 'minimal' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('corrections')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'corrections' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><BookOpen size={18}/> 完整詳解</span>
+                                {activeTab === 'corrections' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('paper')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'paper' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><PenTool size={18}/> 試卷模式</span>
+                                {activeTab === 'paper' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                             <button 
+                                onClick={() => setActiveTab('practice')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'practice' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><Edit3 size={18}/> 自我練習</span>
+                                {activeTab === 'practice' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('final')}
+                                className={`pb-3 px-1 font-medium transition-colors relative whitespace-nowrap ${activeTab === 'final' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                <span className="flex items-center gap-2"><FileText size={18}/> 修正後範文</span>
+                                {activeTab === 'final' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></div>}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Tab Content */}
+                    {activeTab === 'minimal' && (
+                        <div className="space-y-6">
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-xl font-bold text-gray-800">最小修改・詳細批改</h2>
+                                <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">保留原意，只修關鍵</span>
+                            </div>
+                            <div>
+                                {correctionData.minimalCorrections.map(item => (
+                                    <CorrectionCard key={item.id} item={item} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'corrections' && (
+                        <div className="space-y-6">
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-xl font-bold text-gray-800">診斷與修正 ({correctionData.corrections.length})</h2>
+                                <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">完整修改版本</span>
+                            </div>
+                            <div>
+                                {correctionData.corrections.map(item => (
+                                    <CorrectionCard key={item.id} item={item} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    
+                    {activeTab === 'paper' && (
+                        <PaperView 
+                            data={paperMode === 'full' ? correctionData.paperData : correctionData.minimalPaperData} 
+                            paperMode={paperMode}
+                            setPaperMode={setPaperMode}
+                        />
+                    )}
+                    
+                    {activeTab === 'practice' && (
+                        <PracticeView paperData={correctionData.paperData} />
+                    )}
+
+                    {activeTab === 'final' && (
+                        <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                            <div className="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                                <h2 className="font-bold text-gray-700">高分範文版 (Revised Version)</h2>
+                                <button className="text-blue-600 text-sm font-medium hover:underline" onClick={() => navigator.clipboard.writeText(correctionData.finalText.p1 + '\n\n' + correctionData.finalText.p2)}>複製全文</button>
+                            </div>
+                            <div className="p-8 leading-relaxed text-gray-800 text-lg space-y-6">
+                                <p>{correctionData.finalText.p1}</p>
+                                <p>{correctionData.finalText.p2}</p>
+                            </div>
+                            <div className="bg-blue-50 px-6 py-4 border-t border-blue-100">
+                                <p className="text-sm text-blue-800">💡 <strong>小提示：</strong> 閱讀範文時，請特別注意轉折詞 (On the one hand, Furthermore) 與動詞時態的使用。</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

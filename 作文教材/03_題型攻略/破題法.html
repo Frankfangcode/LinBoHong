@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作文破題法互動學習 (完整版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #fdfaf3;
+            color: #3a3a3a;
+        }
+        .book-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem 3rem 4rem 3rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2dccd;
+            position: relative;
+        }
+        .book-container::after {
+            content: '123';
+            position: absolute;
+            bottom: 1.5rem;
+            right: 3rem;
+            color: #b0a090;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1rem;
+        }
+        h1, h2, h3 {
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #5c4b3f;
+        }
+        h1.main-title {
+            font-size: 4rem;
+            text-align: center;
+            margin-top: 0.5rem;
+            margin-bottom: 0.25rem;
+            letter-spacing: 0.1em;
+        }
+        p.sub-title {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 2rem;
+            color: #7c6c5e;
+            text-align: center;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #d4c4b3;
+        }
+        h2 {
+            font-size: 2rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #a38f7e;
+            padding-left: 1rem;
+        }
+        h3 {
+            font-size: 1.6rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #7c6c5e;
+            font-weight: 500;
+        }
+        .intro-text, .diagram-box {
+            background-color: #f9f6f1;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px dashed #d4c4b3;
+            margin: 2rem 0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        .example-box {
+            background-color: #fffaf0;
+            border-left: 4px solid #f0e6d5;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+        .example-box::before {
+            content: '舉例';
+            position: absolute;
+            top: 1.5rem;
+            left: -25px;
+            transform: rotate(-90deg);
+            background-color: #a38f7e;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 6px 6px 0 0;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .quote {
+            font-style: italic;
+            color: #5c4b3f;
+            line-height: 1.7;
+        }
+        .source {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #8c7b6e;
+            margin-top: 0.5rem;
+        }
+        .exercise-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 3px double #d4c4b3;
+            border-bottom: 3px double #d4c4b3;
+            background-color: #fcf9f5;
+        }
+        .exercise-section h3 {
+            margin-top: 0;
+            text-align: center;
+            font-size: 1.8rem;
+            border-bottom: 1px solid #d4c4b3;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .draggable {
+            cursor: move;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background-color: #fff;
+            border: 1px solid #e0d8cc;
+            border-radius: 6px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: flex-start;
+        }
+        .draggable:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .drag-num {
+            font-weight: 700;
+            margin-right: 0.75rem;
+            color: #a38f7e;
+        }
+        .drop-zone {
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 2px dashed #c0b2a3;
+            border-radius: 6px;
+            background-color: #f9f6f1;
+            min-height: 100px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .drop-zone.over {
+            background-color: #f0e6d5;
+            border-color: #a38f7e;
+        }
+        .drop-zone.correct {
+            background-color: #e8f5e9;
+            border-color: #4caf50;
+        }
+        .drop-zone.wrong {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+        .choice-btn {
+            margin: 0.25rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid #a38f7e;
+            background-color: #fff;
+            color: #5c4b3f;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .choice-btn:hover {
+            background-color: #a38f7e;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .choice-btn.selected {
+            background-color: #5c4b3f;
+            color: #fff;
+            border-color: #5c4b3f;
+        }
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #d4c4b3;
+            margin-top: 0.5rem;
+            background-color: #fff;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            line-height: 1.6;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #a38f7e;
+            box-shadow: 0 0 0 3px rgba(163, 143, 126, 0.2);
+        }
+        .answer-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 2rem;
+            background-color: #a38f7e;
+            color: #fff;
+            border-radius: 25px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .answer-btn:hover {
+            background-color: #8c7b6e;
+            transform: translateY(-2px);
+        }
+        .answer-feedback {
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+        .correct-feedback { color: #388e3c; }
+        .wrong-feedback { color: #d32f2f; }
+        .star { font-size: 1.5rem; color: #ffc107; }
+        .no-star { font-size: 1.5rem; color: #d4c4b3; }
+    </style>
+</head>
+<body>
+
+<div class="book-container">
+    <header>
+        <p class="text-center text-xl text-gray-500 font-serif">講到心坎裡的手法技巧</p>
+        <h1 class="main-title">【如何破題】</h1>
+        <p class="sub-title">用破題句吸睛勾人心</p>
+    </header>
+
+    <main>
+        <p class="intro-text">
+            萬事起頭難,英文作文也如此;如果能成功破題,接下來就好寫了。而作文能取得高分,打造吸引人的開頭是一個訣竅,英文寫作的起手式稱之為「writing hook」,就是所謂的「破題技巧」。破題句(hook sentence)亦是開場句(opening sentence),「hook」的意思有二:首先,指的是在文章開頭的句子能夠像鉤子(hook)一樣鉤住讀者的注意力;再者,是希望這些 hook sentences 能像是拳擊手的鉤拳(hook),有力地敲擊讀者心靈。因此,許多國外英文作家也稱這種破題法為「attention-getter」,亦即吸引讀者注意的句子。
+        </p>
+        
+        <div class="diagram-box">
+            <h4 class="font-bold text-center text-lg mb-4 text-gray-700">破題句在作文中的位置</h4>
+            <div class="w-full bg-white p-6 rounded-lg shadow-inner border border-gray-200">
+                <div class="border-l-4 border-yellow-500 pl-4 mb-2">
+                    <p class="font-bold text-yellow-600">Hook sentence (破題句)</p>
+                    <p class="text-sm italic text-gray-600">"How can a writer expect to get a reader's attention without a good hook?"</p>
+                </div>
+                <div class="border-l-4 border-blue-500 pl-4 mb-2">
+                    <p class="font-bold text-blue-600">Background (說明承接)</p>
+                    <p class="text-sm italic text-gray-600">"A hook is the line or lines written to lure a reader in and make them want to learn more. It is an introduction that is meant to grab hold of people's attention."</p>
+                </div>
+                <div class="border-l-4 border-green-500 pl-4">
+                     <p class="font-bold text-green-600">Thesis statement (主旨句)</p>
+                    <p class="text-sm italic text-gray-600">"Writing a good hook is not always easy, but it is an important skill to learn if we want to write effectively."</p>
+                </div>
+            </div>
+             <p class="text-sm text-center mt-2 text-gray-500">顧名思義，破題句就是在開頭段落（Introductory paragraph）的首句。</p>
+        </div>
+
+        <section id="basic-hooks">
+            <h2>破題句五大招式</h2>
+            <p class="mb-6">以下藉由經典名著與佳句的示範,我們一起練習寫出吸睛破題句,打出成功的起手式。</p>
+            <div class="flex justify-center items-center space-x-2 md:space-x-4 mb-8">
+                <div class="text-center p-2 border-2 border-gray-400 rounded-lg bg-gray-100 transform -rotate-3 w-1/5"><p class="font-serif text-gray-600">場景破題法</p></div>
+                <div class="text-center p-2 border-2 border-gray-400 rounded-lg bg-gray-100 transform rotate-2 w-1/5"><p class="font-serif text-gray-600">對話破題法</p></div>
+                <div class="text-center p-2 border-2 border-gray-400 rounded-lg bg-gray-100 transform -rotate-1 w-1/5"><p class="font-serif text-gray-600">名言佳句</p></div>
+                <div class="text-center p-2 border-2 border-gray-400 rounded-lg bg-gray-100 transform rotate-3 w-1/5"><p class="font-serif text-gray-600">擬聲詞法</p></div>
+                <div class="text-center p-2 border-2 border-gray-400 rounded-lg bg-gray-100 transform -rotate-2 w-1/5"><p class="font-serif text-gray-600">設問破題法</p></div>
+            </div>
+
+            <h3>1. 場景破題法 (Setting Hook)</h3>
+            <p>目的是要為讀者打造一個場景,利用人、事、物的細節描述,激發視覺、聽覺、嗅覺、觸覺、味覺等感受,讓人一開始就有身歷其境之感。</p>
+            <div class="example-box">
+                <p class="quote">"Under the darkened sky, the sea was white, running sidewise, exploding in sheets of spray against the long arm of land that formed their end of the little bay."</p>
+                <p class="source">- From The Eyes of the Amaryllis《阿瑪麗麗絲號》by Natelie Babbitt</p>
+                <hr class="my-4 border-gray-300">
+                <p class="quote">"In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell, nor yet a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a hobbit-hole, and that means comfort."</p>
+                <p class="source">- From The Hobbit《哈比人》by J.R.R. Tolkien</p>
+            </div>
+
+            <h3>2. 對話破題法 (Dialogue Hook)</h3>
+            <p>用人物的對白開場,可能是兩人間的對話或是一人的獨白,同時描述人物動作、讓讀者有臨場感,也為後面發生的事件或想法埋下伏筆。</p>
+            <div class="example-box">
+                <p class="quote">""Where's Papa going with that ax?" said Fern to her mother as they were setting the table for breakfast."</p>
+                <p class="source">- From Charlotte's Web《夏綠蒂的網》by E.B. White</p>
+                 <hr class="my-4 border-gray-300">
+                <p class="quote">""To be born again," sang Gibreel Farishta tumbling from the heavens, "first you have to die.""</p>
+                <p class="source">- From The Satanic Verses《魔鬼詩篇》by Salman Rushdie</p>
+            </div>
+
+            <h3>3. 名言佳句破題法 (Quotation Hook)</h3>
+            <p>用名人的話語破題,塑造出專業與權威,藉以提升內容的說服力。</p>
+            <div class="example-box">
+                <p class="quote">""If you want to bring happiness to the whole world, go home, and love your family." Maria Theresa was a smart woman with an amazing mindset. Her popular quote reminds us that there is nothing more important than family."</p>
+                 <hr class="my-4 border-gray-300">
+                <p class="quote">""It always seems impossible, until it's done." This is a quote from Nelson Mandela, who symbolized perfectly perseverance and hard work."</p>
+            </div>
+
+            <h3>4. 擬聲詞破題法 (Sound Hook)</h3>
+            <p>透過擬聲詞能即時在腦海顯現動態的感受,創造身歷其境的效果,重現聲音發生時的情景。</p>
+            <div class="example-box">
+                <p class="quote">"Woosh! Went the wind as my feet touched the soft sand. I was exploring at the beach and was having a great time. It was a beautiful day, the trees swayed in the wind, and the gulls soared through the sky."</p>
+                <p class="source">- From The Most Wonderful Writing Lessons Ever by Barbara Mariconda</p>
+                 <hr class="my-4 border-gray-300">
+                <p class="quote">"Chug, chug, chug. Puff, puff, puff. Ding-dong, ding-dong. The little train rumbled over the tracks."</p>
+                <p class="source">- From The Little Engine That Could《可能的小引擎》by Watty Piper</p>
+            </div>
+            
+            <h3>5. 設問破題法 (Question Hook)</h3>
+            <p>從一個問句寫起以引起讀者注意,將本來平鋪直敘的描述改為疑問句,激發讀者的好奇,再引出主題,也希望透過提問促進讀者深思。</p>
+            <div class="example-box">
+                <p class="quote">"What is the charm of necklaces? Why would anyone put something extra around their neck and then invest it with special significance? A necklace doesn't afford warmth in cold weather, like a scarf, or protection in combat, like chain mail; it only decorates."</p>
+                <p class="source">- From On Necklaces by Emily R. Grosholz</p>
+                 <hr class="my-4 border-gray-300">
+                <p class="quote">"Is virtual learning here to stay for K-12? As students return to post-pandemic classrooms, many are wondering if remote learning will remain an option-and to what extent its impact will be felt."</p>
+                <p class="source">- From EdTech: Focus on K-12 by Rebecca Torchia</p>
+            </div>
+        </section>
+
+        <div class="exercise-section" id="exercise-a">
+            <h3>換你試試看 A：配對選出合適的開場句</h3>
+            <p class="text-center">請閱讀右側的句子，並將它們拖曳到左側對應的破題法方框中。</p>
+            <div class="grid md:grid-cols-2 gap-8 mt-6">
+                <div class="space-y-4">
+                    <div>
+                        <strong>(A) 對話破題法 (Dialogue Hook)</strong>
+                        <div class="drop-zone" data-answer="dialogue1 dialogue2"></div>
+                    </div>
+                    <div>
+                        <strong>(B) 場景破題法 (Setting Hook)</strong>
+                        <div class="drop-zone" data-answer="setting1 setting2"></div>
+                    </div>
+                     <div>
+                        <strong>(C) 設問破題法 (Question Hook)</strong>
+                        <div class="drop-zone" data-answer="question"></div>
+                    </div>
+                    <div>
+                        <strong>(D) 名言佳句破題法 (Quotation Hook)</strong>
+                        <div class="drop-zone" data-answer="quotation"></div>
+                    </div>
+                    <div>
+                        <strong>(E) 擬聲詞破題法 (Sound Hook)</strong>
+                        <div class="drop-zone" data-answer="sound"></div>
+                    </div>
+                </div>
+                <div>
+                    <div id="draggable-items">
+                        <div class="draggable" draggable="true" data-id="question"><span class="drag-num">1.</span> "How many times have you been late to a meeting because you couldn't find a parking spot? You're not alone-our city is in desperate need of a new parking lot."</div>
+                        <div class="draggable" draggable="true" data-id="quotation"><span class="drag-num">2.</span> "We've all heard the saying, 'Be the change you wish to see in the world.' Mahatma Gandhi is often credited with saying this."</div>
+                        <div class="draggable" draggable="true" data-id="setting1"><span class="drag-num">3.</span> "Buzzing noise is coming from the TV, yet I hear nothing but silence. Every time I stay at home alone, I feel lonely. Without the company of my parents or my siblings, the house becomes so quiet."</div>
+                        <div class="draggable" draggable="true" data-id="sound"><span class="drag-num">4.</span> "Click-clack. Click-clack. The sound of my footsteps echoed through the empty aisles of the hallway."</div>
+                        <div class="draggable" draggable="true" data-id="dialogue1"><span class="drag-num">5.</span> ""Answer it, answer it!" my wife cries. The call comes in the middle of the night, at three in the morning, and it nearly scares us to death. ""My God, who is it? Answer it!""</div>
+                        <div class="draggable" draggable="true" data-id="dialogue2"><span class="drag-num">6.</span> ""They are here," my sister yelled as the painters arrived to change my room color."</div>
+                        <div class="draggable" draggable="true" data-id="setting2"><span class="drag-num">7.</span> "Imagine you've just gotten off an airplane. You're hot, you're tired, you're uncomfortable, and suddenly, you're under arrest."</div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <div class="answer-btn" onclick="checkDragDropAnswers()">檢查答案</div>
+                <div class="answer-btn" onclick="resetDragDrop()" style="background-color: #8c7b6e;">重新練習</div>
+            </div>
+        </div>
+        
+        <div class="exercise-section" id="exercise-b">
+            <h3>換你試試看 B：判斷破題方式</h3>
+            <p class="text-center">請閱讀下列句子，判斷這是屬於何種破題方式，並點選正確的代號。</p>
+            <div class="space-y-8 mt-6">
+                <div data-question="b1">
+                    <p class="quote"><span class="drag-num">1.</span> "It was a bright cold day in April, and the clocks were striking thirteen." <span class="source block">- From 1984 by George Orwell</span></p>
+                    <div class="mt-2" data-answer="D">
+                        <button class="choice-btn" onclick="selectAnswer(this, 'b1')">(A) 擬聲詞</button> <button class="choice-btn" onclick="selectAnswer(this, 'b1')">(B) 對話</button> <button class="choice-btn" onclick="selectAnswer(this, 'b1')">(C) 名言佳句</button> <button class="choice-btn" onclick="selectAnswer(this, 'b1')">(D) 場景</button> <button class="choice-btn" onclick="selectAnswer(this, 'b1')">(E) 設問</button>
+                    </div><div class="answer-feedback"></div>
+                </div>
+                <div data-question="b2">
+                    <p class="quote"><span class="drag-num">2.</span> ""Be open and use the world around you." Toni Morrison gives this advice about the craft of writing, but I find that it applies to most areas of my life."</p>
+                    <div class="mt-2" data-answer="C">
+                        <button class="choice-btn" onclick="selectAnswer(this, 'b2')">(A) 擬聲詞</button> <button class="choice-btn" onclick="selectAnswer(this, 'b2')">(B) 對話</button> <button class="choice-btn" onclick="selectAnswer(this, 'b2')">(C) 名言佳句</button> <button class="choice-btn" onclick="selectAnswer(this, 'b2')">(D) 場景</button> <button class="choice-btn" onclick="selectAnswer(this, 'b2')">(E) 設問</button>
+                    </div><div class="answer-feedback"></div>
+                </div>
+                <div data-question="b3">
+                    <p class="quote"><span class="drag-num">3.</span> ""Ring! Ring! Ring!" I looked at my alarm clock. It was seven a.m.! Time to get ready for our family vacation!"</p>
+                    <div class="mt-2" data-answer="A">
+                         <button class="choice-btn" onclick="selectAnswer(this, 'b3')">(A) 擬聲詞</button> <button class="choice-btn" onclick="selectAnswer(this, 'b3')">(B) 對話</button> <button class="choice-btn" onclick="selectAnswer(this, 'b3')">(C) 名言佳句</button> <button class="choice-btn" onclick="selectAnswer(this, 'b3')">(D) 場景</button> <button class="choice-btn" onclick="selectAnswer(this, 'b3')">(E) 設問</button>
+                    </div><div class="answer-feedback"></div>
+                </div>
+                 <div data-question="b4">
+                    <p class="quote"><span class="drag-num">4.</span> ""Mom? Mom?" I called out nervously as I searched the grocery store aisles for her curly gray hair."</p>
+                    <div class="mt-2" data-answer="B">
+                         <button class="choice-btn" onclick="selectAnswer(this, 'b4')">(A) 擬聲詞</button> <button class="choice-btn" onclick="selectAnswer(this, 'b4')">(B) 對話</button> <button class="choice-btn" onclick="selectAnswer(this, 'b4')">(C) 名言佳句</button> <button class="choice-btn" onclick="selectAnswer(this, 'b4')">(D) 場景</button> <button class="choice-btn" onclick="selectAnswer(this, 'b4')">(E) 設問</button>
+                    </div><div class="answer-feedback"></div>
+                </div>
+                 <div data-question="b5">
+                    <p class="quote"><span class="drag-num">5.</span> "On sultry(悶熱的) summer days at my grandma's farm in Michigan, the air gets damp and heavy. Storm clouds drift low over the fields."</p>
+                    <div class="mt-2" data-answer="D">
+                         <button class="choice-btn" onclick="selectAnswer(this, 'b5')">(A) 擬聲詞</button> <button class="choice-btn" onclick="selectAnswer(this, 'b5')">(B) 對話</button> <button class="choice-btn" onclick="selectAnswer(this, 'b5')">(C) 名言佳句</button> <button class="choice-btn" onclick="selectAnswer(this, 'b5')">(D) 場景</button> <button class="choice-btn" onclick="selectAnswer(this, 'b5')">(E) 設問</button>
+                    </div><div class="answer-feedback"></div>
+                </div>
+                 <div data-question="b6">
+                    <p class="quote"><span class="drag-num">6.</span> "Got a bug bite problem? Many people who are troubled by skin rashes caused by bug bites use "foggers" or "bug bombs" to get rid of the annoying crawlers in their homes."</p>
+                    <div class="mt-2" data-answer="E">
+                         <button class="choice-btn" onclick="selectAnswer(this, 'b6')">(A) 擬聲詞</button> <button class="choice-btn" onclick="selectAnswer(this, 'b6')">(B) 對話</button> <button class="choice-btn" onclick="selectAnswer(this, 'b6')">(C) 名言佳句</button> <button class="choice-btn" onclick="selectAnswer(this, 'b6')">(D) 場景</button> <button class="choice-btn" onclick="selectAnswer(this, 'b6')">(E) 設問</button>
+                    </div><div class="answer-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-section" id="exercise-c">
+            <h3>換你試試看 C：練習寫出破題句</h3>
+            <p class="text-center">請任意挑選破題技巧，練習寫出破題句，以承接下列句子。</p>
+            <div class="space-y-6 mt-6">
+                <div>
+                    <textarea placeholder="請在此寫下你的破題句..."></textarea>
+                    <p class="mt-2 p-4 bg-gray-100 rounded-md text-gray-700">... Every time I catch an NBA game on television and witness the thrill of it, I can't help but watch another one.</p>
+                </div>
+                <div>
+                    <textarea placeholder="請在此寫下你的破題句..."></textarea>
+                    <p class="mt-2 p-4 bg-gray-100 rounded-md text-gray-700">... Whenever I arrive home, there is my loyal best friend greeting me in this passionate manner.</p>
+                </div>
+            </div>
+        </div>
+        
+        <section id="advanced-hooks">
+            <h2>師父有交代：進階篇</h2>
+            <p>對於前面介紹的五種破題寫作技巧若已游刃有餘,不妨再挑戰以下五種進階的破題方式。</p>
+
+            <h3>1. 事實/數據破題法 (Fact/Statistic Hook)</h3>
+            <p>提出引人注目的事實或數據作為開場,介紹奇趣新知或提出量化資訊,以增加說服力並使人印象深刻,會想繼續讀下去。</p>
+            <div class="example-box">
+                <p class="quote">"More than half of Iceland's population believes that elves exist or that they possibly can exist. Although this might sound strange to foreigners, many of us have similar beliefs that would sound just as strange to those outside our cultures."</p>
+                <p class="source">- From More Than Half of This Country Believes in Elves by Rich Warren</p>
+                 <hr class="my-4 border-gray-300">
+                <p class="quote">"Of about 3 million youth that are injured every year playing sports or participating in recreational activities, only 25% are treated in hospital emergency rooms."</p>
+                <p class="source">- From Sports Injury Statistics by Stanford Children's Health</p>
+            </div>
+            
+            <h3>2. 懸疑破題法 (Surprise Hook)</h3>
+            <p>從事件的懸疑處寫起,營造神秘氣氛,激發讀者對未知事物的好奇和關注。</p>
+            <div class="example-box">
+                <p class="quote">"Lydia is dead. But they don't know this yet."</p>
+                <p class="source">- From Everything I Never Told You《無聲告白》by Celeste Ng</p>
+                 <hr class="my-4 border-gray-300">
+                <p class="quote">"A screaming comes across the sky. It has happened before, but there is nothing to compare it to now."</p>
+                <p class="source">- From Gravity's Rainbow《萬有引力之虹》by Thomas Pynchon</p>
+            </div>
+
+            <h3>3. 小故事破題法 (Story Hook)</h3>
+            <p>利用個人的人生經歷或某個片段的回憶,帶出主要事件的人物、時空背景。</p>
+            <div class="example-box">
+                <p class="quote">"Finally the day had arrived. I was on my way to Aspen, Colorado. I had heard wonderful stories about the Aspen Music School from friends who had attended in previous years, and I was certain that this summer would be an unbelievable learning experience. I was especially excited to be studying with Mr. Herbert Stessin, an esteemed professor from the Juilliard School."</p>
+                <p class="source">- From A Lesson About Life by Aaron Miller</p>
+                <hr class="my-4 border-gray-300">
+                <p class="quote">"On the morning of October 30, 1969, the body of Chase Andrews lay in the swamp, which would have absorbed it silently, routinely. Hiding it for good. A swamp knows about death, and doesn't necessarily define it as tragedy, certainly not a sin."</p>
+                <p class="source">- From Where the Crawdads Sing by Delia Owens</p>
+            </div>
+            
+            <h3>4. 一字破題法 (One Word Hook)</h3>
+            <p>用一個英文字開頭,簡潔扼要地下關鍵字,點出心境、狀態;或者先下一個簡短的結論,接著帶出後續的事件發展。</p>
+            <div class="example-box">
+                <p class="quote">"Justice? You get justice in the next world, in this world you have the law."</p>
+                <p class="source">- From A Frolic of His Own《他自己的嬉戲》by William Gaddis</p>
+                 <hr class="my-4 border-gray-300">
+                <p class="quote">"Athlete. Often the word conjures up the image of a lithe, muscled person with one percent body fat, and able to leap tall buildings in a single bound. I am not this person. In fact, my career as an athlete is not what most consider successful."</p>
+                <p class="source">- From Between a Rock and Home Plate by Mark K. Arimoto</p>
+            </div>
+            
+            <h3>5. 開門見山破題法 (Statement Hook)</h3>
+            <p>開場直接揭露文章的核心概念,由於挑明了說,所以寫來理充詞沛,容易留下深刻的印象。</p>
+            <div class="example-box">
+                <p class="quote">"It was love at first sight."</p>
+                <p class="source">- From Catch-22《第22條軍規》by Joseph Heller</p>
+                 <hr class="my-4 border-gray-300">
+                <p class="quote">"It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife."</p>
+                <p class="source">- From Pride and Prejudice《傲慢與偏見》by Jane Austen</p>
+            </div>
+        </section>
+        
+        <div class="exercise-section" id="exercise-d">
+            <h3>換你試試看 D：判斷進階破題方式</h3>
+            <p class="text-center">請閱讀例句，判斷這是屬於何種進階的破題寫作方式，並點選正確的代號。</p>
+            <div class="space-y-8 mt-6">
+                <div data-question="d1">
+                    <p class="quote"><span class="drag-num">1.</span> "You'll never guess what this mother found in her son's ear."</p>
+                    <div class="mt-2" data-answer="B">
+                        <button class="choice-btn" onclick="selectAnswer(this, 'd1')">(A) 事實/數據</button> <button class="choice-btn" onclick="selectAnswer(this, 'd1')">(B) 懸疑</button> <button class="choice-btn" onclick="selectAnswer(this, 'd1')">(C) 小故事</button> <button class="choice-btn" onclick="selectAnswer(this, 'd1')">(D) 一字</button> <button class="choice-btn" onclick="selectAnswer(this, 'd1')">(E) 開門見山</button>
+                    </div><div class="answer-feedback"></div>
+                </div>
+                <div data-question="d2">
+                    <p class="quote"><span class="drag-num">2.</span> "We can't afford to ignore the evidence any longer; we need climate action now."</p>
+                    <div class="mt-2" data-answer="E">
+                        <button class="choice-btn" onclick="selectAnswer(this, 'd2')">(A) 事實/數據</button> <button class="choice-btn" onclick="selectAnswer(this, 'd2')">(B) 懸疑</button> <button class="choice-btn" onclick="selectAnswer(this, 'd2')">(C) 小故事</button> <button class="choice-btn" onclick="selectAnswer(this, 'd2')">(D) 一字</button> <button class="choice-btn" onclick="selectAnswer(this, 'd2')">(E) 開門見山</button>
+                    </div><div class="answer-feedback"></div>
+                </div>
+                 <div data-question="d3">
+                    <p class="quote"><span class="drag-num">3.</span> "When I got in the car to go grocery shopping, I never expected the trip would end in tears."</p>
+                    <div class="mt-2" data-answer="C">
+                        <button class="choice-btn" onclick="selectAnswer(this, 'd3')">(A) 事實/數據</button> <button class="choice-btn" onclick="selectAnswer(this, 'd3')">(B) 懸疑</button> <button class="choice-btn" onclick="selectAnswer(this, 'd3')">(C) 小故事</button> <button class="choice-btn" onclick="selectAnswer(this, 'd3')">(D) 一字</button> <button class="choice-btn" onclick="selectAnswer(this, 'd3')">(E) 開門見山</button>
+                    </div><div class="answer-feedback"></div>
+                </div>
+                 <div data-question="d4">
+                    <p class="quote"><span class="drag-num">4.</span> "Bill Gates, founder of Microsoft, could spend one million dollars per day every day, seven days a week and would not run out of money until he was 311 years old! Most would agree that he has reached a point of financial security."</p>
+                    <div class="mt-2" data-answer="A">
+                        <button class="choice-btn" onclick="selectAnswer(this, 'd4')">(A) 事實/數據</button> <button class="choice-btn" onclick="selectAnswer(this, 'd4')">(B) 懸疑</button> <button class="choice-btn" onclick="selectAnswer(this, 'd4')">(C) 小故事</button> <button class="choice-btn" onclick="selectAnswer(this, 'd4')">(D) 一字</button> <button class="choice-btn" onclick="selectAnswer(this, 'd4')">(E) 開門見山</button>
+                    </div><div class="answer-feedback"></div>
+                </div>
+                 <div data-question="d5">
+                    <p class="quote"><span class="drag-num">5.</span> "When I was in high school, I played on a school team for the National High School Basketball Competition. We had to travel downtown on the weekends for practice. Each and every time we had basketball practice at eight a.m., there was a boy around my age in the gym by the time we arrived. He was always covered in sweat, throwing up shots, practicing his dribbling and running laps around the gym."</p>
+                    <div class="mt-2" data-answer="C">
+                        <button class="choice-btn" onclick="selectAnswer(this, 'd5')">(A) 事實/數據</button> <button class="choice-btn" onclick="selectAnswer(this, 'd5')">(B) 懸疑</button> <button class="choice-btn" onclick="selectAnswer(this, 'd5')">(C) 小故事</button> <button class="choice-btn" onclick="selectAnswer(this, 'd5')">(D) 一字</button> <button class="choice-btn" onclick="selectAnswer(this, 'd5')">(E) 開門見山</button>
+                    </div><div class="answer-feedback"></div>
+                </div>
+                 <div data-question="d6">
+                    <p class="quote"><span class="drag-num">6.</span> "Panic. I never really understood the definition of that word until the morning of my tenth birthday."</p>
+                    <div class="mt-2" data-answer="D">
+                        <button class="choice-btn" onclick="selectAnswer(this, 'd6')">(A) 事實/數據</button> <button class="choice-btn" onclick="selectAnswer(this, 'd6')">(B) 懸疑</button> <button class="choice-btn" onclick="selectAnswer(this, 'd6')">(C) 小故事</button> <button class="choice-btn" onclick="selectAnswer(this, 'd6')">(D) 一字</button> <button class="choice-btn" onclick="selectAnswer(this, 'd6')">(E) 開門見山</button>
+                    </div><div class="answer-feedback"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="exercise-section" id="exercise-e">
+            <h3>換你試試看 E：主題寫作練習</h3>
+            <p class="text-center">請以「Dogs Are Better Than Cats」為題，依不同破題法，練習寫出開場句。</p>
+            <div class="space-y-4 mt-6">
+                <div>
+                    <label class="font-bold text-gray-700">● 場景破題法 (Setting Hook)</label>
+                    <textarea placeholder="範例：Every time I come home from work, Spotty welcomes me with her wagging tail. She jumps on me and knocks me down."></textarea>
+                </div>
+                 <div>
+                    <label class="font-bold text-gray-700">● 對話破題法 (Dialogue Hook)</label>
+                    <textarea placeholder="練習寫出你的句子..."></textarea>
+                </div>
+                <div>
+                    <label class="font-bold text-gray-700">● 名言佳句破題法 (Quotation Hook)</label>
+                    <textarea placeholder="練習寫出你的句子..."></textarea>
+                </div>
+                <div>
+                    <label class="font-bold text-gray-700">● 擬聲詞破題法 (Sound Hook)</label>
+                    <textarea placeholder="練習寫出你的句子..."></textarea>
+                </div>
+                <div>
+                    <label class="font-bold text-gray-700">● 設問破題法 (Question Hook)</label>
+                    <textarea placeholder="練習寫出你的句子..."></textarea>
+                </div>
+                <div>
+                    <label class="font-bold text-gray-700">⑥ 自選進階破題法</label>
+                    <textarea placeholder="挑選一個進階方法練習..."></textarea>
+                </div>
+            </div>
+        </div>
+
+         <div class="exercise-section" id="exercise-f">
+            <h3>換你試試看 F：主題破題句寫作</h3>
+            <p class="text-center">請根據主題挑選不同的破題法寫破題句，每題選一至三個破題法寫作。</p>
+            <div class="space-y-8 mt-6">
+                <div>
+                    <h4 class="text-lg font-bold text-gray-800">● 主題：My Swimming Experience</h4>
+                    <p class="text-gray-600 mb-2 text-sm">範例：<br>
+                    (A) 場景破題法: The crisp blue water of the pool glistened in the sun.<br>
+                    (D) 擬聲詞破題法: Splash! I dove into the pool feet-first.<br>
+                    (E) 設問破題法: Have you ever been swimming in a pool?</p>
+                    <textarea placeholder="請用 1-3 個不同方法為這個主題寫破題句..."></textarea>
+                </div>
+                 <div>
+                    <h4 class="text-lg font-bold text-gray-800">● 主題：Our Hero</h4>
+                    <textarea placeholder="請用 1-3 個不同方法為這個主題寫破題句..."></textarea>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-gray-800">● 主題：An Unexpected Visitor</h4>
+                    <textarea placeholder="請用 1-3 個不同方法為這個主題寫破題句..."></textarea>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-gray-800">● 主題：My Dream Park</h4>
+                    <textarea placeholder="請用 1-3 個不同方法為這個主題寫破題句..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="exercise-section" id="exercise-g">
+            <h3>換你試試看 G：評鑑開場句</h3>
+            <p class="text-center">請閱讀下列關於「防疫停課」的開場句，哪個寫法比較吸引人？在吸睛指數欄位裡給予1~3顆星，並閱讀原因說明。</p>
+            <table class="w-full border-collapse mt-6 bg-white">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="p-3 text-left border-b-2 border-gray-300">開場句</th>
+                        <th class="p-3 text-center w-48 border-b-2 border-gray-300">吸睛指數</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b">
+                        <td class="p-4 align-top">
+                            <p>"In this year, Covid-19 spread all over the world, and Taiwan was no exception. Taiwan's government announced a level-three alert due to Covid-19. Everyone needed to stay at home."</p>
+                            <p class="text-sm text-gray-600 mt-2"><strong>原因:</strong> 這是平鋪直敘的寫法，只交代了事實，沒有太多情感或懸念，比較難吸引讀者繼續閱讀。</p>
+                        </td>
+                        <td class="p-4 align-middle text-center">
+                            <div><span class="star">★</span><span class="no-star">☆☆</span></div>
+                        </td>
+                    </tr>
+                     <tr class="border-b">
+                        <td class="p-4 align-top">
+                            <p>"During the time when I was learning from home, I had to overcome some challenges. For me, compared to our regular school days, it was more difficult to stay at home, since I needed to spend time getting accustomed to studying without my friends around me."</p>
+                            <p class="text-sm text-gray-600 mt-2"><strong>原因:</strong> 雖然點出了挑戰，但語氣比較平淡，是比較個人、內心式的開頭，讀者需要多一點耐心才能進入狀況。</p>
+                        </td>
+                        <td class="p-4 align-middle text-center">
+                            <div><span class="star">★★</span><span class="no-star">☆</span></div>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td class="p-4 align-top">
+                            <p>"Can you imagine staying at home for three months without going to school? It used to be my dream. However, little did I expect that the dream would become a reality due to a virus. Because of the Covid-19 epidemic, I experienced a lockdown for more than 100 days."</p>
+                            <p class="text-sm text-gray-600 mt-2"><strong>原因:</strong> 運用了設問破題法，直接與讀者對話，並製造出「夢想成真卻非好事」的反差感，成功勾起讀者的好奇心。</p>
+                        </td>
+                        <td class="p-4 align-middle text-center">
+                            <div><span class="star">★★★</span></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="exercise-section" id="exercise-h">
+            <h3>換你試試看 H：完成作文</h3>
+            <p class="text-center">請以上一題中(C)句為破題開場，運用本章節所學的各種技巧，寫出一篇至少120字的英文作文。</p>
+            <p class="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700">
+                <strong>提示：</strong>2021年5月，臺灣因為新冠肺炎升級到三級警戒，開啟了全國在家防疫不停學的日子。文分三段，第一段以 Part G 的 (C) 句為破題開場；第二段描述你在這段時間生活上或學習上有哪些改變；第三段請闡述你對這些改變的看法與理由。
+            </p>
+            <textarea id="final-essay" class="min-h-[350px] mt-4" placeholder="Can you imagine staying at home for three months without going to school? It used to be my dream. However, little did I expect that the dream would become a reality due to a virus. Because of the Covid-19 epidemic, I experienced a lockdown for more than 100 days."></textarea>
+            <div class="mt-2 text-right text-gray-500">字數: <span id="word-count">0</span> / 120</div>
+        </div>
+    </main>
+</div>
+
+<script>
+    const draggables = document.querySelectorAll('.draggable');
+    const dropZones = document.querySelectorAll('.drop-zone');
+    let draggedItem = null;
+
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', (e) => {
+            draggedItem = e.target;
+            setTimeout(() => e.target.style.opacity = '0.5', 0);
+        });
+        draggable.addEventListener('dragend', (e) => {
+            setTimeout(() => {
+                e.target.style.opacity = '1';
+                draggedItem = null;
+            }, 0);
+        });
+    });
+
+    dropZones.forEach(zone => {
+        zone.addEventListener('dragover', e => {
+            e.preventDefault();
+            zone.classList.add('over');
+        });
+        zone.addEventListener('dragleave', () => {
+            zone.classList.remove('over');
+        });
+        zone.addEventListener('drop', e => {
+            e.preventDefault();
+            zone.classList.remove('over');
+            if (draggedItem) {
+                zone.appendChild(draggedItem);
+            }
+        });
+    });
+    
+    function checkDragDropAnswers() {
+        dropZones.forEach(zone => {
+            const acceptedAnswers = zone.dataset.answer.split(' ');
+            const children = Array.from(zone.children);
+            const childIds = children.map(child => child.dataset.id);
+            
+            let isCorrect = children.length === acceptedAnswers.length && acceptedAnswers.every(ans => childIds.includes(ans));
+            
+            zone.classList.remove('correct', 'wrong');
+            if (children.length > 0) {
+                if (isCorrect) {
+                    zone.classList.add('correct');
+                } else {
+                    zone.classList.add('wrong');
+                }
+            }
+        });
+    }
+    
+    function resetDragDrop() {
+        const container = document.getElementById('draggable-items');
+        // Sort children by their original number to maintain order
+        const allDraggables = Array.from(document.querySelectorAll('.draggable'));
+        allDraggables.sort((a, b) => {
+            const numA = parseInt(a.querySelector('.drag-num').textContent);
+            const numB = parseInt(b.querySelector('.drag-num').textContent);
+            return numA - numB;
+        });
+
+        allDraggables.forEach(item => container.appendChild(item));
+
+        dropZones.forEach(zone => {
+            zone.innerHTML = '';
+            zone.classList.remove('correct', 'wrong');
+        });
+    }
+
+    function selectAnswer(button, questionId) {
+        const questionDiv = document.querySelector(`[data-question="${questionId}"]`);
+        const buttons = questionDiv.querySelectorAll('.choice-btn');
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        button.classList.add('selected');
+
+        const correctAnswer = questionDiv.querySelector('[data-answer]').dataset.answer;
+        const selectedAnswer = button.textContent.match(/\(([^)]+)\)/)[1];
+        const feedbackDiv = questionDiv.querySelector('.answer-feedback');
+        
+        feedbackDiv.classList.remove('correct-feedback', 'wrong-feedback');
+        if (selectedAnswer === correctAnswer) {
+            feedbackDiv.textContent = '✔ 正確！';
+            feedbackDiv.classList.add('correct-feedback');
+        } else {
+            feedbackDiv.textContent = '✖ 再想想！';
+            feedbackDiv.classList.add('wrong-feedback');
+        }
+    }
+    
+    const finalEssay = document.getElementById('final-essay');
+    const wordCountSpan = document.getElementById('word-count');
+    const initialText = "Can you imagine staying at home for three months without going to school? It used to be my dream. However, little did I expect that the dream would become a reality due to a virus. Because of the Covid-19 epidemic, I experienced a lockdown for more than 100 days.";
+    
+    finalEssay.value = initialText + '\n\n';
+
+    function updateWordCount() {
+        const text = finalEssay.value.trim();
+        const words = text === '' ? 0 : text.split(/\s+/).length;
+        wordCountSpan.textContent = words;
+    }
+
+    finalEssay.addEventListener('input', updateWordCount);
+    updateWordCount(); // Initial count
+</script>
+
+</body>
+</html>
+
+

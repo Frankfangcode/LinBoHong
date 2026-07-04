@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英文考題產生器 (v7.0 完整題庫修正版)</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        h2 {
+            margin-top: 40px;
+        }
+        .controls {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .controls button, .output-controls button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .controls button:hover, .output-controls button:hover {
+            background-color: #2980b9;
+        }
+        .controls button.secondary {
+             background-color: #95a5a6;
+        }
+        .controls button.secondary:hover {
+            background-color: #7f8c8d;
+        }
+        #selection-counter {
+            font-size: 16px;
+            color: #2c3e50;
+            font-weight: bold;
+            margin-left: auto;
+        }
+        .output-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+        .output-controls button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+        }
+        #generateQuizBtn { background-color: #3498db; }
+        #generateQuizBtn:hover { background-color: #2980b9; }
+        #generateAnswersBtn { background-color: #2ecc71; }
+        #generateAnswersBtn:hover { background-color: #27ae60; }
+        #generateStudyGuideBtn { background-color: #e67e22; }
+        #generateStudyGuideBtn:hover { background-color: #d35400; }
+        
+        #selection-container {
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #fdfdfd;
+        }
+        #selection-container.is-selecting * {
+            user-select: none;
+        }
+        .selection-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .selection-item:last-child { border-bottom: none; }
+        .selection-item input[type="checkbox"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+            flex-shrink: 0;
+        }
+        .selection-item label {
+            flex-grow: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .selection-item .category {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            margin-left: auto;
+            background-color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+        .answer-preview {
+            color: #007bff;
+            font-style: italic;
+            font-size: 0.9em;
+            margin-left: 8px;
+            margin-right: 10px;
+            opacity: 0.8;
+        }
+
+        #quiz-output-container { margin-top: 20px; }
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            background-color: #f8f9f9;
+            border-radius: 0 4px 4px 0;
+        }
+        .question-meta {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 5px;
+        }
+        .question-text { font-size: 1.1em; margin-bottom: 8px; }
+        .question-answer-line { color: #2c3e50; font-weight: bold; }
+        
+        .study-guide-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .study-guide-table th, .study-guide-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .study-guide-table th {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        @media print {
+            body { padding: 0; background-color: #fff; }
+            .container { box-shadow: none; max-width: 100%; padding: 0; }
+            #step1-container, #step2-container, .footer { display: none; }
+            h1, #output-title { text-align: left; font-size: 24pt; }
+            .question-item, .study-guide-table { border: 1px solid #ccc; page-break-inside: avoid; }
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #95a5a6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>英文考題產生器 (v7.0)</h1>
+
+        <div id="step1-container">
+            <h2>步驟一：勾選題目 (可拖曳或 Shift+點擊 連續選取)</h2>
+            <div class="controls">
+                <button id="selectAllBtn">全選</button>
+                <button id="deselectAllBtn" class="secondary">全不選</button>
+                <span id="selection-counter"></span>
+            </div>
+            <div id="selection-container">
+                <!-- 題目勾選列表將由 JavaScript 動態生成 -->
+            </div>
+        </div>
+
+        <div id="step2-container">
+            <h2>步驟二：選擇產出文件</h2>
+            <div class="output-controls">
+                <button id="generateQuizBtn">產生考卷</button>
+                <button id="generateAnswersBtn">產生答案卷</button>
+                <button id="generateStudyGuideBtn">產生背誦表</button>
+            </div>
+        </div>
+
+        <div id="quiz-output-container">
+             <h2 id="output-title">文件預覽</h2>
+             <div id="quiz-container">
+                <p>請先勾選題目，然後點擊上方按鈕產生文件。</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>產生文件後，點擊瀏覽器的 "列印" 功能 (Ctrl+P 或 Cmd+P) 即可輸出。</p>
+        </div>
+    </div>
+
+    <script>
+        // --- 完整題庫 (v7.0 修正版) ---
+        const questions = [
+            // --- 資料來源: 第一部分：動詞片語總整理 ---
+            { id: 1, category: "動詞片語", question_text: "(1)占有比例 (2)解釋", answer: "Account for" },
+            { id: 2, category: "動詞片語", question_text: "總數(量)高達", answer: "Amount to" },
+            { id: 3, category: "動詞片語", question_text: "導致", answer: "bring about" },
+            { id: 4, category: "動詞片語", question_text: "發生", answer: "come about / Become of" },
+            { id: 5, category: "動詞片語", question_text: "(1)倒退 (2)支持", answer: "Back up" },
+            { id: 6, category: "動詞片語", question_text: "爆炸", answer: "Blow up" },
+            { id: 7, category: "動詞片語", question_text: "痛打一頓", answer: "Beat up" },
+            { id: 8, category: "動詞片語", question_text: "總結來說", answer: "Boil down to" },
+            { id: 9, category: "動詞片語", question_text: "突破", answer: "Break through" },
+            { id: 10, category: "動詞片語", question_text: "(1)機械故障,壞掉 (2)情緒崩潰", answer: "Break down" },
+            { id: 11, category: "動詞片語", question_text: "(1)爆發(戰爭,疾病) (2)冒冷汗", answer: "Break out" },
+            { id: 12, category: "動詞片語", question_text: "分手", answer: "Break up" },
+            { id: 13, category: "動詞片語", question_text: "(1)撫養長大 (2)提出話題", answer: "Bring up" },
+            { id: 14, category: "動詞片語", question_text: "提出計畫", answer: "Bring/put forth/forward" },
+            { id: 15, category: "動詞片語", question_text: "執行計畫政策", answer: "Carry out" },
+            { id: 16, category: "動詞片語", question_text: "繼續", answer: "Carry on" },
+            { id: 17, category: "動詞片語", question_text: "取消", answer: "Call off" },
+            { id: 18, category: "動詞片語", question_text: "延期", answer: "put off" },
+            { id: 19, category: "動詞片語", question_text: "(1)呼籲採取行動 (2)拜訪", answer: "Call on" },
+            { id: 20, category: "動詞片語", question_text: "呼籲要求事情", answer: "Call for" },
+            { id: 21, category: "動詞片語", question_text: "(1)請求協助 (2)打電話請病假", answer: "Call in" },
+            { id: 22, category: "動詞片語", question_text: "普及流行", answer: "Catch on" },
+            { id: 23, category: "動詞片語", question_text: "趕上(程度/進度)他人", answer: "Catch up with" },
+            { id: 24, category: "動詞片語", question_text: "趕上(新聞時事/工作/流言)", answer: "Catch up on" },
+            { id: 25, category: "動詞片語", question_text: "打掃乾淨,替他人善後", answer: "Clean up" },
+            { id: 26, category: "動詞片語", question_text: "清出(房間,垃圾)", answer: "Clean out" },
+            { id: 27, category: "動詞片語", question_text: "(1)天氣放晴 (2)釐清誤解", answer: "Clear up" },
+            { id: 28, category: "動詞片語", question_text: "(1)照顧 (2)喜歡(否定句)", answer: "Care for" },
+            { id: 29, category: "動詞片語", question_text: "依賴", answer: "Count on / rely on" },
+            { id: 30, category: "動詞片語", question_text: "以...形式出現", answer: "Come in" },
+            { id: 31, category: "動詞片語", question_text: "無意間找到看到", answer: "Come across" },
+            { id: 32, category: "動詞片語", question_text: "想出(主意,解決方案)", answer: "Come up with" },
+            { id: 33, category: "動詞片語", question_text: "生病", answer: "Come down with" },
+            { id: 34, category: "動詞片語", question_text: "嚴格取締", answer: "Crack down upon" },
+            { id: 35, category: "動詞片語", question_text: "減量", answer: "Cut down (back) on" },
+            { id: 36, category: "動詞片語", question_text: "沒有...就將就過", answer: "Do without" },
+            { id: 37, category: "動詞片語", question_text: "廢除,除去人", answer: "Do away with" },
+            { id: 38, category: "動詞片語", question_text: "用...將就過", answer: "Make do with" },
+            { id: 39, category: "動詞片語", question_text: "順道拜訪", answer: "drop in on / call on" },
+            { id: 40, category: "動詞片語", question_text: "找...麻煩,挑錯", answer: "Find fault with" },
+            { id: 41, category: "動詞片語", question_text: "吵架失和", answer: "Fall out" },
+            { id: 42, category: "動詞片語", question_text: "(1)克服忘懷 (2)傳遞訊息", answer: "get over" },
+            { id: 43, category: "動詞片語", question_text: "結束,把它弄完", answer: "get it over with" },
+            { id: 44, category: "動詞片語", question_text: "對...屈服", answer: "give in to" },
+            { id: 45, category: "動詞片語", question_text: "散發出(氣味)", answer: "give off" },
+            { id: 46, category: "動詞片語", question_text: "與人相處得來", answer: "Get along with" },
+            { id: 47, category: "動詞片語", question_text: "繳交(作業)", answer: "Hand in / turn in" },
+            { id: 48, category: "動詞片語", question_text: "和...一起玩", answer: "Hang out with" },
+            { id: 49, category: "動詞片語", question_text: "在某地停留,閒晃", answer: "Hang around" },
+            { id: 50, category: "動詞片語", question_text: "(1)耽擱 (2)支撐 (3)搶劫", answer: "Hold up" },
+            { id: 51, category: "動詞片語", question_text: "透露訊息秘密", answer: "Let on" },
+            { id: 52, category: "動詞片語", question_text: "裁員,解雇", answer: "Lay off" },
+            { id: 53, category: "動詞片語", question_text: "落後", answer: "Lag behind / fall behind" },
+            { id: 54, category: "動詞片語", question_text: "調查", answer: "Look into" },
+            { id: 55, category: "動詞片語", question_text: "尊重,景仰", answer: "Look up to" },
+            { id: 56, category: "動詞片語", question_text: "鄙夷,輕視", answer: "Look down upon" },
+            { id: 57, category: "動詞片語", question_text: "(1)抬頭看 (2)查閱", answer: "Look up" },
+            { id: 58, category: "動詞片語", question_text: "(1)小心,注意 (2)找尋 (3)照顧", answer: "Look out for" },
+            { id: 59, category: "動詞片語", question_text: "很快瀏覽", answer: "Look over" },
+            { id: 60, category: "動詞片語", question_text: "符合(期望,標準)", answer: "Live up to" },
+            { id: 61, category: "動詞片語", question_text: "編造,組成,和好", answer: "Make up" },
+            { id: 62, category: "動詞片語", question_text: "彌補", answer: "Make up for" },
+            { id: 63, category: "動詞片語", question_text: "辨識出", answer: "Make out" },
+            { id: 64, category: "動詞片語", question_text: "(1)路邊停車 (2)成功做成(困難的事)", answer: "Pull off" },
+            { id: 65, category: "動詞片語", question_text: "度過難關,康復", answer: "Pull through" },
+            { id: 66, category: "動詞片語", question_text: "失敗,未能實現", answer: "Fall through" },
+            { id: 67, category: "動詞片語", question_text: "傳遞下去", answer: "Pass sth on" },
+            { id: 68, category: "動詞片語", question_text: "昏倒", answer: "Pass out" },
+            { id: 69, category: "動詞片語", question_text: "傳承下去", answer: "Pass down to" },
+            { id: 70, category: "動詞片語", question_text: "容忍", answer: "Put up with" },
+            { id: 71, category: "動詞片語", question_text: "滅(火)", answer: "Put out" },
+            { id: 72, category: "動詞片語", question_text: "說壞話", answer: "Speak ill of" },
+            { id: 73, category: "動詞片語", question_text: "評價很高", answer: "Speak highly of" },
+            { id: 74, category: "動詞片語", question_text: "代表,意味", answer: "Stand for" },
+            { id: 75, category: "動詞片語", question_text: "挺身力抗", answer: "Stand up to" },
+            { id: 76, category: "動詞片語", question_text: "力挺,擁護", answer: "Stand up for" },
+            { id: 77, category: "動詞片語", question_text: "堅守(原則)", answer: "Stick to" },
+            { id: 78, category: "動詞片語", question_text: "建立,架設,陷害", answer: "Set up" },
+            { id: 79, category: "動詞片語", question_text: "(1)施放(煙火) (2)出發", answer: "Set off" },
+            { id: 80, category: "動詞片語", question_text: "分類整理", answer: "Sort out" },
+            { id: 81, category: "動詞片語", question_text: "(藥物)發揮作用,(法規)生效", answer: "take effect" },
+            { id: 82, category: "動詞片語", question_text: "(1)吸收(知識) (2)盡收眼底(風景) (3)收留人", answer: "Take in" },
+            { id: 83, category: "動詞片語", question_text: "接受(挑戰,責任)", answer: "Take on" },
+            { id: 84, category: "動詞片語", question_text: "(1)發展嗜好 (2)占(時間,空間)", answer: "Take up" },
+            { id: 85, category: "動詞片語", question_text: "接管", answer: "Take over" },
+            { id: 86, category: "動詞片語", question_text: "出現", answer: "Turn up / show up" },
+            { id: 87, category: "動詞片語", question_text: "拒絕", answer: "Turn down" },
+            { id: 88, category: "動詞片語", question_text: "結果是...", answer: "Turn out to be" },
+            { id: 89, category: "動詞片語", question_text: "演變成", answer: "turn into" },
+            { id: 90, category: "動詞片語", question_text: "追蹤", answer: "Track down" },
+            { id: 91, category: "動詞片語", question_text: "(1)磨損 (2)使...筋疲力盡", answer: "Wear out" },
+            { id: 92, category: "動詞片語", question_text: "滅絕,消滅", answer: "Wipe out" },
+            { id: 93, category: "動詞片語", question_text: "(1)包裝禮物 (2)結束", answer: "Wrap up" },
+            { id: 94, category: "動詞片語", question_text: "起草(法律,計畫)", answer: "Draw up" },
+            { id: 95, category: "動詞片語", question_text: "停車", answer: "Pull up" },
+            { id: 96, category: "動詞片語", question_text: "隨時可派上用場", answer: "Come in handy" },
+            { id: 97, category: "動詞片語", question_text: "實施", answer: "Put sth into practice" },
+            { id: 98, category: "動詞片語", question_text: "(鬧鐘,炸彈)響起,爆炸", answer: "Go off" },
+            { id: 99, category: "動詞片語", question_text: "鬆懈,散漫", answer: "Slack off" },
+            { id: 100, category: "動詞片語", question_text: "開始著手做事", answer: "Set out to do sth" },
+            { id: 101, category: "動詞片語", question_text: "成年", answer: "come of age" },
+            // --- 資料來源: 第三部分：轉承詞大集合 ---
+            { id: 102, category: "轉承詞", question_text: "補充說明 (此外)", answer: "in addition, additionally, besides, moreover, what's more, furthermore" },
+            { id: 103, category: "轉承詞", question_text: "表示原因 (因為)", answer: "due to, because of, owing to, on account of" },
+            { id: 104, category: "轉承詞", question_text: "表示結果 (因此)", answer: "hence, therefore, thus, consequently, accordingly, as a result" },
+            { id: 105, category: "轉承詞", question_text: "讓步語氣 (儘管)", answer: "despite, in spite of, notwithstanding, regardless of" },
+            { id: 106, category: "轉承詞", question_text: "語氣轉折 (然而/但是)", answer: "however, nonetheless, nevertheless, yet, still" },
+            { id: 107, category: "轉承詞", question_text: "比較與對比 (同樣地)", answer: "likewise, similarly, in the same way" },
+            { id: 108, category: "轉承詞", question_text: "比較與對比 (相反地)", answer: "conversely, on the contrary, in contrast, on the other hand" },
+            { id: 109, category: "轉承詞", question_text: "闡述事實 (事實上)", answer: "actually, in fact, in reality, as a matter of fact" },
+            { id: 110, category: "轉承詞", question_text: "時間順序 (之後)", answer: "thereafter, consequently, afterwards, subsequently" },
+            { id: 111, category: "轉承詞", question_text: "方法手段 (藉由)", answer: "by, with, via, through" },
+            { id: 112, category: "轉承詞", question_text: "換句話說 (也就是)", answer: "that is, in other words, that is to say, namely" },
+            { id: 113, category: "轉承詞", question_text: "舉例 (例如)", answer: "for example, for instance, such as" },
+            { id: 114, category: "轉承詞", question_text: "總結 (總之)", answer: "in short, in brief, in conclusion, all in all, to sum up, in a nutshell" },
+            { id: 115, category: "轉承詞", question_text: "關於", answer: "considering, regarding, concerning, as for, as to" },
+            { id: 116, category: "轉承詞", question_text: "一說到", answer: "when it comes to, speaking of, in terms of" },
+            { id: 117, category: "轉承詞", question_text: "到目前為止", answer: "so far, to date, up to now" },
+            { id: 118, category: "轉承詞", question_text: "處理", answer: "deal with, cope with, address, tackle" },
+            { id: 119, category: "轉承詞", question_text: "追溯回", answer: "date back to, be traced back to, originate from" },
+            { id: 120, category: "轉承詞", question_text: "有困難做...", answer: "have trouble/difficulty/a hard time V-ing" },
+            { id: 121, category: "轉承詞", question_text: "符合", answer: "in line with, in accordance with" },
+            { id: 122, category: "轉承詞", question_text: "作...功用", answer: "serve as, function as" },
+            { id: 123, category: "轉承詞", question_text: "一...就...", answer: "as soon as, upon V-ing, no sooner had ... than, hardly had ... when" },
+            { id: 124, category: "轉承詞", question_text: "為了", answer: "in order to, so as to, for the purpose of, for the sake of" },
+            { id: 125, category: "轉承詞", question_text: "視A為B", answer: "view A as B, regard A as B, see A as B, think of A as B" },
+            { id: 126, category: "轉承詞", question_text: "組成", answer: "consist of, be composed of, be made up of, comprise" },
+            { id: 127, category: "轉承詞", question_text: "與...有關係", answer: "be linked to, be connected to, be associated with" },
+            { id: 128, category: "轉承詞", question_text: "充滿", answer: "be filled with, be teeming with, be packed with" },
+            // --- 資料來源: 第二部分：作文萬用句 (v7.0 完整匯入) ---
+            { id: 129, category: "作文萬用句", question_text: "我對...仍然記憶猶新。", answer: "I still have vivid memories of..." },
+            { id: 130, category: "作文萬用句", question_text: "...的回憶經常浮現在我腦海。", answer: "The memories of... often recur to me." },
+            { id: 131, category: "作文萬用句", question_text: "...牢牢地留在我的記憶中。", answer: "...remains firmly in my memory." },
+            { id: 132, category: "作文萬用句", question_text: "就我記憶所及，...", answer: "To the best of my memory,..." },
+            { id: 133, category: "作文萬用句", question_text: "...的記憶縈繞在我心中。", answer: "Memories of... haunt me." },
+            { id: 134, category: "作文萬用句", question_text: "...銘記在我心中。", answer: "...is inscribed on my heart." },
+            { id: 135, category: "作文萬用句", question_text: "回顧...，我覺得...", answer: "Looking back on..., I have a feeling of..." },
+            { id: 136, category: "作文萬用句", question_text: "當提到...時,我就感到不勝...", answer: "When it comes to..., I am overwhelmed with..." },
+            { id: 137, category: "作文萬用句", question_text: "每次回想...時,我不禁感到...", answer: "Whenever recalling..., I cannot but feel..." },
+            { id: 138, category: "作文萬用句", question_text: "每當我想起...,我不禁...", answer: "No matter when I think of..., I cannot help..." },
+            { id: 139, category: "作文萬用句", question_text: "時間轉折語：有一回, 有一次", answer: "on one occasion" },
+            { id: 140, category: "作文萬用句", question_text: "時間轉折語：起初, 一開始", answer: "at first / in the beginning" },
+            { id: 141, category: "作文萬用句", question_text: "時間轉折語：後來; 其後", answer: "later (on) / and then / afterwards" },
+            { id: 142, category: "作文萬用句", question_text: "時間轉折語：同時, 於此際", answer: "at the same time / in the meantime / meanwhile" },
+            { id: 143, category: "作文萬用句", question_text: "時間轉折語：不久", answer: "before long / by and by / soon (after)" },
+            { id: 144, category: "作文萬用句", question_text: "時間轉折語：立刻, 馬上", answer: "at once / in no time / right away / immediately" },
+            { id: 145, category: "作文萬用句", question_text: "時間轉折語：最後, 終於", answer: "at last / eventually / finally / in the end" },
+            { id: 146, category: "作文萬用句", question_text: "時間轉折語：從那時起", answer: "from then on / from that time on" },
+            { id: 147, category: "作文萬用句", question_text: "我生平第一次體驗...", answer: "For the first time in my life, I experienced..." },
+            { id: 148, category: "作文萬用句", question_text: "這次的...結果竟是一次痛苦的經歷。", answer: "This... turned out to be a bitter experience." },
+            { id: 149, category: "作文萬用句", question_text: "出乎意料地，...", answer: "Against/Contrary to (all) expectations,..." },
+            { id: 150, category: "作文萬用句", question_text: "令我十分...地，...", answer: "Much to my [mood], ... / To my great [mood],..." },
+            { id: 151, category: "作文萬用句", question_text: "...有如晴天霹靂。", answer: "It was a bolt from / out of the blue." },
+            { id: 152, category: "作文萬用句", question_text: "當...時,我快樂地手舞足蹈。", answer: "I jumped with joy when..." },
+            { id: 153, category: "作文萬用句", question_text: "並不感到高興,...卻折磨著我。", answer: "Instead of feeling delighted, I was tortured by..." },
+            { id: 154, category: "作文萬用句", question_text: "當我消沈時,...喚起我的希望。", answer: "When I was depressed, ... inspired my hope." },
+            { id: 155, category: "作文萬用句", question_text: "...與...形成強烈的對比。", answer: "...made a sharp contrast with..." },
+            { id: 156, category: "作文萬用句", question_text: "我洋溢著喜悅。", answer: "I am radiant with joy." },
+            { id: 157, category: "作文萬用句", question_text: "我因欣喜而容光煥發。", answer: "My face lights up with joy." },
+            { id: 158, category: "作文萬用句", question_text: "...令我陶醉。", answer: "I am intoxicated by..." },
+            { id: 159, category: "作文萬用句", question_text: "...讓我欣喜若狂。", answer: "I am in an ecstasy over..." },
+            { id: 160, category: "作文萬用句", question_text: "我因喜悅而雀躍不已。", answer: "My heart bounds with joy." },
+            { id: 161, category: "作文萬用句", question_text: "我流下開心/悲傷/同情的眼淚。", answer: "I shed tears of joy/sorrow/pity." },
+            { id: 162, category: "作文萬用句", question_text: "我喜不自勝/不勝悲傷。", answer: "I am overwhelmed with joy/grief." },
+            { id: 163, category: "作文萬用句", question_text: "我突然笑了起來,放聲大笑。", answer: "I burst into laughter / burst out laughing." },
+            { id: 164, category: "作文萬用句", question_text: "我突然哭了起來,放聲大哭。", answer: "I burst into tears / burst out crying." },
+            { id: 165, category: "作文萬用句", question_text: "淚水沿著我的雙頰流下來。", answer: "Tears stream down my cheeks." },
+            { id: 166, category: "作文萬用句", question_text: "我氣得發抖。", answer: "I am trembling with rage." },
+            { id: 167, category: "作文萬用句", question_text: "...激起我的怒火。", answer: "...inflames me with anger." },
+            { id: 168, category: "作文萬用句", question_text: "恐懼突然攫獲我。", answer: "Fear suddenly possesses me." },
+            { id: 169, category: "作文萬用句", question_text: "那個想法使我毛骨悚然。", answer: "The thought... sends a shiver down my spine." },
+            { id: 170, category: "作文萬用句", question_text: "我嚇得不敢動。", answer: "I am too scared to move." },
+            { id: 171, category: "作文萬用句", question_text: "罪惡感折磨著我。", answer: "I am tortured by guilt." },
+            { id: 172, category: "作文萬用句", question_text: "我尷尬地臉紅。", answer: "I blush with embarrassment." },
+            { id: 173, category: "作文萬用句", question_text: "我羞愧地低下頭。", answer: "I hang my head in shame." },
+            { id: 174, category: "作文萬用句", question_text: "...使我陷入絕望。", answer: "...throws me into despair." },
+            { id: 175, category: "作文萬用句", question_text: "我的腦袋一片空白。", answer: "My mind goes blank." },
+            { id: 176, category: "作文萬用句", question_text: "...使我卸下心中重擔。", answer: "...takes a load off my mind." },
+            { id: 177, category: "作文萬用句", question_text: "我鬆了一口氣。", answer: "I sigh with relief. / I give a sigh of relief." },
+            { id: 178, category: "作文萬用句", question_text: "我覺得如釋重負。", answer: "I feel relieved of the burden." },
+            { id: 179, category: "作文萬用句", question_text: "...的迷人之處在於其未遭破壞的美。", answer: "The charm of... lies in its unspoiled beauty." },
+            { id: 180, category: "作文萬用句", question_text: "美麗的景色賞心悅目。", answer: "Beautiful scenes delight the eye." },
+            { id: 181, category: "作文萬用句", question_text: "極佳的/壯麗的/雄偉的景觀讓我屏息。", answer: "The fabulous/magnificent/majestic landscape leaves me breathless." },
+            { id: 182, category: "作文萬用句", question_text: "從...的頂端望出去的景色相當壯觀。", answer: "The view from the top of... is quite spectacular/splendid." },
+            { id: 183, category: "作文萬用句", question_text: "這條小溪如水晶般清澈。", answer: "The stream is as clear as crystal." },
+            { id: 184, category: "作文萬用句", question_text: "微風使湖面泛起漣漪。", answer: "The breeze sends ripples across the lake." },
+            { id: 185, category: "作文萬用句", question_text: "這是我這輩子至今最...的經歷。", answer: "This has been the [superlative adj.] experience so far in my life." },
+            { id: 186, category: "作文萬用句", question_text: "這是我會永遠記得的最...的經歷。", answer: "This is the [superlative adj.] experience I will remember forever." },
+            { id: 187, category: "作文萬用句", question_text: "...令我永難忘懷。", answer: "...left a lasting impression on me." },
+            { id: 188, category: "作文萬用句", question_text: "在這...之後,我變得比以前更...", answer: "After this..., I became [comparative adj.] than ever before." },
+            { id: 189, category: "作文萬用句", question_text: "這...使我完全意識到...", answer: "This... made me perfectly aware that..." },
+            { id: 190, category: "作文萬用句", question_text: "就是直到...我才領悟到...的重要性。", answer: "It was not until... that I realized the importance/significance/value of..." },
+            { id: 191, category: "作文萬用句", question_text: "若非這...,我現在仍然不知道...", answer: "But for this..., I would still be ignorant of..." },
+            { id: 192, category: "作文萬用句", question_text: "這...使我心胸開放並開闊我的眼界。", answer: "This... opened my mind and broadened my horizon." },
+            { id: 193, category: "作文萬用句", question_text: "在...之後,我對於人生的看法完全不同。", answer: "After..., I had a completely different perspective/outlook on life." },
+            { id: 194, category: "作文萬用句", question_text: "這...給我一個有益的教訓", answer: "This... taught me a useful lesson" },
+            { id: 195, category: "作文萬用句", question_text: "但願我能擺脫...的痛苦的回憶。", answer: "If only I could get rid of the bitter memories of..." },
+            { id: 196, category: "作文萬用句", question_text: "...對我有很大的影響。", answer: "...always have/has a great effect/influence/impact on me." },
+            { id: 197, category: "作文萬用句", question_text: "...讓我洞察...", answer: "...lets me have a good insight into..." },
+            { id: 198, category: "作文萬用句", question_text: "...讓我了解...的真諦。", answer: "...lets me comprehend the true meaning of..." },
+            { id: 199, category: "作文萬用句", question_text: "...使我的人生有徹底的改變。", answer: "...made a radical change to my life." },
+            { id: 200, category: "作文萬用句", question_text: "...使我對人生採取積極的態度。", answer: "...makes me assume/take a positive attitude toward life." },
+            { id: 201, category: "作文萬用句", question_text: "...激勵我更加努力。", answer: "...inspires me to greater efforts." },
+            { id: 202, category: "作文萬用句", question_text: "...驅策我改過自新。", answer: "...urges me to turn over a new leaf." },
+            { id: 203, category: "作文萬用句", question_text: "...在我們的日常生活中扮演不可或缺的角色。", answer: "...plays an essential/indispensable part/role in our daily lives." },
+            { id: 204, category: "作文萬用句", question_text: "...是如此地寶貴,我們必定得珍惜。", answer: "...is so valuable that we must cherish it." },
+            { id: 205, category: "作文萬用句", question_text: "沒有任何一件事能與...一樣地...", answer: "Nothing is as/so [adj.] as..." },
+            { id: 206, category: "作文萬用句", question_text: "...是無價。只有傻子才會認為它沒有價值。", answer: "...is priceless. Only fools think nothing of it." },
+            { id: 207, category: "作文萬用句", question_text: "假如沒有...,我們將覺得人生中缺少了什麼。", answer: "Without..., we would feel that there is something lacking in life." },
+            { id: 208, category: "作文萬用句", question_text: "要不是...,我們的生活將單調且乏味。", answer: "But for..., our lives would be monotonous and dull." },
+            { id: 209, category: "作文萬用句", question_text: "若非...,我們就無法過著充滿樂趣的生活。", answer: "Were it not for..., we could not lead a life full of pleasure." },
+            { id: 210, category: "作文萬用句", question_text: "...就是福。", answer: "...is a blessing." },
+            { id: 211, category: "作文萬用句", question_text: "...有益健康。", answer: "...is beneficial to good health." },
+            { id: 212, category: "作文萬用句", question_text: "藉由...,我能夠保持健康。", answer: "By..., I am able to maintain health." },
+            { id: 213, category: "作文萬用句", question_text: "...有助於鍛鍊我的身心。", answer: "...helps me exercise my body and mind." },
+            { id: 214, category: "作文萬用句", question_text: "助我保持身心的平衡。", answer: "...helps me keep/retain the balance of my body and mind." },
+            { id: 215, category: "作文萬用句", question_text: "使我保持開放的心胸。", answer: "...makes me keep an open mind." },
+            { id: 216, category: "作文萬用句", question_text: "開闊心胸。", answer: "...broadens the mind." },
+            { id: 217, category: "作文萬用句", question_text: "我藉...來陶冶心性。", answer: "I cultivate my mind by..." },
+            { id: 218, category: "作文萬用句", question_text: "充實心靈。", answer: "...enriches the mind." },
+            { id: 219, category: "作文萬用句", question_text: "助我找到內心的平靜。", answer: "...helps me find peace of mind." },
+            { id: 220, category: "作文萬用句", question_text: "帶給我很大的快樂及滿足。", answer: "...gives me great pleasure and satisfaction." },
+            { id: 221, category: "作文萬用句", question_text: "我從...中得到莫大的樂趣。", answer: "I find immense enjoyment in..." },
+            { id: 222, category: "作文萬用句", question_text: "帶給我成就感。", answer: "...gives me a sense of achievement." },
+            { id: 223, category: "作文萬用句", question_text: "我藉由...忘卻所有的煩惱。", answer: "I can leave all my worries behind by..." },
+            { id: 224, category: "作文萬用句", question_text: "...總能使我神清氣爽。", answer: "...always can refresh me." },
+            { id: 225, category: "作文萬用句", question_text: "...寓教於樂。", answer: "...is educational as well as entertaining." },
+            { id: 226, category: "作文萬用句", question_text: "...為我們的生活增添了趣味。", answer: "...adds spice to our lives." },
+            { id: 227, category: "作文萬用句", question_text: "...擴展我們的視野。", answer: "...broadens/enlarges/expands/widens our horizons." },
+            { id: 228, category: "作文萬用句", question_text: "使我更有責任感。", answer: "...makes me have more responsibility." },
+            { id: 229, category: "作文萬用句", question_text: "我為自己立下高標準並事事力求完美。", answer: "I set high standards for myself and aim at perfection in everything." },
+            { id: 230, category: "作文萬用句", question_text: "我懷有崇高的理想並努力實現我的志向。", answer: "I cherish high ideals and endeavor to achieve my ambition." },
+            { id: 231, category: "作文萬用句", question_text: "我執著於我的信念,且從不被別人左右。", answer: "I cling to my beliefs and am never swayed by others." },
+            { id: 232, category: "作文萬用句", question_text: "我永不放棄當...的希望。", answer: "I will never abandon my hope of being a(n)..." },
+            { id: 233, category: "作文萬用句", question_text: "我深信只要我堅持下去,一個光明的未來等著我。", answer: "I am convinced that a bright future awaits me as long as I persevere." },
+            { id: 234, category: "作文萬用句", question_text: "我永遠對事情抱持樂觀的態度。", answer: "I always look on the bright side of things." },
+            { id: 235, category: "作文萬用句", question_text: "我總是從挑戰獲得樂趣。", answer: "I always relish a challenge." },
+            { id: 236, category: "作文萬用句", question_text: "我順從良心做每一件事。", answer: "I obey my conscience in doing everything." },
+            { id: 237, category: "作文萬用句", question_text: "我努力去順應逆境。", answer: "I endeavor to make the best of a very difficult situation." },
+            { id: 238, category: "作文萬用句", question_text: "虛度光陰的人將一事無成。", answer: "People who idle the hours away will not achieve anything." },
+            { id: 239, category: "作文萬用句", question_text: "我們要善用活著的時光。", answer: "We should make good use of the time when we live." },
+            { id: 240, category: "作文萬用句", question_text: "我相信有志者事竟成這句成語。", answer: "I believe in the proverb that where there is a will, there is a way." },
+            { id: 241, category: "作文萬用句", question_text: "勤勉是成功之關鍵。", answer: "Diligence is the key to success." },
+            { id: 242, category: "作文萬用句", question_text: "成功憑藉的是努力而非運氣。", answer: "Success should be achieved by virtue of hard work rather than luck." },
+            { id: 243, category: "作文萬用句", question_text: "沒有毅力無法成就任何大事。", answer: "Nothing important can be achieved without perseverance." },
+            { id: 244, category: "作文萬用句", question_text: "成功需要強大的決心和毅力。", answer: "To succeed requires strong determination and perseverance." },
+            { id: 245, category: "作文萬用句", question_text: "人生好比一趟充滿不可預測的挑戰的航行。", answer: "Life is compared to a voyage full of unpredictable challenges." },
+            { id: 246, category: "作文萬用句", question_text: "金錢未必是衡量人生真正成功的好標準。", answer: "Money is not always a good criterion of real success in life." },
+            { id: 247, category: "作文萬用句", question_text: "論說文：引出自己的看法", answer: "In my opinion/view, I am firmly of the opinion that..., It is my belief that..." },
+            { id: 248, category: "作文萬用句", question_text: "論說文：舉證", answer: "For example / instance, Take... for example, Let me provide a convincing argument." },
+            { id: 249, category: "作文萬用句", question_text: "論說文：引出作法", answer: "The following are the ways to fulfill it. First,..., My ways are as follows. First,..." },
+            { id: 250, category: "作文萬用句", question_text: "論說文：陳述問題及現象", answer: "This problem has been a common phenomenon., This phenomenon is prevailing nowadays." },
+            { id: 251, category: "作文萬用句", question_text: "論說文：提出解決之道(政府)", answer: "The authorities must take/adopt effective measures to solve this problem." },
+            { id: 252, category: "作文萬用句", question_text: "論說文：提出解決之道(法律)", answer: "Stricter law should be enacted and enforced to ensure our safety." },
+            { id: 253, category: "作文萬用句", question_text: "論說文：提出解決之道(教育)", answer: "We should raise our standards of morality through education." },
+            { id: 254, category: "作文萬用句", question_text: "論說文：提出解決之道(公眾)", answer: "We should raise/promote/increase public awareness of such an issue." },
+            { id: 255, category: "作文萬用句", question_text: "論說文：提出解決之道(活動)", answer: "We should launch more campaigns to attract/capture public attention." }
+        ];
+
+        // --- JavaScript 邏輯 ---
+        const selectionContainer = document.getElementById('selection-container');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        const deselectAllBtn = document.getElementById('deselectAllBtn');
+        const selectionCounter = document.getElementById('selection-counter');
+        const generateQuizBtn = document.getElementById('generateQuizBtn');
+        const generateAnswersBtn = document.getElementById('generateAnswersBtn');
+        const generateStudyGuideBtn = document.getElementById('generateStudyGuideBtn');
+        const quizContainer = document.getElementById('quiz-container');
+        const outputTitle = document.getElementById('output-title');
+
+        // 更新計數器
+        function updateCounter() {
+            const selectedCount = selectionContainer.querySelectorAll('input[type="checkbox"]:checked').length;
+            const totalCount = questions.length;
+            selectionCounter.textContent = `已選取：${selectedCount} / ${totalCount} 題`;
+        }
+
+        // 渲染題目勾選列表
+        function renderSelectionList() {
+            selectionContainer.innerHTML = '';
+            questions.forEach((q, index) => {
+                const item = document.createElement('div');
+                item.className = 'selection-item';
+                item.innerHTML = `
+                    <input type="checkbox" id="q-${q.id}" value="${q.id}" data-index="${index}">
+                    <label for="q-${q.id}">
+                        <span class="question-text-preview">${q.question_text}</span>
+                        <span class="answer-preview">➔ ${q.answer}</span>
+                        <span class="category">${q.category}</span>
+                    </label>
+                `;
+                selectionContainer.appendChild(item);
+            });
+        }
+        
+        // 取得已勾選的題目
+        function getSelectedQuestions() {
+            const selectedIds = Array.from(selectionContainer.querySelectorAll('input[type="checkbox"]:checked'))
+                                   .map(cb => parseInt(cb.value, 10));
+            return questions.filter(q => selectedIds.includes(q.id));
+        }
+
+        // 顯示考卷
+        function displayQuiz(questionList) {
+            outputTitle.textContent = "考卷預覽";
+            quizContainer.innerHTML = '';
+            if (questionList.length === 0) {
+                quizContainer.innerHTML = '<p>尚未勾選題目。</p>';
+                return;
+            }
+            quizContainer.innerHTML = `<h3>姓名: ____________ 日期: ____________ 分數: ____________</h3>`;
+            questionList.forEach((q, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-item';
+                questionElement.innerHTML = `
+                    <div class="question-meta">題號: ${index + 1} | 類型: ${q.category}</div>
+                    <div class="question-text">${q.question_text}</div>
+                    <div class="question-answer-line">答案: __________________________________________________</div>
+                `;
+                quizContainer.appendChild(questionElement);
+            });
+        }
+        
+        // 顯示答案卷
+        function displayAnswers(questionList) {
+            outputTitle.textContent = "答案卷預覽";
+            quizContainer.innerHTML = '';
+            if (questionList.length === 0) {
+                quizContainer.innerHTML = '<p>尚未勾選題目。</p>';
+                return;
+            }
+            questionList.forEach((q, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-item';
+                questionElement.innerHTML = `
+                    <div class="question-text"><b>${index + 1}.</b> ${q.answer}</div>
+                `;
+                quizContainer.appendChild(questionElement);
+            });
+        }
+
+        // 顯示背誦表
+        function displayStudyGuide(questionList) {
+            outputTitle.textContent = "背誦表預覽";
+            quizContainer.innerHTML = '';
+            if (questionList.length === 0) {
+                quizContainer.innerHTML = '<p>尚未勾選題目。</p>';
+                return;
+            }
+            const table = document.createElement('table');
+            table.className = 'study-guide-table';
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>中文提示</th>
+                        <th>英文答案</th>
+                        <th>類型</th>
+                    </tr>
+                </thead>
+            `;
+            const tbody = document.createElement('tbody');
+            questionList.forEach(q => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${q.question_text}</td>
+                    <td>${q.answer}</td>
+                    <td>${q.category}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+            quizContainer.appendChild(table);
+        }
+        
+        // --- 事件監聽 ---
+        selectAllBtn.addEventListener('click', () => {
+            selectionContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = true);
+            updateCounter();
+        });
+
+        deselectAllBtn.addEventListener('click', () => {
+            selectionContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            updateCounter();
+        });
+
+        generateQuizBtn.addEventListener('click', () => displayQuiz(getSelectedQuestions()));
+        generateAnswersBtn.addEventListener('click', () => displayAnswers(getSelectedQuestions()));
+        generateStudyGuideBtn.addEventListener('click', () => displayStudyGuide(getSelectedQuestions()));
+        
+        // --- 拖曳勾選與 Shift 點擊邏輯 ---
+        let lastCheckedIndex = null;
+        let isMouseDown = false;
+        let startCheckboxState = false;
+
+        selectionContainer.addEventListener('mousedown', (e) => {
+            const targetCheckbox = e.target.closest('.selection-item')?.querySelector('input[type="checkbox"]');
+            if (!targetCheckbox) return;
+
+            e.preventDefault();
+
+            isMouseDown = true;
+            selectionContainer.classList.add('is-selecting');
+            
+            startCheckboxState = !targetCheckbox.checked;
+            targetCheckbox.checked = startCheckboxState;
+
+            const currentIndex = parseInt(targetCheckbox.dataset.index, 10);
+            if (e.shiftKey && lastCheckedIndex !== null) {
+                const checkboxes = Array.from(selectionContainer.querySelectorAll('input[type="checkbox"]'));
+                const start = Math.min(lastCheckedIndex, currentIndex);
+                const end = Math.max(lastCheckedIndex, currentIndex);
+                for (let i = start; i <= end; i++) {
+                    checkboxes[i].checked = startCheckboxState;
+                }
+            }
+            lastCheckedIndex = currentIndex;
+            updateCounter();
+        });
+
+        selectionContainer.addEventListener('mouseover', (e) => {
+            if (isMouseDown) {
+                const targetCheckbox = e.target.closest('.selection-item')?.querySelector('input[type="checkbox"]');
+                if (targetCheckbox && targetCheckbox.checked !== startCheckboxState) {
+                    targetCheckbox.checked = startCheckboxState;
+                    updateCounter();
+                }
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isMouseDown = false;
+            selectionContainer.classList.remove('is-selecting');
+        });
+
+        // 頁面載入時，渲染勾選列表並初始化計數器
+        window.addEventListener('load', () => {
+            renderSelectionList();
+            updateCounter();
+        });
+    </script>
+</body>
+</html>

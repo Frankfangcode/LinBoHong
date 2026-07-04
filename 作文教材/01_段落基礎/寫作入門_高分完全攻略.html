@@ -1,0 +1,416 @@
+<!-- Chosen Palette: Energetic & Playful -->
+<!-- Application Structure Plan: The SPA is designed as a top-to-bottom visual narrative that guides students through the core concepts of high-score essay writing. The structure has been updated to start with a new, foundational section on paragraph writing, as requested. The logical learning path is now: 1. **Mastering Paragraphs:** A new, detailed guide on paragraph structure from mindset to execution. 2. **Foundational Principles:** The 'Four Pillars' of grading. 3. **Practical Application:** 'Essay Types'. 4. **Skill Enhancement:** The 'Writer's Toolkit' word bank. 5. **Error Avoidance:** 'Common Pitfalls'. This revised structure provides a more robust pedagogical flow, building from micro (paragraph) to macro (full essay) skills. -->
+<!-- Visualization & Content Choices: 
+* **New - Paragraph Writing Guide:** Report Info: User-provided text on paragraph writing. -> Goal: Inform/Educate. -> Viz: Structured & styled text sections (HTML/CSS/Tailwind) with visual aids like a CSS-based "Hamburger" diagram and styled "Dos & Don'ts" lists. -> Interaction: Static, designed for readability. -> Justification: The content is educational and text-heavy, so clear typography, spacing, and visual sectioning are prioritized over complex charts for optimal comprehension.
+* **Four Pillars:** Report Info: The four balanced scoring criteria. -> Goal: Compare. -> Viz: Radar Chart (Chart.js/Canvas). -> Interaction: Hover to see score profiles. -> Justification: Ideal for showing the balanced nature of a high-scoring profile versus an unbalanced one.
+* **Essay Types:** Report Info: List and description of four main essay prompts. -> Goal: Organize. -> Viz: Styled HTML Cards with Unicode Icons (HTML/CSS/Tailwind). -> Interaction: Hover effects on cards. -> Justification: Visually separates categorical information, making it more engaging and scannable than a list.
+* **Transition Words:** Report Info: List of basic vs. advanced connectors. -> Goal: Organize/Inform. -> Viz: Visual Word Bank with "From -> To" structure (HTML/CSS/Tailwind). -> Interaction: Static, clear display. -> Justification: A practical reference tool showing the upgrade path from basic to advanced words.
+* **Common Pitfalls:** Report Info: The five most common writing errors. -> Goal: Inform (show composition). -> Viz: Doughnut Chart (Chart.js/Canvas). -> Interaction: Hover to highlight each 'sin'. -> Justification: Effectively shows how these five key errors contribute to the overall problem. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<!DOCTYPE html>
+<html lang="zh-Hant">
+    <nav style="background-color: #007bff; padding: 12px;">
+  <div style="max-width: 1000px; margin: 0 auto; display: flex; gap: 20px;">
+    <a href="index.html" style="color: white; font-weight: bold; text-decoration: none;">首頁</a>
+    <a href="0707.html" style="color: white; font-weight: bold; text-decoration: none;">7/7 課程內容</a>
+    <a href="0707v2.html" style="color: white; font-weight: bold; text-decoration: none;">7/7遊戲互動</a>
+    <a href="0722v3.html" style="color: white; font-weight: bold; text-decoration: none;">7/22上課內容</a>
+    <a href="備審資料/2.html" style="color: white; font-weight: bold; text-decoration: none;">建築系備審準備</a>
+    <a href="0728writing.html" style="color: white; font-weight: bold; text-decoration: none;">0728作文批改</a>
+  </div>
+</nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>學測英文作文高分完全攻略</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #f7f9fc;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 300px;
+            width: 100%;
+            max-width: 450px;
+        }
+         @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        h1, h2, h3 {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            font-weight: 700;
+        }
+        .text-gradient {
+            background-image: linear-gradient(to right, #00A6ED, #0072ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .step-number {
+            background-color: #00A6ED;
+            color: white;
+            border-radius: 9999px;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+
+        <header class="text-center mb-12 md:mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-gradient mb-3">學測英文作文高分完全攻略</h1>
+            <p class="text-lg text-gray-600 font-medium">Your Visual Guide to Mastering the GSAT English Composition</p>
+        </header>
+
+        <main class="space-y-16 md:space-y-20">
+
+            <section id="paragraph-writing">
+                <h2 class="text-3xl font-bold text-center mb-2">精通英文段落寫作</h2>
+                <p class="text-center text-lg font-medium text-gray-500 mb-8">從架構到流暢的完整指南</p>
+                <div class="card p-6 md:p-8 space-y-12">
+                    <div>
+                        <h3 class="text-2xl font-bold text-center mb-6 text-[#00A6ED]">Part 1: 核心心法 —— 改變思維，從「直接」開始</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="p-6 bg-red-50 rounded-lg border border-red-200">
+                                <h4 class="font-bold text-xl mb-3 text-red-600">中文寫作思維 (Indirect)</h4>
+                                <ul class="space-y-2 list-disc list-inside text-gray-700">
+                                    <li><span class="font-semibold">先鋪陳、後重點：</span>習慣層層推進，最後點明主旨。</li>
+                                    <li><span class="font-semibold">主題句位置靈活：</span>可能出現在段落的任何位置。</li>
+                                    <li><span class="font-semibold">意在言外：</span>引導讀者自行體會，帶有詩意。</li>
+                                </ul>
+                            </div>
+                            <div class="p-6 bg-green-50 rounded-lg border border-green-200">
+                                <h4 class="font-bold text-xl mb-3 text-green-600">英文寫作思維 (Direct)</h4>
+                                <ul class="space-y-2 list-disc list-inside text-gray-700">
+                                    <li><span class="font-semibold">開門見山：</span>第一句話通常就是主題句 (Topic Sentence)。</li>
+                                    <li><span class="font-semibold">先給重點、後給細節：</span>所有句子圍繞主題句發展。</li>
+                                    <li><span class="font-semibold">行文緊扣主題：</span>邏輯清晰，線性發展，絕不偏離。</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-4 bg-gray-100 rounded-lg text-center">
+                            <p class="font-semibold text-gray-800">學習英文寫作，第一步就是練習「破題」的勇氣，將核心觀點，毫不猶豫地放在段落的最開頭。</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold text-center mb-6 text-[#00A6ED]">Part 2: 寫作藍圖 —— 經典「漢堡結構法」</h3>
+                        <div class="max-w-md mx-auto text-center">
+                            <div class="p-4 bg-amber-300 rounded-t-xl"><p class="font-bold">上層麵包 (開頭) → 主題句 (Topic Sentence)</p><p class="text-sm">點出段落中心思想</p></div>
+                            <div class="p-6 bg-green-200 border-y-4 border-dashed border-green-600"><p class="font-bold">中間餡料 (發展) → 支持句 (Supporting Sentences)</p><p class="text-sm">提供細節、解釋、範例來豐富主題句</p></div>
+                            <div class="p-4 bg-amber-300 rounded-b-xl"><p class="font-bold">下層麵包 (結尾) → 結論句 (Concluding Sentence)</p><p class="text-sm">總結前文、重申主旨</p></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold text-center mb-8 text-[#00A6ED]">Part 3: 實戰步驟 —— 一步步打造完美段落</h3>
+                        <div class="space-y-8">
+                            <div class="flex items-start gap-4"><div class="step-number">1</div><div><h4 class="text-xl font-bold">定錨：確立主題與要點</h4><p class="text-gray-600">思考段落核心 (Topic) 與具體論點 (Keywords)，確保方向明確。</p></div></div>
+                            <div class="flex items-start gap-4"><div class="step-number">2</div><div><h4 class="text-xl font-bold">破題：撰寫強而有力的主題句</h4><p class="text-gray-600 mb-2">主題句必須清晰、具體，為整段內容定調。</p><div class="p-3 bg-green-50 border-l-4 border-green-500 text-sm">✅ <span class="font-mono">Preventing ocean pollution is a critical task that requires immediate action...</span></div><div class="p-3 mt-2 bg-red-50 border-l-4 border-red-500 text-sm">❌ <span class="font-mono">The ocean is important.</span> (過於籠統)</div></div></div>
+                            <div class="flex items-start gap-4"><div class="step-number">3</div><div><h4 class="text-xl font-bold">展開：用細節豐富血肉 (支持句)</h4><p class="text-gray-600">提供解釋、事實、範例、因果、比較等來證明主題句，建議3-6句。</p></div></div>
+                            <div class="flex items-start gap-4"><div class="step-number">4</div><div><h4 class="text-xl font-bold">收尾：寫出乾淨俐落的結論句</h4><p class="text-gray-600">重申主旨或總結要點，不要提出新論點。</p></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="pillars">
+                <h2 class="text-3xl font-bold text-center mb-8">The Four Pillars of a High Score <br> <span class="text-lg font-medium text-gray-500">卓越寫作的四大支柱</span></h2>
+                <div class="card p-6 md:p-8">
+                    <p class="text-center text-gray-700 mb-8 max-w-3xl mx-auto">一篇能獲得15分以上的高分作文，必須在內容、組織、文法、詞彙四大維度上都表現出色。這四項能力相輔相成，共同決定了文章的最終品質。以下圖表展示了高分與低分作文在四大維度上的典型差異。</p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div class="chart-container h-[300px] md:h-[400px]">
+                            <canvas id="pillarsChart"></canvas>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 border-l-4 border-[#00A6ED] p-4 rounded-r-lg">
+                                <h3 class="font-bold text-lg text-[#00A6ED]">高分特徵 (High-Scoring Profile)</h3>
+                                <p class="text-gray-700 mt-1">在雷達圖上呈現一個廣闊且對稱的四邊形，代表各項能力均衡發展，沒有明顯短版。</p>
+                            </div>
+                             <div class="bg-red-50 border-l-4 border-[#F6511D] p-4 rounded-r-lg">
+                                <h3 class="font-bold text-lg text-[#F6511D]">低分特徵 (Low-Scoring Profile)</h3>
+                                <p class="text-gray-700 mt-1">呈現一個窄小且偏斜的形狀，暴露出在某些維度上的嚴重弱點，進而影響整體分數。</p>
+                            </div>
+                             <div class="bg-gray-100 p-4 rounded-lg">
+                                <h3 class="font-bold text-lg text-gray-800">關鍵啟示</h3>
+                                <p class="text-gray-700 mt-1">備考策略應著重於全面提升，而非單純強化某一項技能。內容的深度、組織的清晰、語言的精確，三者缺一不可。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="types">
+                <h2 class="text-3xl font-bold text-center mb-8">Adapting to Essay Types<br> <span class="text-lg font-medium text-gray-500">知己知彼：掌握多變題型</span></h2>
+                 <div class="card p-6 md:p-8">
+                    <p class="text-center text-gray-700 mb-8 max-w-3xl mx-auto">學測題型多變，死背模板是高分殺手。成功的關鍵在於根據題目要求，靈活地調整你的寫作框架。以下是四種核心題型及其應對策略：</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                        <div class="p-6 bg-blue-50 rounded-lg border-2 border-blue-200 hover:border-[#00A6ED] transition-colors duration-300">
+                            <span class="text-5xl">🗣️</span>
+                            <h3 class="text-xl font-bold mt-4 mb-2">論說文</h3>
+                            <p class="text-sm text-gray-600">標準IBC架構。引言提出明確立場，主體段落提供理由與例證，結論重申觀點。</p>
+                        </div>
+                        <div class="p-6 bg-green-50 rounded-lg border-2 border-green-200 hover:border-[#7FB800] transition-colors duration-300">
+                            <span class="text-5xl">📊</span>
+                            <h3 class="text-xl font-bold mt-4 mb-2">圖表分析</h3>
+                            <p class="text-sm text-gray-600">引言概述圖表，主體描述關鍵趨勢與數據，結論分析背後原因或意義。</p>
+                        </div>
+                        <div class="p-6 bg-yellow-50 rounded-lg border-2 border-yellow-200 hover:border-[#FFB400] transition-colors duration-300">
+                            <span class="text-5xl">🔗</span>
+                            <h3 class="text-xl font-bold mt-4 mb-2">兩段式提示</h3>
+                            <p class="text-sm text-gray-600">緊扣「問題/解決方案」或「原因/結果」的邏輯，確保兩段之間緊密關聯。</p>
+                        </div>
+                        <div class="p-6 bg-red-50 rounded-lg border-2 border-red-200 hover:border-[#F6511D] transition-colors duration-300">
+                             <span class="text-5xl">🖼️</span>
+                            <h3 class="text-xl font-bold mt-4 mb-2">圖片敘事</h3>
+                            <p class="text-sm text-gray-600">第一段準確描述圖片，第二段發展故事或提出個人反思與評論。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="toolkit">
+                <h2 class="text-3xl font-bold text-center mb-8">The Writer's Toolkit <br> <span class="text-lg font-medium text-gray-500">連接詞升級工作坊</span></h2>
+                <div class="card p-6 md:p-8">
+                     <p class="text-center text-gray-700 mb-8 max-w-3xl mx-auto">升級你的連接詞，是提升文章邏輯層次最有效的方法。拋棄單調的基礎詞彙，換上更精確、更有力的進階用法，讓你的論述更具說服力。</p>
+                    <div class="space-y-6">
+                        
+                        <div class="p-4 rounded-lg bg-blue-50 border border-blue-200">
+                            <h3 class="font-bold text-lg text-[#00A6ED] mb-3">添加觀點 (Addition)</h3>
+                            <div class="flex flex-col md:flex-row items-center gap-4">
+                                <div class="text-center p-3 bg-white rounded-md border w-full md:w-auto"><p class="text-sm text-gray-500">Basic</p><p class="text-2xl font-bold font-mono text-gray-800">and</p></div>
+                                <div class="text-4xl text-blue-300 font-light transform md:rotate-0 rotate-90">→</div>
+                                <div class="flex-1 w-full p-4 bg-white rounded-md border"><p class="text-sm text-[#00A6ED] font-semibold mb-2">Power-up</p><ul class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-2 font-mono text-gray-800"><li>Furthermore,</li><li>Moreover,</li><li>In addition,</li><li>Additionally,</li><li>Besides,</li><li>What's more,</li></ul></div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-lg bg-red-50 border border-red-200">
+                            <h3 class="font-bold text-lg text-[#F6511D] mb-3">提出對比 (Contrast)</h3>
+                             <div class="flex flex-col md:flex-row items-center gap-4">
+                                <div class="text-center p-3 bg-white rounded-md border w-full md:w-auto"><p class="text-sm text-gray-500">Basic</p><p class="text-2xl font-bold font-mono text-gray-800">but</p></div>
+                                <div class="text-4xl text-red-300 font-light transform md:rotate-0 rotate-90">→</div>
+                                <div class="flex-1 w-full p-4 bg-white rounded-md border"><p class="text-sm text-[#F6511D] font-semibold mb-2">Power-up</p><ul class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-2 font-mono text-gray-800"><li>However,</li><li>Nevertheless,</li><li>Nonetheless,</li><li>On the contrary,</li><li>In contrast,</li><li>Whereas,</li></ul></div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-lg bg-green-50 border border-green-200">
+                            <h3 class="font-bold text-lg text-[#7FB800] mb-3">說明因果 (Cause/Effect)</h3>
+                            <div class="flex flex-col md:flex-row items-center gap-4">
+                                <div class="text-center p-3 bg-white rounded-md border w-full md:w-auto"><p class="text-sm text-gray-500">Basic</p><p class="text-2xl font-bold font-mono text-gray-800">so</p></div>
+                                <div class="text-4xl text-green-300 font-light transform md:rotate-0 rotate-90">→</div>
+                                <div class="flex-1 w-full p-4 bg-white rounded-md border"><p class="text-sm text-[#7FB800] font-semibold mb-2">Power-up</p><ul class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-2 font-mono text-gray-800"><li>Therefore,</li><li>Consequently,</li><li>As a result,</li><li>Thus,</li><li>Hence,</li><li>Accordingly,</li></ul></div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-lg bg-purple-50 border border-purple-200">
+                            <h3 class="font-bold text-lg text-purple-500 mb-3">強調語氣 (Emphasis)</h3>
+                            <div class="flex flex-col md:flex-row items-center gap-4">
+                                <div class="text-center p-3 bg-white rounded-md border w-full md:w-auto"><p class="text-sm text-gray-500">To emphasize</p><p class="text-2xl font-bold font-mono text-gray-800">強調</p></div>
+                                <div class="text-4xl text-purple-300 font-light transform md:rotate-0 rotate-90">→</div>
+                                <div class="flex-1 w-full p-4 bg-white rounded-md border"><p class="text-sm text-purple-500 font-semibold mb-2">Power-up</p><ul class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-2 font-mono text-gray-800"><li>Indeed,</li><li>In fact,</li><li>Undoubtedly,</li><li>As a matter of fact,</li><li>Obviously,</li><li>Without a doubt,</li></ul></div>
+                            </div>
+                        </div>
+
+                         <div class="p-4 rounded-lg bg-amber-50 border border-amber-200">
+                            <h3 class="font-bold text-lg text-amber-600 mb-3">進行比較 (Comparison)</h3>
+                            <div class="flex flex-col md:flex-row items-center gap-4">
+                                <div class="text-center p-3 bg-white rounded-md border w-full md:w-auto"><p class="text-sm text-gray-500">Basic</p><p class="text-2xl font-bold font-mono text-gray-800">like</p></div>
+                                <div class="text-4xl text-amber-300 font-light transform md:rotate-0 rotate-90">→</div>
+                                <div class="flex-1 w-full p-4 bg-white rounded-md border"><p class="text-sm text-amber-600 font-semibold mb-2">Power-up</p><ul class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-2 font-mono text-gray-800"><li>Similarly,</li><li>Likewise,</li><li>In the same way,</li><li>Equally,</li></ul></div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
+                            <h3 class="font-bold text-lg text-indigo-500 mb-3">排列順序 (Sequence)</h3>
+                            <div class="flex flex-col md:flex-row items-center gap-4">
+                                <div class="text-center p-3 bg-white rounded-md border w-full md:w-auto"><p class="text-sm text-gray-500">Basic</p><p class="text-xl font-bold font-mono text-gray-800">first, then</p></div>
+                                <div class="text-4xl text-indigo-300 font-light transform md:rotate-0 rotate-90">→</div>
+                                <div class="flex-1 w-full p-4 bg-white rounded-md border"><p class="text-sm text-indigo-500 font-semibold mb-2">Power-up</p><ul class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-2 font-mono text-gray-800"><li>First of all,</li><li>To begin with,</li><li>Secondly,</li><li>Next,</li><li>Subsequently,</li><li>Last but not least,</li></ul></div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-lg bg-cyan-50 border border-cyan-200">
+                            <h3 class="font-bold text-lg text-cyan-500 mb-3">做出總結 (Conclusion)</h3>
+                            <div class="flex flex-col md:flex-row items-center gap-4">
+                                <div class="text-center p-3 bg-white rounded-md border w-full md:w-auto"><p class="text-sm text-gray-500">Basic</p><p class="text-xl font-bold font-mono text-gray-800">in the end</p></div>
+                                <div class="text-4xl text-cyan-300 font-light transform md:rotate-0 rotate-90">→</div>
+                                <div class="flex-1 w-full p-4 bg-white rounded-md border"><p class="text-sm text-cyan-500 font-semibold mb-2">Power-up</p><ul class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-2 font-mono text-gray-800"><li>In conclusion,</li><li>To sum up,</li><li>In summary,</li><li>To conclude,</li><li>In short,</li><li>All in all,</li></ul></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+
+            <section id="pitfalls">
+                 <h2 class="text-3xl font-bold text-center mb-8">Avoiding Common Pitfalls <br> <span class="text-lg font-medium text-gray-500">完美之路：避開常見寫作陷阱</span></h2>
+                <div class="card p-6 md:p-8">
+                     <p class="text-center text-gray-700 mb-8 max-w-3xl mx-auto">了解並避免常見錯誤，是提升分數最有效的方法之一。這五大「原罪」是多數考生失分的主因，應在寫作和複查時特別留意。</p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div class="chart-container h-[300px] md:h-[350px]">
+                            <canvas id="sinsChart"></canvas>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-4 h-4 rounded-full mt-1.5 mr-3 flex-shrink-0" style="background-color: #00A6ED;"></div>
+                                <div><h4 class="font-bold">離題 (Off-Topic)</h4><p class="text-sm text-gray-600">最致命的錯誤。務必完整回應題目的所有要求。</p></div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-4 h-4 rounded-full mt-1.5 mr-3 flex-shrink-0" style="background-color: #7FB800;"></div>
+                                <div><h4 class="font-bold">結構不清 (Poor Structure)</h4><p class="text-sm text-gray-600">缺乏核心論點與流暢的段落過渡。</p></div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-4 h-4 rounded-full mt-1.5 mr-3 flex-shrink-0" style="background-color: #FFB400;"></div>
+                                <div><h4 class="font-bold">語言不精確 (Imprecise Language)</h4><p class="text-sm text-gray-600">包括「中式英文」及模糊、冗長的用詞。</p></div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-4 h-4 rounded-full mt-1.5 mr-3 flex-shrink-0" style="background-color: #F6511D;"></div>
+                                <div><h4 class="font-bold">陳腔濫調 (Clichés)</h4><p class="text-sm text-gray-600">使用缺乏原創性的例子，顯示思考深度不足。</p></div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-4 h-4 rounded-full mt-1.5 mr-3 flex-shrink-0" style="background-color: #6c757d;"></div>
+                                <div><h4 class="font-bold">基本錯誤 (Basic Errors)</h4><p class="text-sm text-gray-600">包含文法、拼字、標點等基礎問題。</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-16 md:mt-20 text-gray-500 text-sm">
+            <p>Infographic created based on the "GSAT English Composition High-Score Guide".</p>
+            <p>&copy; 2025. A Visual Learning Tool.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            } else {
+                return label;
+            }
+        };
+        
+        const sharedTooltipOptions = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    },
+                    backgroundColor: '#2d3748',
+                    titleFont: { size: 14, family: "'Noto Sans TC', 'Inter', sans-serif" },
+                    bodyFont: { size: 12, family: "'Noto Sans TC', 'Inter', sans-serif" },
+                    padding: 10,
+                    cornerRadius: 5,
+                    displayColors: true,
+                }
+            }
+        };
+
+        new Chart(document.getElementById('pillarsChart').getContext('2d'), {
+            type: 'radar',
+            data: {
+                labels: ['內容 Content', '組織 Organization', '文法 Grammar', '詞彙 Vocabulary'],
+                datasets: [{
+                    label: '高分作文',
+                    data: [18, 17, 16, 17],
+                    backgroundColor: 'rgba(0, 166, 237, 0.2)',
+                    borderColor: '#00A6ED',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#00A6ED',
+                },
+                {
+                    label: '低分作文',
+                    data: [8, 7, 10, 6],
+                    backgroundColor: 'rgba(246, 81, 29, 0.2)',
+                    borderColor: '#F6511D',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#F6511D',
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        pointLabels: {
+                            font: { size: 13, family: "'Noto Sans TC', 'Inter', sans-serif", weight: '500' },
+                            color: '#4a5568'
+                        },
+                        ticks: {
+                            color: '#718096',
+                            backdropColor: 'rgba(255, 255, 255, 0.75)',
+                            stepSize: 5
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 20
+                    }
+                },
+                plugins: {
+                    ...sharedTooltipOptions.plugins,
+                    legend: {
+                        position: 'top',
+                         labels: { font: { family: "'Noto Sans TC', 'Inter', sans-serif", size: 14 } }
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('sinsChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['離題 Off-Topic', '結構不清 Poor Structure', '語言不精確 Imprecise Language', '陳腔濫調 Clichés', '基本錯誤 Basic Errors'],
+                datasets: [{
+                    label: 'Common Pitfalls',
+                    data: [25, 20, 20, 15, 20],
+                    backgroundColor: ['#00A6ED', '#7FB800', '#FFB400', '#F6511D', '#6c757d'],
+                    borderColor: '#f7f9fc',
+                    borderWidth: 4,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                cutout: '60%',
+                plugins: {
+                    ...sharedTooltipOptions.plugins,
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

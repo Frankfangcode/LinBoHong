@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖表題寫作技巧</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #fdfaf4;
+            color: #3a2e2e;
+        }
+
+        .book-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background-color: #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e0d9cf;
+        }
+
+        .header {
+            background-color: #e8795a;
+            color: white;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border-bottom: 5px solid #d46a4d;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 2rem 2.5rem;
+            line-height: 1.8;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px dashed #dcd1c1;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #d46a4d;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #f0c9bb;
+            display: inline-block;
+        }
+
+        .sub-section-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #b3563b;
+            margin-top: 2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .keyword {
+            background-color: #fcefe9;
+            color: #c25a3a;
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-family: monospace;
+        }
+
+        .example-box {
+            background-color: #f9f6f1;
+            border-left: 5px solid #f0c9bb;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .example-box p, .example-box li {
+            margin: 0.5rem 0;
+        }
+        
+        .example-box .translation {
+            color: #6b5b5b;
+            font-size: 0.95rem;
+        }
+
+        .interactive-exercise {
+            background-color: #fff9e6;
+            border: 2px solid #ffeeba;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .interactive-exercise h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+
+        .drag-option, .drop-zone {
+            padding: 0.5rem 1rem;
+            margin: 0.5rem;
+            border-radius: 6px;
+            cursor: grab;
+            border: 2px dashed #ccc;
+            background-color: #fff;
+            text-align: center;
+        }
+        
+        .drop-zone {
+            background-color: #e9ecef;
+            min-width: 100px;
+            display: inline-block;
+            transition: background-color: 0.3s;
+        }
+
+        .drop-zone.over {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        
+        .drop-zone.correct {
+            background-color: #d4edda;
+            border: 2px solid #28a745;
+        }
+        
+        .drop-zone.incorrect {
+            background-color: #f8d7da;
+            border: 2px solid #dc3545;
+        }
+
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .check-button {
+            background-color: #e8795a;
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color: 0.3s;
+            margin-top: 1rem;
+            display: block;
+        }
+        
+        .check-button:hover {
+            background-color: #d46a4d;
+        }
+        
+        .feedback {
+            margin-top: 1rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f7f3ed;
+            font-weight: 700;
+            color: #856f5a;
+        }
+
+        .chart-image {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 1.5rem auto;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .ore-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .ore-list li {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .ore-list li::before {
+            content: attr(data-letter);
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #f0c9bb;
+            z-index: 1;
+        }
+        
+        .ore-list li .ore-content {
+            position: relative;
+            z-index: 2;
+            background: #fff;
+            padding: 1rem;
+        }
+
+        .ore-list h5 {
+            font-weight: bold;
+            color: #d46a4d;
+            font-size: 1.2em;
+        }
+        
+        textarea.writing-practice {
+            width: 100%;
+            height: 200px;
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: #fdfcfa;
+            font-family: 'Noto Serif TC', serif;
+            line-height: 1.8;
+            resize: vertical;
+        }
+
+        .table-input {
+             width: 100%;
+             border: none;
+             background: transparent;
+             border-bottom: 2px solid #ccc;
+             text-align: center;
+        }
+        .table-input:focus {
+            outline: none;
+            border-bottom: 2px solid #e8795a;
+        }
+
+        /* Responsive wrapper for wide tables to prevent overflow */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 0.5rem; /* small space for scrollbar */
+        }
+
+        /* Ensure wide tables have a sensible min-width so they can scroll */
+        .table-responsive table {
+            min-width: 820px; /* adjust if needed based on table columns */
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="book-container">
+        <header class="header">
+            <h1>圖表題寫作技巧</h1>
+            <p>學習如何有條理地呈現事實和數據，分析事理，並透過引用證據來表達意見，加強文章說服力。</p>
+        </header>
+
+        <main class="content">
+            <!-- 第一式：長條圓餅說分明 -->
+            <section class="section" id="section1">
+                <h2 class="section-title">第一式：長條圓餅說分明</h2>
+                <p>圖表能將數據視覺化，透過圖像（diagram/graph）與表格（table/chart）達到不同功能，如呈現趨勢或分布、相互比較、視覺化組成、顯示關係等等。本節將學習解讀圖表與比較數據的技巧。</p>
+                
+                <h3 class="sub-section-title">A. 解讀圖表、比較對比</h3>
+                <p>寫作文時，你需要正確地使用圖表的英文名稱。請觀察以下八個圖表的特徵，並將適當的名稱拖曳到對應的描述中。</p>
+                
+                <div class="interactive-exercise" id="chart-type-exercise">
+                    <h4>練習：圖表類型配對</h4>
+                            <div class="options-container" id="chart-options">
+                        <div class="drag-option" draggable="true" data-type="Bar">Bar graph/chart</div>
+                        <div class="drag-option" draggable="true" data-type="Flow">Flow chart</div>
+                        <div class="drag-option" draggable="true" data-type="Line">Line graph/chart</div>
+                        <div class="drag-option" draggable="true" data-type="Pie">Pie chart</div>
+                        <div class="drag-option" draggable="true" data-type="Pyramid">Pyramid graph</div>
+                        <div class="drag-option" draggable="true" data-type="Scatter">Scatter chart/plot</div>
+                        <div class="drag-option" draggable="true" data-type="Table">Table</div>
+                        <div class="drag-option" draggable="true" data-type="Tree">Tree diagram</div>
+                    </div>
+                            <!-- make table horizontally scrollable on small screens to avoid overflow -->
+                            <div class="table-responsive">
+                            <table>
+                        <thead>
+                            <tr>
+                                <th>功能</th>
+                                <th>1. 曲線圖</th>
+                                <th>2. 散佈圖</th>
+                                <th>3. 長條圖</th>
+                                <th>4. 表格</th>
+                                <th>5. 圓餅圖</th>
+                                <th>6. 金字塔圖</th>
+                                <th>7. 樹狀圖</th>
+                                <th>8. 流程圖</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>英文名稱</strong></td>
+                                <td><div class="drop-zone" data-answer="Line"></div></td>
+                                <td><div class="drop-zone" data-answer="Scatter"></div></td>
+                                <td><div class="drop-zone" data-answer="Bar"></div></td>
+                                <td><div class="drop-zone" data-answer="Table"></div></td>
+                                <td><div class="drop-zone" data-answer="Pie"></div></td>
+                                <td><div class="drop-zone" data-answer="Pyramid"></div></td>
+                                <td><div class="drop-zone" data-answer="Tree"></div></td>
+                                <td><div class="drop-zone" data-answer="Flow"></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <button class="check-button" onclick="checkChartTypes()">檢查答案</button>
+                    <div class="feedback" id="chart-feedback"></div>
+                </div>
+
+                <h3 class="sub-section-title">B. 描述趨勢的必備詞彙</h3>
+                <p>掌握描述數字、比例、種類和趨勢變化的關鍵字詞，是圖表寫作的基礎。</p>
+                
+                <h4>① 數字 (number)</h4>
+                <ul>
+                    <li><span class="keyword">figure</span>: 數字</li>
+                    <li><span class="keyword">amount</span>: 數量 (不可數)</li>
+                    <li><span class="keyword">data</span>: 資料、數據</li>
+                    <li><span class="keyword">statistics</span>: 統計數據</li>
+                    <li><span class="keyword">sum</span>: 總額</li>
+                </ul>
+                <div class="example-box">
+                    <p>The <span class="keyword">figures</span>/numbers in the report need to be read critically. (要謹慎閱讀報告裡的數字。)</p>
+                    <p>The number of private colleges has increased. = Private colleges have increased in number. (私立大學數目增加。)</p>
+                </div>
+
+                <h4>② 比例 (proportion)</h4>
+                <ul>
+                    <li><span class="keyword">percentage</span>: 百分比</li>
+                    <li><span class="keyword">proportion</span>: 比率、比例</li>
+                    <li><span class="keyword">rate</span>: 速率、比率</li>
+                    <li><span class="keyword">share</span>: 份額</li>
+                </ul>
+                <div class="example-box">
+                    <p>The literacy <span class="keyword">rate</span> rose to 85 percent. (識字率成長到 85%。)</p>
+                    <p>A large <span class="keyword">percentage</span> of schoolbooks now have e-book versions. (現在很高比例的學校用書有電子版。)</p>
+                    <p>The <span class="keyword">proportion</span> of men to women at my college is about three to one. (我們大學的男女比例是三比一。)</p>
+                </div>
+
+                <h4>③ 種類 (kind)</h4>
+                <ul>
+                    <li><span class="keyword">kind</span>: 種類</li>
+                    <li><span class="keyword">type</span>: 類型</li>
+                    <li><span class="keyword">category</span>: 類別</li>
+                </ul>
+                <div class="example-box">
+                    <p>The chart shows the time spent by high school students in Taiwan on different <span class="keyword">kinds</span> of extracurricular activities. (此圖呈現台灣高中生在不同課外活動所花的時間。)</p>
+                    <p>These studies can be divided into three <span class="keyword">categories</span>. (這個研究可以分為三類。)</p>
+                </div>
+
+                <h4>④ 顯示 (show)</h4>
+                <ul>
+                    <li><span class="keyword">show</span>: 顯示</li>
+                    <li><span class="keyword">illustrate</span>: 說明</li>
+                    <li><span class="keyword">suggest</span>: 表明</li>
+                    <li><span class="keyword">present</span>: 呈現</li>
+                    <li><span class="keyword">indicate</span>: 顯示</li>
+                    <li><span class="keyword">depict</span>: 描述</li>
+                    <li><span class="keyword">represent</span>: 代表</li>
+                </ul>
+                <div class="example-box">
+                    <p>This graph <span class="keyword">demonstrates</span> the different stages of our project over the past three years. (這張圖呈現我們的計畫在過去三年以來的不同階段。)</p>
+                    <p>UNESCO <span class="keyword">figures show</span> two-thirds of an academic year are lost on average worldwide due to Covid-19-related school closures. (聯合國教科文組織的數字顯示，新冠疫情導致的停課已造成全球平均損失達三分之二學年。)</p>
+                </div>
+
+                <h4>⑤ 描述趨勢的上下改變或波動強弱的用字</h4>
+                <div class="interactive-exercise mt-4">
+                    <h4>Part 1: 表示「趨勢上升」的英文用字</h4>
+                    <table>
+                        <thead>
+                            <tr><th>動詞原形</th><th>過去式/過去分詞</th><th>名詞形式</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>increase</td><td>increased/increased</td><td>an increase</td></tr>
+                            <tr><td>rise</td><td>rose/<input type="text" class="table-input" data-answer="risen"></td><td>a rise</td></tr>
+                            <tr><td>grow</td><td>grew/<input type="text" class="table-input" data-answer="grown"></td><td>a growth</td></tr>
+                            <tr><td>ascend</td><td>ascended/ascended</td><td>an <input type="text" class="table-input" data-answer="ascent"></td></tr>
+                            <tr><td>go up</td><td>went up/<input type="text" class="table-input" data-answer="gone up"></td><td>X</td></tr>
+                            <tr><td>climb</td><td>climbed/climbed</td><td>a <input type="text" class="table-input" data-answer="climb"></td></tr>
+                            <tr><td>jump</td><td>jumped/jumped</td><td>a jump</td></tr>
+                            <tr><td>soar</td><td>soared/soared</td><td>X</td></tr>
+                            <tr><td>surge</td><td>surged/surged</td><td>a <input type="text" class="table-input" data-answer="surge"></td></tr>
+                             <tr><td>rocket</td><td>rocketed/rocketed</td><td>a rocket</td></tr>
+                        </tbody>
+                    </table>
+                     <button class="check-button" onclick="checkFillInBlanks(this)">檢查答案</button>
+                    <div class="feedback"></div>
+                </div>
+                 <div class="interactive-exercise mt-4">
+                    <h4>Part 2: 表示「趨勢下降」的英文用字</h4>
+                     <table>
+                        <thead>
+                            <tr><th>動詞原形</th><th>過去式/過去分詞</th><th>名詞形式</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>decline</td><td>declined/declined</td><td>a <input type="text" class="table-input" data-answer="decline"></td></tr>
+                            <tr><td>drop</td><td><input type="text" class="table-input" data-answer="dropped/dropped"></td><td>a drop</td></tr>
+                            <tr><td>decrease</td><td>decreased/decreased</td><td>a <input type="text" class="table-input" data-answer="decrease"></td></tr>
+                            <tr><td>fall</td><td><input type="text" class="table-input" data-answer="fell/fallen"></td><td>a fall</td></tr>
+                            <tr><td>go down</td><td>went down/gone down</td><td>X</td></tr>
+                            <tr><td>descend</td><td>descended/descended</td><td>a <input type="text" class="table-input" data-answer="descent"></td></tr>
+                            <tr><td>plunge</td><td>plunged/plunged</td><td>plunge</td></tr>
+                            <tr><td>plummet</td><td>plummeted/plummeted</td><td>plummet</td></tr>
+                             <tr><td>shrink</td><td><input type="text" class="table-input" data-answer="shrank/shrunk"></td><td>X</td></tr>
+                        </tbody>
+                    </table>
+                     <button class="check-button" onclick="checkFillInBlanks(this)">檢查答案</button>
+                    <div class="feedback"></div>
+                </div>
+                
+                <h4>⑥ 描述趨勢的常用表達法</h4>
+                <p>學會用不同的動詞、名詞與副詞來精準描述數據的動態變化。</p>
+                <div class="grid md:grid-cols-2 gap-8 my-6">
+                    <div>
+                        <h5 class="font-bold text-center text-lg mb-2">表示「趨勢上升」的動詞 + 表示「狀態」的副詞</h5>
+                        <svg viewBox="0 0 400 300" class="chart-image bg-orange-50">
+                            <line x1="50" y1="250" x2="350" y2="50" stroke="#f87171" stroke-width="2" />
+                            <line x1="50" y1="250" x2="350" y2="100" stroke="#fb923c" stroke-width="2" />
+                            <line x1="50" y1="250" x2="350" y2="175" stroke="#fbbf24" stroke-width="2" />
+                            <line x1="50" y1="250" x2="350" y2="225" stroke="#a3e635" stroke-width="2" />
+                            <text x="50" y="40" font-size="14" fill="#3a2e2e" class="font-sans">ascend, climb, go up, grow, increase, jump, rise, rocket, soar, surge</text>
+                            <rect x="250" y="40" width="120" height="30" fill="white" stroke="#ef4444" />
+                            <text x="265" y="60" font-size="14" fill="#ef4444">dramatically</text>
+                             <rect x="250" y="90" width="120" height="30" fill="white" stroke="#f97316" />
+                            <text x="285" y="110" font-size="14" fill="#f97316">quickly</text>
+                             <rect x="250" y="165" width="120" height="30" fill="white" stroke="#f59e0b" />
+                            <text x="280" y="185" font-size="14" fill="#f59e0b">gradually</text>
+                             <rect x="250" y="215" width="120" height="30" fill="white" stroke="#84cc16" />
+                            <text x="290" y="235" font-size="14" fill="#84cc16">slowly</text>
+                        </svg>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-center text-lg mb-2">表示「趨勢下降」的動詞 + 表示「狀態」的副詞</h5>
+                         <svg viewBox="0 0 400 300" class="chart-image bg-blue-50">
+                            <line x1="50" y1="50" x2="350" y2="250" stroke="#60a5fa" stroke-width="2" />
+                            <line x1="50" y1="50" x2="350" y2="200" stroke="#38bdf8" stroke-width="2" />
+                            <line x1="50" y1="50" x2="350" y2="125" stroke="#22d3ee" stroke-width="2" />
+                            <line x1="50" y1="50" x2="350" y2="75" stroke="#67e8f9" stroke-width="2" />
+                            <text x="50" y="270" font-size="14" fill="#3a2e2e" class="font-sans">decline, decrease, descend, drop, fall, go down, plunge, plummet</text>
+                            <rect x="250" y="240" width="120" height="30" fill="white" stroke="#3b82f6" />
+                            <text x="265" y="260" font-size="14" fill="#3b82f6">dramatically</text>
+                             <rect x="250" y="190" width="120" height="30" fill="white" stroke="#0ea5e9" />
+                            <text x="285" y="210" font-size="14" fill="#0ea5e9">quickly</text>
+                             <rect x="250" y="115" width="120" height="30" fill="white" stroke="#06b6d4" />
+                            <text x="280" y="135" font-size="14" fill="#06b6d4">gradually</text>
+                             <rect x="250" y="65" width="120" height="30" fill="white" stroke="#22d3ee" />
+                            <text x="290" y="85" font-size="14" fill="#22d3ee">slowly</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="interactive-exercise">
+                    <h4>練習寫寫看 A</h4>
+                    <p>請依據中文提示，填入正確的英文單字表達趨勢的上升。</p>
+                    <div class="space-y-4">
+                        <p>1. The country's thirst for oil is <input type="text" class="border-b-2 border-gray-400 focus:border-orange-400 outline-none" data-answer="growing quickly|rising quickly|increasing quickly"> as its economy expands. (隨著經濟發展，這個國家對於石油的需求快速增長。)</p>
+                        <p>2. Credit card borrowing has <input type="text" class="border-b-2 border-gray-400 focus:border-orange-400 outline-none" data-answer="rocketed|soared|surged"> since 2012. (2012 年以來信用卡預借現金的狀況暴增。)</p>
+                        <p>3. Sales in Asia have <input type="text" class="border-b-2 border-gray-400 focus:border-orange-400 outline-none" data-answer="grown steadily|risen steadily|increased steadily"> in the past five years. (亞洲的銷售量在過去五年來穩定成長。)</p>
+                    </div>
+                     <button class="check-button" onclick="checkFillInBlanks(this)">檢查答案</button>
+                    <div class="feedback"></div>
+                </div>
+                 <div class="interactive-exercise mt-4">
+                    <h4>練習寫寫看 B</h4>
+                    <p>請依據中文提示，填入正確的英文單字表達趨勢的下降。</p>
+                    <div class="space-y-4">
+                        <p>1. The poverty rate has <input type="text" class="border-b-2 border-gray-400 focus:border-orange-400 outline-none" data-answer="declined gradually|decreased gradually"> over the years. (貧窮率在過去幾年逐漸下降。)</p>
+                        <p>2. The Mayor's approval ratings have seen a <input type="text" class="border-b-2 border-gray-400 focus:border-orange-400 outline-none" data-answer="dramatic fall|sharp drop"> in recent surveys. (市長在最近的民意調查中得分大幅滑落。)</p>
+                        <p>3. Our income has <input type="text" class="border-b-2 border-gray-400 focus:border-orange-400 outline-none" data-answer="plunged|dropped sharply"> this year. (我們今年的收入驟減。)</p>
+                        <p>4. The figure <input type="text" class="border-b-2 border-gray-400 focus:border-orange-400 outline-none" data-answer="gradually fell|steadily declined"> to 3.5 percent, reaching a record low. (數字逐漸下降至 3.5%，達到歷史新低。)</p>
+                    </div>
+                     <button class="check-button" onclick="checkFillInBlanks(this)">檢查答案</button>
+                    <div class="feedback"></div>
+                </div>
+
+                <h4>⑦ 表示狀態維持</h4>
+                 <ul>
+                    <li><b>動詞:</b> <span class="keyword">remain</span>, <span class="keyword">stay</span></li>
+                    <li><b>形容詞:</b> <span class="keyword">constant</span>, <span class="keyword">stable</span>, <span class="keyword">steady</span>, <span class="keyword">unchanged</span></li>
+                    <li><b>動詞片語:</b> <span class="keyword">to flatten out</span>, <span class="keyword">to hold steady</span>, <span class="keyword">to level off</span>, <span class="keyword">to stabilize</span></li>
+                </ul>
+                <div class="example-box">
+                    <p>The price of oil should <span class="keyword">remain stable</span> for the rest of the year. (油價在今年都會維持穩定。)</p>
+                    <p>We are expecting a slow but <span class="keyword">steady</span> economic recovery. (我們期待經濟緩慢而穩定的復甦。)</p>
+                </div>
+
+
+                <h3 class="sub-section-title">C. 說明倍數關係的句型</h3>
+                <p>要更精準地比較數據，倍數句型是不可或缺的工具。</p>
+                <ol class="list-decimal list-inside space-y-4">
+                    <li><code class="bg-gray-200 p-1 rounded">S₁ + be/V₁ + <b>twice / three times</b> as <b>adj/adv</b> as S₂</code>
+                        <div class="example-box">
+                            <p>Kelly earns <span class="keyword">three times as much as</span> I do. (凱莉賺的錢是我的三倍。)</p>
+                        </div>
+                    </li>
+                    <li><code class="bg-gray-200 p-1 rounded">S₁ + be/V₁ + <b>two / three times</b> <b>comparative adj/adv</b> than S₂</code>
+                         <div class="example-box">
+                            <p>We have produced <span class="keyword">four times more milk than</span> we did last year. (我們生產了比去年多四倍的牛乳。)</p>
+                        </div>
+                    </li>
+                    <li><code class="bg-gray-200 p-1 rounded">S₁ + be/V₁ + <b>half / twice / three times</b> the <b>noun</b> of S₂</code>
+                         <div class="example-box">
+                            <p>This lightweight ceiling is <span class="keyword">half the weight of</span> a conventional concrete ceiling. (這種輕型天花板的重量是傳統水泥天花板的一半。)</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <h3 class="sub-section-title">詮釋圖表三步驟 (進階篇)</h3>
+                <p>掌握了基本詞彙與句型後，我們可以用三個步驟來快速掌握並詮釋圖表重點。</p>
+                <ol class="list-decimal list-inside space-y-2 font-bold text-orange-700">
+                    <li>用標題圖說點出主軸：開門見山，說明圖表類型與主題。</li>
+                    <li>挑選顯著的數據為主體：找出最大值、最小值或最突出的類別。</li>
+                    <li>運用倍數比較詮釋數據：使用倍數句型強化對比，深入分析。</li>
+                </ol>
+                
+                <h4 class="font-bold my-4">範例：1990 年代全球墮胎數量</h4>
+                <img src="https://i.ibb.co/dK5QzC7/abortion-chart.png" alt="1990年代全球合法及非法人工流產數量長條圖" class="chart-image max-w-lg">
+                <div class="example-box">
+                    <p><b>Step 1: 點出主軸</b><br>
+                    The two graphs depict the occurrence of abortions in developed and developing nations in the 1990s. One illustrates the occurrence of legal and safe abortions, and the other, the occurrence of illegal and unsafe abortions.<br>
+                    <span class="translation">這兩張圖呈現已開發與開發中國家在 1990 年代的人工流產的數量，一張表示合法且安全的人工流產數量，另一張則是呈現非法且不安全的人工流產數量。</span></p>
+                    <p class="mt-4"><b>Step 2: 挑選顯著數據</b><br>
+                    The graph shows that more than half of all legal abortions took place in developing countries.<br>
+                     <span class="translation">這張圖顯示，在所有合法人工流產數量中，發展中國家佔了一半以上。</span></p>
+                     <p class="mt-4"><b>Step 3: 運用倍數比較 (見下方範文)</b></p>
+                </div>
+                 <div class="example-box bg-blue-50 border-l-blue-400">
+                     <p><b>整合段落範例：</b></p>
+                     <p>The two graphs here depict the occurrence of abortions in developed and developing nations in the 1990s. As illustrated in the bar chart on the left, the number of legal and safe abortions in developing countries was slightly larger than that in developed countries. <u>Nevertheless, we see a considerable difference in the bar chart on the right.</u> The number of illegal or unsafe abortions in developing countries was <u>nine times as large as that in developed countries</u>. The significant differences between the two suggest that women's healthcare in developing countries needs improvement.</p>
+                 </div>
+
+                <div class="interactive-exercise mt-6">
+                    <h4>換你試試看：詮釋圖表數據</h4>
+                    <p class="font-bold">Part A: 請依據中文提示，填入正確的英文單字描述非法墮胎數據。</p>
+                    <div class="space-y-4 my-4">
+                        <p>1. The statistics show that in the 1990s, <input type="text" class="border-b-2 border-gray-400 focus:border-orange-400 outline-none" data-answer="90 percent|ninety percent"> of illegal or unsafe abortions were performed in developing nations. (數據顯示在1990年代，九成的非法或不安全人工流產發生在開發中國家。)</p>
+                        <p>2. The bar chart illustrates that in the 1990s the performance of illegal or unsafe abortions in developing nations was <input type="text" class="border-b-2 border-gray-400 focus:border-orange-400 outline-none" data-answer="nine times more than"> that in developed nations. (這個長條圖說明在1990年代，開發中國家非法或不安全人工流產的數量，是已開發國家的九倍。)</p>
+                        <p>3. The number of illegal or unsafe abortions in developing nations was <input type="text" class="border-b-2 border-gray-400 focus:border-orange-400 outline-none" data-answer="nine times as large as"> that in developed nations in the 1990s. (在1990年代，開發中國家的非法或不安全人工流產數量，是已開發國家的九倍。)</p>
+                    </div>
+                     <button class="check-button" onclick="checkFillInBlanks(this)">檢查 Part A</button>
+                    <div class="feedback"></div>
+
+                    <p class="font-bold mt-8">Part B: 請依據下方圓餅圖與中文提示，填入正確的英文單字。</p>
+                     <img src="https://i.ibb.co/6yJ2W4S/pie-charts.png" alt="各國是否允許墮胎圓餅圖" class="chart-image max-w-lg">
+                     <div class="space-y-4 my-4">
+                        <p>1. The pie chart shows that in the 1990s, <input type="text" class="border-b-2 border-gray-400 focus:border-orange-400 outline-none" data-answer="more than half"> of all countries permitted abortion to preserve the woman's mental health. (這張圓餅圖顯示，在1990年代，超過一半以上的國家同意人工流產以維護女性的心理健康。)</p>
+                        <p>2. The pie chart shows that in the 1990s, the number of the countries permitting abortion to preserve a woman's mental health was <input type="text" class="border-b-2 border-gray-400 focus:border-orange-400 outline-none" data-answer="slightly larger than"> those not permitting it. (這張圓餅圖顯示，在1990年代同意人工流產以維護女性的心理健康的國家數，比不同意的稍微多一些。)</p>
+                    </div>
+                     <button class="check-button" onclick="checkFillInBlanks(this)">檢查 Part B</button>
+                    <div class="feedback"></div>
+                </div>
+                
+                <div class="interactive-exercise mt-6">
+                    <h4>換你試試看：描述圖表</h4>
+                    <p>下圖是「年輕人與長輩二代對於成功因素看法」的調查。請利用前面說明的三個步驟，寫出一個語意連貫的段落，描述下列圖表。</p>
+                    <img src="https://i.ibb.co/2Z5YxCQ/success-factors.png" alt="成功因素調查長條圖" class="chart-image max-w-lg">
+                    <textarea class="writing-practice" placeholder="請在此處練習撰寫你的段落..."></textarea>
+                </div>
+
+
+            </section>
+
+            <!-- 第二式：比較對比 -->
+            <section class="section" id="section2">
+                <h2 class="section-title">第二式：比較對比 (夾心餅乾升級版)</h2>
+                <p>在描述完圖表後，大考作文常要求我們結合自身經驗，進行比較與對比。這時就需要運用升級版的「OREO 夾心餅乾」架構來組織觀點。</p>
+
+                <h3 class="sub-section-title">A. 比較與對比的常用語</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>比較 (尋找相似處)</th>
+                            <th>對比 (尋找差異處)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>like, similar to, similarly, the same as, just as, both, as well as, also, too, likewise, have something in common</td>
+                            <td>unlike, different from, compared to, despite, in spite of, although, but, yet, while, on the contrary, on the other hand, however, nevertheless, otherwise</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="sub-section-title">B. 夾心餅乾 OREO 英文用語</h3>
+                <p>OREO 是一個簡單有效的論述架構：提出觀點 (Opinion)、說明理由 (Reason)、提供舉例 (Example)，最後重申觀點 (Opinion)。</p>
+
+                <ul class="ore-list">
+                    <li data-letter="O">
+                        <div class="ore-content">
+                        <h5>Opinion (觀點)</h5>
+                        <p>In my opinion, I think, I believe, It seems to me that...</p>
+                        </div>
+                    </li>
+                    <li data-letter="R">
+                        <div class="ore-content">
+                        <h5>Reason (原因)</h5>
+                        <p>because, since, due to, therefore, as a result, consequently...</p>
+                        </div>
+                    </li>
+                    <li data-letter="E">
+                        <div class="ore-content">
+                        <h5>Example (舉例)</h5>
+                        <p>for instance, for example, while, whereas, some... others..., but, however...</p>
+                        </div>
+                    </li>
+                     <li data-letter="O">
+                        <div class="ore-content">
+                        <h5>Opinion (重申觀點)</h5>
+                        <p>in conclusion, in short, to sum up, therefore, altogether, finally...</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <h3 class="sub-section-title">範文演練與練習</h3>
+                <p><b>103 年指考題：</b>下圖呈現美國某高中學生每天進行各種活動的時間分配。第一段描述圖表特別現象；第二段說明你一天的時間分配與該高中生的異同，並說明理由。</p>
+                <img src="https://i.ibb.co/9gC0d1d/image.png" alt="美國高中生時間分配長條圖" class="chart-image max-w-lg">
+
+                <div class="interactive-exercise">
+                    <h4>練習寫寫看 A：段落排序</h4>
+                    <p>以下是根據題目撰寫的第二段範文，但順序被打亂了。請將它們拖曳到正確的 O-R-E-O 順序。</p>
+                    <div id="sortable-container" class="space-y-2 p-4 bg-gray-100 rounded-lg">
+                        <div class="sortable-item p-3 bg-white rounded shadow cursor-move" draggable="true" data-order="3"><b>[E] 舉例:</b> For example, I am a member of the school's basketball team, and we practice for at least two hours every day after school. This is quite different from the American students, who spend less than an hour on sports.</div>
+                        <div class="sortable-item p-3 bg-white rounded shadow cursor-move" draggable="true" data-order="1"><b>[O] 觀點:</b> In my view, my daily schedule is quite different from that of the American high school students shown in the chart, primarily due to different academic pressures.</div>
+                        <div class="sortable-item p-3 bg-white rounded shadow cursor-move" draggable="true" data-order="4"><b>[O] 重申觀點:</b> In conclusion, while we both spend a significant amount of time on academics, the allocation for other activities like sports and part-time jobs highlights the different priorities in our high school lives.</div>
+                        <div class="sortable-item p-3 bg-white rounded shadow cursor-move" draggable="true" data-order="2"><b>[R] 理由:</b> This is mainly because in Taiwan, students face immense pressure to get into a good university, so we tend to spend more time on studying and attending cram schools, leaving less time for part-time jobs or leisure.</div>
+                    </div>
+                    <button class="check-button" onclick="checkSort()">檢查順序</button>
+                    <div class="feedback" id="sort-feedback"></div>
+                </div>
+
+                <div class="interactive-exercise mt-6">
+                    <h4>練習寫寫看 B：完整寫作</h4>
+                    <p>現在，請你根據上述題目，試著寫出至少 120 字的完整文章。</p>
+                     <textarea class="writing-practice" placeholder="請在此處輸入你的作文..."></textarea>
+                </div>
+                
+                <div class="interactive-exercise mt-6">
+                    <h4>108年指考作文練習</h4>
+                    <p><b>提示：</b>右表顯示美國18至29歲的青年對不同類別之新聞的關注度統計。請依據圖表內容寫一篇英文作文，文長至少120個單詞。第一段描述圖表內容，並指出關注度較高及偏低的類別；第二段則描述在這六個新聞類別中，你自己較為關注及較不關注的新聞主題分別為何，並說明理由。</p>
+                    <img src="https://i.ibb.co/Jk7wXzQ/news-chart.png" alt="美國青年關注之新聞類別" class="chart-image max-w-md">
+                    <h5 class="font-bold mt-4">寫作步驟提示</h5>
+                    <ol class="list-decimal list-inside text-gray-700">
+                        <li><b>用標題圖示點出主軸：</b>點出圖表標題後，可由關注度高至低依序描述各類別。</li>
+                        <li><b>挑選顯著的數據為主體：</b>指出關注度最高（環境與天然災害）與最低（藝術與文化）的新聞議題。</li>
+                        <li><b>運用倍數比較詮釋數據：</b>以倍數或對比突顯項目間的差異，詮釋數據。</li>
+                        <li><b>比較與對比：</b>拿自己和圖表呈現的訊息相比，有哪些相似處與相異處？描述自己關注的新聞類型，哪個最多？哪個最少？記得說明原因，提供例子與細節。</li>
+                    </ol>
+                    <textarea class="writing-practice" placeholder="請在此處輸入你的作文..."></textarea>
+                </div>
+
+                 <h3 class="sub-section-title">結論技巧進階</h3>
+                 <p>一個好的結論能讓文章餘韻無窮。除了重申論點，還可以嘗試以下方式：</p>
+                 <ul class="list-disc list-inside space-y-2">
+                     <li><b>重溫論點 (Reminding):</b> 簡單扼要地重新申明自己的論點。<br>常用語：<span class="keyword">as stated above</span>, <span class="keyword">for these reasons</span></li>
+                     <li><b>凸顯關鍵 (Emphasizing):</b> 再次強調最重要的字詞。<br>常用語：<span class="keyword">most importantly</span>, <span class="keyword">in fact</span>, <span class="keyword">after all</span></li>
+                     <li><b>創造餘韻 (Resonating):</b> 訴諸情感、拋出問題、做出呼籲或展望未來。<br>常用語：<span class="keyword">I hope...</span>, <span class="keyword">What if...?</span>, <span class="keyword">We should...</span>, <span class="keyword">In the future,...</span>
+                     </li>
+                 </ul>
+                 <div class="example-box">
+                     <p><b>範例 (109 年指考題：校園安全):</b></p>
+                     <p><b>第一段 (O-R-E)</b><br>
+                        In my opinion, a safe campus environment is a priority... Keeping schools safe allows students to learn... However, campus safety has become a growing concern... In fact, violent acts in schools occur at all educational levels... I personally have a close friend who had long been bullied...
+                     </p>
+                     <p class="mt-4"><b>第二段 (R-E-O)</b><br>
+                        Different measures and precautions can be taken... For instance, we students should be responsible for our words and behavior... As stated above, school safety is a vital issue. <b>[重申論點]</b> Will we ever realize how important it is to maintain a safe and nurturing learning environment? <b>[拋出問題]</b> School staff and students alike should play their parts... <b>[做出呼籲]</b> After all, prevention is better than cure. <b>[凸顯關鍵]</b> With all the right measures taken, we will eventually benefit from the efforts we make. <b>[展望未來]</b>
+                     </p>
+                 </div>
+
+                 <div class="interactive-exercise mt-6">
+                    <h4>練習寫寫看 C：個人經驗寫作</h4>
+                    <p><b>提示：</b>每個人從小對於自己未來的職業都有不同想像，請寫一篇 200 字以上的英文作文，說明你的未來志願為何。第一段請說明未來你想從事的行業是什麼，以及是什麼原因促使你做出這種選擇？第二段請說明你打算做哪些準備來成為這種職業人才？</p>
+                    <ul class="list-disc list-inside text-sm text-gray-600">
+                        <li>檢核項目：文章架構是否包含 O-R-E-O？</li>
+                        <li>檢核項目：末段總結觀點是否運用了 Reminding, Emphasizing 或 Resonating 技巧？</li>
+                    </ul>
+                     <textarea class="writing-practice" placeholder="請在此處輸入你的作文..."></textarea>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // --- 互動練習 1: 圖表類型配對 ---
+        const dragOptions = document.querySelectorAll('.drag-option');
+        const dropZones = document.querySelectorAll('.drop-zone');
+        let draggedItem = null;
+
+        dragOptions.forEach(option => {
+            option.addEventListener('dragstart', (e) => {
+                draggedItem = e.target;
+                setTimeout(() => {
+                    e.target.style.display = 'none';
+                }, 0);
+            });
+            option.addEventListener('dragend', (e) => {
+                setTimeout(() => {
+                    e.target.style.display = 'block';
+                    draggedItem = null;
+                }, 0);
+            });
+        });
+
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', e => {
+                e.preventDefault();
+                zone.classList.add('over');
+            });
+            zone.addEventListener('dragleave', e => {
+                zone.classList.remove('over');
+            });
+            zone.addEventListener('drop', e => {
+                e.preventDefault();
+                zone.classList.remove('over');
+                if (draggedItem) {
+                    if (zone.children.length > 0) {
+                        const existingOptionDiv = zone.removeChild(zone.children[0]);
+                        document.getElementById('chart-options').appendChild(existingOptionDiv);
+                    }
+                    zone.appendChild(draggedItem);
+                }
+            });
+        });
+
+        function checkChartTypes() {
+            const feedback = document.getElementById('chart-feedback');
+            let allCorrect = true;
+            dropZones.forEach(zone => {
+                const answer = zone.dataset.answer;
+                const droppedItem = zone.querySelector('.drag-option');
+                zone.classList.remove('correct', 'incorrect');
+                if (droppedItem && droppedItem.dataset.type === answer) {
+                    zone.classList.add('correct');
+                } else {
+                    zone.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                feedback.textContent = '太棒了！全對！';
+                feedback.className = 'feedback text-green-600';
+            } else {
+                feedback.textContent = '再試一次，有些答案不對喔。';
+                feedback.className = 'feedback text-red-600';
+            }
+        }
+        
+        // --- 互動練習 2: 填充題 ---
+        function checkFillInBlanks(button) {
+            const exerciseDiv = button.parentElement;
+            const inputs = exerciseDiv.querySelectorAll('input[type="text"]');
+            const feedbackEl = exerciseDiv.querySelector('.feedback');
+            let allCorrect = true;
+
+            inputs.forEach(input => {
+                const userAnswers = input.value.trim().toLowerCase();
+                const correctAnswers = input.dataset.answer.split('|').map(a => a.toLowerCase());
+                
+                input.classList.remove('border-green-500', 'border-red-500', 'bg-green-100', 'bg-red-100');
+                if (correctAnswers.includes(userAnswers)) {
+                    input.classList.add('border-green-500', 'bg-green-100');
+                } else {
+                    input.classList.add('border-red-500', 'bg-red-100');
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                feedbackEl.textContent = '答對了，很棒！';
+                feedbackEl.className = 'feedback text-green-600';
+            } else {
+                feedbackEl.textContent = '請檢查紅色標示的答案。';
+                feedbackEl.className = 'feedback text-red-600';
+            }
+        }
+        
+        // --- 互動練習 3: 排序題 ---
+        const sortableContainer = document.getElementById('sortable-container');
+        let sortableItem = null;
+        
+        if (sortableContainer) {
+            sortableContainer.addEventListener('dragstart', (e) => {
+               if (e.target.classList.contains('sortable-item')) {
+                   sortableItem = e.target;
+                   e.target.style.opacity = '0.5';
+               }
+            });
+            
+            sortableContainer.addEventListener('dragend', (e) => {
+                if (e.target.classList.contains('sortable-item')) {
+                    e.target.style.opacity = '1';
+                    sortableItem = null;
+                }
+            });
+
+            sortableContainer.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(sortableContainer, e.clientY);
+                if (afterElement == null) {
+                    sortableContainer.appendChild(sortableItem);
+                } else {
+                    sortableContainer.insertBefore(sortableItem, afterElement);
+                }
+            });
+        }
+        
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.sortable-item:not(.dragging)')];
+
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        function checkSort() {
+            const items = sortableContainer.querySelectorAll('.sortable-item');
+            const feedback = document.getElementById('sort-feedback');
+            let isCorrect = true;
+            items.forEach((item, index) => {
+                item.classList.remove('bg-green-100', 'bg-red-100');
+                if (parseInt(item.dataset.order) !== (index + 1)) {
+                    isCorrect = false;
+                    item.classList.add('bg-red-100');
+                } else {
+                    item.classList.add('bg-green-100');
+                }
+            });
+            
+            if (isCorrect) {
+                feedback.textContent = '順序完全正確！你掌握了 OREO 架構！';
+                feedback.className = 'feedback text-green-600';
+            } else {
+                feedback.textContent = '順序不對喔，再想想 OREO 的邏輯。';
+                feedback.className = 'feedback text-red-600';
+            }
+        }
+    </script>
+</body>
+
+</html>
+

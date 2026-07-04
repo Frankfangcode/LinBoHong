@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 1 | 完整精裝互動手冊 (最終版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .book-container {
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        .example-box {
+            background-color: #f8fafc; /* slate-50 */
+            border-left: 3px solid #60a5fa; /* blue-400 */
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 0.375rem 0.375rem 0;
+        }
+        .example-box p:first-child::before {
+            content: '例';
+            background-color: #60a5fa;
+            color: white;
+            font-weight: bold;
+            padding: 0.125rem 0.5rem;
+            border-radius: 0.25rem;
+            margin-right: 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .tip-box {
+            background-color: #fffaeb; /* amber-50 */
+            border: 1px solid #fcd34d; /* amber-300 */
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .tip-box-icon {
+            flex-shrink: 0;
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.75rem;
+            color: #f59e0b; /* amber-500 */
+        }
+
+        .exercise-box {
+            background-color: white;
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e2e8f0; /* slate-200 */
+        }
+        .exercise-box h3::before {
+            content: '';
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 20h9'/%3E%3Cpath d='M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z'/%3E%3C/svg%3E");
+            background-size: contain;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+            transform: translateY(-2px);
+        }
+
+        /* 互動元素樣式 */
+        .option-btn { transition: all 0.2s; }
+        .option-btn.selected.correct-answer { background-color: #ecfdf5; border-color: #22c55e; color: #166534; }
+        .option-btn.selected.wrong-answer { background-color: #fff1f2; border-color: #f43f5e; color: #9f1239; }
+        
+        .fill-in-input {
+            border: none;
+            border-bottom: 2px solid #94a3b8;
+            background: transparent;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .fill-in-input:focus { border-color: #3b82f6; }
+        .fill-in-input.correct { border-color: #22c55e; color: #166534; }
+        .fill-in-input.incorrect { border-color: #f43f5e; color: #9f1239; }
+    </style>
+</head>
+<body>
+
+    <div class="book-container bg-white rounded-lg shadow-lg">
+        <header class="p-4 border-b border-slate-200 flex justify-between items-center sticky top-0 bg-white/80 backdrop-blur-sm z-10">
+             <h1 class="text-xl font-bold text-slate-800">Unit 1: <span class="text-blue-600">中英文句子結構</span></h1>
+             <span id="page-indicator" class="text-sm font-medium text-slate-500"></span>
+        </header>
+
+        <main class="p-6 md:p-8 min-h-[60vh]">
+            <!-- Page 1: 1-1 Structure Difference Intro -->
+            <div class="page">
+                <h2 class="text-2xl font-bold mb-2 text-slate-800">1-1 比較中英文句子基本結構的差異</h2>
+                <hr class="mb-4">
+                <p class="text-slate-600 mb-4 leading-relaxed">不論中文或英文的寫作，句子都是文章的基本單位。若能了解中英文句子結構的不同，就能避免許多寫作上的錯誤。以下以106年學測和指考翻譯題為例，從中英文對照比較就可以看出這兩種語言在句子基本結構上的不同。</p>
+                <div class="example-box">
+                    <p class="font-semibold text-slate-700">（A）玉山在冬天常覆蓋厚厚的積雪，使整個山頂閃耀如玉。</p>
+                    <p class="mt-2 text-sm text-blue-800 italic bg-blue-50 p-2 rounded">Jade Mountain is often covered with thick snow in winter, which makes the entire mountain top sparkle like jade.</p>
+                </div>
+                 <div class="example-box">
+                    <p class="font-semibold text-slate-700">（B）征服玉山一直是國內外登山者最困難的挑戰之一。</p>
+                    <p class="mt-2 text-sm text-blue-800 italic bg-blue-50 p-2 rounded">Conquering Jade Mountain has always been one of the most difficult challenges for both native and foreign mountain climbers.</p>
+                </div>
+                <h3 class="font-bold text-lg mb-2 mt-6 text-slate-700">① 中文是「主題＋敘述」；英文是「主詞＋動詞」</h3>
+                <p class="text-slate-600 leading-relaxed">中文句子傾向先提出要談的「主題」，接著圍繞主題進行敘述。而英文句子則嚴格要求「主詞」必須是「動詞」的執行者。例如，在例句（B）中，主詞「征服玉山」，就必須把動詞 conquer 改成動名詞 conquering 才能當主詞。</p>
+            </div>
+
+            <!-- Page 2: 1-1 How to write sentences & Tip -->
+            <div class="page">
+                 <h3 class="font-bold text-lg mb-2 text-slate-700">② 如何寫出句子</h3>
+                 <p class="text-slate-600 leading-relaxed mb-4">由於中英文句子結構的不同，從中文句子轉換成英文句子時，應該先確定主詞和動詞。英文動詞必須根據時間點而有過去式、現在式和未來式之分，這是翻譯寫作時必須小心的細節。</p>
+                 <div class="example-box">
+                    <p class="font-semibold text-slate-700">動詞時態變化</p>
+                    <ul class="list-disc list-inside mt-2 text-sm text-blue-800 italic bg-blue-50 p-3 rounded space-y-1">
+                        <li>I <span class="font-bold">watched</span> a movie last night. (昨晚看電影)</li>
+                        <li>I <span class="font-bold">am watching</span> a movie now. (現在正在看)</li>
+                        <li>I <span class="font-bold">will watch</span> a movie tonight. (今晚要看)</li>
+                    </ul>
+                 </div>
+                 <div class="tip-box">
+                    <svg class="tip-box-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13a6 6 0 0 1-6 6 6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6z"/><path d="M12 19v2"/><path d="M12 3v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                    <div>
+                        <h4 class="font-bold text-amber-800">Tip</h4>
+                        <p class="text-amber-700 text-sm mt-1">在寫英文句子時，應先確定「主詞」為何，以及該主詞所對應的「動詞」與「時態」，就能寫出正確的英文句子。中文是以主題來思考，而英文則以主詞來思考。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 3: 1-1 Exercise A -->
+            <div class="page">
+                <div class="exercise-box" id="quiz-A">
+                    <h3 class="text-xl font-semibold mb-6 text-blue-700">練習寫寫看 A：選出正確的句子 (可多選)</h3>
+                    <div class="mb-8">
+                        <p class="font-medium mb-3 text-slate-700">1. 學英文必須天天練習。</p>
+                        <div class="space-y-3">
+                            <button data-correct="false" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">A) Studying English must practice every day.</button>
+                            <button data-correct="true" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">B) To study English, we must practice every day.</button>
+                            <button data-correct="true" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">C) Studying English requires everyday practice.</button>
+                        </div>
+                    </div>
+                     <div class="mb-8">
+                        <p class="font-medium mb-3 text-slate-700">2. 桌上有兩枝鉛筆。</p>
+                        <div class="space-y-3">
+                            <button data-correct="false" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">A) The desk has two pencils.</button>
+                            <button data-correct="false" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">B) On the desk has two pencils.</button>
+                            <button data-correct="true" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">C) Two pencils are on the desk.</button>
+                            <button data-correct="true" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">D) On the desk are two pencils.</button>
+                            <button data-correct="true" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">E) There are two pencils on the desk.</button>
+                        </div>
+                    </div>
+                     <div>
+                        <p class="font-medium mb-3 text-slate-700">3. 我上星期五已經交作業了。</p>
+                        <div class="space-y-3">
+                            <button data-correct="true" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">A) My assignment was handed in last Friday.</button>
+                             <button data-correct="false" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">B) My assignment handed in last Friday.</button>
+                            <button data-correct="true" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">C) I had my assignment handed in last Friday.</button>
+                            <button data-correct="true" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">D) I handed in my assignment last Friday.</button>
+                             <button data-correct="false" class="option-btn w-full border-2 border-slate-300 p-3 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50">E) Handing in my assignment last Friday.</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 4: 1-1 Exercise B -->
+            <div class="page">
+                <div class="exercise-box" id="quiz-B">
+                     <h3 class="text-xl font-semibold mb-6 text-blue-700">練習寫寫看 B：主詞與動詞</h3>
+                     <div class="mb-8">
+                        <h4 class="font-semibold text-slate-800 mb-3">■ 寫出主詞並翻譯句子</h4>
+                        <div class="space-y-4">
+                            <p>1. 我們暑假要去澳洲旅遊。 主詞：<input class="fill-in-input w-20" data-answer="我們"> 翻譯：<input class="fill-in-input w-full md:w-auto" data-answer="We are going to travel to Australia during summer vacation."></p>
+                            <p>2. 你應該早一點睡。 主詞：<input class="fill-in-input w-20" data-answer="你"> 翻譯：<input class="fill-in-input w-full md:w-auto" data-answer="You should go to bed earlier."></p>
+                        </div>
+                     </div>
+                     <div>
+                        <h4 class="font-semibold text-slate-800 mb-3">■ 填寫正確的動詞形式</h4>
+                        <div class="space-y-6">
+                            <p class="leading-loose">1. 這支手錶是我爸爸在十年前給我的。<br>This watch <input class="fill-in-input w-24" data-answer="was given"> to me by my father ten years ago. It still <input class="fill-in-input w-24" data-answer="looks"> new now.</p>
+                            <p class="leading-loose">2. Amy 明天早上會去圖書館。<br>Amy <input class="fill-in-input w-32" data-answer="will go"> to the library tomorrow morning.</p>
+                            <p class="leading-loose">3. Peter 的皮夾被偷了，他感到很傷心。<br>Peter's wallet <input class="fill-in-input w-24" data-answer="was stolen">, and he <input class="fill-in-input w-24" data-answer="felt sad">.</p>
+                             <p class="leading-loose">4. 我從出生就一直住在新竹。<br>I <input class="fill-in-input w-32" data-answer="have lived"> in Hsinchu since I <input class="fill-in-input w-24" data-answer="was born">.</p>
+                        </div>
+                     </div>
+                     <button class="check-btn mt-6 bg-blue-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-600 transition-colors" data-quiz="B">核對答案</button>
+                </div>
+            </div>
+            
+            <!-- Page 5: 1-1 Translating "的" -->
+            <div class="page">
+                <h3 class="font-bold text-lg mb-2 text-slate-700">③ 翻譯中文句子的「的」</h3>
+                <p class="text-slate-600 leading-relaxed mb-4">中文裡頻繁使用的「的」，在英文中有多種對應的表達方式。理解這些方法對於英譯非常有幫助。</p>
+                <ul class="space-y-3 text-slate-700">
+                    <li><span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded">所有格/形容詞 + 名詞:</span> <span class="italic">my book</span> (我的書), <span class="italic">beautiful scenery</span> (美麗的風景)</li>
+                    <li><span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded">名詞 + of + 名詞:</span> <span class="italic">the cover of the book</span> (書的封面)</li>
+                    <li><span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded">名詞 + with~:</span> <span class="italic">a girl with long hair</span> (長髮的女孩)</li>
+                    <li><span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded">名詞 + 介系詞片語:</span> <span class="italic">the lamp on the desk</span> (桌上的檯燈)</li>
+                    <li><span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded">名詞 + 不定詞片語:</span> <span class="italic">someone to talk to</span> (可以說話的人)</li>
+                    <li><span class="font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded">名詞 + 關係子句:</span> <span class="italic">birds which are singing</span> (在唱歌的鳥)</li>
+                </ul>
+            </div>
+            
+            <!-- Page 6: 1-1 Exercise C -->
+            <div class="page">
+                <div class="exercise-box" id="quiz-C">
+                     <h3 class="text-xl font-semibold mb-6 text-blue-700">練習寫寫看 C：翻譯練習</h3>
+                     <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+                        <p>1. 好吃的食物: <span class="font-semibold text-blue-600 hidden" data-answer="delicious food">delicious food</span></p>
+                        <p>2. 著名的旅遊景點: <span class="font-semibold text-blue-600 hidden" data-answer="a famous tourist attraction">a famous tourist attraction</span></p>
+                        <p>3. 有車庫的房子: <span class="font-semibold text-blue-600 hidden" data-answer="a house with a garage">a house with a garage</span></p>
+                        <p>4. 一個留長鬍鬚的老人: <span class="font-semibold text-blue-600 hidden" data-answer="an old man with a long beard">an old man with a long beard</span></p>
+                        <p>5. 穿著牛仔褲的女孩: <span class="font-semibold text-blue-600 hidden" data-answer="a girl in jeans / a girl wearing jeans">a girl in jeans / a girl wearing jeans</span></p>
+                        <p>6. 說英文的能力: <span class="font-semibold text-blue-600 hidden" data-answer="the ability to speak English">the ability to speak English</span></p>
+                     </div>
+                     <button class="reveal-btn mt-6 bg-slate-200 text-slate-700 font-semibold py-2 px-5 rounded-lg hover:bg-slate-300 transition-colors" data-quiz="C">顯示/隱藏答案</button>
+                </div>
+            </div>
+
+            <!-- Page 7: 1-2 Fragmented Sentences -->
+            <div class="page">
+                 <h2 class="text-2xl font-bold mb-2 text-slate-800">1-2 片段的句子</h2>
+                 <hr class="mb-4">
+                 <p class="text-slate-600 mb-4 leading-relaxed">完整英文句子的基本元素必須有主詞、動詞、補語或受詞等。當缺乏某些元素時，就成了「片段的句子」(a fragment)，在正式寫作中是錯誤的。修正方式是必須根據文意補充或修正句子缺乏的元素。</p>
+                 <div class="example-box">
+                    <p class="font-semibold text-slate-700">從屬子句片段 (Fragment)</p>
+                    <p class="mt-2 text-sm text-rose-800 italic bg-rose-50 p-2 rounded">When polar bears are starving due to a lack of food. (X)</p>
+                 </div>
+                 <div class="example-box">
+                    <p class="font-semibold text-slate-700">修正後的完整句 (Complete Sentence)</p>
+                    <p class="mt-2 text-sm text-blue-800 italic bg-blue-50 p-2 rounded">When polar bears are starving due to a lack of food, it is a sign of climate change. (O)</p>
+                 </div>
+            </div>
+
+            <!-- Page 8: 1-2 Exercise D -->
+            <div class="page">
+                <div class="exercise-box" id="quiz-D">
+                    <h3 class="text-xl font-semibold mb-6 text-blue-700">練習寫寫看 D：判斷與修正</h3>
+                    <p class="text-slate-500 italic mb-4">點擊句子，判斷是「完整(C)」或「片段(F)」，並查看修正建議。</p>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border-2 border-slate-200 cursor-pointer transition-all hover:shadow-md" data-type="fragment" data-correction="Yuanbao was a type of money.">
+                            <p class="font-medium">1. Yuanbao which was a type of money.</p>
+                        </div>
+                        <div class="p-4 rounded-lg border-2 border-slate-200 cursor-pointer transition-all hover:shadow-md" data-type="complete">
+                            <p class="font-medium">2. Yesterday, I ran into Miss Lee, my English teacher in junior high.</p>
+                        </div>
+                        <div class="p-4 rounded-lg border-2 border-slate-200 cursor-pointer transition-all hover:shadow-md" data-type="fragment" data-correction="If you have an opportunity to visit Tainan, you should taste a variety of local foods.">
+                            <p class="font-medium">3. If you have an opportunity to visit Tainan to taste a variety of local foods.</p>
+                        </div>
+                        <div class="p-4 rounded-lg border-2 border-slate-200 cursor-pointer transition-all hover:shadow-md" data-type="complete">
+                            <p class="font-medium">4. Air is highly polluted especially in the southern part of Taiwan.</p>
+                        </div>
+                         <div class="p-4 rounded-lg border-2 border-slate-200 cursor-pointer transition-all hover:shadow-md" data-type="fragment" data-correction="Because a cellphone is so popular, it has become something necessary in our lives.">
+                            <p class="font-medium">5. Because a cellphone is so popular has become something necessary in our lives.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Page 9: 1-3 Run-on Sentences -->
+            <div class="page">
+                <h2 class="text-2xl font-bold mb-2 text-slate-800">1-3 連寫句和逗號誤用</h2>
+                <hr class="mb-4">
+                <p class="text-slate-600 mb-4 leading-relaxed">將兩個獨立句子直接串連，而沒有使用正確的連接詞或標點，就會形成「連寫句」(run-on sentences)。若只用一個逗號連接兩個獨立句子，則是「逗號誤用」(comma splice)，這在英文寫作中都是需要避免的錯誤。</p>
+                <div class="example-box">
+                    <p class="font-semibold text-slate-700">連寫句 (Run-on)</p>
+                    <p class="mt-2 text-sm text-rose-800 italic bg-rose-50 p-2 rounded">Peter failed again, he felt discouraged. (X)</p>
+                </div>
+                <div class="tip-box">
+                     <svg class="tip-box-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13a6 6 0 0 1-6 6 6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6z"/><path d="M12 19v2"/><path d="M12 3v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                    <div>
+                        <h4 class="font-bold text-amber-800">修正方法</h4>
+                        <ul class="list-disc list-inside text-amber-700 text-sm mt-1 space-y-1">
+                            <li><b>用句點：</b> Peter failed again. He felt discouraged.</li>
+                            <li><b>用對等連接詞：</b> Peter failed again, so he felt discouraged.</li>
+                            <li><b>用從屬連接詞：</b> Because Peter failed again, he felt discouraged.</li>
+                            <li><b>用分號：</b> Peter failed again; he felt discouraged.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Page 10: 1-3 Exercise E & F -->
+            <div class="page">
+                 <div class="exercise-box" id="quiz-E">
+                    <h3 class="text-xl font-semibold mb-6 text-blue-700">練習寫寫看 E：判斷連寫句</h3>
+                    <p class="text-sm text-slate-500 mb-4">R: Run-on (連寫句) / C: Correct (正確)</p>
+                    <div class="space-y-4">
+                         <div class="flex items-center justify-between"><p class="mr-4">1. No matter how successful you are, you must be humble.</p><div data-answer="C" class="space-x-2 feedback-buttons flex-shrink-0"><button>C</button><button>R</button></div></div>
+                         <div class="flex items-center justify-between"><p class="mr-4">2. Peter failed again, he felt discouraged.</p><div data-answer="R" class="space-x-2 feedback-buttons flex-shrink-0"><button>C</button><button>R</button></div></div>
+                         <div class="flex items-center justify-between"><p class="mr-4">3. Everybody was tired out, no one made complaints.</p><div data-answer="R" class="space-x-2 feedback-buttons flex-shrink-0"><button>C</button><button>R</button></div></div>
+                         <div class="flex items-center justify-between"><p class="mr-4">4. My mother felt much better, she said she would leave the hospital as soon as possible.</p><div data-answer="R" class="space-x-2 feedback-buttons flex-shrink-0"><button>C</button><button>R</button></div></div>
+                         <div class="flex items-center justify-between"><p class="mr-4">5. Helen is busy all day. She has to go to work, picks up her daughter after school, and does all the housework.</p><div data-answer="C" class="space-x-2 feedback-buttons flex-shrink-0"><button>C</button><button>R</button></div></div>
+                    </div>
+                </div>
+                <div class="exercise-box" id="quiz-F">
+                    <h3 class="text-xl font-semibold mb-6 text-blue-700">練習寫寫看 F：改正連寫句</h3>
+                     <div class="space-y-4">
+                        <p>1. It had been raining heavily for days, many low-lying areas were flooded.</p>
+                        <p class="text-blue-600 font-semibold hidden text-sm" data-answer="As a result, many low-lying areas were flooded.">修正建議：It had been raining heavily for days<span class="font-bold text-red-500">; as a result,</span> many low-lying areas were flooded.</p>
+                        <p>2. Leo won't forgive you, you make a sincere apology.</p>
+                        <p class="text-blue-600 font-semibold hidden text-sm" data-answer="Unless you make a sincere apology.">修正建議：Leo won't forgive you <span class="font-bold text-red-500">unless</span> you make a sincere apology.</p>
+                     </div>
+                     <button class="reveal-btn mt-6 bg-slate-200 text-slate-700 font-semibold py-2 px-5 rounded-lg hover:bg-slate-300 transition-colors" data-quiz="F">顯示/隱藏答案</button>
+                </div>
+            </div>
+
+            <!-- Page 11: 1-4 Punctuation -->
+            <div class="page">
+                <h2 class="text-2xl font-bold mb-2 text-slate-800">1-4 標點符號</h2>
+                <hr class="mb-4">
+                <p class="text-slate-600 mb-4 leading-relaxed">標點符號的作用是將句子劃分成有意義的單位，使文意更加清楚。</p>
+                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="p-4 bg-slate-50 rounded-lg"><p class="font-bold text-4xl text-blue-500">.</p><h4 class="font-semibold mt-1">句點</h4></div>
+                    <div class="p-4 bg-slate-50 rounded-lg"><p class="font-bold text-4xl text-blue-500">,</p><h4 class="font-semibold mt-1">逗號</h4></div>
+                    <div class="p-4 bg-slate-50 rounded-lg"><p class="font-bold text-4xl text-blue-500">?</p><h4 class="font-semibold mt-1">問號</h4></div>
+                    <div class="p-4 bg-slate-50 rounded-lg"><p class="font-bold text-4xl text-blue-500">;</p><h4 class="font-semibold mt-1">分號</h4></div>
+                 </div>
+                 <div class="tip-box">
+                    <svg class="tip-box-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13a6 6 0 0 1-6 6 6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6z"/><path d="M12 19v2"/><path d="M12 3v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                    <div>
+                        <h4 class="font-bold text-amber-800">中英文標點差異</h4>
+                        <p class="text-amber-700 text-sm mt-1">注意，中英文標點符號的寫法有所不同，英文的句點是實心(.)，中文的句號是空心(。)。英文的引號是 “ ”，中文的引號是「」。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 12: 1-4 Exercise G -->
+             <div class="page">
+                 <div class="exercise-box" id="quiz-G">
+                    <h3 class="text-xl font-semibold mb-6 text-blue-700">練習寫寫看 G：填入正確標點</h3>
+                    <div class="space-y-6">
+                        <p class="leading-loose">1. More than a hundred people took the examination<input class="fill-in-input w-8" data-answer=","> only five passed<input class="fill-in-input w-8" data-answer="."></p>
+                        <p class="leading-loose">2. To my surprise<input class="fill-in-input w-8" data-answer=","> the living room was tidied up<input class="fill-in-input w-8" data-answer=";"> the laundry was done<input class="fill-in-input w-8" data-answer=","> too<input class="fill-in-input w-8" data-answer="."></p>
+                         <p class="leading-loose">3. <input class="fill-in-input w-8" data-answer="&quot;">Why don't you date your cellphone<input class="fill-in-input w-8" data-answer="?&quot;"> said Vivian.</p>
+                         <p class="leading-loose">4. What Jeff needs most now<input class="fill-in-input w-8" data-answer=","> in my opinion<input class="fill-in-input w-8" data-answer=","> is our encouragement instead of financial support<input class="fill-in-input w-8" data-answer="."></p>
+                         <p class="leading-loose">5. My husband<input class="fill-in-input w-8" data-answer=","> who believes in avoiding doctors and hospitals at all costs<input class="fill-in-input w-8" data-answer=","> had to have emergency surgery...</p>
+                    </div>
+                    <button class="check-btn mt-6 bg-blue-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-600 transition-colors" data-quiz="G">核對答案</button>
+                 </div>
+            </div>
+        </main>
+
+        <footer class="p-4 border-t border-slate-200 flex justify-between items-center bg-slate-50">
+            <button id="prev-btn" class="font-semibold text-slate-600 py-2 px-5 rounded-lg hover:bg-slate-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                &larr; 上一頁
+            </button>
+            <button id="next-btn" class="font-semibold text-slate-600 py-2 px-5 rounded-lg hover:bg-slate-200 transition-colors">
+                下一頁 &rarr;
+            </button>
+        </footer>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let currentPage = 0;
+    const pages = document.querySelectorAll('.page');
+    const totalPages = pages.length;
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const pageIndicator = document.getElementById('page-indicator');
+
+    function showPage(pageIndex) {
+        pages.forEach((page, index) => {
+            page.classList.toggle('active', index === pageIndex);
+        });
+        currentPage = pageIndex;
+        updateNavState();
+    }
+
+    function updateNavState() {
+        prevBtn.disabled = currentPage === 0;
+        nextBtn.disabled = currentPage >= totalPages - 1;
+        pageIndicator.textContent = `頁碼 ${currentPage + 1} / ${totalPages}`;
+    }
+
+    prevBtn.addEventListener('click', () => { if (currentPage > 0) showPage(currentPage - 1); });
+    nextBtn.addEventListener('click', () => { if (currentPage < totalPages - 1) showPage(currentPage + 1); });
+    showPage(0);
+
+    // --- Quiz A Logic ---
+    document.getElementById('quiz-A').addEventListener('click', function(e) {
+        if (e.target.matches('.option-btn')) {
+            const btn = e.target;
+            const isCorrect = btn.dataset.correct === 'true';
+            btn.classList.add('selected');
+            btn.classList.toggle('correct-answer', isCorrect);
+            btn.classList.toggle('wrong-answer', !isCorrect);
+        }
+    });
+    
+    // --- Quiz D Logic ---
+    document.getElementById('quiz-D').addEventListener('click', e => {
+        const item = e.target.closest('[data-type]');
+        if (!item) return;
+        let feedback = item.querySelector('.feedback');
+        if (feedback) {
+            feedback.remove();
+            item.style.borderColor = '';
+            return;
+        }
+        feedback = document.createElement('div');
+        feedback.className = 'feedback mt-2 text-sm font-semibold p-2 rounded';
+        if (item.dataset.type === 'fragment') {
+            feedback.innerHTML = `<span class="font-bold text-rose-700">片段(F)</span><br>修正建議：${item.dataset.correction}`;
+            item.style.borderColor = '#f43f5e';
+            feedback.style.backgroundColor = '#fff1f2';
+        } else {
+            feedback.textContent = '完整(C) - 正確';
+            item.style.borderColor = '#22c55e';
+            feedback.style.backgroundColor = '#ecfdf5';
+            feedback.style.color = '#166534';
+        }
+        item.appendChild(feedback);
+    });
+
+    // --- General Fill-in Check Button Logic ---
+    document.querySelectorAll('.check-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const quizId = e.target.dataset.quiz;
+            document.querySelectorAll(`#quiz-${quizId} .fill-in-input`).forEach(input => {
+                const answer = input.dataset.answer.replace(/&quot;/g, '"');
+                const isCorrect = input.value.trim().toLowerCase() === answer.toLowerCase();
+                input.classList.toggle('correct', isCorrect);
+                input.classList.toggle('incorrect', !isCorrect);
+            });
+        });
+    });
+    
+    // --- General Reveal Button Logic ---
+    document.querySelectorAll('.reveal-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const quizId = btn.dataset.quiz;
+            document.querySelectorAll(`#quiz-${quizId} [data-answer]`).forEach(answerEl => {
+                answerEl.classList.toggle('hidden');
+            });
+            btn.textContent = btn.textContent.includes('顯示') ? '隱藏答案' : '顯示答案';
+        });
+    });
+
+    // --- Quiz E Logic ---
+    document.querySelectorAll('#quiz-E .feedback-buttons').forEach(div => {
+        div.querySelectorAll('button').forEach(btn => {
+            btn.className = 'px-3 py-1 border rounded transition-colors hover:bg-slate-100';
+            btn.addEventListener('click', () => {
+                const isCorrect = btn.textContent === div.dataset.answer;
+                div.querySelectorAll('button').forEach(b => b.disabled = true);
+                btn.classList.add(isCorrect ? 'bg-green-200 border-green-500' : 'bg-red-200 border-red-500');
+            });
+        });
+    });
+});
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>孝澤的學測終極戰術板 (20分鐘急救版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%); /* 緊急紅色調背景 */
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .tactic-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .tactic-badge.red { background-color: #fee2e2; color: #991b1b; }
+        .tactic-badge.orange { background-color: #ffedd5; color: #9a3412; }
+        .tactic-badge.slate { background-color: #f1f5f9; color: #475569; }
+
+        .blueprint-grid {
+            background-image: linear-gradient(#e5e7eb 1px, transparent 1px),
+            linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .emergency-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .7; }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen pb-12 text-slate-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:max-w-4xl">
+        
+        <!-- Header: 生存模式 -->
+        <header class="text-center py-6 mb-4">
+            <div class="inline-flex items-center justify-center p-3 bg-red-100 rounded-full shadow-sm mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h1 class="text-3xl font-bold text-red-700 mb-1">20分鐘生存模式</h1>
+            <p class="text-red-500 font-bold text-lg">EMERGENCY PROTOCOL: Finish > Perfect</p>
+        </header>
+
+        <!-- 緊急宣告 -->
+        <div class="mb-8 border-4 border-red-500 rounded-2xl bg-white p-6 shadow-xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">CRITICAL</div>
+            <h2 class="text-2xl font-bold text-red-600 mb-4 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                極限狀況準則
+            </h2>
+            <div class="grid sm:grid-cols-3 gap-4 text-center">
+                <div class="bg-red-50 p-3 rounded-lg border border-red-100">
+                    <span class="block text-xl font-bold text-red-800 mb-1">捨棄漂亮字</span>
+                    <span class="text-sm text-red-600">全部用國中單字，沒時間想了！</span>
+                </div>
+                <div class="bg-red-50 p-3 rounded-lg border border-red-100">
+                    <span class="block text-xl font-bold text-red-800 mb-1">捨棄長難句</span>
+                    <span class="text-sm text-red-600">S+V+O 就好，一句接一句。</span>
+                </div>
+                <div class="bg-red-50 p-3 rounded-lg border border-red-100">
+                    <span class="block text-xl font-bold text-red-800 mb-1">一定要有結尾</span>
+                    <span class="text-sm text-red-600">最後2分鐘不管寫到哪，立刻寫 Therefore 結尾。</span>
+                </div>
+            </div>
+        </div>
+
+        <main class="space-y-8">
+
+            <!-- 20分鐘配速 (CRITICAL) -->
+            <section class="card p-6 border-l-8 border-l-slate-700 bg-slate-50">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center">
+                        <span class="animate-pulse mr-2 text-red-600">●</span> 
+                        20分鐘極限配速
+                    </h3>
+                </div>
+                <div class="relative pt-6 pb-2">
+                    <div class="h-3 bg-gray-300 rounded-full overflow-hidden flex">
+                        <div class="w-[10%] bg-blue-500 h-full"></div>
+                        <div class="w-[80%] bg-red-500 h-full"></div>
+                        <div class="w-[10%] bg-green-500 h-full"></div>
+                    </div>
+                    <div class="flex justify-between mt-3 text-xs sm:text-sm font-bold">
+                        <div class="text-left w-1/4">
+                            <span class="text-blue-700 block text-lg">0-2 min</span>
+                            關鍵字藍圖
+                        </div>
+                        <div class="text-center w-2/4">
+                            <span class="text-red-600 block text-lg emergency-pulse">2-18 min</span>
+                            狂寫猛衝 (不準停)
+                        </div>
+                        <div class="text-right w-1/4">
+                            <span class="text-green-700 block text-lg">18-20 min</span>
+                            強制結尾+檢查
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 戰術零：2分鐘藍圖 (Simplified) -->
+            <section class="card p-6 border-l-8 border-l-orange-500 relative">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-slate-800">
+                        <span class="tactic-badge orange mr-2">0-2 min</span>
+                        極速藍圖 (只寫關鍵字)
+                    </h3>
+                </div>
+
+                <div class="blueprint-grid p-4 rounded-xl border-2 border-slate-300 border-dashed bg-white">
+                    <p class="text-sm text-red-500 font-bold mb-3 text-center">🚫 不准寫句子！只填關鍵字！</p>
+                    <div class="space-y-3 max-w-lg mx-auto text-sm">
+                        <!-- 段落 1 -->
+                        <div class="flex items-center gap-2">
+                            <div class="w-16 bg-slate-800 text-white text-center py-1 rounded font-bold">P1</div>
+                            <div class="flex-1 bg-slate-100 p-2 rounded border border-slate-200">
+                                <span class="text-slate-500">觀點 (Topic):</span> __________
+                            </div>
+                        </div>
+                        <!-- 段落 2 -->
+                        <div class="flex items-center gap-2">
+                            <div class="w-16 bg-slate-800 text-white text-center py-1 rounded font-bold">P2</div>
+                            <div class="flex-1 bg-slate-100 p-2 rounded border border-slate-200">
+                                <span class="text-slate-500">理由 (Why):</span> __________ <br>
+                                <span class="text-slate-500">例子 (Ex):</span> __________
+                            </div>
+                        </div>
+                         <!-- 結論 -->
+                         <div class="flex items-center gap-2">
+                            <div class="w-16 bg-slate-800 text-white text-center py-1 rounded font-bold">End</div>
+                            <div class="flex-1 bg-slate-100 p-2 rounded border border-slate-200">
+                                <span class="text-slate-500">結論 (Re-state):</span> __________
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 戰術一：B計畫單字 (Emergency) -->
+            <section class="card p-6 border-l-8 border-l-red-500">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-slate-800">
+                         <span class="tactic-badge red mr-2">2-18 min</span>
+                        寫作中：單字降級求生
+                    </h3>
+                </div>
+                
+                <p class="text-slate-600 mb-4 bg-red-50 p-3 rounded text-sm font-bold">
+                    ⚠️ 如果你想一個字超過 3 秒鐘，馬上換成國中單字！
+                </p>
+                
+                <div class="grid grid-cols-2 gap-3 text-sm">
+                    <div class="border p-2 rounded bg-slate-50 flex flex-col items-center">
+                        <span class="line-through text-slate-400 text-xs">Beneficial</span>
+                        <span class="font-bold text-red-600 text-lg">Good</span>
+                    </div>
+                    <div class="border p-2 rounded bg-slate-50 flex flex-col items-center">
+                        <span class="line-through text-slate-400 text-xs">Detrimental</span>
+                        <span class="font-bold text-red-600 text-lg">Bad</span>
+                    </div>
+                    <div class="border p-2 rounded bg-slate-50 flex flex-col items-center">
+                        <span class="line-through text-slate-400 text-xs">Establish / Construct</span>
+                        <span class="font-bold text-red-600 text-lg">Build</span>
+                    </div>
+                    <div class="border p-2 rounded bg-slate-50 flex flex-col items-center">
+                        <span class="line-through text-slate-400 text-xs">Utilize</span>
+                        <span class="font-bold text-red-600 text-lg">Use</span>
+                    </div>
+                </div>
+            </section>
+
+             <!-- 戰術二：強制推進器 -->
+             <section class="card p-6 border-l-8 border-l-blue-600">
+                <h3 class="text-xl font-bold text-slate-800 mb-3">
+                     <span class="tactic-badge blue mr-2">2-18 min</span>
+                    卡住怎麼辦？用轉折詞硬接！
+                </h3>
+                <p class="mb-4 text-sm text-slate-600">句子寫完不知道接什麼？寫這三個字，後面隨便掰都能拿分。</p>
+                
+                <div class="flex gap-2">
+                    <div class="flex-1 bg-blue-600 text-white p-3 rounded-lg text-center font-bold">
+                        Besides,<br><span class="text-xs font-normal opacity-75">(除此之外)</span>
+                    </div>
+                    <div class="flex-1 bg-blue-600 text-white p-3 rounded-lg text-center font-bold">
+                        However,<br><span class="text-xs font-normal opacity-75">(然而)</span>
+                    </div>
+                    <div class="flex-1 bg-blue-600 text-white p-3 rounded-lg text-center font-bold">
+                        Therefore,<br><span class="text-xs font-normal opacity-75">(所以)</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 戰術三：生死檢查 -->
+            <section class="card p-6 border-l-8 border-l-green-600">
+                 <h3 class="text-xl font-bold text-slate-800 mb-3">
+                     <span class="tactic-badge green mr-2">18-20 min</span>
+                    最後2分鐘：只看動詞！
+                </h3>
+                <div class="bg-green-50 p-4 rounded-lg border border-green-200 text-green-800 font-bold">
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>每一句都有動詞嗎？</li>
+                        <li>過去式加了 <span class="bg-yellow-200 px-1 text-black">-ed</span> 嗎？</li>
+                        <li>第三人稱單數加了 <span class="bg-yellow-200 px-1 text-black">-s</span> 嗎？</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 連結回首頁 -->
+            <div class="text-center pt-8">
+                <a href="index.html" class="inline-flex items-center justify-center px-8 py-3 border border-slate-300 text-base font-bold rounded-lg text-slate-600 bg-white hover:bg-slate-50 transition">
+                    回到課程總覽
+                </a>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>

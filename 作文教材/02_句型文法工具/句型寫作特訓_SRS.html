@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英文句型寫作特訓 (SRS重組版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        .card-flip { perspective: 1000px; }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .card-flip.flipped .card-inner { transform: rotateY(180deg); }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .card-back { transform: rotateY(180deg); background-color: #f0fdf4; }
+        .card-front { background-color: #ffffff; }
+        
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .star-active { color: #fbbf24; } 
+        .star-inactive { color: #e2e8f0; }
+        
+        /* Word Scramble Styles */
+        .word-chip {
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .word-chip:active { transform: scale(0.95); }
+        .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-slate-800 text-white p-4 shadow-lg sticky top-0 z-10">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold"><i class="fas fa-pen-nib mr-2"></i>句型寫作特訓 <span class="text-xs bg-indigo-500 px-2 py-0.5 rounded ml-2">Hard Mode</span></h1>
+            </div>
+            <div class="text-sm opacity-80 cursor-pointer hover:text-white" onclick="clearData()">
+                <i class="fas fa-trash-alt mr-1"></i> 重置進度
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm mb-6">
+        <div class="max-w-4xl mx-auto flex">
+            <button onclick="switchMode('study')" id="btn-study" class="flex-1 py-4 text-center border-b-2 border-indigo-600 font-bold text-indigo-600 transition-colors hover:bg-slate-50">
+                <i class="fas fa-book-open mb-1 block"></i> 總覽學習
+            </button>
+            <button onclick="switchMode('flashcard')" id="btn-flashcard" class="flex-1 py-4 text-center border-b-2 border-transparent text-slate-500 font-medium transition-colors hover:bg-slate-50 hover:text-indigo-600">
+                <i class="fas fa-layer-group mb-1 block"></i> 智能抽卡
+            </button>
+            <button onclick="switchMode('quiz')" id="btn-quiz" class="flex-1 py-4 text-center border-b-2 border-transparent text-slate-500 font-medium transition-colors hover:bg-slate-50 hover:text-indigo-600">
+                <i class="fas fa-hammer mb-1 block"></i> 造句特訓
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 max-w-4xl pb-10">
+        
+        <!-- View: Study List -->
+        <div id="view-study" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 fade-in">
+            <!-- Content injected by JS -->
+        </div>
+
+        <!-- View: Flashcard -->
+        <div id="view-flashcard" class="hidden flex-col items-center justify-center min-h-[50vh] fade-in relative">
+            <div class="w-full max-w-lg h-80 card-flip cursor-pointer mb-8" onclick="flipCard()">
+                <div class="card-inner bg-white rounded-2xl border border-slate-200" id="flashcard-content">
+                    <!-- Front -->
+                    <div class="card-front relative">
+                        <div class="absolute top-4 right-4 flex gap-1" id="fc-stars"></div>
+                        <span class="absolute top-4 left-4 bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-full font-bold" id="fc-tag">Tag</span>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4 px-4" id="fc-title">Title</h3>
+                        <p class="text-slate-500 text-lg px-4" id="fc-structure">Structure</p>
+                        <p class="mt-8 text-sm text-slate-400">(點擊翻面)</p>
+                    </div>
+                    <!-- Back -->
+                    <div class="card-back border border-green-200">
+                        <h3 class="text-xl font-bold text-green-700 mb-2">Example</h3>
+                        <p class="text-lg text-slate-800 mb-4 italic px-4" id="fc-example">Sentence</p>
+                        <div class="w-full border-t border-green-200 my-2"></div>
+                        <p class="text-slate-600 mt-2 px-4" id="fc-trans">Translation</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-4 w-full max-w-lg justify-between items-center">
+                <button onclick="prevCard()" class="px-6 py-3 bg-white border border-slate-300 rounded-lg shadow-sm hover:bg-slate-50 transition active:scale-95">
+                    <i class="fas fa-arrow-left mr-2"></i> 上一個
+                </button>
+                <div class="text-center">
+                    <span class="text-slate-500 font-mono block" id="fc-counter">1 / 30</span>
+                    <span class="text-xs text-slate-400" id="fc-mastery-text">熟練度: 0</span>
+                </div>
+                <button onclick="nextCard()" class="px-6 py-3 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transition active:scale-95">
+                    下一個 <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- View: Scramble Quiz (New) -->
+        <div id="view-quiz" class="hidden max-w-2xl mx-auto fade-in">
+            <div class="bg-white rounded-2xl shadow-md p-6 md:p-8 border-t-4 border-indigo-500 relative">
+                
+                <!-- Header Info -->
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-sm font-bold text-slate-400">寫作句構重組</span>
+                    <span class="text-sm text-indigo-600 bg-indigo-50 px-2 py-1 rounded" id="quiz-streak-info">此題熟練度: 0</span>
+                </div>
+                
+                <!-- Question Area -->
+                <div class="mb-6">
+                    <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-full font-bold mb-2" id="q-tag">Category</span>
+                    <h2 class="text-xl md:text-2xl font-bold text-slate-800 mb-2" id="q-question">Question Text (Chinese)</h2>
+                    <p class="text-slate-400 text-sm mt-2">請依序點擊下方單字組成正確句子：</p>
+                </div>
+
+                <!-- Answer Zone (Where selected words go) -->
+                <div id="answer-zone" class="min-h-[60px] bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl p-4 mb-6 flex flex-wrap gap-2 items-center transition-colors">
+                    <!-- Selected words injected here -->
+                    <span class="text-slate-400 text-sm italic w-full text-center" id="placeholder-text">點擊下方單字開始造句...</span>
+                </div>
+
+                <!-- Word Bank (Scrambled words) -->
+                <div id="word-bank" class="flex flex-wrap gap-3 justify-center mb-6">
+                    <!-- Scrambled words injected here -->
+                </div>
+
+                <!-- Feedback Area -->
+                <div id="q-feedback" class="hidden mt-4 p-4 rounded-lg bg-slate-100 text-center mb-4">
+                    <!-- Feedback -->
+                </div>
+
+                <!-- Action Button -->
+                <button id="q-next-btn" onclick="nextQuestion()" class="hidden w-full bg-slate-800 text-white py-3 rounded-lg font-bold hover:bg-slate-700 transition shadow-lg transform hover:-translate-y-1">
+                    下一題
+                </button>
+            </div>
+            
+            <div class="text-center mt-8 text-slate-400 text-xs">
+                 * 重組練習能模擬寫作時的思考過程。<br>
+                 必須完全正確排列才能通關。
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Data Source
+        const rawData = [
+            { id: 1, tag: "感官動詞", structure: "S + see/hear + O + V / V-ing", example: "I saw him crossing the street.", trans: "我看見他在過馬路（正在進行）。" },
+            { id: 2, tag: "表花費", structure: "It takes (time) / S spend (time/money)", example: "It took me several hours to solve the problem.", trans: "我花了好幾小時才解決這個問題。" },
+            { id: 3, tag: "表組成", structure: "consist of / be composed of", example: "Water consists of hydrogen and oxygen.", trans: "水是由氫和氧組成的。" },
+            { id: 4, tag: "認為/覺得", structure: "S + find + it + adj + to V...", example: "I find it difficult to master a foreign language.", trans: "我覺得要精通一門外語很難。" },
+            { id: 5, tag: "避免/防止", structure: "keep/stop/prevent ... from V-ing", example: "The heavy rain prevented us from going on a picnic.", trans: "大雨使我們無法去野餐。" },
+            { id: 6, tag: "列舉", structure: "one ... another ... the other", example: "I have three sisters: one is a doctor, another is a lawyer, and the other is a teacher.", trans: "我有三個姐姐：一位是醫生，一位是律師，另一位是老師。" },
+            { id: 7, tag: "配對", structure: "neither A nor B", example: "Neither he nor I know the answer.", trans: "他和我都不知道答案。" },
+            { id: 8, tag: "名詞子句", structure: "that S + V ...", example: "I believe that honesty is the best policy.", trans: "我相信誠實是上策。" },
+            { id: 9, tag: "有可能", structure: "It is likely that ...", example: "It is likely that it will snow tomorrow.", trans: "明天很可能會下雪。" },
+            { id: 10, tag: "據報導", structure: "It is reported/said that ...", example: "It is reported that the typhoon is approaching Taiwan.", trans: "據報導，颱風正在接近台灣。" },
+            { id: 11, tag: "似乎", structure: "It seems that ...", example: "It seems that he is satisfied with the result.", trans: "他似乎對結果很滿意。" },
+            { id: 12, tag: "虛主詞", structure: "It is adj. (+ for sb) + to V", example: "It is impossible for us to finish the work in a day.", trans: "對我們來說，一天內完成工作是不可能的。" },
+            { id: 13, tag: "值得", structure: "It is worthwhile + to V / V-ing", example: "It is worthwhile to see the movie again.", trans: "這部電影值得再看一次。" },
+            { id: 14, tag: "沒必要", structure: "There's no need to V", example: "There is no need to worry about the future.", trans: "沒必要擔心未來。" },
+            { id: 15, tag: "只好", structure: "have no choice but to V", example: "We have no choice but to accept his proposal.", trans: "我們別無選擇，只能接受他的提議。" },
+            { id: 16, tag: "做...有困難", structure: "have trouble/difficulty + V-ing", example: "I have trouble focusing on my studies.", trans: "我無法專注於我的學業。" },
+            { id: 17, tag: "一...就...", structure: "On/Upon + V-ing, S + V", example: "On hearing the news, she burst into tears.", trans: "一聽到這個消息，她就哭了起來。" },
+            { id: 18, tag: "習慣於", structure: "be used to + V-ing", example: "I am not used to staying up late.", trans: "我不習慣熬夜。" },
+            { id: 19, tag: "忍不住", structure: "can't help + V-ing", example: "I couldn't help laughing.", trans: "我忍不住笑了。" },
+            { id: 20, tag: "時間 (完成式)", structure: "By the time S + V", example: "By the time you get there, the movie will have started.", trans: "當你到達那裡時，電影將已經開始了。" },
+            { id: 21, tag: "一...就... (連接詞)", structure: "As soon as S + V", example: "I will call you as soon as I get home.", trans: "我一到家就會打電話給你。" },
+            { id: 22, tag: "因果", structure: "Since/As (因為)", example: "Since you are tired, you should go get some rest.", trans: "既然你累了，你就該去休息。" },
+            { id: 23, tag: "附帶狀況", structure: "with + O + V-ing/p.p.", example: "He listened to music with his eyes closed.", trans: "他閉著眼睛聽音樂。" },
+            { id: 24, tag: "慣用", structure: "Generally speaking", example: "Generally speaking, women live longer than men.", trans: "一般而言，女性比男性長壽。" },
+            { id: 25, tag: "寧願", structure: "would rather V1 than V2", example: "I would rather stay home than go to the movies.", trans: "我寧願待在家也不要去看電影。" },
+            { id: 26, tag: "儘管", structure: "Despite / In spite of", example: "Despite the cold weather, he went swimming.", trans: "儘管天氣很冷，他還是去游泳。" },
+            { id: 27, tag: "而不是", structure: "instead of", example: "We ordered pizza instead of cooking dinner.", trans: "我們叫外送披薩而不是煮晚餐。" },
+            { id: 28, tag: "為了", structure: "with a view to + V-ing", example: "He planted trees with a view to protecting the environment.", trans: "他種樹是為了保護環境。" },
+            { id: 29, tag: "分裂句 (強調)", structure: "It is ... that ...", example: "It was Tom that broke the window.", trans: "打破窗戶的人就是湯姆。" },
+            { id: 30, tag: "如此...以致於", structure: "so ... that ...", example: "She was so busy that she had no time for lunch.", trans: "她是如此忙碌，以致於沒時間吃午餐。" },
+            { id: 31, tag: "太...而不能", structure: "too ... to ...", example: "The box is too heavy for me to carry.", trans: "這箱子太重了我搬不動。" },
+            { id: 32, tag: "再...也不為過", structure: "cannot ... too ...", example: "We cannot overemphasize the importance of health.", trans: "我們再怎麼強調健康的重要性也不為過。" },
+            { id: 33, tag: "Only倒裝", structure: "Only + 條件 + 助 + S + V", example: "Only by working hard can you succeed.", trans: "只有透過努力工作，你才能成功。" }
+        ];
+
+        let grammarData = [];
+        let currentMode = 'study';
+        let currentCardIdx = 0;
+        let quizQueue = [];
+        let currentQuizItem = null;
+        
+        // Scramble specific
+        let currentTargetWords = [];
+        let currentUserWords = [];
+        let hasMadeMistake = false;
+
+        // --- Data Management ---
+        function loadData() {
+            const saved = localStorage.getItem('grammar_mastery_v2'); // New version key
+            const masteryMap = saved ? JSON.parse(saved) : {};
+            
+            grammarData = rawData.map(item => ({
+                ...item,
+                mastery: masteryMap[item.id] || 0 // 0 to 3
+            }));
+        }
+
+        function saveData() {
+            const masteryMap = {};
+            grammarData.forEach(item => {
+                masteryMap[item.id] = item.mastery;
+            });
+            localStorage.setItem('grammar_mastery_v2', JSON.stringify(masteryMap));
+        }
+
+        function clearData() {
+            if(confirm('確定要重置所有學習進度嗎？所有熟練度將歸零。')) {
+                localStorage.removeItem('grammar_mastery_v2');
+                location.reload();
+            }
+        }
+
+        function updateMastery(id, isPerfect) {
+            const item = grammarData.find(i => i.id === id);
+            if (!item) return;
+
+            if (isPerfect) {
+                if (item.mastery < 3) item.mastery++;
+            } else {
+                item.mastery = 0; // Mistakes punish heavily
+            }
+            saveData();
+        }
+
+        // Initialization
+        window.onload = function() {
+            loadData();
+            renderStudyList();
+            setupQuiz();
+            updateFlashcard();
+        };
+
+        // --- Navigation ---
+        function switchMode(mode) {
+            ['study', 'flashcard', 'quiz'].forEach(m => {
+                const btn = document.getElementById(`btn-${m}`);
+                const view = document.getElementById(`view-${m}`);
+                
+                if (m === mode) {
+                    btn.classList.add('border-indigo-600', 'text-indigo-600', 'font-bold');
+                    btn.classList.remove('border-transparent', 'text-slate-500');
+                    view.classList.remove('hidden');
+                    view.classList.add('flex'); 
+                    if(mode === 'study') view.classList.remove('flex'); 
+                    if(mode === 'quiz') {
+                        view.classList.remove('flex');
+                        if (quizQueue.length === 0) setupQuiz();
+                    }
+                } else {
+                    btn.classList.remove('border-indigo-600', 'text-indigo-600', 'font-bold');
+                    btn.classList.add('border-transparent', 'text-slate-500');
+                    view.classList.add('hidden');
+                    view.classList.remove('flex');
+                }
+            });
+            currentMode = mode;
+        }
+
+        // --- Helper: Star Renderer ---
+        function getStarHTML(mastery) {
+            let html = '';
+            for (let i = 0; i < 3; i++) {
+                const colorClass = i < mastery ? 'star-active' : 'star-inactive';
+                html += `<i class="fas fa-star ${colorClass} text-xs"></i>`;
+            }
+            return html;
+        }
+
+        // --- Study & Flashcard (Same as before) ---
+        function renderStudyList() {
+            const container = document.getElementById('view-study');
+            const sortedData = [...grammarData].sort((a, b) => a.mastery - b.mastery);
+            
+            container.innerHTML = sortedData.map((item, index) => `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition duration-200 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full ${item.mastery === 3 ? 'bg-green-400' : (item.mastery === 0 ? 'bg-red-400' : 'bg-yellow-400')}"></div>
+                    <div class="flex justify-between items-start mb-2 pl-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 bg-indigo-50 px-2 py-1 rounded">${item.tag}</span>
+                        <div class="flex gap-1">${getStarHTML(item.mastery)}</div>
+                    </div>
+                    <div class="font-mono text-sm text-slate-500 mb-3 bg-slate-50 p-2 rounded border border-slate-100 break-words">${item.structure}</div>
+                    <p class="text-slate-800 font-medium mb-1">${item.example}</p>
+                    <p class="text-slate-500 text-sm">${item.trans}</p>
+                </div>
+            `).join('');
+        }
+
+        function updateFlashcard() {
+            const item = grammarData[currentCardIdx];
+            const cardEl = document.querySelector('.card-flip');
+            cardEl.classList.remove('flipped');
+            
+            document.getElementById('fc-tag').innerText = item.tag;
+            document.getElementById('fc-title').innerText = item.trans.split('：')[0].split('。')[0]; 
+            document.getElementById('fc-structure').innerText = item.structure;
+            document.getElementById('fc-stars').innerHTML = getStarHTML(item.mastery);
+            document.getElementById('fc-example').innerText = item.example;
+            document.getElementById('fc-trans').innerText = item.trans;
+            document.getElementById('fc-counter').innerText = `${currentCardIdx + 1} / ${grammarData.length}`;
+            document.getElementById('fc-mastery-text').innerText = `熟練度: ${item.mastery}/3`;
+        }
+        function flipCard() { document.querySelector('.card-flip').classList.toggle('flipped'); }
+        function nextCard() { currentCardIdx = (currentCardIdx < grammarData.length - 1) ? currentCardIdx + 1 : 0; updateFlashcard(); }
+        function prevCard() { currentCardIdx = (currentCardIdx > 0) ? currentCardIdx - 1 : grammarData.length - 1; updateFlashcard(); }
+
+        // --- NEW: Scramble Quiz Logic ---
+        
+        function setupQuiz() {
+            let pool = grammarData.filter(i => i.mastery < 3);
+            if (pool.length === 0) pool = [...grammarData]; 
+
+            pool.sort((a, b) => {
+                const weightA = a.mastery + Math.random(); 
+                const weightB = b.mastery + Math.random();
+                return weightA - weightB;
+            });
+
+            quizQueue = pool.slice(0, 5); // 5 questions per round to be intense
+            if(quizQueue.length > 0) renderScrambleQuestion(quizQueue[0]);
+        }
+
+        function renderScrambleQuestion(item) {
+            currentQuizItem = item;
+            hasMadeMistake = false;
+            currentUserWords = [];
+            
+            // Clean and tokenize the sentence
+            // Remove periods for scramble unless you want them as tokens. Let's keep them attached or separate.
+            // Simple split for now, removing final punctuation for cleaner "building".
+            const cleanSentence = item.example.replace(/[.]/g, ''); 
+            currentTargetWords = cleanSentence.split(/\s+/);
+            
+            // Create a shuffled copy for the bank
+            let scrambled = [...currentTargetWords];
+            scrambled.sort(() => Math.random() - 0.5);
+
+            // UI Reset
+            document.getElementById('quiz-streak-info').innerText = `此題熟練度: ${item.mastery}/3`;
+            document.getElementById('q-tag').innerText = item.tag;
+            document.getElementById('q-question').innerText = item.trans;
+            document.getElementById('q-feedback').classList.add('hidden');
+            document.getElementById('q-next-btn').classList.add('hidden');
+            
+            // Render Answer Zone (Empty)
+            const ansZone = document.getElementById('answer-zone');
+            ansZone.innerHTML = `<span class="text-slate-400 text-sm italic w-full text-center" id="placeholder-text">點擊下方單字開始造句...</span>`;
+            ansZone.classList.remove('border-red-400', 'bg-red-50', 'border-green-400', 'bg-green-50');
+
+            // Render Word Bank
+            const bank = document.getElementById('word-bank');
+            bank.innerHTML = scrambled.map((word, idx) => `
+                <button onclick="handleWordClick(this, '${word.replace(/'/g, "\\'")}')" class="word-chip bg-white border border-slate-300 shadow-sm px-4 py-2 rounded-lg font-medium hover:bg-indigo-50 hover:border-indigo-300 text-slate-700">
+                    ${word}
+                </button>
+            `).join('');
+        }
+
+        function handleWordClick(btn, word) {
+            // Check if this is the correct NEXT word
+            const nextIndex = currentUserWords.length;
+            const correctWord = currentTargetWords[nextIndex];
+
+            // Normalize for comparison (remove punctuation if attached in complex cases, but simple split handles most)
+            // For strictness, exact match.
+            
+            if (word === correctWord) {
+                // Correct Logic
+                currentUserWords.push(word);
+                
+                // Move button visual to answer zone (or create new one and hide old)
+                btn.classList.add('opacity-0', 'pointer-events-none'); // Hide from bank
+                
+                const ansZone = document.getElementById('answer-zone');
+                if (document.getElementById('placeholder-text')) document.getElementById('placeholder-text').remove();
+                
+                const newChip = document.createElement('span');
+                newChip.className = "bg-indigo-600 text-white px-3 py-1 rounded shadow-sm font-medium fade-in";
+                newChip.innerText = word;
+                ansZone.appendChild(newChip);
+
+                // Check Completion
+                if (currentUserWords.length === currentTargetWords.length) {
+                    finishQuestion(true);
+                }
+
+            } else {
+                // Wrong Logic
+                hasMadeMistake = true;
+                btn.classList.add('bg-red-100', 'border-red-500', 'text-red-700', 'shake');
+                setTimeout(() => {
+                    btn.classList.remove('bg-red-100', 'border-red-500', 'text-red-700', 'shake');
+                }, 500);
+                
+                const ansZone = document.getElementById('answer-zone');
+                ansZone.classList.add('border-red-300', 'bg-red-50');
+                setTimeout(() => ansZone.classList.remove('border-red-300', 'bg-red-50'), 500);
+            }
+        }
+
+        function finishQuestion(completed) {
+            const feedback = document.getElementById('q-feedback');
+            feedback.classList.remove('hidden');
+            
+            if (!hasMadeMistake) {
+                feedback.innerHTML = `<span class="text-green-700 font-bold"><i class="fas fa-check-circle"></i> 完美！熟練度提升！</span>`;
+                feedback.className = "mt-4 p-4 rounded-lg bg-green-50 text-center mb-4";
+                updateMastery(currentQuizItem.id, true);
+            } else {
+                feedback.innerHTML = `<span class="text-yellow-700 font-bold"><i class="fas fa-exclamation-circle"></i> 完成了，但有失誤。熟練度重置。</span><br><span class="text-sm text-slate-600">再接再厲！</span>`;
+                feedback.className = "mt-4 p-4 rounded-lg bg-yellow-50 text-center mb-4";
+                updateMastery(currentQuizItem.id, false);
+            }
+
+            document.getElementById('q-next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            quizQueue.shift();
+            if (quizQueue.length > 0) {
+                renderScrambleQuestion(quizQueue[0]);
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            const container = document.getElementById('view-quiz');
+            container.innerHTML = `
+                <div class="text-center py-10 fade-in">
+                    <div class="text-6xl text-indigo-600 mb-4"><i class="fas fa-dumbbell"></i></div>
+                    <h2 class="text-3xl font-bold text-slate-800 mb-2">特訓完成</h2>
+                    <p class="text-slate-500 mb-8">你的大腦剛剛經歷了高強度的寫作模擬。</p>
+                    
+                    <button onclick="setupQuiz()" class="bg-indigo-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-indigo-700 transition transform hover:-translate-y-1">
+                        再來一輪
+                    </button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

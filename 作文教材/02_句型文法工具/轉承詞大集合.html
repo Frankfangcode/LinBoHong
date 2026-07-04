@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>澤享的英文同義詞與片語寶典</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 40px;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            background-color: #ecf0f1;
+            margin-bottom: 10px;
+            padding: 12px 18px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        li:hover {
+            transform: scale(1.02);
+        }
+        .term {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .note {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-left: 15px;
+        }
+        .quiz-section {
+            margin-top: 50px;
+            padding: 30px;
+            background-color: #eaf5ff;
+            border: 2px dashed #3498db;
+            border-radius: 12px;
+            text-align: center;
+        }
+        #question {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2980b9;
+        }
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .option-btn {
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid #bdc3c7;
+            background-color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+        }
+        .option-btn:hover:not(:disabled) {
+            background-color: #ecf0f1;
+            border-color: #3498db;
+            transform: translateY(-2px);
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+        .correct {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724 !important;
+        }
+        .wrong {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24 !important;
+        }
+        #feedback {
+            font-size: 1.2em;
+            font-weight: bold;
+            height: 30px;
+        }
+        #next-btn {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            transition: background-color 0.2s;
+        }
+        #next-btn:hover {
+            background-color: #2980b9;
+        }
+        /* --- 響應式設計 (Responsive Web Design) --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 15px 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.3em;
+            }
+            li {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px; /* 在詞彙和註解之間增加一點間距 */
+            }
+            .note {
+                margin-left: 0; /* 移除在電腦版上的左邊距 */
+            }
+            .quiz-section {
+                padding: 20px;
+            }
+            #question {
+                font-size: 1.3em;
+            }
+            .option-btn {
+                padding: 12px;
+                font-size: 1em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>英文同義詞與片語寶典</h1>
+        
+        <p>孝澤，這是我為你準備的專屬學習工具。願它能幫助你更有效率地掌握這些詞彙，在寫作轉承上更上一層樓。</p>
+
+        <div class="quiz-section">
+            <h2>測驗小挑戰</h2>
+            <p>來測試一下你的學習成果吧！</p>
+            <div id="question-container">
+                <p id="question">中文意思會顯示在這裡</p>
+            </div>
+            <div id="options-container" class="options-container">
+                </div>
+            <p id="feedback"></p>
+            <button id="next-btn">下一題</button>
+        </div>
+        <div id="vocabulary-list"></div>
+    </div>
+
+    <script>
+        const vocabularyData = [
+            { category: '轉換與移動', items: [
+                { term: 'transform', note: '轉換' },
+                { term: 'transfer', note: '(v.) 把A移到B, 轉移、換車(交通工具)、調職、過戶 (e.g., He was transferred to the Los Angeles office.)' },
+                { term: 'transport', note: '(v.) 運輸' },
+                { term: 'transmit', note: '傳遞' },
+                { term: 'translate', note: '翻譯' }
+            ]},
+            { category: '補充說明 (此外)', items: [
+                { term: 'in addition, additionally, besides', note: 'adv.' },
+                { term: 'moreover, what\'s more, furthermore', note: 'adv.' },
+                { term: 'apart/aside from that, other than that', note: 'adv.' },
+                { term: 'on top of that, plus', note: 'adv.' },
+                { term: 'in addition to, as well as', note: 'prep.' },
+                { term: 'apart/aside from, on top of', note: 'prep.' },
+                { term: 'beside, other than', note: 'prep.' }
+            ]},
+            { category: '表示原因 (因為)', items: [
+                { term: 'due to, because of, owing to', note: 'prep.' },
+                { term: 'on account of, as a result/consequence of', note: 'prep.' },
+                { term: 'given, thanks to (pos), by virtue of', note: 'prep.' },
+                { term: 'in view of, considering', note: 'prep.' }
+            ]},
+            { category: '表示結果 (因此)', items: [
+                { term: 'hence, therefore, thus', note: 'adv.' },
+                { term: 'consequently, accordingly', note: 'adv.' },
+                { term: 'as a result/consequence', note: 'adv.' },
+                { term: 'whereupon, thereby, in turn', note: 'adv.' },
+                { term: 'for this reason', note: 'adv.' },
+                { term: 'as such', note: '就此而言' },
+                { term: 'in response', note: '因應此情況' }
+            ]},
+            { category: '讓步語氣 (儘管)', items: [
+                { term: 'despite, in spite of, notwithstanding', note: 'prep.' },
+                { term: 'regardless of, disregarding', note: 'prep.' },
+                { term: 'for all, with all', note: 'prep.' }
+            ]},
+            { category: '導致 (動詞片語)', items: [
+                { term: 'result in, lead to', note: 'V.+prep.' },
+                { term: 'bring about/out, contribute to', note: 'V.+prep.' },
+                { term: 'give rise to, devote to, dedicate to', note: 'V.+prep.' }
+            ]},
+            { category: '語氣轉折 (然而/但是)', items: [
+                { term: 'however, nonetheless, nevertheless', note: 'adv.' },
+                { term: 'yet, still, though', note: 'adv.' },
+                { term: 'regardless', note: 'adv.'},
+                { term: 'Whereas', note: '然而(用於比較兩者對比)'}
+            ]},
+            { category: '比較與對比', items: [
+                { term: 'likewise, similarly, in the same way', note: 'adv. 同樣地' },
+                { term: 'conversely, on the contrary, instead', note: 'adv. 相反地' },
+                { term: 'in contrast, rather, on the other hand', note: 'adv. 相反地' }
+            ]},
+            { category: '包含', items: [
+                { term: 'including N, N included', note: 'prep.' },
+            ]},
+            { category: '闡述事實 (事實上)', items: [
+                { term: 'actually, in fact, in effect', note: 'adv.' },
+                { term: 'in reality, as a matter of fact, in truth', note: 'adv.' }
+            ]},
+            { category: '時間順序 (之後)', items: [
+                { term: 'thereafter, consequently, afterwards', note: 'adv.' },
+                { term: 'hereafter, henceforth, subsequently', note: 'adv.' }
+            ]},
+            { category: '位置關係', items: [
+                { term: 'alongside, next to', note: 'prep. 與...並排' }
+            ]},
+            { category: '方法手段 (藉由)', items: [
+                { term: 'by + V-ing', note: 'prep.' },
+                { term: 'with / by way of + N', note: 'prep.' },
+                { term: 'via / through + N/V-ing', note: 'prep.' }
+            ]},
+            { category: '換句話說 (也就是)', items: [
+                { term: 'that is, in other words, that is to say', note: 'adv.' },
+                { term: 'namely, to put it differently', note: 'adv.' }
+            ]},
+            { category: '舉例 (例如)', items: [
+                { term: 'for example, for instance', note: 'adv.' },
+                { term: 'such as, in this case', note: 'adv.' }
+            ]},
+            { category: '總結 (總之)', items: [
+                { term: 'in short, in brief, in conclusion', note: 'adv.' },
+                { term: 'in a word, all in all, to sum up', note: 'adv.' },
+                { term: 'in a nutshell, in sum, in summary', note: 'adv.' },
+                { term: 'by and large, in the final analysis', note: 'adv.' }
+            ]},
+            { category: '關於', items: [
+                { term: 'considering, regarding, respecting', note: 'prep.' },
+                { term: 'in(with) regard to, concerning', note: 'prep.' },
+                { term: 'as for, as to, pertaining to', note: 'prep.' }
+            ]},
+            { category: '一說到', items: [
+                { term: 'when it comes to, speaking of', note: 'prep.' },
+                { term: 'in terms of', note: 'prep.' }
+            ]},
+            { category: '時間點 (到目前為止)', items: [
+                { term: 'so far, to date', note: '' },
+                { term: 'up to now/the present', note: '' }
+            ]},
+            { category: '處理', items: [
+                { term: 'deal with, cope with', note: '' },
+                { term: 'address, tackle, dispose of', note: '' }
+            ]},
+            { category: '追溯回', items: [
+                { term: 'date back to, be traced back to', note: '' },
+                { term: 'originate from, originated in', note: '' }
+            ]},
+            { category: '原生於', items: [
+                { term: 'be native to, be indigenous to', note: '' }
+            ]},
+            { category: '有困難做...', items: [
+                { term: 'have trouble/difficulty/a hard time/problems + V-ing', note: '' }
+            ]},
+            { category: '符合', items: [
+                { term: 'in line with, in accordance with', note: '' },
+                { term: 'to correspond with', note: '' }
+            ]},
+            { category: '幾乎', items: [
+                { term: 'almost, nearly', note: '' },
+                { term: 'as good as', note: '' }
+            ]},
+            { category: '作...功用', items: [
+                { term: 'serve as, function as', note: '' }
+            ]},
+            { category: '一...就...', items: [
+                { term: 'as soon as/the moment/the instant + S + V', note: '' },
+                { term: 'upon/on + N/V-ing', note: '' },
+                { term: 'no sooner had S + pp + than + S + V-ed', note: '倒裝句' },
+                { term: 'Hardly/Scarcely had S + pp + when/before + S + V-ed', note: '倒裝句' }
+            ]},
+            { category: '為了', items: [
+                { term: 'in order to, so as to', note: 'effort to' },
+                { term: 'with a view to, with an eye to, with an aim to', note: '' },
+                { term: 'for the purpose of, with the intention of', note: '' },
+                { term: 'for the sake of', note: '' }
+            ]},
+            { category: '使A免於B', items: [
+                { term: 'keep/stop/hamper/hinder A from B', note: '' },
+                { term: 'guard A against B', note: '' }
+            ]},
+            { category: '視A為B', items: [
+                { term: 'view/regard/perceive/recognize/see/take A as B', note: '' },
+                { term: 'reckon/think of/look upon/refer to A as B', note: '' },
+                { term: 'believe/consider/deem A (to be) B', note: '' }
+            ]},
+            { category: '組成 (大被小)', items: [
+                { term: 'consist of, be composed of', note: '' },
+                { term: 'be made up of, be constituted of', note: '' },
+                { term: 'comprise, be comprised of', note: '' }
+            ]},
+            { category: '與...有關係', items: [
+                { term: 'be linked to, be connected to/with', note: '' },
+                { term: 'be associated with, be relevant to', note: '' }
+            ]},
+            { category: '參與', items: [
+                { term: 'partake, take part in', note: '' },
+                { term: 'be engaged in, be participated in', note: '' }
+            ]},
+            { category: '發生', items: [
+                { term: 'happen, occur (恆主動)', note: '' },
+                { term: 'take place, arise', note: '' }
+            ]},
+            { category: '充滿', items: [
+                { term: 'be filled with, be teeming with, be dripping with', note: '' },
+                { term: 'be packed with, be brimming with, be stuffed with, be bursting with', note: '' }
+            ]},
+            { category: '目前', items: [
+                { term: 'by now, for the time being', note: 'adv.' }
+            ]},
+            { category: '引用俗語', items: [
+                { term: 'Well goes a proverb that...', note: '俗話說得好' },
+                { term: 'Well goes a proverb, "..."', note: '' },
+                { term: 'As a saying runs, "..."', note: '' },
+                { term: 'There is a proverb that...', note: '' }
+            ]},
+            { category: '修飾詞', items: [
+                { term: 'far, much, yet, even, still, a lot, a great deal, a little, way, a bit, rather, a few', note: '修飾比較級' },
+                { term: 'by far the, much the, the very', note: '修飾最高級' }
+            ]},
+            { category: '其他片語', items: [
+                { term: 'lack (vt)', note: '' },
+                { term: 'the lack of', note: '' },
+                { term: 'be lacking in', note: '' },
+                { term: 'path/key/answer/door/access/approach + to (prep.)', note: '通往...的途徑/關鍵' }
+            ]}
+        ];
+        
+        // --- 內容生成 ---
+        const vocabListContainer = document.getElementById('vocabulary-list');
+        vocabularyData.forEach(cat => {
+            const categoryTitle = document.createElement('h2');
+            categoryTitle.textContent = cat.category;
+            vocabListContainer.appendChild(categoryTitle);
+
+            const list = document.createElement('ul');
+            cat.items.forEach(item => {
+                const listItem = document.createElement('li');
+                const termSpan = document.createElement('span');
+                termSpan.className = 'term';
+                termSpan.textContent = item.term;
+                listItem.appendChild(termSpan);
+
+                if (item.note) {
+                    const noteSpan = document.createElement('span');
+                    noteSpan.className = 'note';
+                    noteSpan.textContent = item.note;
+                    listItem.appendChild(noteSpan);
+                }
+                list.appendChild(listItem);
+            });
+            vocabListContainer.appendChild(list);
+        });
+
+        // --- 測驗功能 ---
+        const questionEl = document.getElementById('question');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackEl = document.getElementById('feedback');
+        const nextBtn = document.getElementById('next-btn');
+
+        let quizData = [];
+        let allTerms = [];
+
+        // 建立測驗資料庫
+        const chineseToEnglishMap = new Map();
+        vocabularyData.forEach(cat => {
+            cat.items.forEach(item => {
+                const englishTerms = item.term.split(',').map(t => t.trim());
+                // 處理有特殊說明的，例如 'have trouble... + V-ing'
+                const note = item.note.includes('+') ? item.note : item.note.split(',')[0].trim();
+                let chineseTerm = note;
+
+                if (!note || cat.category.includes(note)) {
+                     chineseTerm = cat.category.split('(')[0].trim();
+                } else if (note.includes('adv.') || note.includes('prep.') || note.includes('v.')) {
+                     chineseTerm = cat.category.split('(')[0].trim();
+                }
+                
+                // 特定修正
+                if (item.term.includes('transfer')) chineseTerm = '轉移/調職';
+                if (item.term.includes('transport')) chineseTerm = '運輸';
+                if (item.term.includes('transmit')) chineseTerm = '傳遞';
+                if (item.term.includes('translate')) chineseTerm = '翻譯';
+                if (item.term.includes('likewise')) chineseTerm = '同樣地';
+                if (item.term.includes('conversely')) chineseTerm = '相反地';
+                if (item.note.includes('與...並排')) chineseTerm = '與...並排';
+                if (cat.category === '藉由') chineseTerm = '藉由';
+                if (item.term.includes('that is')) chineseTerm = '也就是說';
+                if (item.term.includes('for example')) chineseTerm = '例如';
+                if (item.term.includes('in short')) chineseTerm = '總之';
+                if (item.term.includes('regarding')) chineseTerm = '關於';
+                if (item.term.includes('when it comes to')) chineseTerm = '一說到';
+                if (item.term.includes('so far')) chineseTerm = '到目前為止';
+                if (item.term.includes('deal with')) chineseTerm = '處理';
+                if (item.term.includes('date back to')) chineseTerm = '追溯回';
+                if (item.term.includes('be native to')) chineseTerm = '原生於';
+                if (item.term.includes('have trouble')) chineseTerm = '有困難做...';
+                if (item.term.includes('in line with')) chineseTerm = '符合';
+                if (item.term.includes('almost')) chineseTerm = '幾乎';
+                if (item.term.includes('serve as')) chineseTerm = '作...功用';
+                if (item.term.includes('as soon as')) chineseTerm = '一...就...';
+                if (item.term.includes('in order to')) chineseTerm = '為了';
+                if (item.term.includes('keep A from B')) chineseTerm = '使A免於B';
+                if (item.term.includes('view A as B')) chineseTerm = '視A為B';
+                if (item.term.includes('consist of')) chineseTerm = '組成';
+                if (item.term.includes('be linked to')) chineseTerm = '與...有關係';
+                if (item.term.includes('take part in')) chineseTerm = '參與';
+                if (item.term.includes('happen')) chineseTerm = '發生';
+                if (item.term.includes('filled with')) chineseTerm = '充滿';
+                if (item.term.includes('by now')) chineseTerm = '目前';
+
+                // 將所有拆分的片語加入到allTerms，用於隨機產生錯誤選項
+                allTerms.push(...englishTerms);
+                
+                // 將每個英文片語與其對應的中文意思存起來
+                englishTerms.forEach(engTerm => {
+                    if(!chineseToEnglishMap.has(chineseTerm)){
+                        chineseToEnglishMap.set(chineseTerm, []);
+                    }
+                    chineseToEnglishMap.get(chineseTerm).push(engTerm);
+                });
+            });
+        });
+        
+        // 移除重複的 allTerms
+        allTerms = [...new Set(allTerms)];
+
+        // 將 Map 轉換為 quizData 陣列
+        for (let [chinese, englishList] of chineseToEnglishMap.entries()) {
+            quizData.push({ question: chinese, answers: englishList });
+        }
+
+        let currentQuestionIndex;
+        let shuffledQuizData;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startQuiz() {
+            shuffledQuizData = [...quizData];
+            shuffleArray(shuffledQuizData);
+            currentQuestionIndex = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            // 重置狀態
+            feedbackEl.textContent = '';
+            nextBtn.style.display = 'none';
+            optionsContainer.innerHTML = '';
+
+            if (currentQuestionIndex >= shuffledQuizData.length) {
+                questionEl.textContent = '恭喜你完成所有測驗！';
+                feedbackEl.textContent = '點擊按鈕重新開始。';
+                nextBtn.textContent = '重新開始';
+                nextBtn.style.display = 'block';
+                nextBtn.onclick = startQuiz;
+                return;
+            }
+            nextBtn.textContent = '下一題';
+            nextBtn.onclick = () => {
+                currentQuestionIndex++;
+                loadQuestion();
+            };
+
+            const currentQuestion = shuffledQuizData[currentQuestionIndex];
+            questionEl.textContent = `「${currentQuestion.question}」的英文是？`;
+
+            const correctAnswer = currentQuestion.answers[Math.floor(Math.random() * currentQuestion.answers.length)];
+            const options = [correctAnswer];
+
+            // 產生錯誤選項
+            while (options.length < 4) {
+                const randomTerm = allTerms[Math.floor(Math.random() * allTerms.length)];
+                if (!options.includes(randomTerm) && !currentQuestion.answers.includes(randomTerm)) {
+                    options.push(randomTerm);
+                }
+            }
+
+            shuffleArray(options);
+
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.addEventListener('click', () => checkAnswer(button, correctAnswer, currentQuestion.answers));
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedButton, correctAnswer, allCorrectAnswers) {
+            const isCorrect = allCorrectAnswers.includes(selectedButton.textContent);
+
+            Array.from(optionsContainer.children).forEach(btn => {
+                btn.disabled = true;
+                if (allCorrectAnswers.includes(btn.textContent)) {
+                    btn.classList.add('correct');
+                }
+            });
+            
+            if (isCorrect) {
+                feedbackEl.textContent = '答對了，很棒！';
+                feedbackEl.style.color = '#28a745';
+            } else {
+                selectedButton.classList.add('wrong');
+                feedbackEl.textContent = `再加點油！正確答案是 ${correctAnswer}`;
+                feedbackEl.style.color = '#dc3545';
+            }
+            
+            nextBtn.style.display = 'block';
+        }
+
+        // 首次載入
+        startQuiz();
+
+    </script>
+</body>
+</html>

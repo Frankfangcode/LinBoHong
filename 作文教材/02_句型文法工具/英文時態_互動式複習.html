@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>12 英文時態 · 互動式複習網頁</title>
+  <style>
+    :root { --bg:#fdfaf6; --fg:#111827; --muted:#6b7280; --brand:#f97316; --card:#ffffff; --border:#e5e7eb; }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans TC",Arial}
+    .container{max-width:1000px;margin:0 auto;padding:24px}
+    h1{font-size:clamp(24px,4vw,36px);font-weight:900;color:var(--brand);margin:0 0 4px}
+    header p{color:var(--muted);margin:0 0 16px}
+    .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:9999px;padding:8px 12px;background:#fff;cursor:pointer}
+    .pill.active{background:#111827;color:#fff}
+    .row{display:flex;flex-wrap:wrap;gap:8px}
+    section{margin:24px 0}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+    .shadow{box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    .grid{display:grid;gap:12px}
+    @media (min-width:640px){.grid-2{grid-template-columns:1fr 1fr}}
+    .muted{color:var(--muted)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .btn{padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:#fff;cursor:pointer}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .btn.block{display:inline-block}
+    input, select{border:1px solid var(--border);border-radius:10px;padding:10px;width:100%}
+    .answer.ok{background:#ecfdf5;border:1px solid #bbf7d0}
+    .answer.bad{background:#fef2f2;border:1px solid #fecaca}
+    .badge{background:#fef08a;padding:2px 8px;border-radius:6px}
+    .bluebox{background:#eff6ff;border-left:4px solid #bfdbfe;border-radius:8px;padding:12px;margin-top:10px}
+    .tabs{display:flex;gap:8px;justify-content:center}
+    .tabs .pill{background:#fff}
+    .tabs .pill.active{background:#111827;color:#fff}
+    footer{margin:24px 0;text-align:center;color:var(--muted);font-size:14px}
+    .hide{display:none}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header style="text-align:center">
+      <h1>12 英文時態 · 互動式複習網頁</h1>
+      <p>看、記、練、測，一頁完成！</p>
+      <div class="tabs" id="tabs"></div>
+    </header>
+
+    <main>
+      <section id="panel-learn" class="panel">
+        <h2 style="margin:0 0 8px;font-size:22px;font-weight:800">快速複習：12 時態一覽</h2>
+        <div class="row" id="learn-filters"></div>
+        <div class="grid grid-2" id="learn-list"></div>
+      </section>
+
+      <section id="panel-flash" class="panel hide">
+        <h2 style="margin:0 0 8px;font-size:22px;font-weight:800">時態字卡：點擊卡片翻面</h2>
+        <div class="card shadow" id="flash-card" style="min-height:160px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer"></div>
+        <div class="row" style="margin-top:8px">
+          <button class="btn" id="flash-prev">上一張</button>
+          <button class="btn" id="flash-shuffle">隨機</button>
+          <button class="btn" id="flash-next">下一張</button>
+        </div>
+        <div class="muted" style="margin-top:6px">點擊卡片可翻面</div>
+      </section>
+
+      <section id="panel-practice" class="panel hide">
+        <h2 style="margin:0 0 8px;font-size:22px;font-weight:800">造句練習：把 I / breakfast 變成指定時態</h2>
+        <div class="grid grid-2">
+          <label>
+            <div class="muted" style="margin-bottom:6px">選擇時態</div>
+            <select id="practice-tense"></select>
+          </label>
+          <div class="card">
+            <div class="muted">目標句型（以 I / breakfast 為例）： <span class="mono" id="practice-target"></span></div>
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <label class="muted">請輸入你的造句（英文）：</label>
+          <input id="practice-input" placeholder="例如：I eat breakfast." />
+          <div class="row" style="margin-top:8px">
+            <button class="btn" id="practice-check">檢查</button>
+            <button class="btn" id="practice-reset">重置</button>
+            <button class="btn" id="practice-example">看範例</button>
+          </div>
+        </div>
+        <div id="practice-result" class="card answer hide" style="margin-top:10px"></div>
+        <div class="muted" style="margin-top:6px">小提醒：允許常見縮寫（例如 I've / I'll）。</div>
+      </section>
+
+      <section id="panel-quiz" class="panel hide">
+        <h2 style="margin:0 0 8px;font-size:22px;font-weight:800">即時測驗：混合題庫</h2>
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <div class="muted">得分：<b id="quiz-score">0</b></div>
+          <button class="btn" id="quiz-reset">重置得分</button>
+        </div>
+        <div class="card" style="margin-top:10px">
+          <div style="font-weight:700" id="quiz-title">第 1 題</div>
+          <div id="quiz-prompt" style="white-space:pre-wrap;margin:6px 0 10px"></div>
+          <div id="quiz-area"></div>
+          <div class="row" style="margin-top:12px">
+            <button class="btn" id="quiz-submit">送出</button>
+            <button class="btn" id="quiz-next">下一題</button>
+          </div>
+          <div id="quiz-answer" class="card hide" style="margin-top:10px"></div>
+        </div>
+      </section>
+
+      <section id="panel-generator" class="panel hide">
+        <h2 style="margin:0 0 8px;font-size:22px;font-weight:800">動詞產生器：自訂動詞三態，立即生成 12 時態例句</h2>
+        <div class="grid grid-2">
+          <label><div class="muted" style="margin-bottom:6px">原形（base）</div><input id="gen-base" value="eat" /></label>
+          <label><div class="muted" style="margin-bottom:6px">過去式（V2）</div><input id="gen-past" value="ate" /></label>
+          <label><div class="muted" style="margin-bottom:6px">過去分詞（P.P.）</div><input id="gen-pp" value="eaten" /></label>
+        </div>
+        <div class="grid grid-2" id="gen-output" style="margin-top:10px"></div>
+        <div class="muted" style="font-size:12px;margin-top:6px">* 提醒：規則動詞 +ing、三單變化、拼字變化（如 run→running）請依實際拼字調整。</div>
+      </section>
+    </main>
+
+    <footer>
+      <div>© 2025 英文時態複習 · 製作：你最棒的英文老師 ✨</div>
+      <div style="margin-top:4px">靈感來源：使用者提供之「英文時態懶人包」內容</div>
+    </footer>
+  </div>
+
+  <script>
+    const TENSES = [
+      {key:'prs-simple',name:'現在簡單式',en:'Simple Present',form:'(主詞) + 原形動詞 / 三單 +s/es',usage:'表事實或習慣。',example:'I eat breakfast.',zh:'我有吃早餐（習慣）。'},
+      {key:'pst-simple',name:'過去簡單式',en:'Simple Past',form:'(主詞) + 過去式動詞',usage:'過去某時間點做了某事。',example:'I ate breakfast.',zh:'我吃了早餐。'},
+      {key:'fut-simple',name:'未來簡單式',en:'Simple Future',form:'(主詞) + will + 原形動詞',usage:'未來某時間點會做某事。',example:'I will eat breakfast.',zh:'我明早會吃早餐。'},
+      {key:'prs-cont',name:'現在進行式',en:'Present Continuous',form:'(主詞) + am/is/are + V-ing',usage:'現在正在進行；也可表未來計畫。',example:'I am eating breakfast.',zh:'我正在吃早餐。'},
+      {key:'pst-cont',name:'過去進行式',en:'Past Continuous',form:'(主詞) + was/were + V-ing',usage:'過去某時間點正在進行。',example:'I was eating breakfast.',zh:'那時我正在吃早餐。'},
+      {key:'fut-cont',name:'未來進行式',en:'Future Continuous',form:'(主詞) + will be + V-ing',usage:'未來某時間點將正在進行。',example:'I will be eating breakfast.',zh:'到時我會在吃早餐。'},
+      {key:'prs-perf',name:'現在完成式',en:'Present Perfect',form:'(主詞) + have/has + P.P.',usage:'到現在之前已經完成 / 有經驗。',example:'I have eaten breakfast.',zh:'我已經吃過早餐。'},
+      {key:'pst-perf',name:'過去完成式',en:'Past Perfect',form:'(主詞) + had + P.P.',usage:'到過去某時間點之前已完成。',example:'I had eaten breakfast.',zh:'那時之前我就吃過早餐了。'},
+      {key:'fut-perf',name:'未來完成式',en:'Future Perfect',form:'(主詞) + will have + P.P.',usage:'到未來某時間點之前將完成。',example:'I will have eaten breakfast.',zh:'到時我就吃完早餐了。'},
+      {key:'prs-perf-cont',name:'現在完成進行式',en:'Present Perfect Continuous',form:'(主詞) + have/has been + V-ing',usage:'從過去持續到現在（最近一直）。',example:'I have been eating breakfast.',zh:'我最近一直在吃早餐。'},
+      {key:'pst-perf-cont',name:'過去完成進行式',en:'Past Perfect Continuous',form:'(主詞) + had been + V-ing',usage:'直到過去某時持續進行。',example:'I had been eating breakfast.',zh:'直到那時我一直在吃早餐。'},
+      {key:'fut-perf-cont',name:'未來完成進行式',en:'Future Perfect Continuous',form:'(主詞) + will have been + V-ing',usage:'直到未來某時將持續進行（里程碑）。',example:'I will have been eating breakfast.',zh:'到時我將持續吃早餐達一段時間。'},
+    ];
+
+    const ANSWER_PATTERNS = {
+      "prs-simple": [/^i\s+eat\s+breakfast\.?$/i],
+      "pst-simple": [/^i\s+ate\s+breakfast\.?$/i],
+      "fut-simple": [/^(i\s+will\s+eat\s+breakfast\.?|i\'ll\s+eat\s+breakfast\.?)/i],
+      "prs-cont": [/^i\s+am\s+eating\s+breakfast\.?$/i, /^i\'m\s+eating\s+breakfast\.?$/i],
+      "pst-cont": [/^i\s+was\s+eating\s+breakfast\.?$/i],
+      "fut-cont": [/^(i\s+will\s+be\s+eating\s+breakfast\.?|i\'ll\s+be\s+eating\s+breakfast\.?)/i],
+      "prs-perf": [/^i\s+have\s+eaten\s+breakfast\.?$/i, /^i\'ve\s+eaten\s+breakfast\.?$/i],
+      "pst-perf": [/^i\s+had\s+eaten\s+breakfast\.?$/i, /^i\'d\s+eaten\s+breakfast\.?$/i],
+      "fut-perf": [/^(i\s+will\s+have\s+eaten\s+breakfast\.?|i\'ll\s+have\s+eaten\s+breakfast\.?)/i],
+      "prs-perf-cont": [/^i\s+have\s+been\s+eating\s+breakfast\.?$/i, /^i\'ve\s+been\s+eating\s+breakfast\.?$/i],
+      "pst-perf-cont": [/^i\s+had\s+been\s+eating\s+breakfast\.?$/i, /^i\'d\s+been\s+eating\s+breakfast\.?$/i],
+      "fut-perf-cont": [/^(i\s+will\s+have\s+been\s+eating\.?|i\'ll\s+have\s+been\s+eating\.?)/i],
+    };
+
+    const $ = (sel, el=document) => el.querySelector(sel);
+    const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+    const shuffle = (arr) => arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(v=>v[1]);
+    const uniq = (arr) => [...new Set(arr)];
+    const save = (k,v)=>localStorage.setItem(k,JSON.stringify(v));
+    const load = (k,def=null)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):def;}catch{return def;}};
+
+    const tabs = [
+      {id:'learn', name:'學習 Learn'},
+      {id:'flash', name:'字卡 Flashcards'},
+      {id:'practice', name:'練習 Practice'},
+      {id:'quiz', name:'測驗 Quiz'},
+      {id:'generator', name:'動詞產生器'},
+    ];
+
+    function renderTabs(){
+      const wrap = $('#tabs');
+      wrap.innerHTML = '';
+      tabs.forEach(t=>{
+        const b = document.createElement('button');
+        b.className='pill'; b.textContent=t.name; b.dataset.tab=t.id;
+        b.addEventListener('click',()=>activateTab(t.id));
+        wrap.appendChild(b);
+      });
+      activateTab('learn');
+    }
+
+    function activateTab(id){
+      $$('.panel').forEach(p=>p.classList.add('hide'));
+      $('#panel-'+id).classList.remove('hide');
+      $$('#tabs .pill').forEach(b=>b.classList.toggle('active', b.dataset.tab===id));
+      if(id==='flash') updateFlashCard();
+      if(id==='practice') updatePracticeTarget();
+      if(id==='generator') renderGenerator();
+      if(id==='learn') renderLearnList();
+    }
+
+    const groups = { '簡單式':['prs-simple','pst-simple','fut-simple'], '進行式':['prs-cont','pst-cont','fut-cont'], '完成式':['prs-perf','pst-perf','fut-perf'], '完成進行式':['prs-perf-cont','pst-perf-cont','fut-perf-cont'] };
+    let learnFilter='ALL';
+
+    function renderLearnFilters(){
+      const bar = $('#learn-filters');
+      bar.innerHTML='';
+      const mk = (label,val)=>{
+        const btn = document.createElement('button');
+        btn.className='pill'+(learnFilter===val?' active':'');
+        btn.textContent=label; btn.addEventListener('click',()=>{learnFilter=val; renderLearnFilters(); renderLearnList();});
+        bar.appendChild(btn);
+      };
+      mk('全部','ALL');
+      Object.keys(groups).forEach(k=>mk(k,k));
+    }
+
+    function renderLearnList(){
+      renderLearnFilters();
+      const list = $('#learn-list');
+      list.innerHTML='';
+      const keys = learnFilter==='ALL' ? TENSES.map(t=>t.key) : groups[learnFilter];
+      TENSES.filter(t=>keys.includes(t.key)).forEach(t=>{
+        const li = document.createElement('div');
+        li.className='card shadow';
+        li.innerHTML = '<div style="font-weight:700">'+t.name+' <span class="muted" style="font-size:12px">'+t.en+'</span></div>'+
+          '<div class="muted" style="margin-top:4px">用法：'+t.usage+'</div>'+
+          '<div style="margin-top:4px"><span class="badge">公式：</span> '+t.form+'</div>'+
+          '<div class="bluebox">\n            <div class="mono">'+t.example+'</div>\n            <div class="muted" style="font-size:14px">'+t.zh+'</div>\n          </div>';
+        list.appendChild(li);
+      });
+    }
+
+    const flashCards = TENSES.map(t=>({front:t.name+' ( '+t.en+' )', back:t.example+' — '+t.zh}));
+    let flashIndex = 0; let flashFlipped = false;
+
+    function updateFlashCard(){
+      const box = $('#flash-card');
+      const c = flashCards[flashIndex];
+      box.textContent = flashFlipped ? c.back : c.front;
+    }
+    function bindFlash(){
+      $('#flash-card').addEventListener('click',function(){flashFlipped=!flashFlipped; updateFlashCard();});
+      $('#flash-prev').addEventListener('click',function(){flashIndex=(flashIndex-1+flashCards.length)%flashCards.length; flashFlipped=false; updateFlashCard();});
+      $('#flash-next').addEventListener('click',function(){flashIndex=(flashIndex+1)%flashCards.length; flashFlipped=false; updateFlashCard();});
+      $('#flash-shuffle').addEventListener('click',function(){flashIndex=Math.floor(Math.random()*flashCards.length); flashFlipped=false; updateFlashCard();});
+    }
+
+    function renderPracticeSelect(){
+      const sel = $('#practice-tense');
+      sel.innerHTML='';
+      TENSES.forEach(function(t){
+        const opt = document.createElement('option'); opt.value=t.key; opt.textContent=t.name; sel.appendChild(opt);
+      });
+      sel.addEventListener('change', updatePracticeTarget);
+      $('#practice-check').addEventListener('click', checkPractice);
+      $('#practice-reset').addEventListener('click', function(){ $('#practice-input').value=''; showPracticeResult(null); });
+      $('#practice-example').addEventListener('click', function(){ $('#practice-input').value=currentTense().example; });
+      $('#practice-input').addEventListener('keydown',function(e){if(e.key==='Enter') checkPractice();});
+      updatePracticeTarget();
+    }
+    function currentTense(){ var key=$('#practice-tense').value || TENSES[0].key; return TENSES.find(function(t){return t.key===key}); }
+    function updatePracticeTarget(){ $('#practice-target').textContent = currentTense().example; }
+    function showPracticeResult(state){
+      const box = $('#practice-result');
+      if(state===null){ box.classList.add('hide'); box.classList.remove('ok','bad'); box.textContent=''; return; }
+      box.classList.remove('hide');
+      box.classList.toggle('ok', state==='ok');
+      box.classList.toggle('bad', state==='bad');
+      box.textContent = state==='ok' ? '✅ 太棒了！句型正確。' : '❌ 還差一步！留意助動詞、動詞變化或標點。';
+      box.classList.add('answer');
+    }
+    function checkPractice(){
+      const key = $('#practice-tense').value; const val = $('#practice-input').value.trim();
+      const ok = (ANSWER_PATTERNS[key]||[]).some(function(re){return re.test(val)});
+      showPracticeResult(ok?'ok':'bad');
+    }
+
+    function buildQuestionBank(){
+      const bank=[];
+      TENSES.forEach(function(t){ bank.push({type:'mc-tense', prompt:'判斷下列句子的時態：\n“'+t.example+'”', answer:t.key, options: uniq(shuffle(TENSES.map(function(x){return x.key})).slice(0,3).concat(t.key))}); });
+      [
+        { key:'prs-simple', base:'( ) eat breakfast.', ans:'I' },
+        { key:'pst-simple', base:'I ( ) breakfast.', ans:'ate' },
+        { key:'prs-cont', base:'I am ( ) breakfast.', ans:'eating' },
+        { key:'prs-perf', base:'I have ( ) breakfast.', ans:'eaten' },
+        { key:'fut-perf', base:'I will have ( ) breakfast.', ans:'eaten' },
+      ].forEach(function(d){ bank.push({type:'fill', prompt:d.base, answer:d.ans, tense:d.key}); });
+      [
+        { zh:'我正在吃早餐。', key:'prs-cont' },
+        { zh:'我吃了早餐。', key:'pst-simple' },
+        { zh:'我明早會吃早餐。', key:'fut-simple' },
+      ].forEach(function(p){ var t=TENSES.find(function(x){return x.key===p.key}); bank.push({type:'zh2en', prompt:p.zh, answer:t.example}); });
+      return bank;
+    }
+
+    const quiz = { bank: buildQuestionBank(), idx:0, answered:false, userAns:'', score: (function(){try{var v=localStorage.getItem('tense-quiz-score'); return v?JSON.parse(v):0;}catch{return 0;}})() };
+
+    function renderQuiz(){
+      $('#quiz-score').textContent = quiz.score;
+      $('#quiz-reset').addEventListener('click',function(){quiz.score=0; localStorage.setItem('tense-quiz-score',0); $('#quiz-score').textContent=0;});
+      $('#quiz-submit').addEventListener('click',submitQuiz);
+      $('#quiz-next').addEventListener('click',nextQuiz);
+      loadQuizQuestion();
+    }
+
+    function loadQuizQuestion(){
+      const q = quiz.bank[quiz.idx % quiz.bank.length];
+      $('#quiz-title').textContent = '第 '+(quiz.idx+1)+' 題';
+      $('#quiz-prompt').textContent = q.prompt;
+      $('#quiz-answer').classList.add('hide');
+      const area = $('#quiz-area'); area.innerHTML='';
+      quiz.userAns=''; quiz.answered=false;
+      if(q.type==='mc-tense'){
+        const ops = shuffle(uniq(q.options)).slice(0,4);
+        ops.forEach(function(key){
+          const t = TENSES.find(function(x){return x.key===key});
+          const btn = document.createElement('button');
+          btn.className='btn block'; btn.style.textAlign='left'; btn.style.width='100%'; btn.style.margin='4px 0';
+          btn.innerHTML = '<div style="font-weight:600">'+t.name+'</div><div class="muted" style="font-size:12px">'+t.en+'</div>';
+          btn.addEventListener('click',function(){quiz.userAns=key; $$('#quiz-area .btn').forEach(function(b){b.classList.remove('active'); b.style.background='#fff'; b.style.color='';}); btn.classList.add('active'); btn.style.background='#111827'; btn.style.color='#fff';});
+          area.appendChild(btn);
+        });
+      } else if(q.type==='fill' || q.type==='zh2en'){
+        const input = document.createElement('input'); input.placeholder = q.type==='fill'?'填入正確的字':'請翻成英文（可用縮寫）';
+        input.addEventListener('keydown',function(e){if(e.key==='Enter') submitQuiz();});
+        input.addEventListener('input',function(e){quiz.userAns=e.target.value});
+        area.appendChild(input);
+        if(q.type==='fill'){
+          const tip = document.createElement('div'); tip.className='muted'; tip.style.marginTop='6px'; tip.textContent='提示：'+TENSES.find(function(t){return t.key===q.tense}).form; area.appendChild(tip);
+        }
+      }
+    }
+
+    function submitQuiz(){
+      const q = quiz.bank[quiz.idx % quiz.bank.length];
+      var correct=false;
+      if(q.type==='mc-tense'){ correct = quiz.userAns===q.answer; }
+      else if(q.type==='fill'){ correct = (quiz.userAns||'').trim().toLowerCase() === q.answer.toLowerCase(); }
+      else if(q.type==='zh2en'){
+        const key = TENSES.find(function(t){return t.example===q.answer}).key;
+        correct = (ANSWER_PATTERNS[key]||[]).some(function(re){return re.test((quiz.userAns||'').trim())});
+      }
+      quiz.answered=true;
+      const ans = $('#quiz-answer'); ans.classList.remove('hide'); ans.innerHTML='';
+      if(correct){ quiz.score++; localStorage.setItem('tense-quiz-score',JSON.stringify(quiz.score)); $('#quiz-score').textContent=quiz.score; }
+      const label = document.createElement('div'); label.style.fontWeight='600'; label.style.marginBottom='4px'; label.textContent='答案'; ans.appendChild(label);
+      if(q.type==='mc-tense'){
+        const t = TENSES.find(function(x){return x.key===q.answer}); ans.innerHTML += '正確時態：'+t.name+'（'+t.en+'）';
+      } else if(q.type==='fill'){
+        ans.innerHTML += '正確填空：<span class="mono">'+q.answer+'</span>';
+      } else { ans.innerHTML += '其中一個標準答案：<span class="mono">'+q.answer+'</span>'; }
+    }
+
+    function nextQuiz(){ quiz.idx++; loadQuizQuestion(); }
+
+    function renderGenerator(){ updateGeneratorOutput(); ['gen-base','gen-past','gen-pp'].forEach(function(id){ $('#'+id).addEventListener('input',updateGeneratorOutput); }); }
+    function updateGeneratorOutput(){
+      const base=$('#gen-base').value||''; const past=$('#gen-past').value||''; const pp=$('#gen-pp').value||'';
+      const sentences = {
+        'prs-simple': 'I '+base+' breakfast.',
+        'pst-simple': 'I '+past+' breakfast.',
+        'fut-simple': 'I will '+base+' breakfast.',
+        'prs-cont': 'I am '+base+'ing breakfast.',
+        'pst-cont': 'I was '+base+'ing breakfast.',
+        'fut-cont': 'I will be '+base+'ing breakfast.',
+        'prs-perf': 'I have '+pp+' breakfast.',
+        'pst-perf': 'I had '+pp+' breakfast.',
+        'fut-perf': 'I will have '+pp+' breakfast.',
+        'prs-perf-cont': 'I have been '+base+'ing breakfast.',
+        'pst-perf-cont': 'I had been '+base+'ing breakfast.',
+        'fut-perf-cont': 'I will have been '+base+'ing breakfast.',
+      };
+      const wrap = $('#gen-output'); wrap.innerHTML='';
+      TENSES.forEach(function(t){
+        const box = document.createElement('div'); box.className='card';
+        box.innerHTML = '<div class="muted" style="font-size:14px">'+t.name+'</div><div class="mono">'+sentences[t.key]+'</div>';
+        wrap.appendChild(box);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded',function(){
+      renderTabs();
+      renderLearnList();
+      bindFlash();
+      renderPracticeSelect();
+      renderQuiz();
+    });
+  </script>
+</body>
+</html>
+

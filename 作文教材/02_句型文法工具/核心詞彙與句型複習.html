@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學測英文作文核心詞彙與句型複習</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        p.instructions {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        ol {
+            list-style-type: none;
+            padding-left: 0;
+            counter-reset: question-counter;
+        }
+        li {
+            background-color: #fdfdfd;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-left: 5px solid #bdc3c7;
+            counter-increment: question-counter;
+            position: relative;
+        }
+        li::before {
+            content: counter(question-counter) ". ";
+            font-weight: bold;
+            color: #3498db;
+        }
+        .word-bank {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .word-bank-item {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 0.95em;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            transition: background-color 0.2s;
+        }
+        .blank-container {
+            display: inline-block;
+            position: relative;
+            min-width: 120px;
+            text-align: center;
+        }
+        .blank {
+            border-bottom: 1.5px solid #7f8c8d;
+            padding: 0 20px;
+            color: transparent; /* 讓底線可以被文字撐開但文字本身看不見 */
+            user-select: none;
+        }
+        .answer-text {
+            display: none; /* 初始隱藏 */
+            color: #2980b9;
+            font-weight: bold;
+            padding: 2px 4px;
+            background-color: #eaf5ff;
+            border-radius: 4px;
+        }
+        .answer-text.revealed {
+            display: inline; /* 點擊後顯示 */
+        }
+        .toggle-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .toggle-btn.toggled {
+            background-color: #e74c3c;
+        }
+         .toggle-btn.toggled:hover {
+            background-color: #c0392b;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>學測英文作文核心詞彙與句型複習</h1>
+        <p class="instructions">思考空格答案後，點擊下方按鈕以顯示或隱藏答案。</p>
+
+        <form id="quizForm">
+            <!-- Part I -->
+            <section>
+                <h2>第一部分：動詞片語填充 (共 15 題)</h2>
+                <div class="word-bank">
+                    <span class="word-bank-item">account for</span><span class="word-bank-item">boil down to</span><span class="word-bank-item">break down</span><span class="word-bank-item">break out</span><span class="word-bank-item">bring up</span><span class="word-bank-item">call off</span><span class="word-bank-item">carry out</span><span class="word-bank-item">catch up with</span><span class="word-bank-item">come up with</span><span class="word-bank-item">cut down on</span><span class="word-bank-item">do away with</span><span class="word-bank-item">get along with</span><span class="word-bank-item">get over</span><span class="word-bank-item">give in to</span><span class="word-bank-item">hand in</span>
+                </div>
+                <small style="display: block; margin-top: -5px; margin-bottom: 20px; color: #777;">(請注意動詞形式變化)</small>
+                <ol>
+                    <li id="q1">After a long discussion, the team finally managed to <span class="blank-container"><span class="blank">come up with</span><span class="answer-text">come up with</span></span> a creative solution to the marketing problem.</li>
+                    <li id="q2">The heavy rainstorm forced the organizers to <span class="blank-container"><span class="blank">call off</span><span class="answer-text">call off</span></span> the outdoor concert.</li>
+                    <li id="q3">It took me a long time to <span class="blank-container"><span class="blank">get over</span><span class="answer-text">get over</span></span> the shock of failing the exam.</li>
+                    <li id="q4">The success of any project ultimately <span class="blank-container"><span class="blank">boils down to</span><span class="answer-text">boils down to</span></span> teamwork and communication.</li>
+                    <li id="q5">Students are required to <span class="blank-container"><span class="blank">hand in</span><span class="answer-text">hand in</span></span> their reports by the end of this week.</li>
+                    <li id="q6">The government is considering a new policy to <span class="blank-container"><span class="blank">do away with</span><span class="answer-text">do away with</span></span> single-use plastics to protect the environment.</li>
+                    <li id="q7">Many historians believe that the economic crisis was one of the factors that caused the war to <span class="blank-container"><span class="blank">break out</span><span class="answer-text">break out</span></span>.</li>
+                    <li id="q8">My scooter <span class="blank-container"><span class="blank">broke down</span><span class="answer-text">broke down</span></span> again on my way to school; I really need to get it fixed.</li>
+                    <li id="q9">Even when he felt immense pressure, the leader refused to <span class="blank-container"><span class="blank">give in to</span><span class="answer-text">give in to</span></span> the unreasonable demands.</li>
+                    <li id="q10">If you want to be healthier, you should <span class="blank-container"><span class="blank">cut down on</span><span class="answer-text">cut down on</span></span> the amount of sugar in your diet.</li>
+                    <li id="q11">He was asked to <span class="blank-container"><span class="blank">account for</span><span class="answer-text">account for</span></span> his strange behavior during the meeting.</li>
+                    <li id="q12">Although I started late, I studied hard and finally <span class="blank-container"><span class="blank">caught up with</span><span class="answer-text">caught up with</span></span> the rest of the class.</li>
+                    <li id="q13">She finds it difficult to <span class="blank-container"><span class="blank">get along with</span><span class="answer-text">get along with</span></span> her new colleagues because they have very different working styles.</li>
+                    <li id="q14">Parents should be careful when they <span class="blank-container"><span class="blank">bring up</span><span class="answer-text">bring up</span></span> the topic of future careers with their children.</li>
+                    <li id="q15">The scientist will <span class="blank-container"><span class="blank">carry out</span><span class="answer-text">carry out</span></span> a detailed study on the effects of climate change.</li>
+                </ol>
+            </section>
+
+            <!-- Part II -->
+            <section>
+                <h2>第二部分：轉承詞填充 (共 5 題)</h2>
+                 <div class="word-bank">
+                    <span class="word-bank-item">As a result</span><span class="word-bank-item">Furthermore</span><span class="word-bank-item">However</span><span class="word-bank-item">Despite</span><span class="word-bank-item">On the other hand</span>
+                </div>
+                <ol start="16">
+                    <li id="q16">The team practiced relentlessly for months. <span class="blank-container"><span class="blank">As a result</span><span class="answer-text">As a result</span></span>, they won the championship with ease.</li>
+                    <li id="q17"><span class="blank-container"><span class="blank">Despite</span><span class="answer-text">Despite</span></span> the traffic jam, we still managed to arrive at the airport on time.</li>
+                    <li id="q18">The new smartphone has a larger screen and a longer battery life. <span class="blank-container"><span class="blank">Furthermore</span><span class="answer-text">Furthermore</span></span>, its camera is significantly improved.</li>
+                    <li id="q19">Living in the city offers many job opportunities. <span class="blank-container"><span class="blank">On the other hand</span><span class="answer-text">On the other hand</span></span>, the cost of living is extremely high.</li>
+                    <li id="q20">He felt confident about his presentation. <span class="blank-container"><span class="blank">However</span><span class="answer-text">However</span></span>, when he stood on the stage, he was too nervous to speak a word.</li>
+                </ol>
+            </section>
+            
+            <!-- Part III -->
+            <section>
+                <h2>第三部分：翻譯題 (共 10 題)</h2>
+                <ol start="21">
+                    <li id="q21">當提到學習新語言的挑戰時，我總是感到不知所措。<br><span class="blank-container"><span class="blank">When it comes to the challenges of learning a new language, I am always overwhelmed.</span><span class="answer-text">When it comes to the challenges of learning a new language, I am always overwhelmed.</span></span></li>
+                    <li id="q22">他在舞台上充滿自信的表現，與他私下害羞的個性形成了強烈的對比。<br><span class="blank-container"><span class="blank">His confident performance on stage made a sharp contrast with his shy personality in private.</span><span class="answer-text">His confident performance on stage made a sharp contrast with his shy personality in private.</span></span></li>
+                    <li id="q23">當我聽到那個好消息時，我如釋重負地鬆了一口氣。<br><span class="blank-container"><span class="blank">When I heard the good news, I sighed with relief.</span><span class="answer-text">When I heard the good news, I sighed with relief.</span></span></li>
+                    <li id="q24">這整個事件來得太突然，簡直是個晴天霹靂。<br><span class="blank-container"><span class="blank">The whole incident was a bolt from the blue.</span><span class="answer-text">The whole incident was a bolt from the blue.</span></span></li>
+                    <li id="q25">這趟旅程使我完全意識到，團隊合作是成功的關鍵。<br><span class="blank-container"><span class="blank">This journey made me perfectly aware that teamwork is the key to success.</span><span class="answer-text">This journey made me perfectly aware that teamwork is the key to success.</span></span></li>
+                    <li id="q26">就是直到那次志工服務後，我才領悟到付出的真正價值。<br><span class="blank-container"><span class="blank">It was not until that volunteer service that I realized the true value of giving.</span><span class="answer-text">It was not until that volunteer service that I realized the true value of giving.</span></span></li>
+                    <li id="q27">若非這次的失敗，我現在仍然不知道自己準備得有多麼不足。<br><span class="blank-container"><span class="blank">But for this failure, I would still be ignorant of how underprepared I was.</span><span class="answer-text">But for this failure, I would still be ignorant of how underprepared I was.</span></span></li>
+                    <li id="q28">這次的交流計畫使我的心胸開放，也開闊了我的國際視野。<br><span class="blank-container"><span class="blank">This exchange program opened my mind and broadened my global horizon.</span><span class="answer-text">This exchange program opened my mind and broadened my global horizon.</span></span></li>
+                    <li id="q29">我老師的鼓勵激勵我付出更大的努力去追尋我的夢想。<br><span class="blank-container"><span class="blank">My teacher's encouragement inspires me to greater efforts to pursue my dream.</span><span class="answer-text">My teacher's encouragement inspires me to greater efforts to pursue my dream.</span></span></li>
+                    <li id="q30">令我十分喜悅地，我申請的大學錄取我了。<br><span class="blank-container"><span class="blank">Much to my great joy, I was accepted by the university I applied for.</span><span class="answer-text">Much to my great joy, I was accepted by the university I applied for.</span></span></li>
+                </ol>
+            </section>
+
+            <button type="button" class="toggle-btn" id="toggleBtn" onclick="toggleAnswers()">顯示答案</button>
+
+        </form>
+    </div>
+
+    <script>
+        let answersVisible = false;
+
+        function toggleAnswers() {
+            const btn = document.getElementById('toggleBtn');
+            const answerElements = document.querySelectorAll('.answer-text');
+            const blankElements = document.querySelectorAll('.blank');
+
+            answersVisible = !answersVisible; // 切換狀態
+
+            if (answersVisible) {
+                // 顯示答案
+                answerElements.forEach(el => el.classList.add('revealed'));
+                blankElements.forEach(el => el.style.display = 'none');
+                btn.textContent = '隱藏答案';
+                btn.classList.add('toggled');
+            } else {
+                // 隱藏答案
+                answerElements.forEach(el => el.classList.remove('revealed'));
+                blankElements.forEach(el => el.style.display = 'inline');
+                btn.textContent = '顯示答案';
+                btn.classList.remove('toggled');
+            }
+        }
+    </script>
+
+</body>
+</html>
+

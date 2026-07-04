@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 6 敘述文</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif TC', serif; /* 內文預設為襯線體 */
+            background-color: #fef2f2; /* 書頁淡粉背景 */
+            color: #3d4451;
+            line-height: 1.8;
+        }
+        .font-sans-tc {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif; /* 標題使用無襯線體 */
+        }
+        .book-page-container {
+            max-width: 960px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #fbcfe8;
+        }
+        .content-card {
+            background-color: #fff;
+            border-left: 4px solid #f472b6; /* 粉色左邊框 */
+            padding: 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            margin-bottom: 1.5rem;
+        }
+        .example-box {
+            background-color: #fdf2f8; /* 淡粉色範例背景 */
+            border: 1px solid #fbcfe8;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.375rem;
+        }
+        .draggable {
+            cursor: move;
+            user-select: none;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.375rem;
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+            text-align: left;
+        }
+        .draggable-handle {
+            font-weight: bold;
+            flex-shrink: 0;
+            color: #be185d;
+            padding-top: 0.125rem;
+        }
+        .drop-zone {
+            min-height: 80px;
+            border: 2px dashed #fda4af;
+            background-color: #fff1f2;
+            transition: background-color 0.3s ease;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+        .drop-zone.drag-over {
+            background-color: #ffe4e6;
+        }
+        .feedback {
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-left: 12px;
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        .feedback.correct { color: #166534; background-color: #dcfce7; }
+        .feedback.incorrect { color: #991b1b; background-color: #fee2e2; }
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background-color: #fefefe; margin: 10% auto; padding: 24px; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: 8px; position: relative; }
+        .close-button { color: #aaa; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close-button:hover, .close-button:focus { color: black; }
+        blockquote p { margin-bottom: 0.5rem; }
+        .main-title {
+            color: #db2777; /* 桃紅色主標題 */
+            transform: rotate(-2deg);
+        }
+        .section-title {
+            color: #be185d; /* 深桃紅色段落標題 */
+        }
+        .custom-btn {
+            background-color: #db2777;
+            color: white;
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            transition: background-color 0.2s;
+        }
+        .custom-btn:hover {
+            background-color: #be185d;
+        }
+        .custom-btn-secondary {
+            background-color: #a1a1aa;
+        }
+        .custom-btn-secondary:hover {
+            background-color: #71717a;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="book-page-container mx-auto my-8 p-8 md:p-12 rounded-lg">
+
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h2 class="text-xl font-semibold text-gray-500 font-sans-tc">PART II 實用寫作文體 (Writing Genres)</h2>
+            <h1 class="text-4xl md:text-5xl font-bold mt-2 font-sans-tc main-title">Unit 6 敘述文</h1>
+        </header>
+        
+        <div class="flex flex-col md:flex-row gap-8 mb-12 items-center">
+             <!-- Introduction Section -->
+            <section class="flex-1">
+                <p class="text-lg leading-relaxed">敘述文 (narrative writing) 是描述人物經歷或事件發生過程的文體，也就是俗稱的說故事 (storytelling)。其實日常生活中，很多說話的內容就具有敘述性質，譬如敘述一位值得尊敬的人、一件難忘的事、朋友間分享的親身經歷、生活札記、電影情節、小說、童話故事、名人傳記、新聞報導等。說故事，尤其是真人真事的故事，是一種很具說服力的寫作文體。作家常用敘述文來分享重要的人生經驗或用來說明自己的觀點。因此，敘述文可說是一種應用最頻繁的文體。</p>
+                <p class="mt-4 text-lg leading-relaxed">在題材方面，一個人的經驗、事蹟，一件事的發生，尤其是具有啟發性、警惕性、感動性等往往是很好的寫作題材，因為它有人類經驗的共同性，他人也許會因有類似的經驗而產生共鳴，所以生動的敘述文有其獨特性和渲染力。</p>
+            </section>
+             <!-- Illustration -->
+            <aside class="flex-shrink-0 text-center">
+                <img src="https://i.imgur.com/e3uB526.png" alt="書本風格插圖" class="mx-auto" style="width: 200px; height: auto;">
+            </aside>
+        </div>
+
+        <!-- Section 6-1 -->
+        <section class="mb-10">
+            <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-pink-200 font-sans-tc section-title">6-1 敘述文的寫作技巧</h2>
+            <div class="space-y-8">
+                <div class="content-card">
+                    <h3 class="text-2xl font-semibold mb-3 font-sans-tc"><span class="text-pink-600">●</span> 設定情節 (plot)</h3>
+                    <p>第一步先設定好主角和故事，如何開始 (beginning) → 問題、事情或衝突 (conflict/rising action) → 過程/問題/衝突等如何發生 (climax) → 解決方法 (falling action) → 結果 (result)。</p>
+                </div>
+                <div class="content-card">
+                    <h3 class="text-2xl font-semibold mb-3 font-sans-tc"><span class="text-pink-600">●</span> 設定觀點 (point of view)</h3>
+                    <p class="mb-4">最常見的敘事身份與角度為第一人稱和第三人稱。第一人稱是以「我」的口吻或角度來敘述。一般敘述文中，「我」即敘事者 (narrator)，透過「我」的眼睛和感受，給讀者第一手資訊，讓讀者更真實自然體會「我」的經歷。而第三人稱是以旁觀者的角度來敘述文章中的人物、事件、場景等，可以不受空間及時間的限制，以較自由廣闊的角度來做客觀的描述。不論是第一人稱還是第三人稱的敘述都有其優缺點，但重要的是，初學者在寫作練習中，應選擇一種觀點來描述，人稱千萬不可換來換去，否則容易沒有一致性，讓讀者感覺混亂、無所適從。比較下列範例1和2:</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="example-box">
+                            <h4 class="font-bold text-lg mb-2 font-sans-tc text-pink-800">範例 1</h4>
+                            <p class="text-sm font-sans-tc mb-2">本段文章以第一人稱敘述和Jim爭吵的原因、過程和結果。</p>
+                            <blockquote class="border-l-4 border-pink-400 pl-4 text-gray-700">
+                                <p class="italic">Jim and I got into another fight over the mess he made in the living room again. I was trembling with rage after he told me to "stop nagging." With his eyes closed, he said that he had been stressed out and needed some silence. I stood still next to the sofa and waited for an apology from him. However, I almost hit the roof because he just sat there and kept changing channels.</p>
+                                <p class="mt-4 text-sm text-gray-600">我和Jim 又因為他把客廳弄得一團亂而吵架了。在他跟我說：「不要再嘮叨了。」後，我氣得直發抖。他閉上眼睛，說他最近壓力很大，需要安靜。我靜靜地站在沙發旁，等著他向我道歉。然而，我快氣炸了，因為他只是坐在那裡，不停地切換電視頻道。</p>
+                            </blockquote>
+                        </div>
+                        <div class="example-box">
+                            <h4 class="font-bold text-lg mb-2 font-sans-tc text-pink-800">範例 2</h4>
+                             <p class="text-sm font-sans-tc mb-2">本段文章以第三人稱述說一個助人的故事，以第三人稱敘述雖然沒有直接涉及情節發展，卻能以客觀的角度來描述Joe的善行。</p>
+                            <blockquote class="border-l-4 border-pink-400 pl-4 text-gray-700">
+                                <p class="italic">It was starting to get dark. Although snow flurries drifted in the dim light of day, Joe could still notice an elderly lady stranded by the roadside. Apparently, she needed some help. So, he pulled up in front of her Mercedes-Benz and got out. When he approached her, she was worried. Realizing that she was frightened, he said quickly, "I'm here to help, ma'am. By the way, my name is Joe." All she had was a flat tire, but for an old lady, that was bad enough. She thanked him for coming to her aid. Joe just smiled as he put the flat tire into the trunk. She asked him how much she owed him. Joe, however, never thought twice about helping others. He certainly never thought about any kind of payment or reward. To him this wasn't a job, but rather a way to help someone in need, just like those who had given him a hand in the past. He told the lady that if she really wanted to repay him she could help someone else that was in need. He waited until she started her car and drove off. It had been a cold and depressing day, but he felt content as he headed for home.</p>
+                                <p class="mt-4 text-sm text-gray-600">天色漸漸暗了。雖然飄著陣陣細雪，Joe還是注意到有一位老婦人受困在路旁。顯然地，她需要幫助...他告訴那位老婦人，如果她真的想要報答他，她可以幫助其他需要幫助的人...這原本是個既寒冷又令人沮-喪的一天，但Joe 在回家的路上卻感到心滿意足。</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="text-2xl font-semibold mb-3 font-sans-tc"><span class="text-pink-600">●</span> 時間順序 (time order)</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="text-xl font-semibold mb-2 font-sans-tc">順敘法：</h4>
+                            <p>順敘法(chronological order)於敘述時通常照時間的先後順序來說明事情的發展經過，先發生的事先說明，接著依次寫後續發生的事，也是敘述文最常用的敘事順序。</p>
+                             <div class="example-box">
+                                <h5 class="font-bold mb-2 font-sans-tc text-pink-800">範文</h5>
+                                <p class="text-sm font-sans-tc mb-2">本篇文章依時間先後順序說明事情發生的原因、內心的不安、補救的辦法，最後得到原諒和鼓勵。</p>
+                                <blockquote class="border-l-4 border-pink-400 pl-4 text-gray-700">
+                                    <p class="italic">On a quiet Saturday afternoon, my friend and I were bored, so we played the game of throwing stones. I found a stone and threw it. Unfortunately, it was so smooth that it slipped out of my hand and hit my neighbor's window. We were frightened and escaped at the sound of the broken window.</p>
+                                    <p class="italic">For the next few days, I was so worried about myself that I did not think of the old lady and her broken window. Later on, I started to feel guilty. Every day, the old lady greeted me with a warm smile as I passed her the newspaper, but I didn't feel comfortable in her presence anymore.</p>
+                                    <p class="italic">Finally, I made up my mind to save the money which I made from delivering newspapers. In three weeks, I collected seven dollars and put the money in an envelope with an apology letter. I slipped the envelope under her door. After I did so, I felt relieved and couldn't wait to look her straight in the eye once again.</p>
+                                    <p class="italic">The next day, I could happily hand her the newspaper and return the warm smile that I received from her. She thanked me for the newspaper and gave me a bag of cookies. I walked away and opened the bag. I discovered an envelope inside. I opened it up. I was very surprised. There were the seven dollars and a short note that said, "I'm proud of you!"</p>
+                                    <p class="mt-4 text-sm text-gray-600">一個安靜的星期六午後，我和朋友覺得無聊，所以我們玩起丟石頭的遊戲... 最後，我下定決心要把送報賺得的錢存起來... 翌日，我開心地將報紙遞給老婦人... 我發現袋子裡有一個信封... 信封裡有那7塊錢和一張簡短的便條，上面寫著：「我以你為榮！」</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold mb-2 font-sans-tc">倒敘法：</h4>
+                            <p>除了順敘法外，敘述文也可用倒敘法(flashback)的技巧，亦即從現在時間上的一點回溯到過去，然後再回到現在。倒敘法會在文章開頭先描寫事情的結果，接著才敘述事情的開始及經過，因此文章會根據發生時間出現現在式和過去式混用的情況。倒敘法把結果放在故事開頭，能營造出懸疑的氣氛，引起讀者一探究竟的興趣。</p>
+                            <div class="example-box">
+                                <h5 class="font-bold mb-2 font-sans-tc text-pink-800">範文</h5>
+                                 <p class="text-sm font-sans-tc mb-2">本篇文章是用倒敘法，由現在偶然間發現一張全家出遊照片，回溯到拍攝照片的那一天，並敘述當天的情形，結尾再回到照片，表示睹物思人。</p>
+                                <blockquote class="border-l-4 border-pink-400 pl-4 text-gray-700">
+                                    <p class="italic">"While we were doing the cleaning, my daughter accidentally found a picture and asked me who the girl in the picture was. Taking a glimpse at it, I recognized that the picture was taken when I attended a singing contest for the first time. At once, I was brought back to thirty years ago..."</p>
+                                    <p class="mt-4 text-sm text-gray-600">當我們打掃時，我女兒無意間發現一張照片，問我照片中的女孩是誰。我看了一眼，認得那是自己第一次參加歌唱比賽的照片。我一下子回到30年前...</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold mb-2 font-sans-tc">常用轉折詞與時間副詞</h4>
+                            <p>無論順敘或倒敘，最好能用表示時間或先後次序的轉折詞或時間副詞，把時間順序交代清楚，以免讓讀者感到困惑。</p>
+                            <div class="overflow-x-auto mt-4">
+                                <table class="min-w-full bg-white border border-pink-100 rounded-md text-center font-sans-tc">
+                                    <thead class="bg-pink-50"><tr><th class="p-2 border-b border-pink-200">back to (回溯到...)</th><th class="p-2 border-b border-pink-200">afterwards (後來)</th><th class="p-2 border-b border-pink-200">in the long run/at last/in the end/finally (最後)</th></tr></thead>
+                                    <tbody>
+                                        <tr><td class="p-2 border-b border-pink-200">first/to begin with (首先)</td><td class="p-2 border-b border-pink-200">before (在...之前)</td><td class="p-2 border-b border-pink-200">until (直到)</td></tr>
+                                        <tr><td class="p-2 border-b border-pink-200">at first (一開始)</td><td class="p-2 border-b border-pink-200">after (在...之後)</td><td class="p-2 border-b border-pink-200">from now on (從現在起)</td></tr>
+                                        <tr><td class="p-2 border-b border-pink-200">second (第二)</td><td class="p-2 border-b border-pink-200">at that moment (那時)</td><td class="p-2 border-b border-pink-200">before long (不久)</td></tr>
+                                        <tr><td class="p-2 border-b border-pink-200">then (接著,然後)</td><td class="p-2 border-b border-pink-200">meanwhile (同時)</td><td class="p-2 border-b border-pink-200">a few days later (幾天之後)</td></tr>
+                                        <tr><td class="p-2 border-b border-pink-200">next (接著)</td><td class="p-2 border-b border-pink-200">at the same time (同時)</td><td class="p-2 border-b border-pink-200">while/when/as (當)</td></tr>
+                                        <tr><td class="p-2 border-b border-pink-200">the next day (第二天)</td><td class="p-2 border-b border-pink-200">as soon as (一...就)</td><td class="p-2 border-b border-pink-200">after a while (過了一會兒)</td></tr>
+                                        <tr><td class="p-2">later (後來)</td><td class="p-2">nowadays (現今)</td><td class="p-2"></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice A -->
+        <section id="practice-a" class="mb-10">
+            <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-pink-200 font-sans-tc section-title">練習寫寫看 A</h2>
+            <div class="space-y-8">
+                <p class="font-sans-tc">第一人稱的觀點敘述法填 FN (a first-person narrative)，第三人稱的觀點敘述法則填 TN (a third-person narrative)。接著改變人稱 (第一人稱改為第三人稱，第三人稱改為第一人稱) 來重寫各題。第一題為示範。</p>
+                <div class="content-card">
+                     <p class="mb-2"><b class="font-sans-tc">1.</b> Harrison's family has been in the ice-cream business for four generations, and Harrison himself has spent almost his whole life in it as well.</p>
+                     <div class="flex items-center mb-4"><label class="mr-2 font-sans-tc"><input type="radio" name="q1" value="FN" class="mr-1"> FN</label><label class="mr-2 font-sans-tc"><input type="radio" name="q1" value="TN" class="mr-1"> TN</label><button onclick="checkAnswer('q1', 'TN')" class="custom-btn text-sm">檢查</button><span id="feedback-q1" class="feedback"></span></div>
+                     <textarea class="w-full p-2 border rounded-md" placeholder="請將上面句子改寫成第一人稱..."></textarea>
+                     <button onclick="showAnswerModal('ans-a1')" class="mt-2 custom-btn custom-btn-secondary text-sm">顯示範例答案</button>
+                </div>
+                <div class="content-card">
+                     <p class="mb-2"><b class="font-sans-tc">2.</b> Jack Wang is standing at the gate of his new school. He is so nervous that his heart is pounding because today is his first day at an American high school.</p>
+                     <div class="flex items-center mb-4"><label class="mr-2 font-sans-tc"><input type="radio" name="q2" value="FN" class="mr-1"> FN</label><label class="mr-2 font-sans-tc"><input type="radio" name="q2" value="TN" class="mr-1"> TN</label><button onclick="checkAnswer('q2', 'TN')" class="custom-btn text-sm">檢查</button><span id="feedback-q2" class="feedback"></span></div>
+                     <textarea class="w-full p-2 border rounded-md" placeholder="請將上面句子改寫成第一人稱..."></textarea>
+                     <button onclick="showAnswerModal('ans-a2')" class="mt-2 custom-btn custom-btn-secondary text-sm">顯示範例答案</button>
+                </div>
+                <div class="content-card">
+                     <p class="mb-2"><b class="font-sans-tc">3.</b> At that time, I was a primary school student. One day, when I was cleaning the classroom, I picked up a five-dollar bill. Without thinking, I put it in my pocket. Later, Helen, one of my best friends, told me she had lost her money with tears in her eyes. I comforted her and felt regret. I decided to wait until there was no one in the classroom. Then, I put the money in Helen's drawer.</p>
+                     <div class="flex items-center mb-4"><label class="mr-2 font-sans-tc"><input type="radio" name="q3" value="FN" class="mr-1"> FN</label><label class="mr-2 font-sans-tc"><input type="radio" name="q3" value="TN" class="mr-1"> TN</label><button onclick="checkAnswer('q3', 'FN')" class="custom-btn text-sm">檢查</button><span id="feedback-q3" class="feedback"></span></div>
+                     <textarea class="w-full p-2 border rounded-md" placeholder="請將上面句子改寫成第三人稱..."></textarea>
+                     <button onclick="showAnswerModal('ans-a3')" class="mt-2 custom-btn custom-btn-secondary text-sm">顯示範例答案</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6-2 -->
+        <section class="mb-10">
+            <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-pink-200 font-sans-tc section-title">6-2 敘述文的寫作原則</h2>
+            <div class="content-card">
+                <ul class="space-y-4 text-lg">
+                    <li><b class="font-sans-tc"><span class="text-pink-600">●</span> 主旨要清楚：</b>主旨是一篇文章的重點，寫敘述文就是藉由說故事的方式，把主旨傳遞給讀者。敘述文的主旨可以是作者對某一經歷的見解或態度，或是某一經歷對作者的意義或影響。</li>
+                    <li><b class="font-sans-tc"><span class="text-pink-600">●</span> 必須掌握的六個要素：</b>在敘述人物經歷或事情經過的時候，有六個要素，也就是人物(who)、地點(where)、時間(when)、事件(what)、經過(how)和起因(why)，這些要素必須交代清楚。</li>
+                    <li><b class="font-sans-tc"><span class="text-pink-600">●</span> 選擇相關事件來呈現事情發生經過：</b>敘述文不是記流水帳，並不需要把大大小小經過的事情從頭到尾寫下來。作者須仔細選擇與主旨相關的事件來敘述。</li>
+                    <li><b class="font-sans-tc"><span class="text-pink-600">●</span> 描寫人、事、物的細節：</b>敘述文中常有重要的人物或場景，清楚的描寫可讓讀者有身歷其境的感覺。例如敘述地震時，可以描寫作者所在之處天搖地動的情形，這樣可以讓讀者體會作者的恐懼和思念家人的心情。</li>
+                    <li><b class="font-sans-tc"><span class="text-pink-600">●</span> 適時的應用對話：</b>人物之間的對話可以讓讀者彷彿能夠聽到故事中的人物說話一樣，進而拉近讀者與人物之間的距離，使人物更加真實生動。
+                        <div class="grid md:grid-cols-2 gap-4 mt-4 text-base">
+                            <div class="example-box">
+                                <h5 class="font-bold mb-1 font-sans-tc text-pink-800">範例 1</h5>
+                                <blockquote class="text-gray-700 italic border-l-4 border-pink-400 pl-4">My mother was waiting for me in the living room when I arrived home at midnight. "Where have you been all night?" she almost yelled. "I was at a friend's place," I said. "Don't you know I am worried about you?" she complained. "I am not a child anymore," I said impatiently.</blockquote>
+                            </div>
+                            <div class="example-box">
+                                 <h5 class="font-bold mb-1 font-sans-tc text-pink-800">範例 2</h5>
+                                <blockquote class="text-gray-700 italic border-l-4 border-pink-400 pl-4">My mother was waiting for me in the living room when I arrived home at midnight. She asked me angrily where I had been all night. I said that I was at a friend's place. She complained that she was worried about me. I said to her impatiently that I was not a child anymore.</blockquote>
+                            </div>
+                        </div>
+                    </li>
+                    <li><b class="font-sans-tc"><span class="text-pink-600">●</span> 句子結構多變化：</b>除了簡單句外，可以善用對等連接詞形成複合句(compound sentence)，或善用從屬連接詞形成複雜句(complex sentence)。但句子並非越長越好，應視需要長短句交替使用，這樣文章才不會單調無變化。</li>
+                    <li><b class="font-sans-tc"><span class="text-pink-600">●</span> 使用生動的動詞：</b>動詞的精確與否能給讀者不同的感受，精確的動詞能讓故事更有活力，讓讀者更清楚故事內容、角色的性格及感受。</li>
+                    <li><b class="font-sans-tc"><span class="text-pink-600">●</span> 善用有關感覺的表達：</b>敘述文中有許多關於情感的敘述，可以引起讀者共鳴，讓讀者感同身受。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Practice B -->
+        <section id="practice-b" class="mb-10">
+            <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-pink-200 font-sans-tc section-title">練習寫寫看 B</h2>
+            <div class="space-y-8">
+                <div class="content-card">
+                    <h3 class="text-xl font-semibold mb-4 font-sans-tc">1. 從A至I根據邏輯順序，組成一篇敘述童年的文章。</h3>
+                    <div id="source-b1" class="mb-4 p-4 bg-gray-50 rounded-md space-y-2">
+                        <div id="b1-a" draggable="true" class="draggable"><span class="draggable-handle">A</span><span>In the daytime, my cousins and I usually did nothing but play. We liked to play hide-and-seek the most.</span></div>
+                        <div id="b1-b" draggable="true" class="draggable"><span class="draggable-handle">B</span><span>When it was time for bed, I looked forward to some bedtime stories.</span></div>
+                        <div id="b1-c" draggable="true" class="draggable"><span class="draggable-handle">C</span><span>We might also play basketball or baseball.</span></div>
+                        <div id="b1-d" draggable="true" class="draggable"><span class="draggable-handle">D</span><span>My parents would come to my room and take turns telling bedtime stories.</span></div>
+                        <div id="b1-e" draggable="true" class="draggable"><span class="draggable-handle">E</span><span>My childhood was the sweetest time of my life.</span></div>
+                        <div id="b1-f" draggable="true" class="draggable"><span class="draggable-handle">F</span><span>I lived in an extended family with my grandparents, parents, uncle, aunt, and cousins.</span></div>
+                        <div id="b1-g" draggable="true" class="draggable"><span class="draggable-handle">G</span><span>Once in a while, I would go to grocery stores with my grandparents.</span></div>
+                        <div id="b1-h" draggable="true" class="draggable"><span class="draggable-handle">H</span><span>In the evenings, while children were watching TV, the adults were chatting.</span></div>
+                        <div id="b1-i" draggable="true" class="draggable"><span class="draggable-handle">I</span><span>I wish I could go back to the sweet, carefree childhood.</span></div>
+                    </div>
+                    <div id="drop-b1" class="drop-zone rounded-md font-sans-tc">將選項拖曳到此處排序...</div>
+                    <div class="mt-4"><button onclick="checkDragDrop('drop-b1', 'E,F,A,C,G,H,B,D,I')" class="custom-btn">檢查順序</button><button onclick="resetDragDrop('source-b1', 'drop-b1')" class="custom-btn custom-btn-secondary ml-2">重設</button><span id="feedback-b1" class="feedback"></span></div>
+                </div>
+                 <div class="content-card">
+                    <h3 class="text-xl font-semibold mb-4 font-sans-tc">2. 從A至I根據邏輯順序，組成一篇敘述邵族傳奇故事的文章。</h3>
+                    <div id="source-b2" class="mb-4 p-4 bg-gray-50 rounded-md space-y-2">
+                        <div id="b2-a" draggable="true" class="draggable"><span class="draggable-handle">A</span><span>Finally, the spirit got a chance to explain. It complained that the Thao have been blinded by their greed, and they were emptying the lake of its fish.</span></div>
+                        <div id="b2-b" draggable="true" class="draggable"><span class="draggable-handle">B</span><span>Numa then told the tribe's elders what had happened in the lake.</span></div>
+                        <div id="b2-c" draggable="true" class="draggable"><span class="draggable-handle">C</span><span>One day, a group of Thao fishermen found that their fishing nets had been seriously damaged, but no one knew the reason for this.</span></div>
+                        <div id="b2-d" draggable="true" class="draggable"><span class="draggable-handle">D</span><span>To avoid catching baby fish, the Thao no longer used small-mesh nets from then on.</span></div>
+                        <div id="b2-e" draggable="true" class="draggable"><span class="draggable-handle">E</span><span>After he jumped into the water, he headed directly for its deepest area and came upon the answer there-a long-haired spirit was destroying the Thao's fishing nets.</span></div>
+                        <div id="b2-f" draggable="true" class="draggable"><span class="draggable-handle">F</span><span>He made peace with the long-haired spirit before he returned to his tribe.</span></div>
+                        <div id="b2-g" draggable="true" class="draggable"><span class="draggable-handle">G</span><span>Numa, a strong Thao hero, volunteered to go into the lake to find out the cause of it.</span></div>
+                        <div id="b2-h" draggable="true" class="draggable"><span class="draggable-handle">H</span><span>When Numa heard what the spirit said, he was shocked and embarrassed. It dawned on him that the lake had supported his tribe for generations.</span></div>
+                        <div id="b2-i" draggable="true" class="draggable"><span class="draggable-handle">I</span><span>Numa swam quickly toward it and tried to stop it from tearing more of the nets. The two then had a fierce fight underwater for three days.</span></div>
+                    </div>
+                    <div id="drop-b2" class="drop-zone rounded-md font-sans-tc">將選項拖曳到此處排序...</div>
+                    <div class="mt-4"><button onclick="checkDragDrop('drop-b2', 'C,G,E,I,A,H,F,B,D')" class="custom-btn">檢查順序</button><button onclick="resetDragDrop('source-b2', 'drop-b2')" class="custom-btn custom-btn-secondary ml-2">重設</button><span id="feedback-b2" class="feedback"></span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6-3 -->
+        <section class="mb-10">
+            <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-pink-200 font-sans-tc section-title">6-3 敘述文的寫作練習</h2>
+            <div class="content-card">
+                <p class="text-lg font-sans-tc"><b>1. 腦力激盪:</b> 先構想一個故事，並盡量寫出所有想到的支持細節或相關細節，之後去除跟主題沒有相關的細節，再把留下來的細節依邏輯來分類或分段。</p>
+                <p class="text-lg font-sans-tc mt-2"><b>2. 寫大綱:</b> 根據分類的細節擬定大綱和分段，決定每段的主題句、支持句和結論。</p>
+                <p class="text-lg font-sans-tc mt-2"><b>3. 組織文章:</b> 根據敘述文的寫作技巧來組織文章。</p>
+                
+                <div class="example-box">
+                    <h4 class="font-bold text-lg mb-2 font-sans-tc text-pink-800">範文 1: Watching a Horror Movie</h4>
+                     <blockquote class="border-l-4 border-pink-400 pl-4 text-gray-700">
+                        <p class="italic">Last Friday night, I watched a horror movie alone at home. At first, I did not think it would be too scary, so I turned off the light, lay down on the sofa, and watched the film by myself. However, right after the movie started, I found out that I was wrong—it was really scary. I was really terrified when the dead people came alive and turned into zombies. As blood splattered everywhere on the TV screen, the darkness of the room made it even creepier. Finally, I decided to turn off the TV. Just as I was about to head back to my room, I heard footsteps behind me and a voice whispering my name. I tried to tell myself that it was only my imagination, but the voice kept coming back. My heart pounded wildly, and I was very afraid. "It was not my imagination! There really was someone behind the sofa!" At the moment I was just about to pass out, that "someone" turned the light on. To my great relief, it was my mom, saying that she had heard some noise in the living room.</p>
+                        <p class="mt-4 text-sm text-gray-600">上週五晚上，我獨自在家看恐怖片。起初，我不認為片子會太恐怖... 屋裡的黑暗讓這部片更令人毛骨悚然。最後，我決定關掉電視... 就在我幾乎快昏厥的時候，那個人打開燈。令我鬆了一口氣，那是我媽媽，她說她聽到客廳裡有聲音。</p>
+                    </blockquote>
+                </div>
+                <div class="example-box">
+                    <h4 class="font-bold text-lg mb-2 font-sans-tc text-pink-800">範文 2: Toni Morrison: The First African American Woman to Win the Nobel Prize</h4>
+                    <blockquote class="border-l-4 border-pink-400 pl-4 text-gray-700">
+                        <p class="italic">American writer Toni Morrison was born in 1931 in Ohio. She was brought up in an African American family filled with songs and happiness. Her happy family life led to her excellent performance in school.</p>
+                        <p class="italic mt-2">After graduating from college, Morrison worked as a teacher and got married in 1958. Several years later, her marriage began to fail. For a temporary escape, she joined a small writers' group. In the group, each member was required to bring a story for discussion. She wrote a story based on the life of a girl she knew in childhood. The girl had prayed to God for blue eyes. The story was well received by the group, but then she put it away.</p>
+                        <p class="italic mt-2">In 1964, she got divorced and devoted herself to writing. One day, she dusted off the story and decided to make it into a novel. She drew on her memories from childhood and expanded upon them using her imagination so that the characters developed a life of their own. The Bluest Eye was eventually published in 1970. From 1970 to 1992, Morrison published five more novels.</p>
+                        <p class="italic mt-2">In her novels, Morrison brings in different elements of the African American past, their struggles, problems and cultural memory. In Song of Solomon, for example, Morrison tells the story of an African American man and his search for identity in his culture. The novels and other works won her several prizes. In 1993, Morrison received the Nobel Prize in Literature. She is the eighth woman and the first African American woman to win the honor.</p>
+                        <p class="mt-4 text-sm text-gray-600">美國作家 Toni Morrison在1931年出生於俄亥俄州... 在1964年，Morrison 離婚並致力於寫作... 在她的小說中，Morrison帶入非裔美國人過去歷史的不同元素... 在1993年，Morrison 獲頒諾貝爾文學獎。她是第8名女性，也是第一位非裔美國女性得到這份殊榮。</p>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice C -->
+        <section id="practice-c" class="mb-10">
+            <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-pink-200 font-sans-tc section-title">練習寫寫看 C</h2>
+            <div class="content-card">
+                <h3 class="text-2xl font-bold mb-4 font-sans-tc">題目: A Bad Day in My Life</h3>
+                <p class="mb-6 font-sans-tc">根據題目寫出一篇敘述文，其寫作步驟為: 腦力激盪 → 寫出大綱 → 寫出文章 (至少120個單詞)。</p>
+                <div class="space-y-6">
+                    <div>
+                        <label for="brainstorm" class="block text-lg font-semibold mb-2 font-sans-tc">1. 腦力激盪</label>
+                        <textarea id="brainstorm" rows="4" class="w-full p-3 border rounded-md focus:ring-2 focus:ring-pink-300" placeholder="寫下所有你想到的點子..."></textarea>
+                    </div>
+                    <div>
+                        <label for="outline" class="block text-lg font-semibold mb-2 font-sans-tc">2. 寫出大綱</label>
+                        <textarea id="outline" rows="4" class="w-full p-3 border rounded-md focus:ring-2 focus:ring-pink-300" placeholder="主題句：&#10;支持細節："></textarea>
+                    </div>
+                    <div>
+                        <label for="article" class="block text-lg font-semibold mb-2 font-sans-tc">3. 寫出文章</label>
+                        <textarea id="article" rows="8" class="w-full p-3 border rounded-md focus:ring-2 focus:ring-pink-300" placeholder="開始寫作你的文章..."></textarea>
+                    </div>
+                    <button onclick="showAnswerModal('ans-c')" class="custom-btn">查看範例答案</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tip Section -->
+        <footer class="mt-12 text-center">
+             <div class="bg-pink-50 border-t-4 border-pink-300 text-pink-900 p-6 rounded-lg max-w-4xl mx-auto">
+                <h3 class="text-xl font-bold mb-2 font-sans-tc">Tip 寫作提示</h3>
+                <p class="text-left leading-relaxed">練習寫敘述文時，人、事、物皆可入題，如：A Person Who Influences Me Most (影響我最深的人)、An Unforgettable Experience/Lesson(一個難忘的經驗/教訓)、A Wonderful/Busy/Lucky Day (很棒/很忙/幸運的一天)、A Gift/Present I Treasure Most (我最珍惜的禮物)、An Impressive Movie/Book (印象深刻的電影/書籍)、My First Date (我的第一次約會)、My First Watch (我的第一支手錶)等。</p>
+                <p class="text-left leading-relaxed mt-2">重要的是，多多練習才能熟能生巧。多讀多寫是寫作進步的不二法門。</p>
+            </div>
+        </footer>
+    </div>
+    
+    <div id="answer-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeAnswerModal()">&times;</span>
+            <h3 class="text-2xl font-bold mb-4 font-sans-tc section-title">範例答案</h3>
+            <div id="modal-body" class="font-sans-tc">
+                <div id="ans-a1" class="hidden">
+                    <p><b>改寫後 (第一人稱):</b></p>
+                    <p>My family has been in the ice-cream business for four generations, and I myself have spent almost my whole life in it as well.</p>
+                </div>
+                <div id="ans-a2" class="hidden">
+                    <p><b>改寫後 (第一人稱):</b></p>
+                    <p>I am standing at the gate of my new school. I am so nervous that my heart is pounding because today is my first day at an American high school.</p>
+                </div>
+                <div id="ans-a3" class="hidden">
+                    <p><b>改寫後 (第三人稱):</b></p>
+                    <p>At that time, Jack was a primary school student. One day, when he was cleaning the classroom, he picked up a five-dollar bill. Without thinking, he put it in his pocket. Later, Helen, one of his best friends, told him she had lost her money with tears in her eyes. He comforted her and felt regret. He decided to wait until there was no one in the classroom. Then, he put the money in Helen's drawer.</p>
+                </div>
+                <div id="ans-c" class="hidden">
+                     <p><b>主題句：</b>I had a very bad day yesterday.</p>
+                     <p class="mt-2"><b>支持細節：</b></p>
+                     <ul class="list-disc ml-5">
+                        <li>Group A: overslept and forgot to bring an umbrella</li>
+                        <li>Group B: slipped on the sidewalk and broke my glasses</li>
+                        <li>Group C: was teased by my classmates</li>
+                     </ul>
+                     <p class="mt-4"><b>範文：</b></p>
+                     <p>I had a very bad day yesterday. It began when I overslept and missed the bus. Then, as I rushed out of the door, it began to rain. I didn't want to waste any time running back home to get an umbrella, so I simply put my schoolbag under my jacket. Suddenly, I slipped and fell on the wet sidewalk. My glasses flew off, and everyone started looking at me. I felt very embarrassed. However, my bad day didn't end there. As I was trying to find my glasses, a car drove through a puddle of water and splashed water all over me. It was very hard for me to see anything with my face covered with muddy water. I finally found my glasses, but they were broken. Wet and dirty from head to toe, I finally arrived at school. When my classmates saw me, they all broke out into laughter. Yesterday was really not my day.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function checkAnswer(question, correctAnswer) {
+        const selected = document.querySelector(`input[name="${question}"]:checked`);
+        const feedbackEl = document.getElementById(`feedback-${question}`);
+        if (!selected) {
+            feedbackEl.textContent = '請選擇';
+            feedbackEl.className = 'feedback incorrect';
+            return;
+        }
+        feedbackEl.textContent = selected.value === correctAnswer ? '正確！' : '再試一次';
+        feedbackEl.className = selected.value === correctAnswer ? 'feedback correct' : 'feedback incorrect';
+    }
+
+    const modal = document.getElementById('answer-modal');
+    const modalBody = document.getElementById('modal-body');
+    function showAnswerModal(answerId) {
+        Array.from(modalBody.children).forEach(el => el.classList.add('hidden'));
+        const answerDiv = document.getElementById(answerId);
+        if (answerDiv) {
+            answerDiv.classList.remove('hidden');
+            modal.style.display = "block";
+        }
+    }
+    function closeAnswerModal() { modal.style.display = "none"; }
+    window.onclick = function(event) { if (event.target == modal) closeAnswerModal(); }
+
+    let draggedItem = null;
+    document.querySelectorAll('.draggable').forEach(item => {
+        item.addEventListener('dragstart', e => {
+            draggedItem = e.target.closest('.draggable');
+            setTimeout(() => { if(draggedItem) draggedItem.style.opacity = '0.5'; }, 0);
+        });
+        item.addEventListener('dragend', () => {
+            setTimeout(() => { if(draggedItem) draggedItem.style.opacity = '1'; draggedItem = null; }, 0);
+        });
+    });
+    document.querySelectorAll('.drop-zone').forEach(zone => {
+        zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+        zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+        zone.addEventListener('drop', e => {
+            e.preventDefault();
+            zone.classList.remove('drag-over');
+            if (draggedItem) {
+                if (zone.textContent.includes('...')) zone.textContent = '';
+                zone.appendChild(draggedItem);
+            }
+        });
+    });
+    
+    function checkDragDrop(dropZoneId, correctOrderStr) {
+        const dropZone = document.getElementById(dropZoneId);
+        const feedbackEl = document.getElementById(`feedback-${dropZoneId.replace('drop-', '')}`);
+        const items = dropZone.querySelectorAll('.draggable');
+        if (items.length === 0) {
+            feedbackEl.textContent = '請拖曳排序';
+            feedbackEl.className = 'feedback incorrect';
+            return;
+        }
+        const userOrder = Array.from(items).map(item => item.id.split('-')[1].toUpperCase()).join(',');
+        feedbackEl.textContent = userOrder === correctOrderStr ? '順序正確！' : '順序錯誤';
+        feedbackEl.className = userOrder === correctOrderStr ? 'feedback correct' : 'feedback incorrect';
+    }
+
+    function resetDragDrop(sourceId, dropZoneId) {
+        const sourceContainer = document.getElementById(sourceId);
+        const dropZone = document.getElementById(dropZoneId);
+        const feedbackEl = document.getElementById(`feedback-${dropZoneId.replace('drop-', '')}`);
+        Array.from(dropZone.querySelectorAll('.draggable'))
+             .sort((a, b) => a.id.localeCompare(b.id))
+             .forEach(item => sourceContainer.appendChild(item));
+        dropZone.textContent = '將選項拖曳到此處排序...';
+        feedbackEl.textContent = '';
+        feedbackEl.className = 'feedback';
+    }
+</script>
+
+</body>
+</html>
+

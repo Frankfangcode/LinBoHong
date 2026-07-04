@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 9 互動式教學</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f0f2f5;
+        }
+        #sidebar {
+            flex: 0 0 250px;
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        #sidebar h2 {
+            font-size: 1.5em;
+            color: #333;
+            margin-top: 0;
+        }
+        #sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #sidebar li {
+            margin: 15px 0;
+        }
+        #sidebar a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 1.1em;
+            transition: color 0.2s;
+        }
+        #sidebar a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        #content {
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        .page {
+            display: none;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        .page.active {
+            display: block;
+        }
+        h1, h2, h3 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .example, .tip {
+            background-color: #e9f7ff;
+            border-left: 5px solid #007bff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .tip {
+            background-color: #fffbe6;
+            border-left-color: #ffc107;
+        }
+        .example p, .tip p {
+            margin: 0;
+        }
+        .chinese {
+            color: #555;
+            font-style: italic;
+        }
+        .exercise {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px dashed #ccc;
+            border-radius: 5px;
+        }
+        .exercise h3 {
+            border: none;
+        }
+        .exercise textarea {
+            width: 100%;
+            min-height: 150px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 1em;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+        .img-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="sidebar">
+    <h2>目錄</h2>
+    <ul>
+        <li><a href="#" onclick="showPage('page1')">Unit 7 描寫文</a></li>
+        <li><a href="#" onclick="showPage('page2')">修辭法與精確用詞</a></li>
+        <li><a href="#" onclick="showPage('page3')">7-1 描寫人物 (一)</a></li>
+        <li><a href="#" onclick="showPage('page4')">7-1 描寫人物 (二)</a></li>
+        <li><a href="#" onclick="showPage('page5')">描寫人物寫作步驟</a></li>
+        <li><a href="#" onclick="showPage('page6')">範文：我的母親 (大綱)</a></li>
+        <li><a href="#" onclick="showPage('page7')">範文：我的母親 (段落)</a></li>
+        <li><a href="#" onclick="showPage('page8')">練習 A: 我最好的朋友</a></li>
+        <li><a href="#" onclick="showPage('page9')">練習 B: 我最喜歡的老師</a></li>
+        <li><a href="#" onclick="showPage('page10')">7-2 描寫地方 (一)</a></li>
+        <li><a href="#" onclick="showPage('page11')">7-2 描寫地方 (二)</a></li>
+        <li><a href="#" onclick="showPage('page12')">描寫地方寫作技巧</a></li>
+        <li><a href="#" onclick="showPage('page13')">描寫地方寫作步驟</a></li>
+        <li><a href="#" onclick="showPage('page14')">範文：內灣 (大綱)</a></li>
+        <li><a href="#" onclick="showPage('page15')">範文：內灣 (段落)</a></li>
+        <li><a href="#" onclick="showPage('page17')">練習 C: 最難忘的地方</a></li>
+        <li><a href="#" onclick="showPage('page18')">練習 D: 我想去旅行的地方</a></li>
+        <li><a href="#" onclick="showPage('page19')">7-3 描寫物品 (一)</a></li>
+        <li><a href="#" onclick="showPage('page20')">7-3 描寫物品 (二)</a></li>
+        <li><a href="#" onclick="showPage('page21')">範文：最珍貴的東西 (大綱)</a></li>
+        <li><a href="#" onclick="showPage('page22')">範文：最珍貴的東西 (段落)</a></li>
+        <li><a href="#" onclick="showPage('page23')">練習 E: 我的學校制服</a></li>
+        <li><a href="#" onclick="showPage('page24')">練習 F: 我最喜愛的食物</a></li>
+        <li><a href="#" onclick="showPage('page26')">寫作檢核表</a></li>
+    </ul>
+</div>
+
+<div id="content">
+    <div id="page1" class="page active">
+        <h1>Unit 7 描寫文 (Descriptive Writing)</h1>
+        <p>描寫文通常描述人、地方或物品,為讀者創造「字的圖畫」,讓他們能夠清楚地「看」。</p>
+        <p>如何寫出一篇好的描寫文,寫作的重點於下:</p>
+        
+        <h2>● 提供足以吸引讀者感官 (視覺、聽覺、嗅覺、味覺、觸覺)的描述</h2>
+        <div class="example">
+            <p>The golden sun shed tender light across the grass as it peeked out from behind the clouds.</p>
+            <p class="chinese">當金色的太陽從雲後露臉時,柔和的光線灑落在草地上。(視覺)</p>
+        </div>
+        <div class="example">
+            <p>The squeaky bicycle wheels are extremely annoying.</p>
+            <p class="chinese">嘎吱作響的腳踏車輪令人十分討厭。(聽覺)</p>
+        </div>
+        <div class="example">
+            <p>I can smell the aroma of freshly brewed coffee.</p>
+            <p class="chinese">我能聞到剛煮好的咖啡香味。(嗅覺)</p>
+        </div>
+        <div class="example">
+            <p>The sour cream soup tastes like spoiled milk.</p>
+            <p class="chinese">這酸奶油湯喝起來像壞掉的牛奶。(味覺)</p>
+        </div>
+        <div class="example">
+            <p>The texture of the wall is like coarse paper.</p>
+            <p class="chinese">這牆壁的材質像粗糙的紙。(觸覺)</p>
+        </div>
+        <div class="tip">
+            <p>在寫描寫文之前,可先問自己:What did I see/hear/smell/feel/taste?</p>
+            <p class="chinese">我看/聽/聞/感覺/嚐到什麼?</p>
+        </div>
+    </div>
+
+    <div id="page2" class="page">
+        <h1>修辭法與精確用詞</h1>
+        <h2>● 可利用修辭法(明喻、暗喻、誇飾、擬人法等)</h2>
+        <h3>明喻(simile):利用 like 或 as 等字詞明確地比喻某物,例:</h3>
+        <div class="example">
+            <p>The bed is as hard as a rock.</p>
+            <p class="chinese">這張床像石頭一樣硬。</p>
+        </div>
+        <div class="example">
+            <p>The blonde girl looks like a Barbie doll.</p>
+            <p class="chinese">這個金髮女孩看起來像芭比娃娃。</p>
+        </div>
+        <h3>暗喻 (metaphor):不用like 或as 等字詞來比喻某物,句子所延伸的意義本身不見得能從字面上看出來,而是用「是」、「為」、「也」、「等於」、「成了」等來表示隱藏的比喻手法。</h3>
+        <div class="example">
+            <p>Knowledge is power.【諺】</p>
+            <p class="chinese">知識就是力量。</p>
+        </div>
+        <h3>誇飾 (hyperbole):將原有的情形加以誇大描述,藉此加深讀者印象,同時製造輕鬆幽默的氛圍,例:</h3>
+        <div class="example">
+            <p>Lucas spoke so loudly that I could hear his voice from miles away.</p>
+            <p class="chinese">Lucas 講話如此大聲,以致於我在幾英里外就聽得到他的聲音。</p>
+        </div>
+        <h3>擬人法 (personification):把動植物或無生命之物用人來做比喻,例:</h3>
+        <div class="example">
+            <p>The flowers were begging for water.</p>
+            <p class="chinese">這些花朵渴求水分。</p>
+        </div>
+        <h2>● 使用更精確的形容詞、副詞、名詞及動詞</h2>
+        <div class="example">
+            <p>Sitting on the chair, I drank coffee.</p>
+            <p class="chinese">坐在椅子上,我喝咖啡。</p>
+            <p>→ Leaning on my favorite crushed velvet sofa, I leisurely sipped a cup of latte.</p>
+            <p class="chinese">斜靠在我最愛的壓花絲絨沙發上,我悠閒地啜飲一杯拿鐵。</p>
+        </div>
+        <div class="example">
+            <p>The boy went to the playground when he heard the bell ring.</p>
+            <p class="chinese">聽到鐘響,這男孩去操場。</p>
+            <p>→ The active boy rushed to the outdoor playground immediately when he heard the recess bell ring.</p>
+            <p class="chinese">聽到下課鐘響,這個好動的男孩立刻衝到戶外操場。</p>
+        </div>
+        <h2>● 依實際需要,有組織的呈現描寫的細節,可按空間順序、時間順序、地方順序或重要性來加以排列</h2>
+        <div class="example">
+            <p>The department store is located in the busiest area of the city. It is near the train station and the bus terminal.</p>
+            <p class="chinese">這家百貨公司位於城裡最繁華的地段。它在火車站和客運站附近。</p>
+        </div>
+    </div>
+
+    <div id="page3" class="page">
+        <h1>7-1 描寫人物 (一)</h1>
+        <p>以下為描寫文中描述人物時需注意的原則以及寫作的步驟:</p>
+        <h2>● 利用形容詞來表示人物的外表特徵和內在特質</h2>
+        <p>利用形容詞,以自由聯想、列表或問答等各種方式得到更多可用的細節,針對描寫對象將所有可以想到的資訊列出來。以下為人物的外表特徵和內在特質的形容詞列表:</p>
+        <h3>外表</h3>
+        <p>attractive (迷人的)、brown-eyed (棕色眼珠的)、fit (健康的)、good-looking (好看的)、handsome (帥的)、ordinary (一般的)、pale (蒼白的)、plain (平凡的)、pretty (漂亮的)、overweight (過重的)、slim (苗條的)、ugly (醜陋的)、well-built (結實的)</p>
+        <h3>正面性格</h3>
+        <p>clever (聰明的)、confident (有自信的)、easy-going (隨和的)、energetic (精力充沛的)、generous (慷慨的)、 honest (誠實的)、humorous (幽默的)、patient (有耐心的)、rational (理性的)、thoughtful (體貼的)、trustworthy (值得信賴的)</p>
+        <h3>負面性格</h3>
+        <p>big-headed (自負的)、boring (無趣的)、careless (粗心的)、cowardly (膽小的)、cruel (殘忍的)、irresponsible (不負責任的)、jealous (嫉妒的)、lazy (懶惰的)、mean (卑鄙的)、selfish(自私的)、stubborn (固執的)</p>
+        <h2>● 描寫順序的安排</h2>
+        <p>1. 可以從頭到腳或由腳到頭,也可以從最重要的外表特徵開始描寫。</p>
+        <div class="example">
+            <p>My mother is very beautiful. She has short hair, a small waist, and long legs.</p>
+            <p class="chinese">我媽媽很漂亮。她有一頭短髮、細腰和長腿。(從頭到腳描寫。)</p>
+        </div>
+        <div class="example">
+            <p>My mother looks younger than people of the same age. Tall and thin, she is very beautiful with the brightest eyes I have ever seen.</p>
+            <p class="chinese">我媽媽看起來比同年齡的人來得年輕。又高又瘦,她很漂亮,有我見過最明亮的眼睛。(從最重要的外表特徵描寫。)</p>
+        </div>
+    </div>
+
+    <div id="page4" class="page">
+        <h1>7-1 描寫人物 (二)</h1>
+        <p>2. 除了描寫外表特徵,也可以描述人物的內在特質。</p>
+        <div class="example">
+            <p>My mother has a pleasant personality. With a smile on her face, she makes people around her feel at ease.</p>
+            <p class="chinese">我媽媽有親和力。臉上掛著笑容,她讓周遭的人感到輕鬆自在。</p>
+        </div>
+        <p>3. 可以加入作者與描寫對象的關係,或彼此相處時所擁有的特殊經歷和回憶。</p>
+        <div class="example">
+            <p>My mother took good care of my brother and me when we were little. In order not to make her sad or worried, we would do anything to bring a smile to her face.</p>
+            <p class="chinese">我媽媽在我和弟弟小時候悉心照顧我們。為了不讓她難過、煩惱,我們願意做任何事來讓她開心。</p>
+        </div>
+        <h2>● 利用五種感官 (five senses) 來描寫</h2>
+        <p>描寫人物時,必須得生動逼真。訴諸讀者的五種感官:視覺 (sight)、聽覺 (hearing)、嗅覺 (smell)、味覺 (taste) 以及觸覺 (touch),是最好用、也是最常用的方法。</p>
+        <div class="example">
+            <p>The handsome young man wears a pair of dark blue jeans.</p>
+            <p class="chinese">這帥氣的年輕人穿著一條深藍色牛仔褲。(視覺)</p>
+        </div>
+        <div class="example">
+            <p>Helen couldn't sleep because of her husband's deafening snores.</p>
+            <p class="chinese">因為她先生震耳欲聾的鼾聲,Helen 無法入睡。(聽覺)</p>
+        </div>
+        <div class="example">
+            <p>The cheap perfume of the woman made me unable to breathe.</p>
+            <p class="chinese">這女人的廉價香水讓我無法呼吸。(嗅覺)</p>
+        </div>
+        <div class="example">
+            <p>Linda's glossy lips taste like strawberries.</p>
+            <p class="chinese">Linda 的水亮雙唇嚐起來像草莓一樣。(味覺)</p>
+        </div>
+        <div class="example">
+            <p>On touching Mom's rough hands, I could feel her deep love for me.</p>
+            <p class="chinese">一碰到媽媽粗糙的雙手,我就感受到她對我濃濃的愛。(觸覺)</p>
+        </div>
+    </div>
+
+    <div id="page5" class="page">
+        <h1>描寫人物寫作步驟</h1>
+        <h2>● 利用比喻法,使描述能更加生動</h2>
+        <div class="example">
+            <p>Tommy is as stubborn as a mule. <span class="chinese">Tommy 像騾子一樣固執。(明喻)</span></p>
+            <p>Hank is a wolf in sheep's clothing. <span class="chinese">Hank 是披著羊皮的狼。(暗喻)</span></p>
+            <p>I am so hungry that I could eat a horse. <span class="chinese">我餓到可以吃下一匹馬了。(誇飾)</span></p>
+        </div>
+        <div class="tip">
+            <p>除了明喻、暗喻、誇飾及擬人法之外,描寫文也可用:</p>
+            <p>1. 擬聲 (onomatopoeia): The rough wind rattled the windows. <span class="chinese">狂風讓窗戶嘎嘎作響。</span></p>
+            <p>2. 象徵 (symbol): Sam offered an olive branch to his enemy in the company and agreed to write a letter of apology. <span class="chinese">Sam 向他公司的對頭伸出橄欖枝,並同意寫一封道歉信。</span></p>
+        </div>
+        <h2>描寫人物的寫作步驟:</h2>
+        <ol>
+            <li>腦力激盪所有跟描述人物有關的細節,歸類想寫的細節,刪除無關的細節,然後開始書寫。</li>
+            <li>於主題句中告訴讀者主角是誰,並寫下對此人的綜合印象。</li>
+            <li>於支持句中描寫此人的外表、性格、與描寫對象的關係或特殊經歷等,善用感官和比喻法,並使用精確的文字。</li>
+            <li>於結論句中告訴讀者此人對你造成的影響。</li>
+        </ol>
+    </div>
+
+    <div id="page6" class="page">
+        <h1>範文：My Mother 我的母親 (大綱)</h1>
+        <h2>1. 腦力激盪</h2>
+        <p>先將所有想得到與媽媽有關的細節都先記錄下來,然後將細節分類,再刪除不相關的細節。</p>
+        <div style="display: flex; justify-content: space-around;">
+            <div>
+                <p>1. tall and thin 高瘦的</p>
+                <p>2. short hair 短髮</p>
+                <p>3. looks young 看起來年輕</p>
+                <p>4. takes exercise twice a week 一週運動兩次</p>
+                <p>5. pretty 漂亮的</p>
+                <p>6. in her mid-forties 45 歲左右</p>
+                <p>7. thoughtful and sympathetic 體貼且富同情心</p>
+                <p>8. works hard 工作努力</p>
+                <p>9. takes good care of the family 照顧好家庭</p>
+                <p>10. does voluntary work 做志工</p>
+                <p>11. my role model 我的榜樣</p>
+            </div>
+            <div>
+                <p>① tall and thin</p>
+                <p>① short hair</p>
+                <p>① looks young</p>
+                <p>① pretty</p>
+                <p>① in her mid-forties</p>
+                <p>② thoughtful and sympathetic</p>
+                <p>② works hard</p>
+                <p>③ takes good care of the family</p>
+                <p>③ does voluntary work</p>
+                <p>③ my role model</p>
+            </div>
+        </div>
+        <h2>2. 寫出大綱</h2>
+        <p><strong>主題句:</strong> My mother is a very special woman in many ways. <span class="chinese">我媽媽在許多方面都很特別。</span></p>
+        <p><strong>支持細節:</strong> ① her looks 她的長相 ② her personality 她的個性 ③ her behavior 她的行為</p>
+    </div>
+
+    <div id="page7" class="page">
+        <h1>範文：My Mother 我的母親 (段落)</h1>
+        <h2>3. 寫出段落</h2>
+        <div class="example">
+            <p><strong>(主題句)</strong> My mother is a very special woman in many ways.</p>
+            <p><strong>(支持句)</strong> She has short hair. Tall and thin, she often wears jeans when she goes out. Because she looks so young and pretty, she is often mistaken for my elder sister, even though she is now in her mid-forties. Having grown up in a poor family makes my mother cherish what she has now. So, she works hard to make sure we have a better home environment than she had. As a busy working mother, she not only does her job very well, but also helps to take good care of her family all the time. What's more, she is very thoughtful and sympathetic, and she does voluntary work to help people in need. She believes that it is more blessed to give than to receive.</p>
+            <p><strong>(結論句)</strong> Without doubt, my mother is a role model to me, and it's great to have a perfect mother like her.</p>
+        </div>
+        <div class="chinese">
+            <p>我媽媽在許多方面都很特別。她有著一頭短髮。又高又瘦,她常穿牛仔褲出門。因為她看起來如此年輕漂亮,常被誤認為是我姊姊,即使她現在已經45歲左右了。成長在貧困的家庭讓媽媽很珍惜現在她所擁有的一切。因此,她努力工作,確保我們有比她以前更好的家庭環境。身為一名忙碌的職業婦女,她不只做好工作,還總是照顧好家庭。此外,她非常體貼且富有同情心,更擔任志工幫助需要的人。她認為施比受有福。無疑地,我媽媽是我的模範,我能有像她這樣完美的媽媽,真是太棒了。</p>
+        </div>
+    </div>
+
+    <div id="page8" class="page">
+        <h1>練習 A: 我最好的朋友</h1>
+        <div class="exercise">
+            <h3>題目: My Best Friend</h3>
+            <p>以「我最好的朋友」為題,寫一段描寫文。依照上面的例子,先腦力激盪出關於其長相、性格或行為等細節,然後寫出大綱,善用五種感官和比喻法,並使用精確的文字,寫出包含主題句、支持句及結論句的完整段落。</p>
+            <h3>1. 腦力激盪</h3>
+            <textarea placeholder="寫下你的想法..."></textarea>
+            <h3>2. 寫出大綱</h3>
+            <textarea placeholder="主題句:&#10;支持細節:"></textarea>
+            <h3>3. 寫出段落</h3>
+            <textarea placeholder="寫出你的文章..."></textarea>
+        </div>
+    </div>
+
+    <div id="page9" class="page">
+        <h1>練習 B: 我最喜歡的老師</h1>
+        <div class="exercise">
+            <h3>題目: My Favorite Teacher</h3>
+            <p>以「我最喜歡的老師」為題,寫一段描寫文。先腦力激盪出關於老師的長相、性格、教學風格或難忘的經歷等細節,然後寫出大綱,善用五種感官和比喻法,並使用精確的文字,寫出包含主題句、支持句及結論句的完整段落。</p>
+            <h3>1. 腦力激盪</h3>
+            <textarea placeholder="寫下你的想法..."></textarea>
+            <h3>2. 寫出大綱</h3>
+            <textarea placeholder="主題句:&#10;支持細節:"></textarea>
+            <h3>3. 寫出段落</h3>
+            <textarea placeholder="寫出你的文章..."></textarea>
+        </div>
+    </div>
+
+    <div id="page10" class="page">
+        <h1>7-2 描寫地方 (一)</h1>
+        <p>描述地方的描寫文要讓讀者彷彿身歷其境,因此必須提供足以吸引讀者感官(視覺、聽覺、嗅覺、味覺、觸覺)的描述,使文章生動活潑。寫作時可依照空間配置,或是從一般印象到特別細節的順序來加以描述。以下提供4點描寫文中描述地方的寫作原則:</p>
+        <h2>● 提供描寫主題的背景資料</h2>
+        <p>描寫文通常會先簡單地勾勒出描寫對象的背景,如作者何時到過該地。此外,最好能同時讓讀者對將要描寫的地方產生興趣,如利用一些帶有情感的語句做為開頭來吸引讀者,例:</p>
+        <div class="example">
+            <p>I will never forget... <span class="chinese">我永遠不會忘記...</span></p>
+            <p>I still remember very clearly... <span class="chinese">我仍然清楚記得...</span></p>
+        </div>
+        <h2>● 描繪主要的印象</h2>
+        <p>簡單敘述作者跟該地的關係後,可以用形容詞或名詞把對主題的感覺表達出來。</p>
+        <div class="example">
+            <p>The library is a peaceful and quiet place.</p>
+            <p>→ The library is a place of peace and quiet. <span class="chinese">這間圖書館是個寧靜無聲的地方。</span></p>
+        </div>
+    </div>
+
+    <div id="page11" class="page">
+        <h1>7-2 描寫地方 (二)</h1>
+        <h2>範例: My Dream Room</h2>
+        <div class="example">
+            <p>Sharon is my classmate who used to live in the same dormitory with me. Recently, she found a nice place off campus and moved out of the crowded school dormitory. Her room is in a new apartment which is located in the center of the town. I've dreamed of living in such a comfortable place like Sharon's.</p>
+            <p class="chinese">Sharon 是以前和我同寢室的同學。最近,她在校外找到一個好住所,搬出擁擠的學校宿舍。她的房間位在市中心的一棟新公寓裡。我夢想要住在跟 Sharon 房間一樣舒適的地方。</p>
+        </div>
+        <h2>● 照空間順序或重要性順序來描寫</h2>
+        <p>有順序的描寫就像戲劇或電影中流暢的鏡頭,帶領讀者有條理地觀察描寫文中的人、地、事、物。在描寫地方時,可依空間順序由遠到近、從左到右或從外到內,也可從最重要的物件描寫起,然後再逐漸擴展到較不重要的物件。</p>
+        <div class="example">
+            <p>There is a bookcase on the left-hand side of the room. On top of the bookcase is a CD player. Next to the bookcase are two chairs.</p>
+            <p class="chinese">房間的左手邊有一個書架。書架上是一臺 CD 播放器。書架旁是兩張椅子。</p>
+        </div>
+        <div class="tip">
+            <p>指出空間位置的介系詞 (片語) 常用的有: at、above、around、across、along、between、below、beside、beneath、behind、in、inside、near、next to、under、on the right-hand/left-hand side、on the right/left of、to/on one's right/left、in back of、in front of、in the middle of、in the center of、on top of 等。</p>
+        </div>
+    </div>
+
+    <div id="page12" class="page">
+        <h1>描寫地方寫作技巧</h1>
+        <h2>● 描寫要生動傳神</h2>
+        <p>空間位置交代清楚後,也要注意細節的描述,否則就像上面的例子,只是在陳述家具的位置,並未表達出對這個地方的印象,這樣就只會是一篇生硬的敘述文罷了。</p>
+        <h3>1. 利用五種感官</h3>
+        <div class="example">
+            <p>Around the house, Grandpa plants roses of various colors: white, pink, and red. <span class="chinese">(視覺)</span></p>
+            <p>A swarm of bees are buzzing among the flowers. <span class="chinese">(聽覺)</span></p>
+            <p>There is a sweet smell of the roses in the air. <span class="chinese">(嗅覺)</span></p>
+            <p>The papayas Grandpa plants are sweet and juicy. <span class="chinese">(味覺)</span></p>
+            <p>Grandpa's hands have become rough from working in the garden. <span class="chinese">(觸覺)</span></p>
+        </div>
+        <h3>2. 利用精確的文字描述</h3>
+        <div class="example">
+            <p>There is a big wooden bookcase on the left-hand side of the living room. It is filled with old books, women's fashion magazines, and Mozart CDs. On top of the bookcase is a brand new CD player playing classical music. Next to the bookcase are two chairs of pine wood.</p>
+            <p class="chinese">客廳的左手邊有一個木製大書架。上面擺滿了舊書、女性時尚雜誌和莫札特的CD。書架上是一臺全新的CD播放器,正播著古典音樂。書架旁有兩張松木椅。</p>
+        </div>
+        <h3>3. 善用比喻法</h3>
+        <div class="example">
+            <p>The basement is as dark as night. <span class="chinese">這間地下室像夜晚一樣漆黑。(明喻)</span></p>
+            <p>Disneyland is a paradise for children. <span class="chinese">迪士尼樂園是孩子的天堂。(暗喻)</span></p>
+            <p>My new house costs me an arm and a leg. <span class="chinese">我的新房子所費不貲。(誇飾法)</span></p>
+            <p>This city never sleeps. <span class="chinese">這是個不夜城。(擬人法)</span></p>
+        </div>
+    </div>
+
+    <div id="page13" class="page">
+        <h1>描寫地方的寫作步驟</h1>
+        <ol>
+            <li>腦力激盪所有跟這個地方有關的資訊,歸類想寫的細節,並刪除無關的內容,然後才開始書寫。</li>
+            <div class="tip">
+                <p>為了得到更多描寫的靈感,可以自問以下的問題:</p>
+                <p>Where is the place?/What does the place look like?/What happens in the place?/What do I think of the place?/What does the place mean to me?</p>
+            </div>
+            <li>於主題句中告訴讀者這是什麼地方,並簡短描述這個地方。</li>
+            <li>於支持句中描寫此地的特色,善用五種感官和比喻法,並使用精確的文字。</li>
+            <li>描寫地方時,為了表達出空間位置,常用 surround、locate、situate、place 等動詞,且這些動詞多為被動語態。</li>
+            <div class="example">
+                <p>My grandparents' house is surrounded by trees.</p>
+                <p>The Internet café is located/situated in the busiest area of the town.</p>
+            </div>
+            <li>描述空間位置時,可用不同的句型來表達同樣的意思。</li>
+            <div class="example">
+                <p>There is a bed in the center of the bedroom.</p>
+                <p>In the center of the bedroom is a bed.</p>
+                <p>A bed is in the center of the bedroom.</p>
+            </div>
+            <li>於結論再次重述此地,並簡單摘要所描寫的細節,以加深讀者印象。</li>
+        </ol>
+    </div>
+
+    <div id="page14" class="page">
+        <h1>範文：內灣 (大綱)</h1>
+        <h2>主題: Neiwan-A Village of White Tung Blossoms 內灣——白色桐花之鄉</h2>
+        <h3>1. 腦力激盪</h3>
+        <p>1. an attractive Hakka village</p>
+        <p>2. most villagers used to earn their living by cutting down trees or farming</p>
+        <p>3. it costs about NT$20 to go from Zhudong to Neiwan by train</p>
+        <p>4. in the Zhudong area, the eastern part of Hsinchu County</p>
+        <p>5. Hakka is not easy to learn</p>
+        <p>6. coal was mined there</p>
+        <p>7. the government decided to restore Neiwan</p>
+        <p>8. the Hakka Tung Blossom Festival</p>
+        <p>9. Hakka pounded tea and wild ginger flower flavored rice dumplings</p>
+        <p>10. Neiwan Theater</p>
+        <h3>2. 寫出大綱</h3>
+        <p><strong>主題句:</strong> Neiwan is an attractive Hakka village.</p>
+        <p><strong>支持細節:</strong> ① location ② local history ③ tourist attractions and local specialties</p>
+    </div>
+
+    <div id="page15" class="page">
+        <h1>範文：內灣 (段落)</h1>
+        <div class="example">
+            <p><strong>(主題句)</strong> Neiwan is an attractive Hakka village in the Zhudong area, located in the eastern part of Hsinchu County.</p>
+            <p><strong>(支持句)</strong> During the Japanese colonial era, most villagers used to earn their living by cutting down trees or farming. Later, coal was mined there, and Neiwan soon became a prosperous coal mining area. However, Neiwan lost its economic importance and the population dropped because of the restrictions on mining. In 2000, the government started a project to restore Neiwan to its former glory. With the efforts of both government officials and local residents, Neiwan has become a very popular tourist spot since then. Every April and May, Neiwan holds the Hakka Tung Blossom Festival, when visitors can appreciate the natural beauty of the tung blossoms. In addition, Neiwan is famous for Hakka snacks, such as Hakka pounded tea and wild ginger flower flavored rice dumplings. Last but not least, the Neiwan Theater is worth visiting. Built in 1950, it has now been turned into a restaurant in which visitors can watch old movies as they enjoy meals there.</p>
+            <p><strong>(結論句)</strong> Without doubt, if you want to take a one-day trip, Neiwan is certainly a good choice.</p>
+        </div>
+        <div class="chinese">
+            <p>位於新竹縣東部竹東地區的內灣是個有魅力的客家莊。日治時期,大部分村民是靠伐木與務農維生。後來,當地發現煤礦,內灣迅速成為繁華的煤礦區。然而,由於採礦的限制,內灣失去其經濟重要性,人口也減少。在2000年時,政府開始重現內灣風華的修復計畫。在政府官員與當地居民的共同努力下,內灣自此成為一個熱門的觀光景點。每年的4和5月,內灣舉辦客家桐花季,讓觀光客欣賞桐花的自然美景。此外,內灣以客家點心著名,譬如客家擂茶和野薑花粽。最後但同樣重要的是,內灣戲院是值得一遊的地方。建於1950年,現在成為觀光客在享用餐點的同時能看懷舊電影的餐廳。無疑地,如果你想要來個一日遊,內灣絕對是個好選擇。</p>
+        </div>
+    </div>
+
+    <div id="page17" class="page">
+        <h1>練習 C: 我曾到過最難忘的地方</h1>
+        <div class="exercise">
+            <h3>題目: The Most Unforgettable Place I Have Visited</h3>
+            <p>以「我曾到過最難忘的地方」為題,寫一段描寫文。依照上面的例子,先腦力激盪出關於其位置、觀光景點或當地特色等細節,然後寫出大綱,善用五種感官和比喻法,並使用精確的文字,寫出包含主題句、支持句及結論句的完整段落。</p>
+            <h3>1. 腦力激盪</h3>
+            <textarea placeholder="寫下你的想法..."></textarea>
+            <h3>2. 寫出大綱</h3>
+            <textarea placeholder="主題句:&#10;支持細節:"></textarea>
+            <h3>3. 寫出段落</h3>
+            <textarea placeholder="寫出你的文章..."></textarea>
+        </div>
+    </div>
+
+    <div id="page18" class="page">
+        <h1>練習 D: 我想去旅行的地方</h1>
+        <div class="exercise">
+            <h3>題目: The Place I Want to Take a Trip</h3>
+            <p>以「我想去旅行的地方」為題,寫一段描寫文。依照上面的例子,先腦力激盪出關於其位置、觀光景點或當地特色等細節,然後寫出大綱,善用五種感官和比喻法,並使用精確的文字,寫出包含主題句、支持句及結論句的完整段落。</p>
+            <h3>1. 腦力激盪</h3>
+            <textarea placeholder="寫下你的想法..."></textarea>
+            <h3>2. 寫出大綱</h3>
+            <textarea placeholder="主題句:&#10;支持細節:"></textarea>
+            <h3>3. 寫出段落</h3>
+            <textarea placeholder="寫出你的文章..."></textarea>
+        </div>
+    </div>
+
+    <div id="page19" class="page">
+        <h1>7-3 描寫物品 (一)</h1>
+        <p>對物品的描述亦屬描寫文,好的描述必須讓讀者彷彿親眼看見這項物品,讓他們看到你所看到和感覺到的。因此,描述物品的描寫文得注意以下細節:</p>
+        <ol>
+            <li>最好選擇自己有強烈感受的物品來描述,可以是非常喜歡或厭惡的。</li>
+            <li>所有細節的描述都必須跟主題有關。</li>
+            <li>描寫時可提供讀者五種感官的感受。</li>
+            <li>細節的描寫順序必須合乎邏輯,可按照方位或重要性來描寫。</li>
+            <li>善用比喻法,並使用精確的文字。</li>
+        </ol>
+        <div class="tip">
+            <p>在寫描述物品的文章時,可問自己: What does it look, sound, smell, taste or feel like? 或 How do I feel about it?</p>
+        </div>
+        <h3>常用形容詞</h3>
+        <p><strong>opinion 意見:</strong> splendid, wonderful, suitable, unusual, valuable, awful, worthless, common</p>
+        <p><strong>sound 聽覺:</strong> loud, thunderous, deafening, noisy, soft, quiet, silent</p>
+        <p><strong>taste 味覺:</strong> sour, sweet, bitter, spicy, salty, tasty, delicious, yummy</p>
+        <p><strong>touch 觸覺:</strong> hard, soft, silky, smooth, polished, rough</p>
+    </div>
+
+    <div id="page20" class="page">
+        <h1>7-3 描寫物品 (二)</h1>
+        <h3>常用形容詞 (續)</h3>
+        <p><strong>smell 嗅覺:</strong> burnt, smelly, perfumed, aromatic, fragrant, odorless</p>
+        <p><strong>size 尺寸:</strong> heavy, light, tiny, slim, lean, enormous, huge, vast, gigantic</p>
+        <p><strong>temperature 溫度:</strong> freezing, icy, frosty, frozen, chilly, burning, suffocating, blazing</p>
+        <p><strong>color 顏色:</strong> yellowish, dark-green, light-blue, ruby, tan, silver, golden, colorless, transparent</p>
+        <p><strong>shape 形狀:</strong> round, circular, square, triangular, oval, wavy, straight, crooked, linear, domed, vertical</p>
+        <p><strong>material 材質:</strong> glass, wooden, cloth, concrete, fabric, cotton, plastic, leather, china, metal, steel, stone</p>
+        <div class="tip">
+            <p>在描寫物品時,如需用到一個以上的形容詞時,其前後順序如下:</p>
+            <p>數量 → 意見 → 尺寸 → 溫度 → 狀態 → 形狀 → 顏色 → 來源 → 材質 → 功能</p>
+            <p>例: a beautiful red silk dress (一件漂亮的紅色絲綢禮服)</p>
+        </div>
+        <h2>描寫物品的寫作步驟:</h2>
+        <ol>
+            <li>腦力激盪跟此物品有關的所有細節,想出可以用來形容此物品的詞彙,並刪除無關的細節。</li>
+            <li>於主題句中寫出對此物品的總體印象。</li>
+            <li>按照邏輯的順序來描寫,如:由左到右、由內到外、順時針方向等順序,也可依照細節的重要性從輕到重來描述。</li>
+            <li>結論需要再次強調為何描述該物件。</li>
+        </ol>
+    </div>
+
+    <div id="page21" class="page">
+        <h1>範文：最珍貴的東西 (大綱)</h1>
+        <h2>主題: The Most Valuable Thing I Have</h2>
+        <h3>1. 腦力激盪</h3>
+        <p>1. damaged plastic band</p>
+        <p>2. silver case</p>
+        <p>3. the first watch that I received from my parents</p>
+        <p>4. neither water nor scratch resistant</p>
+        <p>5. a gift for my tenth birthday</p>
+        <p>6. feature Mickey Mouse in full color on its white face</p>
+        <p>7. special hour and minute hands</p>
+        <p>8. date function</p>
+        <p>9. battery-operated</p>
+        <p>10. used for seven years</p>
+        <h3>2. 寫出大綱</h3>
+        <p>① damaged plastic band, silver case</p>
+        <p>② neither water nor scratch resistant</p>
+        <p>③ the first watch that I received from my parents, a gift for my tenth birthday</p>
+    </div>
+
+    <div id="page22" class="page">
+        <h1>範文：最珍貴的東西 (段落)</h1>
+        <p><strong>主題句:</strong> The most valuable thing I have is an old automatic watch.</p>
+        <p><strong>支持細節:</strong> ① its appearance ② its function ③ its value</p>
+        <div class="example">
+            <p><strong>(主題句)</strong> The most valuable thing I have is an old automatic watch with a damaged plastic band.</p>
+            <p><strong>(支持句)</strong> It is the first watch that I received from my parents as a gift for my tenth birthday. The watch has a silver case and features Mickey Mouse in full color on its white face. The cutest things are that his little arms act as the hour and minute hands. The date function is located at the 3:00 spot. It is battery-operated. Though it's not licensed by Disney and neither water nor scratch resistant, it is the watch that has been keeping me company and telling me the time for the past seven years.</p>
+            <p><strong>(結論句)</strong> The cartoon watch is definitely the thing that I cherish most.</p>
+        </div>
+        <div class="chinese">
+            <p>我所擁有最珍貴的東西是一支有著破損塑膠錶帶的舊自動錶。那是我父母親送給我的10歲生日禮物。這支手錶有銀色的錶框,白色的錶面以色彩繽紛的米老鼠為主角。最可愛的是,米老鼠的兩隻小手臂正好做為時針和分針。在3點鐘的位置有顯示日期,是電池驅動的。雖然它並非迪士尼授權,甚至也不防水和防刮,但這支手錶在過去7年陪伴著我,讓我知道時間。這支卡通錶絕對是我最珍貴的東西。</p>
+        </div>
+    </div>
+
+    <div id="page23" class="page">
+        <h1>練習 E: 我的學校制服</h1>
+        <div class="exercise">
+            <h3>題目: My School Uniform</h3>
+            <p>以「我的學校制服」為題,寫一段描寫文。仿照上面的例子,先腦力激盪出關於其外觀、功能或價值等資訊,然後寫出大綱,善用五種感官和比喻法,並使用精確的文字,寫出包含主題句、支持句及結論句的完整段落。</p>
+            <h3>1. 腦力激盪</h3>
+            <textarea placeholder="寫下你的想法..."></textarea>
+            <h3>2. 寫出大綱</h3>
+            <textarea placeholder="主題句:&#10;支持細節:"></textarea>
+            <h3>3. 寫出段落</h3>
+            <textarea placeholder="寫出你的文章..."></textarea>
+        </div>
+    </div>
+
+    <div id="page24" class="page">
+        <h1>練習 F: 我最喜愛的食物</h1>
+        <div class="exercise">
+            <h3>題目: My Favorite Food</h3>
+            <p>以「我最喜愛的食物」為題,寫一段描寫文。仿照上面的例子,先腦力激盪出關於其外觀、功能或價值等資訊,然後寫出大綱,善用五種感官和比喻法,並使用精確的文字,寫出包含主題句、支持句及結論句的完整段落。</p>
+            <h3>1. 腦力激盪</h3>
+            <textarea placeholder="寫下你的想法..."></textarea>
+            <h3>2. 寫出大綱</h3>
+            <textarea placeholder="主題句:&#10;支持細節:"></textarea>
+            <h3>3. 寫出段落</h3>
+            <textarea placeholder="寫出你的文章..."></textarea>
+        </div>
+    </div>
+
+    <div id="page26" class="page">
+        <h1>寫作檢核表</h1>
+        <p>在寫作完成後,可以根據下表來檢核已完成的文章是否為一篇好的描寫文。</p>
+        <table border="1" style="width:100%; border-collapse: collapse;">
+            <tr style="background-color: #f2f2f2;">
+                <th style="padding: 10px;">Check to see if...?</th>
+                <th style="padding: 10px;">Yes</th>
+                <th style="padding: 10px;">No</th>
+            </tr>
+            <tr>
+                <td style="padding: 10px;">1. there are any sentence(s) that are not related to the person, the place or the object</td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td style="padding: 10px;">2. there are still some details about the person, the place or the object that can be added into the description</td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td style="padding: 10px;">3. all the adjectives and expressions are appropriate</td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td style="padding: 10px;">4. there are good and proper transitions</td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td style="padding: 10px;">5. the main idea is clear</td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td style="padding: 10px;">6. the conclusion restates the feeling the person, the place or the object brings</td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td style="padding: 10px;">7. there are no spelling or grammatical mistakes</td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td style="padding: 10px;">8. readers are able to make a mental picture of the person, the place or the object</td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+                <td style="padding: 10px;"><input type="checkbox"></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    function showPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+        // Show the selected page
+        document.getElementById(pageId).classList.add('active');
+    }
+</script>
+
+</body>
+</html>

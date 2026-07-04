@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學測英文作文－句型系統化學習地圖</title>
+    <!-- 載入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 載入 Inter 字體 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+    <style>
+        /* 應用字體 */
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+        }
+        /* 隱藏滾動條 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        /* 頁面內容樣式 */
+        .phase-content {
+            display: none; /* 預設隱藏所有內容 */
+        }
+        .phase-content.active {
+            display: block; /* 顯示當前活躍的內容 */
+        }
+        /* 側邊欄活躍狀態 */
+        .sidebar-link.active {
+            background-color: #e0f2fe; /* light-blue-100 */
+            color: #0284c7; /* sky-700 */
+            font-weight: 600;
+        }
+        /* 顯示答案的樣式 */
+        .answer {
+            display: none; /* 預設隱藏答案 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="flex h-screen">
+        <!-- 側邊導覽列 -->
+        <nav class="w-64 bg-white shadow-lg no-scrollbar overflow-y-auto flex-shrink-0">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-gray-800">學測英文作文</h1>
+                <p class="text-sm text-gray-600">句型系統化學習地圖</p>
+            </div>
+            <ul class="space-y-2 p-4">
+                <li>
+                    <a href="#" class="sidebar-link active block rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100" onclick="event.preventDefault(); showPhase('phase1', this)">
+                        🟦 Phase 1：基礎句型正確化
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link block rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100" onclick="event.preventDefault(); showPhase('phase2', this)">
+                        🟩 Phase 2：中階句型建構
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link block rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100" onclick="event.preventDefault(); showPhase('phase3', this)">
+                        🟧 Phase 3：進階句型掌握
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link block rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100" onclick="event.preventDefault(); showPhase('phase4', this)">
+                        🟥 Phase 4：高階寫作技巧
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link block rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100" onclick="event.preventDefault(); showPhase('quiz', this)">
+                        ⭐ 總測驗：學習成果檢定
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- 主要內容區域 -->
+        <main class="flex-1 overflow-y-auto p-8 md:p-12">
+            
+            <!-- Phase 1 內容 -->
+            <div id="phase1" class="phase-content active space-y-8">
+                <header class="mb-8">
+                    <h2 class="text-4xl font-bold text-blue-700 mb-2">Phase 1：基礎句型正確化</h2>
+                    <p class="text-xl text-gray-600">目標：把錯誤率降到最低，避免 run-on sentence、主詞動詞不一致、冠詞複數錯誤。</p>
+                    <p class="text-lg text-gray-500 mt-2">做到這裡 → 作文穩定 14–16 分。</p>
+                </header>
+
+                <!-- 學習內容卡片 -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-800">學習內容（必練）</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-lg font-semibold">1. 基本句型五大類（正確寫出 S + V、S + V + O）</h4>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1 pl-4">
+                                <li>S + V (The sun rises.)</li>
+                                <li>S + V + O (The government provides various facilities.)</li>
+                                <li>S + V + C (The park is full of trees.)</li>
+                                <li>S + V + IO + DO (He gave me a book.)</li>
+                                <li>S + V + O + OC (We consider him a leader.)</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-semibold">2. 避免句子過長 → 拆句練習（重要！）</h4>
+                            <p class="text-gray-700">這能完全消除你文章中的 run-on sentence（連寫句）。</p>
+                            <div class="mt-2 p-3 bg-red-50 rounded-md">
+                                <p class="font-semibold text-red-700">❌ 錯誤範例 (Run-on)：</p>
+                                <p class="text-red-700">Parents go to the park, they want to relax, they are tired.</p>
+                            </div>
+                            <div class="mt-2 p-3 bg-green-50 rounded-md">
+                                <p class="font-semibold text-green-700">✔ 正確範例 (複句)：</p>
+                                <p class="text-green-700">Parents go to the park because they want to relax.</p>
+                                <p class="font-semibold text-green-700">✔ 正確範例 (拆句)：</p>
+                                <p class="text-green-700">Parents go to the park. They want to relax because they are tired.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-semibold">3. 冠詞 / 複數 / 動詞一致性</h4>
+                            <p class="text-gray-700">每日練 5 句 → 查錯誤 → 改寫。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 練習任務卡片 -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-700">Phase 1 練習任務（基礎抓錯）</h3>
+                    <p class="mb-4">找出以下句子中的基礎錯誤並修正：</p>
+                    <div class="space-y-3">
+                        <div class="practice-item">
+                            <p class="text-gray-800">1. People is worried about the future.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>People <strong class="text-red-600">are</strong> worried... (主詞動詞不一致：People 是複數)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">2. He bought many book yesterday.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...many <strong class="text-red-600">books</strong>... (複數錯誤：many 後面接複數名詞)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">3. I went to store, I bought milk.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>I went to <strong class="text-red-600">the</strong> store <strong class="text-red-600">and</strong> I bought milk. (冠詞錯誤 + Run-on Sentence)</p>
+                                <p>或：I went to the store. I bought milk.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 全新加入：Phase 1 實戰演練與考試應用 -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
+                    <h3 class="text-2xl font-semibold mb-4 text-purple-800">🎯 實戰演練與考試應用 (Phase 1)</h3>
+                    
+                    <!-- 考試應用提示 -->
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md mb-6">
+                        <h4 class="text-lg font-semibold text-yellow-800">🧠 考試怎麼用？(基礎)</h4>
+                        <p class="text-gray-700 mt-2">這是您的「防扣分網」。在考場上，每寫完一個段落，您只有 30 秒能檢查。請「只」檢查三件事：</p>
+                        <ul class="list-disc list-inside text-gray-700 pl-4 mt-1">
+                            <li><strong>S-V 一致</strong>：He <code class="bg-gray-200 px-1 rounded">go</code> -> <code class="bg-green-200 px-1 rounded">goes</code>?</li>
+                            <li><strong>複數 (N)</strong>：Many <code class="bg-gray-200 px-1 rounded">student</code> -> <code class="bg-green-200 px-1 rounded">students</code>?</li>
+                            <li><strong>時態 (V)</strong>：<code class="bg-gray-200 px-1 rounded">Yesterday</code> ... <code class="bg-gray-200 px-1 rounded">go</code> -> <code class="bg-green-200 px-1 rounded">went</code>?</li>
+                        </ul>
+                        <p class="text-gray-700 mt-2">只要守住這三點，您的基礎分（14分）就穩了。</p>
+                    </div>
+
+                    <h4 class="text-lg font-semibold mb-3">更多基礎抓錯練習：</h4>
+                    <div class="space-y-3">
+                        <div class="practice-item">
+                            <p class="text-gray-800">4. There are many informations on the Internet.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...many <strong class="text-red-600">pieces of information</strong>... (information 是不可數名詞)</p>
+                                <p>或：...<strong class="text-red-600">is</strong> <strong class_text-red-600="">much information</strong>...</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">5. He is a boy love basketball.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>He is a boy <strong class="text-red-600">who loves</strong> basketball. (句子缺動詞/連接詞，基礎句型錯誤)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">6. (中譯英) 學生們應該要準時交作業。</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>Students should hand in their homework on time.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- === 以下為本次新增內容 === -->
+                    <h3 class="text-2xl font-semibold mb-4 text-purple-800 mt-8">⚠️ 更多高頻易錯點 (陷阱題)</h3>
+                    <p class="mb-4 text-gray-700">這些是學測中非常容易失分的「陷阱」，請特別留意：</p>
+                    <div class="space-y-3">
+                        <div class="practice-item">
+                            <p class="text-gray-800">1. One of my friends (live / lives) abroad.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...friends <strong class="text-red-600">lives</strong>... (主詞是 "One"，不是 "friends")</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">2. The company bought new (equipments / equipment).</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...new <strong class="text-red-600">equipment</strong>. (equipment 是不可數名詞，沒有複數)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">3. He gave me many good (advices / pieces of advice).</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...good <strong class="text-red-600">pieces of advice</strong>. (advice 也是不可數名詞)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">4. The bad weather (effected / affected) our flight.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...<strong class="text-red-600">affected</strong> (v. 影響) our flight. (effect 是名詞 "n. 影響；效果")</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">5. Each of the students (have / has) to join the club.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...students <strong class="text-red-600">has</strong>... (主詞是 "Each"，是單數)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">6. (中譯英) 住在城市裡有許多優點。</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-red-600">Living</strong> in the city <strong class="text-red-600">has</strong> many advantages. (動名詞 "Living" 當主詞，視為單數)</p>
+                                <p>或：<strong class="text-red-600">There are</strong> many advantages to living in the city.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- === 新增內容結束 === -->
+
+                    <!-- === 以下為本次新增 (澤享的客製化練習) === -->
+                    <h3 class="text-2xl font-semibold mb-4 text-purple-800 mt-8">🔥 客製化練習 (Phase 1 基礎)</h3>
+                    <p class="mb-4 text-gray-700">請找出並改正下列句子的錯誤：</p>
+                    <div class="space-y-3">
+                        <div class="practice-item">
+                            <p class="text-gray-800">1. There are many kind of park in the city.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...many <strong class="text-red-600">kinds</strong> of <strong class="text-red-600">parks</strong>... (many + 複數名詞)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">2. The government build many facility for children.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...government <strong class="text-red-600">builds</strong> many <strong class="text-red-600">facilities</strong>... (S-V 一致 + 複數)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">3. Children can do their favorite pastime in the park.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...favorite <strong class="text-red-600">pastimes</strong>... (通常有多種)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">4. The trees is planted everywhere in the park.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>The trees <strong class="text-red-600">are</strong> planted... (S-V 一致)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">5. People can get close to the nature and feel relax.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...close to <strong class="text-red-600">nature</strong> (不可數，不加 the) and feel <strong class="text-red-600">relaxed</strong> (adj. 感到放鬆的).</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">6. The kids enjoy to play with their friends.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...enjoy <strong class="text-red-600">playing</strong>... (enjoy + V-ing)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">7. My parents brings me to park every weekend.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...parents <strong class="text-red-600">bring</strong> me to <strong class="text-red-600">the</strong> park... (S-V 一致 + 冠詞)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">8. The vendor sell hotdog, ice cream and soda.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...vendor <strong class="text-red-600">sells</strong> <strong class="text-red-600">hotdogs</strong>... (S-V 一致 + 複數)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">9. The birds is singing happily on the tree.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...birds <strong class="text-red-600">are</strong> singing... <strong class="text-red-600">in</strong> the tree.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">10. There has a lake in the middle of the park.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>There <strong class="text-red-600">is</strong> a lake... (「有」的句型)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">11. The park provide a space for people to release their stress.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...park <strong class="text-red-600">provides</strong>... (S-V 一致)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">12. This are the reason why people loves this park.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-red-600">These</strong> are the <strong class="text-red-600">reasons</strong> why people <strong class="text-red-600">love</strong>... (This/These; S-V)</p>
+                                <p>或：<strong class="text-red-600">This is</strong> the reason why people <strong class="text-red-600">love</strong>...</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">13. Everyone need a place where they can rest.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>Everyone <strong class="text-red-600">needs</strong>... (Everyone 為單數)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">14. The parent sit under the tree and close eyes.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>The <strong class="text-red-600">parents</strong> <strong class="text-red-600">sit</strong>... and close <strong class="text-red-600">their</strong> eyes.</p>
+                                <p>或：The <strong class="text-red-600">parent</strong> <strong class="text-red-600">sits</strong>... and <strong class="text-red-600">closes his/her</strong> eyes.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">15. The children make new friend and broaden their relationship of people.</p>
+                            <button class="text-sm text-blue-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>...make new <strong class="text-red-600">friends</strong> and broaden their <strong class="text-red-600">relationships with people</strong> (或 social circle).</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- === 客製化練習結束 === -->
+
+                </div>
+            </div>
+
+            <!-- Phase 2 內容 -->
+            <div id="phase2" class="phase-content space-y-8">
+                <!-- === 以下為本次補回的 Phase 2 內容 === -->
+                <header class="mb-8">
+                    <h2 class="text-4xl font-bold text-green-700 mb-2">Phase 2：中階句型建構</h2>
+                    <p class="text-xl text-gray-600">目標：讓句子變得有密度、內容變扎實。</p>
+                    <p class="text-lg text-gray-500 mt-2">做到 Phase 2 → 作文穩定 16–18 分。</p>
+                </header>
+
+                <!-- 學習內容卡片 (2-1) -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+                    <h3 class="text-2xl font-semibold mb-4 text-green-800">2-1：形容詞子句 (關係代名詞)</h3>
+                    <p class="text-gray-700 mb-4">🎯 功能：補充說明 + 合併句子。這是學測最常提高句子層次的方式。</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1 pl-4 mb-4">
+                        <li><code class="bg-gray-200 px-1 rounded">which</code> → 代替物</li>
+                        <li><code class="bg-gray-200 px-1 rounded">who</code> → 代替人</li>
+                        <li><code class="bg-gray-200 px-1 rounded">that</code> → 泛用 (物/人都可)</li>
+                        <li><code class="bg-gray-200 px-1 rounded">where</code> → 代替地方 (in which)</li>
+                    </ul>
+                    <h4 class="text-lg font-semibold">📘 模板 (句子合併)</h4>
+                    <p class="text-gray-600">原句：The park has a small lake. People like to walk around it.</p>
+                    <p class="text-green-700 font-semibold">✔ 升級：The park has a small lake <strong class="text-green-800">which</strong> people like to walk around.</p>
+                </div>
+
+                <!-- 學習內容卡片 (2-2) -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+                    <h3 class="text-2xl font-semibold mb-4 text-green-800">2-2：名詞子句</h3>
+                    <p class="text-gray-700 mb-4">🎯 功能：讓內容抽象、提升層次。這是高分作文必出的句型。</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1 pl-4 mb-4">
+                        <li><code class="bg-gray-200 px-1 rounded">that</code> S + V (I believe <strong class="text-green-800">that</strong> parks are important.)</li>
+                        <li><code class="bg-gray-200 px-1 rounded">what</code> S + V (<strong>What</strong> people need is a park.)</li>
+                        <li><code class="bg-gray-200 px-1 rounded">why/how</code> S + V (<strong>Why</strong> this is important is that...)</li>
+                    </ul>
+                    <h4 class="text-lg font-semibold">📘 模板 (一句變高分句)</h4>
+                    <p class="text-gray-600">原句：People need parks to relax.</p>
+                    <p class="text-green-700 font-semibold">✔ 升級：<strong class="text-green-800">What</strong> people need is a park <strong class="text-green-800">where</strong> they can truly relax.</p>
+                </div>
+
+                <!-- 練習任務卡片 -->
+                <div class="bg-green-50 p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold mb-4 text-green-700">Phase 2 練習任務（每日練習）</h3>
+                    <p class="mb-4">A. 拿你作文中的 3 句 → 用 which/that 重寫</p>
+                    <p class="mb-4">B. 拿 2 句 → 用 名詞子句 重寫</p>
+                    <p class="text-gray-600">（你可以把句子傳給我，我幫你檢查＋升級）</p>
+                </div>
+
+                <!-- Phase 2 實戰演練與考試應用 -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500 mt-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-purple-800">🎯 實戰演練與考試應用 (Phase 2)</h3>
+                    
+                    <!-- 考試應用提示 -->
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md mb-6">
+                        <h4 class="text-lg font-semibold text-yellow-800">🧠 考試怎麼用？(中階)</h4>
+                        <p class="text-gray-700 mt-2"><strong>(which/who) 關代：</strong>用在「舉例」或「補充說明」時最好用。當你提到一個名詞 (a park, a friend, a method)，立刻用 "which..." 或 "who..." 接著補充說明，句子長度立刻加倍，內容也更扎實。</p>
+                        <p class="text-gray-700 mt-2"><strong>(that/what) 名詞子句：</strong>用在「開頭」或「表達觀點」時。與其說 "Parks are good."，不如說 "<strong class="text-green-800">I believe that</strong> parks are good." 或 "<strong class="text-green-800">What makes parks good is</strong>..."。後者分數立刻高一級。</p>
+                    </div>
+
+                    <h4 class="text-lg font-semibold mb-3">中階句型練習：</h4>
+                    <div class="space-y-3">
+                        <div class="practice-item">
+                            <p class="text-gray-800">1. (句子合併) The book is on the table. My teacher recommended it.</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>The book <strong class="text-green-800">which</strong> (或 that) my teacher recommended is on the table.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">2. (句子改寫) He said something. I don't understand it.</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>I don't understand <strong class="text-green-800">what</strong> he said.</p>
+                            </div>
+                        </div>
+                    </div>
+                <!-- === 補回內容結束 === -->
+
+                    <!-- === 以下為本次新增 (澤享的客製化練習) === -->
+                    <h3 class="text-2xl font-semibold mb-4 text-purple-800 mt-8">🔥 客製化練習 (Phase 2)</h3>
+
+                    <h4 class="text-lg font-semibold mb-3 mt-6">Phase 2-1：關係代名詞合併句練習</h4>
+                    <p class="mb-4 text-gray-700">把兩句合成一句，用 which / that / who / where。</p>
+                    <div class="space-y-3">
+                        <div class="practice-item">
+                            <p class="text-gray-800">1. There is a lake in the park. People like to walk around the lake.</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>There is a lake in the park <strong class="text-green-800">which</strong> (或 that) people like to walk around.</p>
+                                <p>(進階：... a lake in the park <strong class="text-green-800">around which</strong> people like to walk.)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">2. The playground is full of children. They are laughing and shouting happily.</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>The playground is full of children <strong class="text-green-800">who</strong> (或 that) are laughing and shouting happily.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">3. I visited a park yesterday. The park is famous for its beautiful cherry blossoms.</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>I visited a park yesterday <strong class="text-green-800">which</strong> (或 that) is famous for its beautiful cherry blossoms.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">4. The government built a new park. The park provides many facilities for teenagers.</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>The government built a new park <strong class="text-green-800">which</strong> (或 that) provides many facilities for teenagers.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">5. I met a girl in the park. She loves drawing the scenery there.</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>I met a girl in the park <strong class="text-green-800">who</strong> (或 that) loves drawing the scenery there.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">6. There is a bench under the tree. Old people like to rest there in the afternoon.</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>There is a bench under the tree <strong class="text-green-800">where</strong> old people like to rest in the afternoon.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">7. I took some photos in the park. The photos remind me of my childhood.</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>I took some photos in the park <strong class="text-green-800">which</strong> (或 that) remind me of my childhood.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">8. The vendor sells hot dogs and ice cream. Many children line up to buy food from him.</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>The vendor, <strong class="text-green-800">from whom</strong> many children line up to buy food, sells hot dogs and ice cream. (注意 "from whom" 與逗號)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">9. The city has a park. The park is quiet and far from the traffic.</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>The city has a park <strong class="text-green-800">which</strong> (或 that) is quiet and far from the traffic.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">10. We found a small corner. We could sit there and listen to the sound of nature.</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>We found a small corner <strong class="text-green-800">where</strong> we could sit and listen to the sound of nature.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="text-lg font-semibold mb-3 mt-6">Phase 2-2：名詞子句改寫練習</h4>
+                    <p class="mb-4 text-gray-700">請用指定開頭改寫</p>
+                    <div class="space-y-3">
+                        <div class="practice-item">
+                            <p class="text-gray-800">1. Parks are important for people’s mental health. (用 I believe that...)</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-green-800">I believe that</strong> parks are important for people’s mental health.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">2. We need a place where we can slow down. (用 What we need is...)</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-green-800">What we need is</strong> a place where we can slow down.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">3. Many people feel stressed because they work too hard. (用 The reason is that...)</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>Many people feel stressed. <strong class="text-green-800">The reason is that</strong> they work too hard.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">4. People visit parks to relax, not just to exercise. (用 Why people visit parks is that...)</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-green-800">Why people visit parks is that</strong> they want to relax, not just to exercise.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">5. A good park design can change people’s lives. (用 I am convinced that...)</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-green-800">I am convinced that</strong> a good park design can change people’s lives.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">6. The park makes me feel calm and peaceful. (用 How the park makes me feel is...)</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-green-800">How the park makes me feel is</strong> calm and peaceful.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">7. We should build more parks in big cities. (用 It is clear that...)</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-green-800">It is clear that</strong> we should build more parks in big cities.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">8. The most important thing is that families can spend time together. (用 What matters most is that...)</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-green-800">What matters most is that</strong> families can spend time together.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">9. I will never forget the day when I first visited this park. (用 I will never forget that... - 較不推薦)</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p>I will never forget <strong class="text-green-800">that</strong> day when I first visited this park. (此處 that 是形容詞 "那")</p>
+                                <p>(原句的 "when..." 是形容詞子句，不是名詞子句)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">10. Parks give people a chance to escape from the noise of the city. (用 That-clause 主詞...)</p>
+                            <button class="text-sm text-green-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-green-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-green-800">That parks give people a chance to escape from the noise of the city</strong> is undeniable.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- === 客製化練習結束 === -->
+
+                </div>
+            </div>
+
+            <!-- Phase 3 內容 -->
+            <div id="phase3" class="phase-content space-y-8">
+                <!-- === 以下為本次補回的 Phase 3 內容 === -->
+                <header class="mb-8">
+                    <h2 class="text-4xl font-bold text-orange-700 mb-2">Phase 3：進階句型掌握</h2>
+                    <p class="text-xl text-gray-600">目標：從普通變高分，文章出現「精緻句子」。</p>
+                    <p class="text-lg text-gray-500 mt-2">做到這裡 → 作文可達 18–19 分。</p>
+                </header>
+
+                <!-- 學習內容卡片 (3-1) -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-orange-500">
+                    <h3 class="text-2xl font-semibold mb-4 text-orange-800">3-1：分詞構句 (Being/ V-ing / p.p.)</h3>
+                    <p class="text-gray-700 mb-4">🎯 功能：讓文章看起來成熟、壓縮資訊。用來取代 "Because...", "When...", "While..."。</p>
+                    <h4 class="text-lg font-semibold">📘 模板</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1 pl-4 mb-4">
+                        <li><code class="bg-gray-200 px-1 rounded">Being + adj.</code>, S + V (取代 Because S + is/was + adj.)</li>
+                        <li><code class="bg-gray-200 px-1 rounded">V-ing...</code>, S + V (主動 / 同時發生)</li>
+                        <li><code class="bg-gray-200 px-1 rounded">p.p. ...</code>, S + V (被動)</li>
+                    </ul>
+                    <p class="text-gray-600">原句：Because people feel stressed, they visit parks to unwind.</p>
+                    <p class="text-orange-700 font-semibold">✔ 升級：<strong class="text-orange-800">Feeling stressed</strong>, many people visit parks to unwind.</p>
+                    <p class="text-gray-600">原句：The park is surrounded by trees, so it is very quiet.</p>
+                    <p class="text-orange-700 font-semibold">✔ 升級：<strong class="text-orange-800">Surrounded by trees</strong>, the park is very quiet.</p>
+                </div>
+                
+                <!-- 學習內容卡片 (3-2 & 3-3) -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-orange-500">
+                    <h3 class="text-2xl font-semibold mb-4 text-orange-800">3-2：強調句 (It is ... that ...)</h3>
+                    <p class="text-gray-700 mb-4">🎯 功能：強調你認為重要的東西 → 尤其適合「立論」或「結尾」。</p>
+                    <p class="text-gray-600">原句：The peaceful environment makes the park special.</p>
+                    <p class="text-orange-700 font-semibold">✔ 升級：<strong class="text-orange-800">It is</strong> the peaceful environment <strong class="text-orange-800">that</strong> makes the park special.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-orange-500">
+                    <h3 class="text-2xl font-semibold mb-4 text-orange-800">3-3：倒裝句 (Only / Not until)</h3>
+                    <p class="text-gray-700 mb-4">🎯 功能：讓句子瞬間更「有文采」，適合用在結尾下結論。</p>
+                    <p class="text-gray-600">原句：We can live a better life only when we protect nature.</p>
+                    <p class="text-orange-700 font-semibold">✔ 升級：<strong class="text-orange-800">Only when</strong> we protect nature <strong class="text-orange-800">can we</strong> live a better life.</p>
+                </div>
+
+                <!-- 練習任務卡片 -->
+                <div class="bg-orange-50 p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold mb-4 text-orange-700">Phase 3 練習任務（每日練習）</h3>
+                    <p class="mb-4">1. 用「分詞構句」改寫 2 句 (取代 Because / When)</p>
+                    <p class="mb-4">2. 用「It is … that」重寫 1 句 (強調你的論點)</p>
+                    <p class="mb-4">3. 用 「Only when…」造 1 句 (當作結尾)</p>
+                </div>
+
+                <!-- Phase 3 實戰演練與考試應用 -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500 mt-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-purple-800">🎯 實戰演練與考試應用 (Phase 3)</h3>
+                    
+                    <!-- 考試應用提示 -->
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md mb-6">
+                        <h4 class="text-lg font-semibold text-yellow-800">🧠 考試怎麼用？(進階)</h4>
+                        <p class="text-gray-700 mt-2"><strong>(分詞構句)：</strong>用在「描述背景」或「說明原因」時。不要整篇都用 "Because..."，偶爾用一句 "Feeling...", "Surrounded by..." 開頭，能讓教授眼睛一亮。</p>
+                        <p class="text-gray-700 mt-2"><strong>(It is...) 強調句：</strong>用在「第一段的論點句」或「第二段的開頭」。 "It is this reason that..."</p>
+                        <p class="text-gray-700 mt-2"><strong>(Only/Not until) 倒裝句：</strong><strong class="text-red-600">強烈建議只用在「文章結尾」</strong>。這是最強的結尾句型，例如："Only by doing so can we..." (唯有如此，我們才能...)。</p>
+                    </div>
+
+                    <h4 class="text-lg font-semibold mb-3">進階句型練習：</h4>
+                    <div class="space-y-3">
+                        <div class="practice-item">
+                            <p class="text-gray-800">1. (改寫) Because he is an honest man, I trust him.</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Being an honest man</strong>, he is trusted by me. (主詞需一致)</p>
+                                <p>或 (保留原主詞)：<strong class="text-orange-800">Believing</strong> he is an honest man, I trust him.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">2. (改寫) We can achieve our dreams only by working hard.</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Only by</strong> working hard <strong class="text-orange-800">can we</strong> achieve our dreams.</p>
+                            </div>
+                        </div>
+                    </div>
+                <!-- === 補回內容結束 === -->
+
+                    <!-- === 以下為本次新增 (澤享的客製化練習) === -->
+                    <h3 class="text-2xl font-semibold mb-4 text-purple-800 mt-8">🔥 客製化練習 (Phase 3)</h3>
+
+                    <h4 class="text-lg font-semibold mb-3 mt-6">Phase 3-1：分詞構句改寫練習</h4>
+                    <p class="mb-4 text-gray-700">把 because / when / while / 被動句，改成分詞構句開頭。</p>
+                    <div class="space-y-3">
+                        <div class="practice-item">
+                            <p class="text-gray-800">1. Because he felt tired, he sat down under the tree.</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Feeling tired</strong>, he sat down under the tree.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">2. When I walked into the park, I saw many children playing.</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Walking into the park</strong>, I saw many children playing.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">3. While they were listening to the birds, they forgot all their worries.</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Listening to the birds</strong>, they forgot all their worries.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">4. Because she was surrounded by nature, she felt peaceful.</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Surrounded by nature</strong>, she felt peaceful.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">5. When the sun was setting, the park became even more beautiful.</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">With the sun setting</strong>, the park became even more beautiful. (獨立分詞構句)</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">6. Because the park is located near my house, I go there very often.</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Located near my house</strong>, the park is a place I go very often.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">7. When we were walking along the path, we talked about our dreams.</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Walking along the path</strong>, we talked about our dreams.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">8. Because the parents were busy with work, they needed a place to relax.</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Being busy with work</strong>, the parents needed a place to relax.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">9. The park was designed by the government. It has many green areas.</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Designed by the government</strong>, the park has many green areas.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">10. The benches were placed under the trees. People could sit there comfortably.</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Placed under the trees</strong>, the benches allowed people to sit comfortably.</p>
+                                <p>(注意：主詞需一致。原句主詞 "People" 不同，直接改寫 "Placed..." 會變懸垂分詞。)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="text-lg font-semibold mb-3 mt-6">Phase 3-2：強調句 (It is...) 練習</h4>
+                    <p class="mb-4 text-gray-700">指定「要強調的部分」，請改寫成 It is/was... that...</p>
+                    <div class="space-y-3">
+                        <div class="practice-item">
+                            <p class="text-gray-800">1. The peaceful atmosphere makes this park special. (強調 ...atmosphere)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">It is</strong> the peaceful atmosphere <strong class="text-orange-800">that</strong> makes this park special.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">2. I visit this park on weekends. (強調 on weekends)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">It is</strong> on weekends <strong class="text-orange-800">that</strong> I visit this park.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">3. My parents took me to this park for the first time. (強調 my parents)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">It was</strong> my parents <strong class="text-orange-800">who</strong> (或 that) took me to this park for the first time.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">4. The government built this park for children and the elderly. (強調 ...and the elderly)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">It was</strong> for children and the elderly <strong class="text-orange-800">that</strong> the government built this park.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">5. The trees along the path create a relaxing feeling. (強調 ...along the path)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">It is</strong> the trees along the path <strong class="text-orange-800">that</strong> create a relaxing feeling.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">6. I realized the value of nature during that summer. (強調 during that summer)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">It was</strong> during that summer <strong class="text-orange-800">that</strong> I realized the value of nature.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">7. This park helped me overcome my stress. (強調 this park)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">It was</strong> this park <strong class="text-orange-800">that</strong> helped me overcome my stress.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">8. I like to sit by the lake and think about my future. (強調 sit by the lake)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">It is</strong> to sit by the lake <strong class="text-orange-800">that</strong> I like (most) and think about my future.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">9. The laughter of children fills the whole park. (強調 ...of children)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">It is</strong> the laughter of children <strong class="text-orange-800">that</strong> fills the whole park.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">10. My ideal park brings joy to everyone in the city. (強調 ...to everyone in the city)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">It is</strong> to everyone in the city <strong class="text-orange-800">that</strong> my ideal park brings joy.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="text-lg font-semibold mb-3 mt-6">Phase 3-3：倒裝句 (Only/Not until) 練習</h4>
+                    <p class="mb-4 text-gray-700">用 Only when / Only by / Not until 改寫</p>
+                    <div class="space-y-3">
+                        <div class="practice-item">
+                            <p class="text-gray-800">1. We truly relax when we stay away from our phones. (用 Only when...)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Only when</strong> we stay away from our phones <strong class="text-orange-800">do we</strong> truly relax.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">2. We can understand the value of nature when we lose it. (用 Not until...)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Not until</strong> we lose nature <strong class="text-orange-800">do we</strong> understand its value.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">3. People can enjoy the beauty of the park only if they slow down. (用 Only if...)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Only if</strong> they slow down <strong class="text-orange-800">can people</strong> enjoy the beauty of the park.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">4. I realized how tired I was when I sat on the bench. (用 Not until...)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Not until</strong> I sat on the bench <strong class="text-orange-800">did I</strong> realize how tired I was.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">5. We can build a better city if we add more green spaces. (用 Only by...)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Only by</strong> adding more green spaces <strong class="text-orange-800">can we</strong> build a better city.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">6. He found real peace after he started taking walks in the park. (用 Not until...)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Not until</strong> he started taking walks in the park <strong class="text-orange-800">did he</strong> find real peace.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">7. I noticed the birds’ singing when I closed my eyes. (用 Only when...)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Only when</strong> I closed my eyes <strong class="text-orange-800">did I</strong> notice the birds’ singing.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">8. People start to care about the environment after they see pollution. (用 Not until...)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Not until</strong> people see pollution <strong class="text-orange-800">do they</strong> start to care about the environment.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">9. I felt grateful for this park when I was under great pressure. (用 Only when...)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Only when</strong> I was under great pressure <strong class="text-orange-800">did I</strong> feel grateful for this park.</p>
+                            </div>
+                        </div>
+                        <div class="practice-item">
+                            <p class="text-gray-800">10. We can protect nature if we work together. (用 Only by...)</p>
+                            <button class="text-sm text-orange-600 hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                            <div class="answer mt-2 p-2 bg-orange-100 rounded">
+                                <p class="font-semibold">答案：</p>
+                                <p><strong class="text-orange-800">Only by</strong> working together <strong class="text-orange-800">can we</strong> protect nature.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- === 客製化練習結束 === -->
+
+                </div>
+            </div>
+
+            <!-- Phase 4 內容 -->
+            <div id="phase4" class="phase-content space-y-8">
+                <header class="mb-8">
+                    <h2 class="text-4xl font-bold text-red-700 mb-2">Phase 4：高階寫作技巧</h2>
+                    <p class="text-xl text-gray-600">目標：達到 19–20 分頂標水準。</p>
+                    <p class="text-lg text-gray-500 mt-2">做到這裡 → 你就是 20 分等級的寫手。</p>
+                </header>
+
+                <!-- 學習內容卡片 -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-red-500">
+                    <h3 class="text-2xl font-semibold mb-4 text-red-800">學習內容（高階）</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-lg font-semibold">4-1：主題句（Topic Sentence）</h4>
+                            <p class="text-gray-700">每段第一句都要明確說明這段在做什麼。</p>
+                            <div class="mt-2 p-3 bg-green-50 rounded-md">
+                                <p class="font-semibold text-green-700">✔ 範例：</p>
+                                <p class="text-green-700">An ideal park should serve people of all ages.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold">4-2：段落內部連接 (Transition Signals)</h4>
+                            <p class="text-gray-700">使用轉折詞讓邏輯流暢：</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1 pl-4">
+                                <li>To begin with, First of all...</li>
+                                <li>Moreover, Furthermore, In addition...</li>
+                                <li>Nevertheless, However...</li>
+                                <li>As a result, Therefore, Consequently...</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold">4-3：結尾呼應（首尾一致）</h4>
+                            <p class="text-gray-700">開頭談公園重要性 → 結尾用進階句型呼應：</p>
+                            <div class="mt-2 p-3 bg-green-50 rounded-md">
+                                <p class="font-semibold text-green-700">✔ 範例：</p>
+                                <p class="text-green-700">Only by building better parks can we build a better city.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 練習任務卡片 -->
+                <div class="bg-red-50 p-6 rounded-lg shadow-md">
+                    <h3 class="text-2xl font-semibold mb-4 text-red-700">Phase 4 練習任務（段落組織）</h3>
+                    <p class="mb-4">依題目寫「兩段式文章」→ 我進行完整批改（依學測標準）。（此功能需在聊天中進行）</p>
+                </div>
+                
+                <!-- Phase 4 實戰演練與考試應用 -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500 mt-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-purple-800">🎯 實戰演練與考試應用 (Phase 4)</h3>
+                    
+                    <!-- 考試應用提示 -->
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md mb-6">
+                        <h4 class="text-lg font-semibold text-yellow-800">🧠 考試怎麼用？(高階)</h4>
+                        <p class="text-gray-700 mt-2">這是「邏輯」與「架構」層級。您的句型 (Phase 1-3) 就像磚塊，Phase 4 則是教您如何蓋房子。</p>
+                        <p class="text-gray-700 mt-2">在考場上，第一段的「第一句」和第二段的「第一句」 (Topic Sentence) 決定了您 70% 的分數。寫完主題句後，請用轉折詞 (Moreover, However, As a result) 確保您的論點是「向前推進」，而不是「原地打轉」。</p>
+                    </div>
+
+                    <h4 class="text-lg font-semibold mb-3">段落建構練習：</h4>
+                    <p class="mb-4">請試著用轉折詞，將以下三個分散的論點，組合成一段有邏輯的段落 (關於「社群媒體的壞處」)：</p>
+                    <ul class="list-decimal list-inside bg-gray-50 p-4 rounded-md mb-4">
+                        <li>(主題句) Using social media too much can be harmful.</li>
+                        <li>(論點1) It wastes a lot of our valuable time.</li>
+                        <li>(論點2) It makes people feel anxious about their lives (due to comparison).</li>
+                        <li>(結論) We should use it more wisely.</li>
+                    </ul>
+                    <button class="text-sm text-red-600 hover:underline" onclick="toggleAnswer(this)">顯示範例答案</button>
+                    <div class="answer mt-2 p-2 bg-red-100 rounded">
+                        <p class="font-semibold">範例答案：</p>
+                        <p class="text-gray-800">Using social media too much can be harmful. <strong class="text-red-700">To begin with,</strong> it wastes a lot of our valuable time <strong class="text-red-700">which</strong> could be spent on more meaningful activities. <strong class="text-red-700">Moreover,</strong> it often makes people feel anxious about their own lives when they see others' seemingly perfect posts. <strong class="text-red-700">As a result,</strong> it is crucial that we learn to use it more wisely.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 總測驗 內容 -->
+            <div id="quiz" class="phase-content space-y-8">
+                <header class="mb-8">
+                    <h2 class="text-4xl font-bold text-yellow-600 mb-2">⭐ 總測驗：學習成果檢定</h2>
+                    <p class="text-xl text-gray-600">檢驗你對 Phase 1-3 句型的掌握度。</p>
+                </header>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="space-y-6">
+                        <!-- Q1 -->
+                        <div class="quiz-question">
+                            <p class="text-lg font-semibold mb-2">Q1: (Phase 1 基礎) Which sentence is correct?</p>
+                            <div class="space-y-1">
+                                <label class="block"><input type="radio" name="q1" value="a" class="mr-2"> (A) One of my teacher teach me English.</label>
+                                <label class="block"><input type="radio" name="q1" value="b" class="mr-2"> (B) One of my teachers teaches me English.</label>
+                                <label class="block"><input type="radio" name="q1" value="c" class="mr-2"> (C) One of my teachers teach me English.</label>
+                                <label class="block"><input type="radio" name="q1" value="d" class="mr-2"> (D) One of my teacher teaches me English.</label>
+                            </div>
+                        </div>
+                        <!-- Q2 -->
+                        <div class="quiz-question">
+                            <p class="text-lg font-semibold mb-2">Q2: (Phase 2 中階) "The man is my father. He is talking to the principal." →</p>
+                            <div class="space-y-1">
+                                <label class="block"><input type="radio" name="q2" value="a" class="mr-2"> (A) The man who is talking to the principal is my father.</label>
+                                <label class="block"><input type="radio" name="q2" value="b" class="mr-2"> (B) The man, who is talking to the principal, is my father.</label>
+                                <label class="block"><input type="radio" name="q2" value="c" class="mr-2"> (C) The man which is talking to the principal is my father.</label>
+                                <label class="block"><input type="radio" name="q2" value="d" class="mr-2"> (D) The man, that is talking to the principal, is my father.</label>
+                            </div>
+                        </div>
+                        <!-- Q3 -->
+                        <div class="quiz-question">
+                            <p class="text-lg font-semibold mb-2">Q3: (Phase 2 中階) "I believe ___ he is an honest man."</p>
+                            <div class="space-y-1">
+                                <label class="block"><input type="radio" name="q3" value="a" class="mr-2"> (A) that</label>
+                                <label class="block"><input type="radio" name="q3" value="b" class="mr-2"> (B) what</label>
+                                <label class="block"><input type="radio" name="q3" value="c" class="mr-2"> (C) which</label>
+                                <label class="block"><input type="radio" name="q3" value="d" class="mr-2"> (D) who</label>
+                            </div>
+                        </div>
+                         <!-- Q4 -->
+                        <div class="quiz-question">
+                            <p class="text-lg font-semibold mb-2">Q4: (Phase 3 進階) "Because he was sick, he didn't go to school." →</p>
+                            <div class="space-y-1">
+                                <label class="block"><input type="radio" name="q4" value="a" class="mr-2"> (A) Sicking, he didn't go to school.</label>
+                                <label class="block"><input type="radio" name="q4" value="b" class="mr-2"> (B) Being sick, he didn't go to school.</label>
+                                <label class="block"><input type="radio" name="q4" value="c" class="mr-2"> (C) To be sick, he didn't go to school.</label>
+                                <label class="block"><input type="radio" name="q4" value="d" class="mr-2"> (D) Sick, he didn't go to school.</label>
+                            </div>
+                        </div>
+                         <!-- Q5 -->
+                        <div class="quiz-question">
+                            <p class="text-lg font-semibold mb-2">Q5: (Phase 3 進階) "I didn't know the truth until he told me." →</p>
+                            <div class="space-y-1">
+                                <label class="block"><input type="radio" name="q5" value="a" class="mr-2"> (A) Not until did he tell me I knew the truth.</label>
+                                <label class="block"><input type="radio" name="q5" value="b" class="mr-2"> (B) Not until he told me I knew the truth.</label>
+                                <label class="block"><input type="radio" name="q5" value="c" class="mr-2"> (C) Not until he told me did I know the truth.</label>
+                                <label class="block"><input type="radio" name="q5" value="d" class="mr-2"> (D) Not until he did tell me I knew the truth.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="mt-8 w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300" onclick="submitQuiz()">
+                        查看答案
+                    </button>
+                    <div id="quiz-result" class="mt-6 p-4 bg-gray-100 rounded-md text-center font-semibold" style="display: none;">
+                        <!-- 測驗結果會顯示在這裡 -->
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // 顯示/隱藏 答案
+        function toggleAnswer(button) {
+            // 找到按鈕的下一個兄弟元素，即 .answer div
+            const answer = button.nextElementSibling;
+            if (answer && answer.classList.contains('answer')) {
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                    button.textContent = '顯示答案';
+                } else {
+                    answer.style.display = 'block';
+                    button.textContent = '隱藏答案';
+                }
+            } else {
+                // 處理 "顯示範例答案" 按鈕 (結構不同)
+                const answerDiv = button.nextElementSibling;
+                if (answerDiv && answerDiv.classList.contains('answer')) {
+                    if (answerDiv.style.display === 'block') {
+                        answerDiv.style.display = 'none';
+                        button.textContent = '顯示範例答案';
+                    } else {
+                        answerDiv.style.display = 'block';
+                        button.textContent = '隱藏範例答案';
+                    }
+                }
+            }
+        }
+
+        // 切換 Phase 頁面
+        function showPhase(phaseId, element) {
+            // 1. 隱藏所有 phase-content
+            document.querySelectorAll('.phase-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // 2. 顯示被點擊的 phase-content
+            const activeContent = document.getElementById(phaseId);
+            if (activeContent) {
+                activeContent.classList.add('active');
+            }
+
+            // 3. 移除所有 sidebar-link 的 active 狀態
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // 4. 將 active 狀態添加到被點擊的
+            if (element) {
+                element.classList.add('active');
+            }
+        }
+
+        // 提交測驗 (總測驗頁面)
+        function submitQuiz() {
+            const correctAnswers = {
+                q1: 'b',
+                q2: 'a',
+                q3: 'a',
+                q4: 'b',
+                q5: 'c'
+            };
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+            const results = [];
+
+            document.querySelectorAll('.quiz-question').forEach((question, index) => {
+                const qName = `q${index + 1}`;
+                const correctAnswer = correctAnswers[qName];
+                const selected = document.querySelector(`input[name="${qName}"]:checked`);
+                
+                // 移除舊的標記
+                question.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('text-green-700', 'font-semibold', 'text-red-700');
+                });
+
+                if (selected) {
+                    if (selected.value === correctAnswer) {
+                        score++;
+                        // 將正確答案標記為綠色
+                        selected.parentElement.classList.add('text-green-700', 'font-semibold');
+                    } else {
+                        // 將錯誤答案標記為紅色
+                        selected.parentElement.classList.add('text-red-700', 'font-semibold');
+                        // 並標記出正確答案
+                        const correctLabel = question.querySelector(`input[value="${correctAnswer}"]`);
+                        if(correctLabel) {
+                            correctLabel.parentElement.classList.add('text-green-700', 'font-semibold');
+                        }
+                    }
+                } else {
+                    // 如果沒選，也標記出正確答案
+                    const correctLabel = question.querySelector(`input[value="${correctAnswer}"]`);
+                    if(correctLabel) {
+                        correctLabel.parentElement.classList.add('text-green-700', 'font-semibold');
+                    }
+                }
+            });
+
+            const resultElement = document.getElementById('quiz-result');
+            resultElement.innerHTML = `你答對了 ${score} / ${totalQuestions} 題。 正確答案已用<span class="text-green-700 font-semibold">綠色</span>標示。`;
+            resultElement.style.display = 'block';
+        }
+
+        // 頁面加載時，默認顯示 phase1
+        document.addEventListener('DOMContentLoaded', () => {
+            showPhase('phase1', document.querySelector('.sidebar-link'));
+        });
+    </script>
+
+</body>
+</html>

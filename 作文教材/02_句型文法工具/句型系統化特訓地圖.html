@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學測英文作文－系統化特訓地圖</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+    <style>
+        body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .phase-content { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .phase-content.active { display: block; }
+        .sidebar-link.active { background-color: #eff6ff; color: #1d4ed8; font-weight: 700; border-right: 4px solid #1d4ed8; }
+        .answer { display: none; }
+        
+        /* 三段式教學的標籤樣式 */
+        .step-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .step-model { background-color: #dbeafe; color: #1e40af; } /* Blue */
+        .step-guided { background-color: #fef3c7; color: #92400e; } /* Yellow */
+        .step-independent { background-color: #dcfce7; color: #166534; } /* Green */
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="flex h-screen overflow-hidden">
+        <nav class="w-72 bg-white shadow-xl no-scrollbar overflow-y-auto flex-shrink-0 z-10">
+            <div class="p-8 border-b border-gray-100">
+                <h1 class="text-2xl font-bold text-gray-900 tracking-tight">學測作文特訓</h1>
+                <p class="text-sm text-blue-600 font-medium mt-1">個人化戰情室</p>
+            </div>
+            <ul class="space-y-1 p-4">
+                <li>
+                    <a href="#" class="sidebar-link active block rounded-md px-4 py-4 text-gray-600 hover:bg-gray-50 transition-all" onclick="event.preventDefault(); showPhase('phase1', this)">
+                        <div class="flex items-center">
+                            <span class="text-xl mr-3">🛡️</span>
+                            <div>
+                                <div class="font-bold">Phase 1：防禦工事</div>
+                                <div class="text-xs text-gray-400">基礎除錯 & 錯誤矩陣</div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link block rounded-md px-4 py-4 text-gray-600 hover:bg-gray-50 transition-all" onclick="event.preventDefault(); showPhase('phase2', this)">
+                        <div class="flex items-center">
+                            <span class="text-xl mr-3">⚔️</span>
+                            <div>
+                                <div class="font-bold">Phase 2：武器升級</div>
+                                <div class="text-xs text-gray-400">關代 & 名詞子句擴充</div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link block rounded-md px-4 py-4 text-gray-600 hover:bg-gray-50 transition-all" onclick="event.preventDefault(); showPhase('phase3', this)">
+                        <div class="flex items-center">
+                            <span class="text-xl mr-3">🔥</span>
+                            <div>
+                                <div class="font-bold">Phase 3：高階連擊</div>
+                                <div class="text-xs text-gray-400">分詞構句 & 一句四變</div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link block rounded-md px-4 py-4 text-gray-600 hover:bg-gray-50 transition-all" onclick="event.preventDefault(); showPhase('phase4', this)">
+                        <div class="flex items-center">
+                            <span class="text-xl mr-3">🏗️</span>
+                            <div>
+                                <div class="font-bold">Phase 4：建築藍圖</div>
+                                <div class="text-xs text-gray-400">段落模板 & 結構佈局</div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="mt-4 pt-4 border-t border-gray-100">
+                     <a href="#" class="sidebar-link block rounded-md px-4 py-3 text-gray-600 hover:bg-gray-50" onclick="event.preventDefault(); showPhase('quiz', this)">
+                        ⭐ 綜合實戰驗收
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="flex-1 overflow-y-auto bg-gray-50 p-8 md:p-12 relative">
+            
+            <div id="phase1" class="phase-content active max-w-4xl mx-auto space-y-10">
+                <header>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Phase 1：防禦工事 (基礎正確率)</h2>
+                    <p class="text-gray-600">寫作的第一原則：先求不扣分，再求加分。這裡整理了你最容易犯的錯誤。</p>
+                </header>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="bg-red-50 px-6 py-4 border-b border-red-100">
+                        <h3 class="text-lg font-bold text-red-800 flex items-center">
+                            ⚠️ 常見錯誤儀表板 (Top 5 Errors)
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b border-gray-200 text-gray-500 text-sm uppercase tracking-wider">
+                                        <th class="pb-3 font-semibold">錯誤類型</th>
+                                        <th class="pb-3 font-semibold">❌ 你的直覺 (錯誤)</th>
+                                        <th class="pb-3 font-semibold">✔ 正確寫法</th>
+                                        <th class="pb-3 font-semibold">核心觀念</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-700 text-sm">
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-4 font-medium text-red-600">1. S-V 一致性</td>
+                                        <td class="py-4">The government <u>provide</u>...</td>
+                                        <td class="py-4 text-green-700 font-medium">The government provides...</td>
+                                        <td class="py-4 text-gray-500">單數主詞 + 單數動詞 (加s)</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-4 font-medium text-red-600">2. 不可數名詞</td>
+                                        <td class="py-4">many <u>informations</u> / <u>advices</u></td>
+                                        <td class="py-4 text-green-700 font-medium">much information / advice</td>
+                                        <td class="py-4 text-gray-500">抽象名詞通常不可數，不可加 s</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-4 font-medium text-red-600">3. 特定動詞用法</td>
+                                        <td class="py-4">I enjoy <u>to swim</u>.</td>
+                                        <td class="py-4 text-green-700 font-medium">I enjoy swimming.</td>
+                                        <td class="py-4 text-gray-500">enjoy, finish, mind + V-ing</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-4 font-medium text-red-600">4. Run-on Sentence</td>
+                                        <td class="py-4">I like swimming, it is fun.</td>
+                                        <td class="py-4 text-green-700 font-medium">I like swimming because it is fun.</td>
+                                        <td class="py-4 text-gray-500">兩個子句不能只用逗號連接</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-4 font-medium text-red-600">5. 關代誤用</td>
+                                        <td class="py-4">The student <u>which</u> studies hard...</td>
+                                        <td class="py-4 text-green-700 font-medium">The student who studies hard...</td>
+                                        <td class="py-4 text-gray-500">人配 who，物配 which</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">🎯 基礎修復特訓 (3-Stage Flow)</h3>
+                    
+                    <div class="mb-8 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                        <span class="step-tag step-model">Step 1: 示範 (Modeling)</span>
+                        <p class="mt-2 text-gray-700 font-medium">目標：修正 Run-on Sentence (連寫句)</p>
+                        <p class="mt-1 text-red-400 line-through text-sm">錯句：Parents go to the park, they want to relax.</p>
+                        <p class="mt-1 text-blue-800 font-bold text-lg">✔ Parents go to the park <span class="underline">because</span> they want to relax.</p>
+                        <p class="text-xs text-gray-500 mt-1">解析：加入連接詞 because 連接兩個動作。</p>
+                    </div>
+
+                    <div class="mb-8 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                        <span class="step-tag step-guided">Step 2: 半開放練習 (Guided Practice)</span>
+                        <p class="mt-2 text-gray-800">請用連接詞修正以下句子：</p>
+                        <p class="text-gray-600 text-sm mb-2">題目：The weather was bad, we cancelled the trip.</p>
+                        <div class="flex items-center gap-2">
+                            <span class="font-mono text-lg">We cancelled the trip </span>
+                            <input type="text" class="border-b-2 border-gray-400 bg-transparent w-24 text-center focus:outline-none focus:border-blue-500" placeholder="連接詞?">
+                            <span class="font-mono text-lg"> the weather was bad.</span>
+                        </div>
+                        <button class="mt-3 text-sm text-yellow-700 font-semibold hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                        <div class="answer mt-2 text-green-700 font-bold">Ans: because / since / as</div>
+                    </div>
+
+                    <div class="p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                        <span class="step-tag step-independent">Step 3: 獨立任務 (Mission A)</span>
+                        <p class="mt-2 text-gray-800 font-bold">挑戰任務：</p>
+                        <p class="text-gray-700">請檢查你最近的一篇作文，找出 3 個「S-V 不一致」或「名詞單複數」錯誤並修正。</p>
+                        <textarea class="w-full mt-3 p-3 rounded border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none h-24 text-sm" placeholder="在此輸入你的修正（例如：He go -> He goes...）"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div id="phase2" class="phase-content max-w-4xl mx-auto space-y-10">
+                <header>
+                    <h2 class="text-3xl font-bold text-blue-800 mb-2">Phase 2：武器升級 (密度與層次)</h2>
+                    <p class="text-gray-600">目標：拒絕短句。用「關係代名詞」和「名詞子句」讓句子變長、變厚實。</p>
+                </header>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-900">🔧 武器 A：關係代名詞 (Adjective Clause)</h3>
+                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">合併句子神器</span>
+                    </div>
+
+                    <div class="mb-6 p-4 bg-blue-50 rounded-lg">
+                        <span class="step-tag step-model">Step 1: 示範</span>
+                        <p class="text-gray-600 text-sm mt-1">原句 1: The park has a lake.</p>
+                        <p class="text-gray-600 text-sm">原句 2: People like to walk around the lake.</p>
+                        <p class="text-blue-800 font-bold mt-2 text-lg">→ The park has a lake <span class="underline decoration-wavy">which</span> people like to walk around.</p>
+                    </div>
+
+                    <div class="mb-6 p-4 bg-yellow-50 rounded-lg">
+                        <span class="step-tag step-guided">Step 2: 填空引導</span>
+                        <p class="text-gray-800 mb-2">題目：He is the swimmer. He won the gold medal.</p>
+                        <p class="font-mono text-lg">He is the swimmer <input type="text" class="border-b-2 border-gray-400 bg-transparent w-20 text-center" placeholder="who/which"> won the gold medal.</p>
+                        <button class="mt-2 text-sm text-yellow-700 font-semibold hover:underline" onclick="toggleAnswer(this)">顯示答案</button>
+                        <div class="answer mt-1 text-green-700 font-bold">Ans: who (因為先行詞是人)</div>
+                    </div>
+
+                    <div class="p-4 bg-green-50 rounded-lg">
+                        <span class="step-tag step-independent">Step 3: 實戰造句</span>
+                        <p class="text-gray-800 font-bold mb-1">你的任務：</p>
+                        <p class="text-gray-700 text-sm mb-2">請用 "which" 或 "where" 合併這兩句：<br>1. I study at NCCU (政大). <br>2. NCCU has a beautiful library.</p>
+                        <textarea class="w-full p-2 rounded border border-gray-300 text-sm" placeholder="試著寫寫看..."></textarea>
+                        <button class="mt-2 text-sm text-green-700 font-semibold hover:underline" onclick="toggleAnswer(this)">參考答案</button>
+                        <div class="answer mt-1 text-green-700">NCCU, where I study, has a beautiful library. <br> (或 NCCU, which has a beautiful library, is where I study.)</div>
+                    </div>
+                </div>
+
+                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-900">🧠 武器 B：名詞子句 (Noun Clause)</h3>
+                        <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">觀點表達神器</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div class="p-3 bg-gray-50 rounded border-l-4 border-purple-500">
+                                <h4 class="font-bold text-purple-700">I believe that... (觀點)</h4>
+                                <p class="text-sm text-gray-600">不要只寫 "Sports are good."</p>
+                                <p class="text-sm font-bold mt-1">→ I believe that sports are beneficial.</p>
+                            </div>
+                             <div class="p-3 bg-gray-50 rounded border-l-4 border-purple-500">
+                                <h4 class="font-bold text-purple-700">What... is... (強調主詞)</h4>
+                                <p class="text-sm text-gray-600">不要只寫 "We need patience."</p>
+                                <p class="text-sm font-bold mt-1">→ What we need is patience.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-purple-50 rounded-lg flex flex-col justify-center">
+                            <span class="step-tag step-independent bg-purple-200 text-purple-800 mb-2">Mission B: 觀點升級</span>
+                            <p class="text-sm text-gray-700 mb-2">將句子 "Time management is important." 改寫成名詞子句。</p>
+                            <input type="text" class="w-full p-2 border rounded mb-2" placeholder="試用 I think that... 或 What...">
+                            <button class="text-xs text-purple-600 hover:underline self-start" onclick="toggleAnswer(this)">顯示建議</button>
+                            <div class="answer mt-1 text-sm text-gray-800">
+                                1. I think that time management is important.<br>
+                                2. What is important is time management.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="phase3" class="phase-content max-w-4xl mx-auto space-y-10">
+                <header>
+                    <h2 class="text-3xl font-bold text-orange-700 mb-2">Phase 3：高階連擊 (句型變身)</h2>
+                    <p class="text-gray-600">這一關是分水嶺。我們要學會「同一個意思，四種高級寫法」。這會讓閱卷教授覺得你的英文非常靈活。</p>
+                </header>
+
+                <div class="bg-gradient-to-br from-orange-50 to-white rounded-xl shadow-lg border border-orange-200 p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">✨ 句型變身實驗室</h3>
+                    
+                    <div class="mb-8 text-center">
+                        <p class="text-gray-500 text-sm uppercase tracking-wide font-semibold">原始句子 (Base Sentence)</p>
+                        <div class="bg-white border-2 border-gray-800 text-gray-900 text-xl font-bold p-4 rounded-lg inline-block shadow-sm mt-2">
+                            The park helps people relax.
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-5 rounded-lg shadow-sm border-l-4 border-blue-400 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between mb-2">
+                                <h4 class="font-bold text-blue-800">1. 關係代名詞變身</h4>
+                                <span class="text-xs bg-gray-100 px-2 py-1 rounded">插入補充</span>
+                            </div>
+                            <p class="text-gray-700">The park, <span class="text-blue-600 font-bold">which helps people relax</span>, is popular.</p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-lg shadow-sm border-l-4 border-purple-400 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between mb-2">
+                                <h4 class="font-bold text-purple-800">2. 名詞子句變身</h4>
+                                <span class="text-xs bg-gray-100 px-2 py-1 rounded">強調事實</span>
+                            </div>
+                            <p class="text-gray-700"><span class="text-purple-600 font-bold">What the park does</span> is (to) help people relax.</p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-lg shadow-sm border-l-4 border-orange-400 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between mb-2">
+                                <h4 class="font-bold text-orange-800">3. 分詞構句變身</h4>
+                                <span class="text-xs bg-gray-100 px-2 py-1 rounded">簡潔精練</span>
+                            </div>
+                            <p class="text-gray-700"><span class="text-orange-600 font-bold">Helping people relax</span>, the park is indispensable.</p>
+                            <p class="text-xs text-gray-500 mt-1">(主動用 V-ing, 被動用 p.p.)</p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-lg shadow-sm border-l-4 border-red-400 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between mb-2">
+                                <h4 class="font-bold text-red-800">4. 強調句變身</h4>
+                                <span class="text-xs bg-gray-100 px-2 py-1 rounded">語氣加強</span>
+                            </div>
+                            <p class="text-gray-700"><span class="text-red-600 font-bold">It is</span> the park <span class="text-red-600 font-bold">that</span> helps people relax.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">🏋️‍♂️ Mission C: 變身訓練</h3>
+                    <p class="text-gray-600 mb-4">請嘗試將 "Technology changes our lives." 進行「分詞構句」與「強調句」變身。</p>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">分詞構句 (Changing...)</label>
+                            <input type="text" class="w-full border rounded p-2 focus:ring-2 focus:ring-orange-300 focus:outline-none" placeholder="Changing our lives, technology...">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">強調句 (It is...)</label>
+                            <input type="text" class="w-full border rounded p-2 focus:ring-2 focus:ring-red-300 focus:outline-none" placeholder="It is technology that...">
+                        </div>
+                    </div>
+                    <button class="mt-4 text-sm text-gray-500 hover:text-gray-800 underline" onclick="toggleAnswer(this)">顯示參考答案</button>
+                    <div class="answer mt-2 bg-gray-50 p-3 rounded text-sm">
+                        1. Changing our lives, technology plays a key role.<br>
+                        2. It is technology that changes our lives.
+                    </div>
+                </div>
+            </div>
+
+            <div id="phase4" class="phase-content max-w-4xl mx-auto space-y-10">
+                <header>
+                    <h2 class="text-3xl font-bold text-indigo-800 mb-2">Phase 4：建築藍圖 (滿分模板)</h2>
+                    <p class="text-gray-600">學測作文不需要從零發明。這裡有經過驗證的段落骨架，讓你考試時直接填肉。</p>
+                </header>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-xl shadow-md border-t-4 border-blue-500 p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">📄 Paragraph 1: 圖片描述</h3>
+                        <div class="space-y-2 text-gray-700 text-sm leading-relaxed">
+                            <p><span class="font-bold text-blue-600">[開場]</span> <strong>In Picture A, we can see</strong> a vivid scene where [描述主詞與動作].</p>
+                            <p><span class="font-bold text-blue-600">[細節]</span> <strong>Surrounded by</strong> [背景物件], the character seems to be [情緒/狀態].</p>
+                            <p><span class="font-bold text-blue-600">[對比]</span> <strong>In contrast, Picture B depicts</strong> a completely different situation. Here, [描述圖B].</p>
+                            <p><span class="font-bold text-blue-600">[小結]</span> <strong>What makes these two pictures distinct is that</strong> [圖A與圖B的核心差異].</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <p class="text-xs text-gray-500">💡教練筆記：記得用到 "Surrounded by" (分詞) 和 "What makes..." (名詞子句)。</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-md border-t-4 border-indigo-500 p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">📝 Paragraph 2: 論說與經驗</h3>
+                        <div class="space-y-2 text-gray-700 text-sm leading-relaxed">
+                            <p><span class="font-bold text-indigo-600">[主題句]</span> <strong>As for me, I believe that</strong> [你的觀點/選擇].</p>
+                            <p><span class="font-bold text-indigo-600">[理由]</span> <strong>The main reason is that</strong> [解釋原因].</p>
+                            <p><span class="font-bold text-indigo-600">[個人經驗]</span> <strong>Take my own experience as an example.</strong> I remember a time when [你的故事].</p>
+                            <p><span class="font-bold text-indigo-600">[結論-大招]</span> <strong>Only by</strong> [你的建議/行動] <strong>can we</strong> truly [美好結果].</p>
+                        </div>
+                         <div class="mt-4 pt-4 border-t border-gray-100">
+                            <p class="text-xs text-gray-500">💡 教練筆記：結論句一定要用 Only by 倒裝句，這是拿 18+ 分的關鍵。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-50 rounded-xl p-8 text-center">
+                    <h3 class="text-2xl font-bold text-indigo-900 mb-2">🚀 Mission D: 模考實戰</h3>
+                    <p class="text-indigo-700 mb-6">現在，請使用上述的模板，針對「AI 對學生的影響」寫出第二段的主題句與結論句。</p>
+                    <div class="text-left max-w-lg mx-auto bg-white p-4 rounded shadow-sm">
+                        <p class="mb-2 text-sm text-gray-500">Topic Sentence:</p>
+                        <div class="h-8 border-b border-gray-300 mb-4"></div>
+                        <p class="mb-2 text-sm text-gray-500">Conclusion (Only by...):</p>
+                        <div class="h-8 border-b border-gray-300"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz" class="phase-content max-w-4xl mx-auto">
+                <header class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900">⭐ 總測驗：學習成果檢定</h2>
+                </header>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md space-y-8">
+                     <div class="quiz-question group">
+                        <p class="text-lg font-semibold mb-3 text-gray-800">Q1: (Phase 1) 哪一個句子文法完全正確？</p>
+                        <div class="space-y-2 pl-2">
+                            <label class="flex items-center cursor-pointer p-2 rounded hover:bg-gray-50 transition"><input type="radio" name="q1" value="a" class="mr-3 w-4 h-4 text-blue-600"> One of my teacher teach me English.</label>
+                            <label class="flex items-center cursor-pointer p-2 rounded hover:bg-gray-50 transition"><input type="radio" name="q1" value="b" class="mr-3 w-4 h-4 text-blue-600"> One of my teachers teaches me English.</label>
+                            <label class="flex items-center cursor-pointer p-2 rounded hover:bg-gray-50 transition"><input type="radio" name="q1" value="c" class="mr-3 w-4 h-4 text-blue-600"> One of my teachers teach me English.</label>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question group">
+                        <p class="text-lg font-semibold mb-3 text-gray-800">Q2: (Phase 3) "Because he was tired, he slept." 改寫為分詞構句：</p>
+                        <div class="space-y-2 pl-2">
+                            <label class="flex items-center cursor-pointer p-2 rounded hover:bg-gray-50 transition"><input type="radio" name="q2" value="a" class="mr-3 w-4 h-4 text-blue-600"> Tireding, he slept.</label>
+                            <label class="flex items-center cursor-pointer p-2 rounded hover:bg-gray-50 transition"><input type="radio" name="q2" value="b" class="mr-3 w-4 h-4 text-blue-600"> To be tired, he slept.</label>
+                            <label class="flex items-center cursor-pointer p-2 rounded hover:bg-gray-50 transition"><input type="radio" name="q2" value="c" class="mr-3 w-4 h-4 text-blue-600"> Being tired, he slept.</label>
+                        </div>
+                    </div>
+
+                    <button class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-4 rounded-lg shadow-lg hover:from-blue-700 hover:to-indigo-700 transition transform hover:-translate-y-1" onclick="submitQuiz()">
+                        交卷查看成績
+                    </button>
+                    <div id="quiz-result" class="hidden mt-6 p-4 bg-green-50 text-green-800 rounded-lg text-center font-bold text-xl border border-green-200"></div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function showPhase(phaseId, element) {
+            // 隱藏所有內容
+            document.querySelectorAll('.phase-content').forEach(el => el.classList.remove('active'));
+            // 顯示目標內容
+            const target = document.getElementById(phaseId);
+            if(target) target.classList.add('active');
+            
+            // 處理選單樣式
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+            if(element) element.classList.add('active');
+
+            // 捲動到頂部
+            document.querySelector('main').scrollTop = 0;
+        }
+
+        function toggleAnswer(btn) {
+            const answerDiv = btn.nextElementSibling;
+            if (answerDiv.style.display === 'block') {
+                answerDiv.style.display = 'none';
+                btn.textContent = btn.textContent.replace('隱藏', '顯示');
+            } else {
+                answerDiv.style.display = 'block';
+                answerDiv.style.animation = 'fadeIn 0.3s';
+                btn.textContent = btn.textContent.replace('顯示', '隱藏');
+            }
+        }
+
+        function submitQuiz() {
+            const answers = { q1: 'b', q2: 'c' };
+            let score = 0;
+            let total = 2;
+
+            // 簡單的批改邏輯
+            for(let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                const questionDiv = document.querySelector(`input[name="${q}"]`).closest('.quiz-question');
+                
+                // 重置樣式
+                questionDiv.querySelectorAll('label').forEach(l => l.classList.remove('text-green-600', 'font-bold', 'text-red-600'));
+
+                if(selected) {
+                    if(selected.value === answers[q]) {
+                        score++;
+                        selected.parentElement.classList.add('text-green-600', 'font-bold');
+                    } else {
+                        selected.parentElement.classList.add('text-red-600');
+                        // 標示正確答案
+                        const correctInput = questionDiv.querySelector(`input[value="${answers[q]}"]`);
+                        correctInput.parentElement.classList.add('text-green-600', 'font-bold');
+                    }
+                }
+            }
+
+            const resultDiv = document.getElementById('quiz-result');
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = `得分：${score} / ${total} <br> <span class="text-sm font-normal text-gray-600">${score === total ? '太棒了！完美！🎉' : '再接再厲，看綠色標示的正確答案喔！'}</span>`;
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            showPhase('phase1', document.querySelector('.sidebar-link'));
+        });
+    </script>
+</body>
+</html>

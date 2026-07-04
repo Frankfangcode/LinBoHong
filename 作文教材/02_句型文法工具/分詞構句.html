@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「分詞」是什麼？「過去分詞」與「現在分詞」的用法！ – 英文庫</title>
+    <style>
+        /* * 根據 PDF 視覺風格重新編寫的 CSS
+         */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px; /* 在手機上增加邊距 */
+            background-color: #f8f9fa; /* 淺灰色背景 */
+            color: #343a40; /* 主要文字顏色 */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto; /* 頁面置中 */
+            padding: 20px 40px; /* 內部留白 */
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* 加上陰影使其更立體 */
+        }
+        h1, h2, h3 {
+            color: #212529; /* 標題使用更深的顏色 */
+        }
+        h1 {
+            font-size: 2.2em;
+            border-bottom: 3px solid #dee2e6; /* 模仿 PDF 的標題底線 */
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 50px; /* 與前段內容的間距 */
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        h3 {
+            font-size: 1.4em;
+            margin-top: 40px;
+            border: none; /* h3 不加底線，但保留與上方間距 */
+        }
+        p {
+            margin-bottom: 1.2em; /* 段落間距 */
+            font-size: 1.05em;
+        }
+        ul {
+            padding-left: 25px;
+            list-style-type: disc; /* 使用實心圓點 */
+        }
+        li {
+            margin-bottom: 12px;
+        }
+        strong {
+            color: #0056b3; /* 強調文字使用藍色 */
+        }
+        code {
+            background-color: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+        }
+        
+        /* 測驗區塊樣式 */
+        .quiz-section {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 3px solid #dee2e6;
+        }
+        .quiz-question {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .quiz-question p, .fill-in-blank-item p {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .quiz-options label {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .quiz-options label:hover {
+            background-color: #e9ecef;
+        }
+        .quiz-options input {
+            margin-right: 10px;
+        }
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: none; /* 預設隱藏 */
+        }
+        .quiz-feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        .quiz-feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+        .quiz-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+        .quiz-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 填空題樣式 */
+        .fill-in-blank-item {
+             background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .fill-in-blank-item input[type="text"] {
+            border: 2px solid #ced4da;
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 1em;
+            margin: 0 5px;
+            width: 120px;
+            text-align: center;
+        }
+        .fill-in-blank-item input[type="text"]:focus {
+            outline: none;
+            border-color: #80bdff;
+        }
+        .fill-in-feedback {
+            font-weight: bold;
+            margin-left: 10px;
+            visibility: hidden; /* 預設隱藏 */
+        }
+        .fill-in-feedback.correct {
+            color: #155724;
+            visibility: visible;
+        }
+        .fill-in-feedback.incorrect {
+            color: #721c24;
+            visibility: visible;
+        }
+
+
+        /* 響應式設計 */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .fill-in-blank-item {
+                display: flex;
+                flex-direction: column;
+            }
+            .fill-in-blank-item input[type="text"] {
+                width: 80%;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>「分詞」是什麼？「過去分詞」與「現在分詞」的用法！</h1>
+
+        <p>今天要帶你認識的就是英文的「分詞」！每次講到分詞，就讓不少人感到頭痛，特別是那些專有名詞：「現在分詞」、「過去分詞」、「分詞片語」、「分詞構句」等等，光是聽到就覺得頭昏腦脹，對吧？別擔心！關於分詞的重點都在今天的這篇文章裡囉！</p>
+
+        <h2>分詞是什麼？</h2>
+        <p>在開始介紹分詞之前，我們先來複習5種動詞型態：</p>
+        <ul>
+            <li><strong>eat:</strong> 原形動詞</li>
+            <li><strong>ate:</strong> 過去式</li>
+            <li><strong>eaten:</strong> 過去分詞 (或稱 <code>p.p.</code>)</li>
+            <li><strong>eating:</strong> 現在分詞 (或稱 <code>V-ing</code>)</li>
+        </ul>
+        <p>你有沒有發現「分詞」在哪裡呢？沒錯！「現在分詞」和「過去分詞」都是分詞喔！</p>
+        <p>簡單來說，分詞的定義就是一種<strong>「動詞變化」</strong>，可以分為「現在分詞」和「過去分詞」。</p>
+        <ul>
+            <li><strong>「現在分詞」</strong>或稱為 <code>V-ing</code>，最常見的就是「動詞+ing」的型態。</li>
+            <li><strong>「過去分詞」</strong>或稱為 <code>p.p.</code> (past participle)，就是動詞三態表裡面的第三個，最常見的就是「動詞+ed」。除此之外，過去分詞也有其他不規則的形式，像是「eat / ate / eaten」、「make / made / made」，它們的過去分詞就是不規則的變化。</li>
+        </ul>
+        <p>分詞的功能很多樣，除了用來形成「時態」，也可以用來形成「被動語態」，也可以當「形容詞」修飾人事物，還可以用來簡化句子，也就是文法老師常說的「分詞構句」。聽起來是不是很厲害呢~</p>
+
+        <h2>現在分詞的功能</h2>
+        <h3>1. 形成時態 (進行式)</h3>
+        <p>首先，分詞最常見的用法就是用來「形成時態」，它們用來形成時態時，就是「不同形式的動詞」。現在分詞 (V-ing) 會用在「進行式」與「完成進行式」。</p>
+        <ul>
+            <li>He is <strong>making</strong> a cake. (現在進行式)</li>
+            <li>He was <strong>making</strong> a cake. (過去進行式)</li>
+            <li>He has been <strong>exercising</strong> regularly. (現在完成進行式)</li>
+        </ul>
+
+        <h3>2. 當形容詞 (主動、進行中)</h3>
+        <p>現在分詞也可以當「形容詞」來修飾人事物，「現在分詞 V-ing」當形容詞時帶有<strong>「主動、進行中」</strong>的意思。</p>
+        <ul>
+            <li>a <strong>moving</strong> car (一台移動中的車)</li>
+            <li>a <strong>burning</strong> cake (一個正在燃燒的蛋糕)</li>
+            <li>a <strong>falling</strong> leaf (一片正在掉落的葉子)</li>
+        </ul>
+        <p>現在分詞也可以和其他單字組成「分詞片語」放在名詞後面修飾：</p>
+        <ul>
+            <li>The person <strong>making a cake</strong> is Jack.</li>
+            <li>Did you talk to the girl <strong>painting the picture</strong>?</li>
+        </ul>
+
+        <h3>3. 當補語 (補充說明)</h3>
+        <p>現在分詞能用來「補充說明句子缺少的資訊」，表示這個動作的對象是「處於什麼樣的狀態」，一樣有<strong>「主動、進行中」</strong>的意思。</p>
+        <ul>
+            <li>I saw Mary <strong>dancing in the room</strong>.</li>
+            <li>He found a dog <strong>sleeping under the table</strong>.</li>
+        </ul>
+
+        <h2>過去分詞的功能</h2>
+        <h3>1. 形成時態 (完成式)</h3>
+        <p>過去分詞 (p.p.) 用來形成時態時，會搭配 <code>has/ have / had</code> 形成「完成式」。</p>
+        <ul>
+            <li>He has <strong>made</strong> a cake. (現在完成式)</li>
+            <li>We have <strong>made</strong> a cake. (現在完成式)</li>
+            <li>He had <strong>made</strong> a cake. (過去完成式)</li>
+        </ul>
+
+        <h3>2. 形成被動語態</h3>
+        <p>「過去分詞」也能搭配 be動詞形成「被動語態」 (<code>be + p.p.</code>)，指「被……」的情況。</p>
+        <ul>
+            <li>The cake is <strong>made</strong> by Jack.</li>
+            <li>The cake was <strong>made</strong> by Jack.</li>
+        </ul>
+
+        <h3>3. 當形容詞 (被動、已完成)</h3>
+        <p>過去分詞也可以當「形容詞」來修飾人事物，而「過去分詞 p.p.」當形容詞則有<strong>「被動、已完成」</strong>的意思。</p>
+        <ul>
+            <li>a <strong>moved</strong> car (一台被移動的車)</li>
+            <li>a <strong>burnt</strong> cake (一個燒焦的蛋糕)</li>
+            <li>a <strong>fallen</strong> leaf (一片落葉)</li>
+        </ul>
+        <p>過去分詞還可以和其他單字組成「分詞片語」放在名詞後面修飾，帶有「被……」的意思。</p>
+        <ul>
+            <li>The cake <strong>made by Jack</strong> is on the table.</li>
+            <li>Did you see the picture <strong>painted by the girl</strong>?</li>
+        </ul>
+
+        <h3>4. 當補語 (補充說明)</h3>
+        <p>過去分詞也能「補充說明句子缺少的資訊」，表示這個動作的對象是「處於什麼樣的狀態」，這裡的過去分詞一樣帶有<strong>「被動、已完成」</strong>的意思。</p>
+        <ul>
+            <li>We saw John <strong>taken to the police station</strong>.</li>
+            <li>The boss wants this project <strong>done by Friday</strong>.</li>
+        </ul>
+
+        <h2>分詞構句</h2>
+        <p>最後，來到分詞最關鍵的用法了！那就是「簡化句子」啦！在英文裡，為了「用最短的句子提供最多的資訊」，就會用分詞「把句子簡化、補充資訊」。</p>
+
+        <h3>1. 簡化句子 (口語)</h3>
+        <p>這類的句子很常出現在「口語」裡，是為了讓句子在最精簡的情況下，表達出最多資訊。句子用到「現在分詞 V-ing」也有「主動讓事情發生」的意味。不過必須注意的是，整個句子的主詞必須是「一致的」。</p>
+        <ul>
+            <li>I sat down, <strong>turning on the computer</strong>. (<code>I sat down, and turned on the computer.</code>)</li>
+            <li>She opened the fridge, <strong>trying to get some food</strong>. (<code>She opened the fridge, and tried to get some food.</code>)</li>
+            <li>He was in Taipei, <strong>working as a teacher</strong>. (<code>He was in Taipei, and worked as a teacher.</code>)</li>
+        </ul>
+
+        <h3>2. 承接子句 (書面)</h3>
+        <p>在簡化句子的過程中，分詞還能「承接前後兩個子句」，讓原本有前後關係、表示「原因、條件、否定、發生時間順序」的兩個子句能更加精簡。這個用法也就是文法老師常講的「分詞構句」。</p>
+        <ul>
+            <li><strong>Feeling tired</strong>, she went to bed early. (<code>Because she felt tired...</code>)</li>
+            <li><strong>Called by the teacher</strong>, he stood up and answered the question. (<code>Because he was called...</code>)</li>
+            <li><strong>Running in the rain</strong>, he got very wet. (<code>When he was running in the rain...</code>)</li>
+            <li><strong>Not knowing the answer</strong>, the man paused for a moment. (<code>Because he didn't know the answer...</code>)</li>
+            <li><strong>Having finished the work</strong>, she went home happily. (<code>...so she went home happily.</code>)</li>
+        </ul>
+        <p>不過必須注意的是，前面省略掉連接詞的子句和後面的主要子句，兩者的「主詞必須是相同的」，才能達成省略的條件喔！</p>
+
+        <!-- 互動測驗區塊 -->
+        <div class="quiz-section">
+            <h2>小測驗：進階挑戰</h2>
+            
+            <!-- 問題 1 -->
+            <div class="quiz-question" id="q1">
+                <p>1. ______ all his money, he couldn't afford a ticket to the concert.</p>
+                <div class="quiz-options">
+                    <label><input type="radio" name="q1" value="A"> (A) Having spent</label>
+                    <label><input type="radio" name="q1" value="B"> (B) Spending</label>
+                </div>
+                <button class="quiz-button" onclick="checkAnswer('q1', 'A', '答對了！「花完錢」這個動作發生在「買不起票」之前，所以使用完成式分詞 (Having + p.p.)。')">確認答案</button>
+                <div class="quiz-feedback" id="feedback-q1"></div>
+            </div>
+
+            <!-- 問題 2 -->
+            <div class="quiz-question" id="q2">
+                <p>2. The professor stood in front of the class, ______ for the noise to subside.</p>
+                <div class="quiz-options">
+                    <label><input type="radio" name="q2" value="A"> (A) waiting</label>
+                    <label><input type="radio" name="q2" value="B"> (B) waited</label>
+                </div>
+                <button class="quiz-button" onclick="checkAnswer('q2', 'A', '答對了！這裡的分詞片語用來描述教授站著的時候「同時」正在做的伴隨動作，所以用現在分詞。')">確認答案</button>
+                <div class="quiz-feedback" id="feedback-q2"></div>
+            </div>
+            
+            <!-- 問題 3 -->
+            <div class="quiz-question" id="q3">
+                <p>3. The solutions ______ in the report were innovative and highly praised.</p>
+                <div class="quiz-options">
+                    <label><input type="radio" name="q3" value="A"> (A) proposing</label>
+                    <label><input type="radio" name="q3" value="B"> (B) proposed</label>
+                </div>
+                <button class="quiz-button" onclick="checkAnswer('q3', 'B', '答對了！解決方案是「被」提出的，所以使用過去分詞 (p.p.) 來表示被動。')">確認答案</button>
+                <div class="quiz-feedback" id="feedback-q3"></div>
+            </div>
+
+        </div>
+
+        <!-- 互動填空區塊 -->
+        <div class="quiz-section">
+            <h2>互動填空：動詞變身</h2>
+
+            <div class="fill-in-blank-item" id="fib-1">
+                <p>1. (excite) The news is very <input type="text" id="ans-1" data-answer="exciting">. All the students are <input type="text" id="ans-2" data-answer="excited"> about the trip.</p>
+            </div>
+
+            <div class="fill-in-blank-item" id="fib-2">
+                <p>2. (break) Be careful with the vase <input type="text" id="ans-3" data-answer="broken"> by the cat yesterday.</p>
+            </div>
+
+            <div class="fill-in-blank-item" id="fib-3">
+                <p>3. (see) <input type="text" id="ans-4" data-answer="Seeing"> the police car approaching, the thief ran away immediately.</p>
+            </div>
+            <button class="quiz-button" onclick="checkFillInBlank()">批改答案</button>
+            <div id="fill-in-summary"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // 選擇題答案檢查函式
+        function checkAnswer(questionId, correctAnswer, correctMessage) {
+            const feedbackEl = document.getElementById('feedback-' + questionId);
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+
+            if (!selectedOption) {
+                feedbackEl.textContent = '請選擇一個答案！';
+                feedbackEl.className = 'quiz-feedback incorrect';
+                return;
+            }
+
+            if (selectedOption.value === correctAnswer) {
+                feedbackEl.textContent = correctMessage;
+                feedbackEl.className = 'quiz-feedback correct';
+            } else {
+                feedbackEl.textContent = '答錯了，再思考一下語境！';
+                feedbackEl.className = 'quiz-feedback incorrect';
+            }
+        }
+
+        // 填空題答案檢查函式
+        function checkFillInBlank() {
+            const inputs = document.querySelectorAll('.fill-in-blank-item input[type="text"]');
+            let allCorrect = true;
+
+            inputs.forEach(input => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.answer.toLowerCase();
+                let feedbackEl = document.getElementById('feedback-' + input.id);
+
+                if (!feedbackEl) {
+                    feedbackEl = document.createElement('span');
+                    feedbackEl.id = 'feedback-' + input.id;
+                    feedbackEl.className = 'fill-in-feedback';
+                    input.parentNode.appendChild(feedbackEl);
+                }
+
+                if (userAnswer === correctAnswer) {
+                    feedbackEl.textContent = '✓ 正確';
+                    feedbackEl.className = 'fill-in-feedback correct';
+                } else {
+                    feedbackEl.textContent = '✗ 不對喔，想想主被動或語意！';
+                    feedbackEl.className = 'fill-in-feedback incorrect';
+                    allCorrect = false;
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit2_腦力激盪
+    and Unit3_句子加長
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fafc;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .unit-card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            padding: 2rem;
+        }
+        .unit-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #2d3748;
+            border-bottom: 4px solid #4299e1;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .tip-box {
+            background-color: #fffbeb;
+            border-left: 4px solid #f6e05e;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+        }
+        .exercise-container {
+            background-color: #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .exercise-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e0;
+            margin-top: 0.5rem;
+            resize: vertical;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .grid-item {
+            background-color: #f7fafc;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background-color: #f7fafc;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<div class="container">
+    <div class="unit-card">
+        <h1 class="unit-title">Unit 2 腦力激盪 (Brainstorming)</h1>
+        <p>寫作文最困難的是不知該從何下筆。當腸枯思竭時，寫作前的暖身活動——腦力激盪 (brainstorming) 就可以幫你發想、構思、組織想法，找出最合適的靈感。只要跟主題相關，想到什麼就先記錄下來，任何想法都可以，因此腦力激盪不需考量邏輯性、一致性或適當性。當沒有任何新想法時，就可結束腦力激盪。之後才從所有想法中縮小主題，篩選出符合該主題的細節。常見的腦力激盪有以下三種方式：自由寫作 (freewriting)、群集 (clustering) 和表列 (listing)。</p>
+        <div class="tip-box">
+            <p class="font-bold">Tip</p>
+            <p>不論用哪一種腦力激盪的方式都不需考慮拼字、用字或文法，也不用寫出完整的句子。</p>
+        </div>
+
+        <h2 class="section-title">2-1 自由寫作 (Freewriting)</h2>
+        <p>有時題目較廣泛，難以聚焦，此時自由寫作 (freewriting) 就很有幫助。只要連續寫 5 至 10 分鐘，想到什麼就寫什麼，即使沒有點子也要一直寫，或重複寫跟前面類似的內容。時間到後再回過頭來，尋找有興趣或可以深入探究的主題，進一步找出相關的細節。</p>
+        
+        <div class="exercise-container">
+            <h3 class="exercise-title">練習寫寫看 A: 自由寫作</h3>
+            <p>請選擇一個主題：<span id="topic-display-a" class="font-bold text-blue-700"></span></p>
+            <div class="flex gap-2 mb-4 flex-wrap">
+                <button onclick="setTopicA('sports')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">Sports (運動)</button>
+                <button onclick="setTopicA('travel')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">Travel (旅行)</button>
+                <button onclick="setTopicA('music')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">Music (音樂)</button>
+                <button onclick="setTopicA('food')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">Food (食物)</button>
+            </div>
+            <p class="mb-2">請在下方寫下你對該主題的所有想法。別擔心文法或拼字，寫就對了！</p>
+            <textarea id="freewriting-input" rows="8" placeholder="請在此自由寫作..."></textarea>
+            <button onclick="analyzeFreewriting()" class="bg-green-500 text-white px-4 py-2 mt-4 rounded-full hover:bg-green-600 transition">分析我的自由寫作</button>
+            <div id="freewriting-output" class="mt-4 text-sm text-gray-700"></div>
+        </div>
+
+        <h2 class="section-title">2-2 群集 (Clustering)</h2>
+        <p>群集 (clustering) 是一種將想法圖像化的腦力激盪，由圈圈與圈圈的連結，可看出其中的關聯性。進行群集腦力激盪的步驟如下：</p>
+        <ol class="list-decimal list-inside space-y-2 mt-4">
+            <li>在一張空白紙的中央畫一個圓圈，並於其中寫上主題。</li>
+            <li>將任何與主題相關的點子寫在主題圓圈周圍的圓圈中。</li>
+            <li>將這些與新主題相關的點子以線與主題圓圈相連。</li>
+            <li>根據每個新點子，再想一些相關點子在其周圍圓圈中，並以線連接。</li>
+            <li>完成後，其中有最多圓圈連接的就是最可能的主題。</li>
+        </ol>
+        
+        <div class="exercise-container">
+            <h3 class="exercise-title">練習寫寫看 B: 群集</h3>
+            <p>以「holidays (假期)」為主題，在下方構思你的想法。點擊主圓圈新增相關點子。</p>
+            <div class="bg-white rounded-lg p-6 mt-4 relative border-dashed border-2 border-gray-400" style="min-height: 400px;">
+                <div id="clustering-canvas" class="relative w-full h-full">
+                    <div id="holidays-cluster" class="absolute bg-blue-400 text-white font-bold rounded-full w-24 h-24 flex items-center justify-center cursor-pointer" style="left: 50%; top: 50%; transform: translate(-50%, -50%);">holidays</div>
+                </div>
+            </div>
+            <div id="clustering-output" class="mt-4 text-sm text-gray-700"></div>
+        </div>
+
+        <h2 class="section-title">2-3 表列 (Listing)</h2>
+        <p>表列 (listing) 的方式可將大主題範圍縮小，順勢找出適當的主題。表列與其他腦力激盪方式相同，都是將未經篩選，直接想到與主題相關的字、詞及點子列出來。跟自由寫作不同之處在於表列所列出來的字、詞常常不是完整句，只是以較粗略的方式呈現。以下為「網路的優缺點」範例：</p>
+        <div class="table-container">
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <th class="bg-blue-200">Advantages (優點)</th>
+                        <th class="bg-blue-200">Disadvantages (缺點)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>faster communication 更快速的溝通</td><td>theft of personal information 盜用個資</td></tr>
+                    <tr><td>information resources 資訊來源</td><td>spamming 垃圾郵件</td></tr>
+                    <tr><td>entertainment 娛樂</td><td>virus threat 病毒威脅</td></tr>
+                    <tr><td>social networking 社群網絡</td><td>pornography 色情影片</td></tr>
+                    <tr><td>online services 線上服務</td><td>social disconnect 社會脫節</td></tr>
+                    <tr><td>e-commerce 電子商務</td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tip-box">
+            <p class="font-bold">Tip</p>
+            <p>有了點子及方向，即可選擇自己比較瞭解的項目寫出主題句，再進一步發展成段落或文章。</p>
+        </div>
+
+        <div class="exercise-container">
+            <h3 class="exercise-title">練習寫寫看 C: 表列</h3>
+            <p>以「課堂上是否允許使用智慧型手機？」為題，在優點和缺點下方分別表列出你的意見。</p>
+            <div class="grid-container mt-4">
+                <div class="grid-item">
+                    <p class="font-bold text-green-700">優點 (Advantages)</p>
+                    <textarea id="listing-advantages" rows="6" placeholder="請在此列點..."></textarea>
+                </div>
+                <div class="grid-item">
+                    <p class="font-bold text-red-700">缺點 (Disadvantages)</p>
+                    <textarea id="listing-disadvantages" rows="6" placeholder="請在此列點..."></textarea>
+                </div>
+            </div>
+            <button onclick="showListingSummary()" class="bg-blue-500 text-white px-4 py-2 mt-4 rounded-full hover:bg-blue-600 transition">顯示我的總結</button>
+            <div id="listing-summary" class="mt-4"></div>
+        </div>
+    </div>
+
+    <div class="unit-card">
+        <h1 class="unit-title">Unit 3 句子加長 (Sentence Expansion)</h1>
+        <p>寫作時，是否苦於總是寫出短短的 (choppy) 句子，而句子結構常常只是簡單的「主詞 + 動詞 + 受詞」？若能讓讀者「看得見」所描述的畫面，就能使文章更吸引讀者，因此有時需寫出長一點的句子。有三種將句子加長的方式較為常見：第一種是利用回答 wh-問句的方式加長句子；第二種是加入不同詞性的字使句子變長；第三種則是利用不同的句子結構將句子加長。</p>
+        <div class="tip-box">
+            <p class="font-bold">Tip</p>
+            <p>寫作文時，並非都要寫長句才可以。事實上，句子要有長有短，文章讀起來才更有變化。</p>
+        </div>
+
+        <h2 class="section-title">3-1 利用回答 wh-問句將句子加長</h2>
+        <p>利用回答 who、what、where、when、why、how 等問題，加入更多細節到簡單句中。</p>
+        <div class="table-container">
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <th>問句</th>
+                        <th>句子範例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>簡單句</td><td>I like ice cream. 我喜歡冰淇淋。</td></tr>
+                    <tr><td>Who 是誰</td><td>My sister and I both like ice cream. 我和妹妹都喜歡冰淇淋。</td></tr>
+                    <tr><td>What kind 哪一種</td><td>My sister and I both like chocolate ice cream. 我和妹妹都喜歡巧克力冰淇淋。</td></tr>
+                    <tr><td>Where 哪裡</td><td>My sister and I both like chocolate ice cream sold at Honey Dessert. 我和妹妹都喜歡蜂蜜甜點店賣的巧克力冰淇淋。</td></tr>
+                    <tr><td>How many 幾個</td><td>My sister and I both like to have two scoops of chocolate ice cream sold at Honey Dessert. 我和妹妹都喜歡來兩球蜂蜜甜點店賣的巧克力冰淇淋。</td></tr>
+                    <tr><td>When 何時</td><td>My sister and I both like to have two scoops of chocolate ice cream sold at Honey Dessert when we feel depressed. 當我們感到沮喪時，我和妹妹都喜歡來兩球蜂蜜甜點店賣的巧克力冰淇淋。</td></tr>
+                    <tr><td>Why 為什麼</td><td>My sister and I both like to have two scoops of chocolate ice cream sold at Honey Dessert when we feel depressed, because ice cream can cheer us up. 當我們感到沮喪時，我和妹妹都喜歡來兩球蜂蜜甜點店賣的巧克力冰淇淋，因為冰淇淋能讓我們振奮。</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="exercise-container">
+            <h3 class="exercise-title">練習寫寫看 A: 句子加長</h3>
+            <p>請利用回答 wh-疑問句的方式，將簡單句「The cat is eating.」加長。你可以點擊按鈕來提示你如何加長句子。</p>
+            <p id="wh-sentence" class="my-4 text-lg font-bold">The cat is eating.</p>
+            <div class="flex flex-wrap gap-2">
+                <button onclick="expandSentence('what')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">What kind</button>
+                <button onclick="expandSentence('how')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">How</button>
+                <button onclick="expandSentence('where')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">Where</button>
+                <button onclick="expandSentence('when')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">When</button>
+                <button onclick="expandSentence('why')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">Why</button>
+                <button onclick="resetSentence()" class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition">重置</button>
+            </div>
+            <div id="wh-summary" class="mt-4 text-sm text-gray-700"></div>
+        </div>
+
+        <h2 class="section-title">3-2 利用增加不同詞性的字將句子加長</h2>
+        <p>常用來加長句子的字，詞性包括：形容詞、副詞、介系詞、對等連接詞和從屬連接詞。點擊下方的按鈕，看句子如何變化。</p>
+        <p id="expansion-sentence" class="my-4 text-lg font-bold">The puppy is playing.</p>
+        <div class="flex flex-wrap gap-2">
+            <button onclick="expandByPart('adjective')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">加形容詞</button>
+            <button onclick="expandByPart('adverb')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">加副詞</button>
+            <button onclick="expandByPart('preposition')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">加介系詞</button>
+            <button onclick="expandByPart('conjunction')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">加對等連接詞</button>
+            <button onclick="expandByPart('subordinate')" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">加從屬連接詞</button>
+            <button onclick="resetExpansion()" class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition">重置</button>
+        </div>
+        <div id="expansion-summary" class="mt-4"></div>
+
+        <h2 class="section-title">3-3 利用不同的句子結構將句子加長</h2>
+        <p>除了增加詞性，我們也可以利用不同的句子結構來讓句子變得更豐富。這包括對等子句、關係子句、同位語、副詞子句、分詞片語和分詞構句。以下是一些範例與練習。</p>
+        
+        <div class="exercise-container">
+            <h3 class="exercise-title">練習寫寫看 C: 句子結構</h3>
+            <p class="mb-2">請將下方的句子利用括號內的提示加長。</p>
+            <div class="space-y-4">
+                <div>
+                    <p class="font-bold">1. On the hall walls, Jack saw many sports medals. (and)</p>
+                    <textarea class="w-full" rows="2" placeholder="你的答案..."></textarea>
+                </div>
+                <div>
+                    <p class="font-bold">2. Do you want to go to the movies? (or)</p>
+                    <textarea class="w-full" rows="2" placeholder="你的答案..."></textarea>
+                </div>
+                <div>
+                    <p class="font-bold">3. I'd be glad to play basketball with you. (but)</p>
+                    <textarea class="w-full" rows="2" placeholder="你的答案..."></textarea>
+                </div>
+                <div>
+                    <p class="font-bold">4. The stones looked just like comets. (關係代名詞 that)</p>
+                    <textarea class="w-full" rows="2" placeholder="你的答案..."></textarea>
+                </div>
+                <div>
+                    <p class="font-bold">5. Peter can speak five different languages. (同位語)</p>
+                    <textarea class="w-full" rows="2" placeholder="你的答案..."></textarea>
+                </div>
+                <div>
+                    <p class="font-bold">6. I discovered some money inside the envelope. (從屬連接詞 after)</p>
+                    <textarea class="w-full" rows="2" placeholder="你的答案..."></textarea>
+                </div>
+                <div>
+                    <p class="font-bold">7. The woman is in good health. (分詞片語)</p>
+                    <textarea class="w-full" rows="2" placeholder="你的答案..."></textarea>
+                </div>
+                <div>
+                    <p class="font-bold">8. Andy let out a cry. (分詞構句)</p>
+                    <textarea class="w-full" rows="2" placeholder="你的答案..."></textarea>
+                </div>
+            </div>
+            <button onclick="checkSentenceStructures()" class="bg-blue-500 text-white px-4 py-2 mt-4 rounded-full hover:bg-blue-600 transition">檢查答案</button>
+            <div id="structure-feedback" class="mt-4"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Unit 2: Freewriting
+    let currentTopicA = '';
+    function setTopicA(topic) {
+        currentTopicA = topic;
+        const topicMap = {
+            'sports': 'Sports (運動)',
+            'travel': 'Travel (旅行)',
+            'music': 'Music (音樂)',
+            'food': 'Food (食物)'
+        };
+        document.getElementById('topic-display-a').textContent = topicMap[topic];
+    }
+    setTopicA('sports'); // Default topic
+    
+    function analyzeFreewriting() {
+        const text = document.getElementById('freewriting-input').value;
+        const output = document.getElementById('freewriting-output');
+        if (text.trim() === '') {
+            output.innerHTML = '<p class="text-red-500">請先輸入一些內容！</p>';
+            return;
+        }
+
+        const words = text.split(/\s+/).filter(word => word.length > 0);
+        const wordCount = words.length;
+
+        const keywords = ['sport', 'travel', 'music', 'food', 'hobby', 'run', 'swim', 'game', 'sing', 'eat', 'read'];
+        let keywordMatches = 0;
+        let foundKeywords = [];
+        words.forEach(word => {
+            if (keywords.includes(word.toLowerCase())) {
+                keywordMatches++;
+                if (!foundKeywords.includes(word.toLowerCase())) {
+                    foundKeywords.push(word.toLowerCase());
+                }
+            }
+        });
+
+        output.innerHTML = `
+            <p><strong>你的自由寫作分析:</strong></p>
+            <p>總字數: ${wordCount}</p>
+            <p>與主題相關的關鍵字數量: ${keywordMatches}</p>
+            <p>你可能會感興趣的主題句靈感: ${foundKeywords.length > 0 ? '「' + foundKeywords.join('」, 「') + '」' : '目前沒有找到特別的關鍵字。'}</p>
+            <p class="mt-2">自由寫作的重點是流暢表達，從中找到感興趣的點。你可以試著從找到的關鍵字中，發展出一個完整的主題句。</p>
+        `;
+    }
+
+    // Unit 2: Clustering
+    let clusterCount = 0;
+    document.getElementById('clustering-canvas').addEventListener('click', function(event) {
+        if (event.target.id === 'holidays-cluster' || event.target.classList.contains('cluster-circle')) {
+            const circle = event.target;
+            const text = prompt("請輸入一個與此主題相關的新點子：", "");
+            if (text) {
+                const newCircle = document.createElement('div');
+                const x = (Math.random() * 80) + 10;
+                const y = (Math.random() * 80) + 10;
+                newCircle.className = 'absolute cluster-circle bg-gray-300 text-gray-800 rounded-full w-20 h-20 flex items-center justify-center text-xs text-center cursor-pointer transition';
+                newCircle.style.left = `${x}%`;
+                newCircle.style.top = `${y}%`;
+                newCircle.textContent = text;
+                newCircle.setAttribute('data-parent', circle.id);
+                newCircle.id = 'cluster-' + clusterCount++;
+                document.getElementById('clustering-canvas').appendChild(newCircle);
+                
+                const line = document.createElement('div');
+                line.className = 'absolute h-px bg-gray-500 transition-all duration-500';
+                document.getElementById('clustering-canvas').appendChild(line);
+
+                setTimeout(() => {
+                    const parentRect = circle.getBoundingClientRect();
+                    const childRect = newCircle.getBoundingClientRect();
+                    const canvasRect = document.getElementById('clustering-canvas').getBoundingClientRect();
+                    
+                    const pX = parentRect.left + parentRect.width / 2 - canvasRect.left;
+                    const pY = parentRect.top + parentRect.height / 2 - canvasRect.top;
+                    const cX = childRect.left + childRect.width / 2 - canvasRect.left;
+                    const cY = childRect.top + childRect.height / 2 - canvasRect.top;
+
+                    const length = Math.sqrt(Math.pow(cX - pX, 2) + Math.pow(cY - pY, 2));
+                    const angle = Math.atan2(cY - pY, cX - pX) * 180 / Math.PI;
+
+                    line.style.width = `${length}px`;
+                    line.style.transformOrigin = '0 0';
+                    line.style.transform = `translate(${pX}px, ${pY}px) rotate(${angle}deg)`;
+                }, 10);
+            }
+        }
+    });
+
+
+    // Unit 2: Listing
+    function showListingSummary() {
+        const advantages = document.getElementById('listing-advantages').value.split('\n').filter(item => item.trim() !== '');
+        const disadvantages = document.getElementById('listing-disadvantages').value.split('\n').filter(item => item.trim() !== '');
+        const summaryDiv = document.getElementById('listing-summary');
+
+        if (advantages.length === 0 && disadvantages.length === 0) {
+            summaryDiv.innerHTML = '<p class="text-red-500">請至少列出一個優點或缺點。</p>';
+            return;
+        }
+
+        let summaryText = `<p><strong>你的「課堂上使用手機」觀點總結：</strong></p>`;
+        
+        if (advantages.length > 0) {
+            summaryText += `<p class="mt-2 font-semibold text-green-700">優點:</p><ul class="list-disc list-inside">`;
+            advantages.forEach(item => summaryText += `<li>${item}</li>`);
+            summaryText += `</ul>`;
+        }
+
+        if (disadvantages.length > 0) {
+            summaryText += `<p class="mt-2 font-semibold text-red-700">缺點:</p><ul class="list-disc list-inside">`;
+            disadvantages.forEach(item => summaryText += `<li>${item}</li>`);
+            summaryText += `</ul>`;
+        }
+        
+        const total = advantages.length + disadvantages.length;
+        if (advantages.length > disadvantages.length) {
+            summaryText += `<p class="mt-4">從你的觀點來看，似乎你更傾向於贊成在課堂上使用智慧型手機。</p>`;
+        } else if (disadvantages.length > advantages.length) {
+            summaryText += `<p class="mt-4">從你的觀點來看，似乎你更傾向於反對在課堂上使用智慧型手機。</p>`;
+        } else if (total > 0) {
+            summaryText += `<p class="mt-4">你的觀點非常平衡，同時看到了優點和缺點。</p>`;
+        }
+
+        summaryDiv.innerHTML = summaryText;
+    }
+
+    // Unit 3: Sentence Expansion
+    let baseSentence = "The cat is eating.";
+    let currentSentence = baseSentence;
+    const whSummary = document.getElementById('wh-summary');
+    const whSentence = document.getElementById('wh-sentence');
+    
+    function expandSentence(type) {
+        let expansion = '';
+        let originalSentence = currentSentence;
+        switch(type) {
+            case 'what':
+                expansion = 'a delicious fish.';
+                currentSentence = originalSentence.replace('eating.', `eating ${expansion}`);
+                break;
+            case 'how':
+                expansion = 'happily';
+                currentSentence = originalSentence.replace('eating.', `eating ${expansion}.`);
+                break;
+            case 'where':
+                expansion = 'in the kitchen.';
+                currentSentence = originalSentence.replace('eating.', `eating ${expansion}.`);
+                break;
+            case 'when':
+                expansion = 'when the sun rises.';
+                currentSentence = originalSentence.replace('eating.', `eating ${expansion}.`);
+                break;
+            case 'why':
+                expansion = 'because it is very hungry.';
+                currentSentence = originalSentence.replace('eating.', `eating because it is very hungry.`);
+                break;
+        }
+        whSentence.textContent = currentSentence;
+        whSummary.innerHTML += `<p><strong>${type.toUpperCase()}:</strong> ${currentSentence}</p>`;
+    }
+
+    function resetSentence() {
+        currentSentence = baseSentence;
+        whSentence.textContent = currentSentence;
+        whSummary.innerHTML = '';
+    }
+
+    // Unit 3: Expansion by Part of Speech
+    let expansionBase = "The puppy is playing.";
+    let expansionCurrent = expansionBase;
+    const expansionSentence = document.getElementById('expansion-sentence');
+    const expansionSummary = document.getElementById('expansion-summary');
+    
+    function expandByPart(part) {
+        let expansionText = '';
+        let newSentence = expansionCurrent;
+        switch(part) {
+            case 'adjective':
+                newSentence = 'The cute little puppy is playing.';
+                expansionText = '加入了形容詞 "cute little" 來修飾名詞 "puppy"。';
+                break;
+            case 'adverb':
+                newSentence = newSentence.replace('playing.', 'playing happily.');
+                expansionText = '加入了副詞 "happily" 來修飾動詞 "playing"。';
+                break;
+            case 'preposition':
+                newSentence = newSentence.replace('happily.', 'happily in the sand.');
+                expansionText = '加入了介系詞片語 "in the sand" 來描述地點。';
+                break;
+            case 'conjunction':
+                newSentence = 'The cute little puppy is running, jumping, and playing happily in the sand.';
+                expansionText = '加入了對等連接詞 "and" 來連接多個動詞。';
+                break;
+            case 'subordinate':
+                newSentence = newSentence.replace('sand.', 'sand while its owner is getting a suntan.');
+                expansionText = '加入了從屬連接詞 "while" 引導的從屬子句來補充資訊。';
+                break;
+        }
+        expansionCurrent = newSentence;
+        expansionSentence.textContent = expansionCurrent;
+        expansionSummary.innerHTML = `<p>${expansionText}</p>`;
+    }
+    
+    function resetExpansion() {
+        expansionCurrent = expansionBase;
+        expansionSentence.textContent = expansionCurrent;
+        expansionSummary.innerHTML = '';
+    }
+
+    // Unit 3: Sentence Structure Practice
+    function checkSentenceStructures() {
+        const answers = [
+            "On the hall walls, Jack saw many sports medals and he decided to become an athlete.",
+            "Do you want to go to the movies, or would you prefer to stay at home?",
+            "I'd be glad to play basketball with you, but I have to finish my homework first.",
+            "The stones looked just like comets that were flying through the sky.",
+            "Peter, an amazing linguist, can speak five different languages.",
+            "After I discovered some money inside the envelope, I told my parents immediately.",
+            "The woman smiling brightly is in good health.",
+            "Andy let out a cry, seeing a giant spider on his bed."
+        ];
+        const userAnswers = Array.from(document.querySelectorAll('.exercise-container textarea')).slice(3).map(ta => ta.value.trim());
+        const feedbackDiv = document.getElementById('structure-feedback');
+        let correctCount = 0;
+        let feedbackHTML = '<p class="font-bold">答案檢查結果：</p><ul>';
+
+        userAnswers.forEach((answer, index) => {
+            const isCorrect = answer && answers[index].includes(answer.replace(/\s+/g, ' '));
+            if (isCorrect) {
+                correctCount++;
+                feedbackHTML += `<li class="text-green-600"><strong>第 ${index + 1} 題:</strong> 正確！</li>`;
+            } else {
+                feedbackHTML += `<li class="text-red-600"><strong>第 ${index + 1} 題:</strong> 尚待加強。參考答案：${answers[index]}</li>`;
+            }
+        });
+
+        feedbackHTML += '</ul>';
+        feedbackHTML += `<p class="mt-4">你的總得分為：${correctCount} / ${answers.length}。</p>`;
+        feedbackDiv.innerHTML = feedbackHTML;
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>Unit 5 Paragraph Writing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            margin: 40px;
+            line-height: 1.8;
+            color: #333;
+            background-color: #fff;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        h1 {
+            background-color: #a5d8ff;
+            color: #333;
+            padding: 15px 20px;
+            border-radius: 15px;
+            text-align: left;
+            font-size: 2.5em;
+            position: relative;
+            margin-bottom: 30px;
+        }
+        h1::after {
+            content: '✨';
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 2em;
+        }
+        h2 {
+            background-color: #ffc0cb;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 1.5em;
+            margin-top: 40px;
+        }
+        .tip {
+            background-color: #ffe4e1;
+            border: 1px solid #ffb6c1;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .example {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-left: 5px solid #90ee90;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .practice {
+            background-color: #e0f7fa;
+            border: 1px solid #00bfff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .sortable {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sortable li {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 12px;
+            margin: 8px 0;
+            cursor: grab;
+            border-radius: 5px;
+            transition: transform 0.2s ease;
+        }
+        .sortable li:hover {
+            transform: scale(1.02);
+        }
+        .check-button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+        }
+        .check-button:hover {
+            background-color: #45a049;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .question-options label {
+            display: block;
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .question-options label:hover {
+            background-color: #f0f0f0;
+        }
+        .input-topic {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .illustration {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script>
+        $(function() {
+            $(".sortable").sortable();
+            $(".sortable").disableSelection();
+        });
+        function checkAnswer(questionId, correct) {
+            let selected;
+            if (typeof correct === 'string') {
+                selected = document.querySelector(`input[name="${questionId}"]:checked`)?.value;
+                const feedback = document.getElementById(`${questionId}-feedback`);
+                feedback.style.color = selected === correct ? 'green' : 'red';
+                feedback.textContent = selected === correct ? '正確！🎉' : '錯誤，請再試試。😕';
+            } else if (Array.isArray(correct)) {
+                selected = Array.from(document.querySelectorAll(`input[name="${questionId}[]"]:checked`)).map(el => el.value).sort();
+                const feedback = document.getElementById(`${questionId}-feedback`);
+                feedback.style.color = selected.join(',') === correct.join(',') ? 'green' : 'red';
+                feedback.textContent = selected.join(',') === correct.join(',') ? '正確！🎉' : '錯誤，請再試試。😕';
+            } else if (correct.type === 'text') {
+                selected = document.getElementById(`${questionId}-input`).value.trim();
+                const feedback = document.getElementById(`${questionId}-feedback`);
+                feedback.style.color = selected.toLowerCase() === correct.answer.toLowerCase() ? 'green' : 'red';
+                feedback.textContent = selected.toLowerCase() === correct.answer.toLowerCase() ? '正確！🎉' : '錯誤，請再試試。😕';
+            }
+        }
+        function checkSortable(questionId, correctOrder) {
+            const items = Array.from(document.querySelectorAll(`#${questionId} li`)).map(li => li.textContent.trim());
+            const feedback = document.getElementById(`${questionId}-feedback`);
+            if (items.join('|') === correctOrder.join('|')) {
+                feedback.textContent = '排列正確！🎉 太棒了！';
+                feedback.style.color = 'green';
+            } else {
+                feedback.textContent = '排列錯誤，請再試試。😕 加油！';
+                feedback.style.color = 'red';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Unit 5 段落寫作 (Paragraph Writing)</h1>
+
+    <h2>5-1 段落格式</h2>
+    <p>前面 4 個單元討論了句子的結構、標點符號等，從這個單元進入段落的寫作。</p>
+    <p>本單元開始介紹段落的基本格式。從「可以形成段落」，段落組成文章，而正確的段落格式是文章寫作的重要要素之一。以下是基本的段落格式：</p>
+    <ol>
+        <li>每一段的開始需常用縮排五個字元。</li>
+    </ol>
+    <div class="tip">
+        <strong>Tip</strong><br>
+        現在有些正式的出版品（如商業信件或報告）並無縮排；而是以上面、下段空一行的者，稱作塊式 (block style)。但縮排還是比較普遍的段落格式。
+    </div>
+    <ol start="2">
+        <li>每一個句子以大寫字母開始，以正確的標點符號結束，如句點、問號或驚歎號。</li>
+        <li>每一個句子與前後句子的順序必須合乎邏輯，使文章連貫直到段落結束。</li>
+    </ol>
+    <h3>範例</h3>
+    <div class="example">
+        <p>將下列句子組成完整的幾個段落，包括大寫、標點符號等。</p>
+        <p>本段的主題在外國一位女服務生。從文化差異來看，第一出現的普通名詞是以「不定冠詞 a(n) + 名詞」，再出現到升級「定冠詞 the + 名詞」；從文意上來看，先提到一位女服務生，然後以增加她，該賓再說明懷孕人對該女服務生的看法。</p>
+        <ul>
+            <li>a waitress opened the door and gave the elderly lady a clean towel for her wet hair</li>
+            <li>the lady noticed that the waitress was heavily pregnant</li>
+            <li>she wondered how a person like this waitress could be so thoughtful to a perfect stranger</li>
+            <li>the waitress had a sweet smile, one that even being on her feet for an entire day couldn't erase</li>
+        </ul>
+        <p>A waitress opened the door and gave the elderly lady a clean towel for her wet hair. The waitress had a sweet smile, one that even being on her feet for an entire day couldn't erase. The lady noticed that the waitress was heavily pregnant. She wondered how a person like this waitress could be so thoughtful to a perfect stranger.</p>
+        <p>一位女服務生開門並且拿了一條乾淨的毛巾給這位老太太，讓她擦乾淋濕的頭髮。這位女服務生面帶甜美的微笑，那種微笑站了一整天也不會消失的微笑。老太太注意到這位女服務生即將臨盆。她納悶怎麼會有人像這位女服務生一樣，可以對一個完全陌生的人如此體貼。</p>
+    </div>
+    <img src="https://placehold.co/400x200?text=Illustration+of+Waitress" alt="Illustration of waitress scene" class="illustration">
+    <div class="tip">
+        <strong>Tip</strong><br>
+        段落標點的主要事項：<br>
+        1. 文中的方式將段落標點屬於首行。<br>
+        2. 出現在標題的第一個字都大寫。在標題裡面，冠詞 (a, an, the)、連接詞以及少於五個字母的介系詞則小寫。但五個字以上的介系詞 (如：during, among, about, under, between, through) 的第一個字母大寫。最後一個字不管幾個字，第一個字都大寫。<br>
+        3. 標題後不加句點。<br>
+        4. 標題與正文間需空一行。
+    </div>
+
+    <div class="practice">
+        <h3>練習寫寫看 A</h3>
+        <p>請將下面的句子重新排列，組成文章連貫的段落，並注意大小寫以及標點符號的正確性。</p>
+        <div id="practice-a1">
+            <p>1.</p>
+            <ul class="sortable" id="sortable-a1">
+                <li>once upon a time a stingy man hid all of his money in a hole and put a heavy stone to the top</li>
+                <li>he cried so loudly that his neighbors came out to see what was going on</li>
+                <li>one day, he lifted the stone but found no money there</li>
+                <li>one of the neighbors told him that he didn't need to be unhappy at all</li>
+                <li>since he never thought of what to do with the money</li>
+                <li>there is a French proverb that says, "A stingy man is always poor"</li>
+            </ul>
+            <button class="check-button" onclick="checkSortable('sortable-a1', ['there is a French proverb that says, \"A stingy man is always poor\"','once upon a time a stingy man hid all of his money in a hole and put a heavy stone to the top','one day, he lifted the stone but found no money there','he cried so loudly that his neighbors came out to see what was going on','one of the neighbors told him that he didn\'t need to be unhappy at all','since he never thought of what to do with the money'])">檢查排列</button>
+            <div class="feedback" id="sortable-a1-feedback"></div>
+        </div>
+        <div id="practice-a2">
+            <p>2.</p>
+            <ul class="sortable" id="sortable-a2">
+                <li>in China, for example, dogs represent loyalty, and tigers are a symbol of authority</li>
+                <li>likewise, animal imagery can be found in many English expressions</li>
+                <li>the imagery does give color to the language</li>
+                <li>in many languages, certain animals have specific characteristics</li>
+                <li>"as busy as a bee" and "as quiet as a mouse" vividly describe a busy person and a quiet person</li>
+            </ul>
+            <button class="check-button" onclick="checkSortable('sortable-a2', ['in many languages, certain animals have specific characteristics','in China, for example, dogs represent loyalty, and tigers are a symbol of authority','likewise, animal imagery can be found in many English expressions','\"as busy as a bee\" and \"as quiet as a mouse\" vividly describe a busy person and a quiet person','the imagery does give color to the language'])">檢查排列</button>
+            <div class="feedback" id="sortable-a2-feedback"></div>
+        </div>
+        <div id="practice-a3">
+            <p>3.</p>
+            <ul class="sortable" id="sortable-a3">
+                <li>thus, it is common to find pineapples placed in houses during Chinese New Year</li>
+                <li>baozi and zongzi are another example</li>
+                <li>as a result, many Chinese people give those who are going to take an exam baozi and zongzi as gifts</li>
+                <li>the pronunciation of the word for "pineapple" in Taiwanese means "prosperity or good luck will come"</li>
+                <li>the pronunciation of the two words "bao zong" sounds like "a sure victory"</li>
+                <li>naturally, it has become a symbol of wealth in Chinese culture</li>
+                <li>pineapple, baozi, and zongzi are considered good luck in Chinese culture</li>
+            </ul>
+            <button class="check-button" onclick="checkSortable('sortable-a3', ['pineapple, baozi, and zongzi are considered good luck in Chinese culture','the pronunciation of the word for \"pineapple\" in Taiwanese means \"prosperity or good luck will come\"','thus, it is common to find pineapples placed in houses during Chinese New Year','naturally, it has become a symbol of wealth in Chinese culture','baozi and zongzi are another example','the pronunciation of the two words \"bao zong\" sounds like \"a sure victory\"','as a result, many Chinese people give those who are going to take an exam baozi and zongzi as gifts'])">檢查排列</button>
+            <div class="feedback" id="sortable-a3-feedback"></div>
+        </div>
+        <div id="practice-a4">
+            <p>4.</p>
+            <ul class="sortable" id="sortable-a4">
+                <li>to make more money, Della had her long hair cut off and sold</li>
+                <li>for Christmas, Della decided to buy Jim a chain for his cherished pocket watch given to him by his father</li>
+                <li>Jim and Della were a young couple who loved each other so much, but they were very poor</li>
+                <li>meanwhile, Jim decided to sell his watch to buy Della a beautiful set of combs for her long hair</li>
+                <li>although disappointed to find the gift they chose became useless, they were all pleased</li>
+            </ul>
+            <button class="check-button" onclick="checkSortable('sortable-a4', ['Jim and Della were a young couple who loved each other so much, but they were very poor','for Christmas, Della decided to buy Jim a chain for his cherished pocket watch given to him by his father','to make more money, Della had her long hair cut off and sold','meanwhile, Jim decided to sell his watch to buy Della a beautiful set of combs for her long hair','although disappointed to find the gift they chose became useless, they were all pleased'])">檢查排列</button>
+            <div class="feedback" id="sortable-a4-feedback"></div>
+        </div>
+        <div id="practice-a5">
+            <p>5.</p>
+            <ul class="sortable" id="sortable-a5">
+                <li>I broke Mr. Wang's window last Sunday, but I didn't tell him about this.</li>
+                <li>Instead of saying sorry to him, I ran away. After that day, I was afraid to look Mr. Wang in the eye.</li>
+                <li>Yesterday, I decided to tell him what had happened.</li>
+                <li>To my surprise, Mr. Wang wasn't angry. He said he was proud that I had told the truth.</li>
+                <li>As a result, I made up my mind that I would be honest with other people.</li>
+            </ul>
+            <button class="check-button" onclick="checkSortable('sortable-a5', ['I broke Mr. Wang\'s window last Sunday, but I didn\'t tell him about this.','Instead of saying sorry to him, I ran away. After that day, I was afraid to look Mr. Wang in the eye.','Yesterday, I decided to tell him what had happened.','To my surprise, Mr. Wang wasn\'t angry. He said he was proud that I had told the truth.','As a result, I made up my mind that I would be honest with other people.'])">檢查排列</button>
+            <div class="feedback" id="sortable-a5-feedback"></div>
+        </div>
+    </div>
+
+    <h2>5-2 主題句</h2>
+    <p>何謂主題句 (topic sentence)？一個段落通常是由題句加上一個或數個跟主題句相關的句子組成。主題句就是一段的主要論點，點出這一段所要表達的主要內容。主題句不僅讓出一段要敘述的主要，也掌控其他句子要表達的訊息。好的主題句能勸說讀者繼續讀下去的方向，預告或暗示一段的內容，引導發展的方向，並避免與主題無關的內容。主題句必須廣泛且簡單單一要地概括所要表達的觀點，不做細節的描述。</p>
+    <p>主題句常見的問題是：</p>
+    <ol>
+        <li>內容過於廣泛，缺乏明確性的論述方向。<br>例 Many children like to play. 許多小孩喜歡玩。<br>(內含過於廣泛，並且缺乏明確的論述方向。)</li>
+        <li>內含為事實，無法發展成論點。<br>例 I walk to work every day. 我每天走路上班。<br>(內含為事實，無法發展成論點。)</li>
+        <li>缺乏作者觀點。<br>例 This chapter is about the invention of cellphones.<br>這個章節是關於手機的發明。(主題明顯，但缺乏作者觀點。)</li>
+    </ol>
+    <p>主題句通常會在段落之初，多為段落的第一句。雖然也處置於最後一句，但一般而言，還是建議以第一句的位置為佳。</p>
+    <h3>範例</h3>
+    <div class="example">
+        <p>In Japan, a person's blood type is popularly believed to determine his or her own personality traits. People with blood type A are generally considered responsible and cautious, but over-anxious. Those who with blood type B are cheerful, but irresponsible and forgetful. People having blood type AB are suggested to be rational, but critical and indecisive. On the other hand, people with blood type O are curious and confident, but stubborn. Even though there is no scientific evidence to support this belief, it is widely seen in books, magazines, and television programs.</p>
+        <p>在日本，一個人的血型普遍被認為能決定其人格特質。A 型人大多被認為是負責且謹慎的，但會過度焦慮。B 型人是開朗的，但較不負責且健忘。AB 型人很理性，但挑剔且優柔寡斷。另一方面，O 型人好奇心強且有自信，但是固執己見。即使沒有科學證據支持這個論點，還是常見於日本書籍、雜誌和電視節目上。</p>
+    </div>
+    <p>可以明顯看出這個段落的主题句是："In Japan, a person's blood type is popularly believed to determine his or her own personality traits."，知道本段的中心思想是血型決定人的性格特質。主題句是個概括，進而可以瞭解本段接著會說明類型，陳述各種血型有著不同的個性。</p>
+    <div class="tip">
+        <strong>Tip</strong><br>
+        備註主題句也會出現在段落的最後一句。在這種情況下，會先鋪排支持句的相關園子，最後由主題句概括整個段落的敘述他的效果。
+    </div>
+
+    <div class="practice">
+        <h3>練習寫寫看 B</h3>
+        <p>選出最適合當主題句的句子。</p>
+        <div>
+            <p>1.</p>
+            <div class="question-options">
+                <label><input type="radio" name="b1" value="A"> (A) Colors play a more important role in your life than you can ever imagine.</label>
+                <label><input type="radio" name="b1" value="B"> (B) Among my friends, those who like red color seem to be more active.</label>
+                <label><input type="radio" name="b1" value="C"> (C) My sister doesn't like purple because she thinks it disgusting.</label>
+                <label><input type="radio" name="b1" value="D"> (D) Red light is also a symbol of danger and warning.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('b1', 'A')">檢查</button>
+            <div class="feedback" id="b1-feedback"></div>
+        </div>
+        <div>
+            <p>2.</p>
+            <div class="question-options">
+                <label><input type="radio" name="b2" value="A"> (A) You have to add some seasonings to make the soup a tasty dish.</label>
+                <label><input type="radio" name="b2" value="B"> (B) Making friends can be a lot like making soup.</label>
+                <label><input type="radio" name="b2" value="C"> (C) First, you need a special recipe to tell you the things that you need.</label>
+                <label><input type="radio" name="b2" value="D"> (D) Next, you have to prepare everything properly and then cook it with care.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('b2', 'B')">檢查</button>
+            <div class="feedback" id="b2-feedback"></div>
+        </div>
+        <div>
+            <p>3.</p>
+            <div class="question-options">
+                <label><input type="radio" name="b3" value="A"> (A) If you believe that opera can be fun to watch, you will surely enjoy it.</label>
+                <label><input type="radio" name="b3" value="B"> (B) You can start with short, well-known operas and avoid long, difficult ones.</label>
+                <label><input type="radio" name="b3" value="C"> (C) It is important for you to learn the story of the opera before you watch it.</label>
+                <label><input type="radio" name="b3" value="D"> (D) Here are some useful tips for you to learn how to enjoy operas.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('b3', 'D')">檢查</button>
+            <div class="feedback" id="b3-feedback"></div>
+        </div>
+        <p>圓圈各段內內容，寫出適當的主題句。</p>
+        <div>
+            <p>1.</p>
+            <p>Most Americans show affection by kissing and hugging. The Inuit rub noses.<br>Instead of giving cards or roses, Koreans give chocolate-covered cookie sticks to their loved ones.</p>
+            <input type="text" id="b4-1-input" class="input-topic" placeholder="寫出主題句">
+            <button class="check-button" onclick="checkAnswer('b4-1', {type: 'text', answer: 'Different cultures have different ways of showing love.'})">檢查</button>
+            <div class="feedback" id="b4-1-feedback"></div>
+        </div>
+        <div>
+            <p>2.</p>
+            <p>They feel good about themselves while wearing, using, or eating brand-name items. For instance, some think they look slimmer and more attractive in jeans from a company that has hired famous models as its brand ambassadors. Others trust only Nike or Adidas shoes, for they believe their feet will not be protected in shoes without those brand names. Still others consider that only drinks sold by Starbucks provide them with the refreshment they need.</p>
+            <input type="text" id="b4-2-input" class="input-topic" placeholder="寫出主題句">
+            <button class="check-button" onclick="checkAnswer('b4-2', {type: 'text', answer: 'Many people prefer brand-name products.'})">檢查</button>
+            <div class="feedback" id="b4-2-feedback"></div>
+        </div>
+        <div>
+            <p>3.</p>
+            <p>Have you ever thought about why school buses and taxis are painted yellow, and stop signs red? This is because yellow is bright enough to attract people's attention, even in heavy traffic. As for red, it is usually used to indicate warning. Therefore, most traffic signs use this color.</p>
+            <input type="text" id="b4-3-input" class="input-topic" placeholder="寫出主題句">
+            <button class="check-button" onclick="checkAnswer('b4-3', {type: 'text', answer: 'Colors have special meanings in our lives.'})">檢查</button>
+            <div class="feedback" id="b4-3-feedback"></div>
+        </div>
+        <div>
+            <p>4.</p>
+            <p>I broke Mr. Wang's window last Sunday, but I didn't tell him about this. Instead of saying sorry to him, I ran away. After that day, I was afraid to look Mr. Wang in the eye. Yesterday, I decided to tell him what had happened. To my surprise, Mr. Wang wasn't angry. He said he was proud that I had told the truth. As a result, I made up my mind that I would be honest with other people.</p>
+            <input type="text" id="b4-4-input" class="input-topic" placeholder="寫出主題句">
+            <button class="check-button" onclick="checkAnswer('b4-4', {type: 'text', answer: 'Honesty is the best policy.'})">檢查</button>
+            <div class="feedback" id="b4-4-feedback"></div>
+        </div>
+        <div>
+            <p>5.</p>
+            <p>Fresh onions are available in yellow, red, and white throughout their season, March through August. They can be identified by their thin, light-colored skin. Because they have a higher water content, they are typically sweeter and milder tasting than storage onions. This higher water content also makes it easier for them to bruise. With its delicate taste, the fresh onion is an ideal choice for salads and other lightly-cooked dishes. Storage onions, on the other hand, are available August through April. Unlike fresh onions, they have multiple layers of thick, dark, papery skin. They also have an intense flavor and a higher percentage of solids. For these reasons, storage onions are the best choice for spicy dishes that require longer cooking times or more flavor.</p>
+            <input type="text" id="b4-5-input" class="input-topic" placeholder="寫出主題句">
+            <button class="check-button" onclick="checkAnswer('b4-5', {type: 'text', answer: 'There are two types of onions: fresh onions and storage onions.'})">檢查</button>
+            <div class="feedback" id="b4-5-feedback"></div>
+        </div>
+    </div>
+
+    <h2>5-3 支持句</h2>
+    <p>一個段落有了主題句，接著必須提供資訊來支持主題句，這些句子稱為支持句 (supporting sentences)。支持句能為主題句提供解釋、細節、訊息、舉例或佐證，使讀者能更加瞭解段落的主題。跟主題句密切相關的支持句越多，主題就越清楚，也會更具說服力。主題句通常是廣泛的陳述，而支持句是針對主題句提出明確、深入且特定的論述。</p>
+    <p>1. 舉例、個人經驗、解釋和提供細節。<br>2. 根據新聞報導、歷史事實、研究報告、科學證據和統計資料。<br>3. 引用文學作品、諺語和名言。<br>4. 引用故事或實言。</p>
+    <h3>範例 1</h3>
+    <div class="example">
+        <p>Believe it or not, baby oil, medicated oil, or even oil from potato chips can help remove stubborn stains effectively. Just follow these steps. First, prepare some baby oil. Then, put a few drops of the oil on the stain. Two minutes later, wipe it up with some tissues. Amazingly, the stained area will look clean again. The secret behind the magic is that the organic substances from these kinds of oil can help break down the stains, and thus, make them easier to remove.</p>
+        <p>信不信由你，嬰兒油、藥油或是甚至是洋芋片上的油都能有效清除頑固汙漬。只要跟著這些步驟。首先，準備一些嬰兒油。然後，滴幾滴油在汙漬上。兩分鐘過後，用衛生紙擦拭該處。出乎意料地，髒的地方又再度變乾淨了。這個魔法的秘訣在於這些種類的油的有機物質能幫助分解汙漬，也因此能夠更容易清除除掉。</p>
+    </div>
+    <p>主題句：Believe it or not, baby oil, medicated oil, or even oil from potato chips can help remove stubborn stains effectively.</p>
+    <p>支持細節 1：First, prepare some baby oil. Then, put a few drops of the oil on the stain. Two minutes later, wipe it up with some tissues. (說明步驟。)</p>
+    <p>支持細節 2：The secret behind the magic is that the organic substances from these kinds of oil can help break down the stains, and thus, make them easier to remove. (解釋原因。)</p>
+    <h3>範例 2</h3>
+    <div class="example">
+        <p>There is no doubt that travel opens people's eyes, but how can this possibly be true if the explosive growth of tourism eventually leaves nothing but ruins for visitors to see? Governments and tourists must take action now to help preserve the cultural and natural treasures because these precious things cannot be restored once they have been spoiled. To prevent further destruction, it is important that governments lay down clear guiding principles to encourage more public participation in environmental conservation. Tourists, too, must act with a stronger sense of responsibility and morality than they do now. After all, visiting these unique and amazing places around the world is a privilege, rather than something that is taken for granted.</p>
+        <p>毫無疑問地，旅遊可以增加見聞，但如果爆發性的旅遊業最終只留下斷壁殘垣給旅客欣賞，怎麼還會是事實呢？政府和觀光客現在必須採取行動來保護文化和自然的珍寶，因為這些珍貴的東西一且受損就無法復原了。為了避免更嚴重的破壞，重要的足政府應該設立明確的指導原則來鼓勵大眾參與環保保育。觀光客，同樣地，必須表現得比現在更有責任心和道德非理所當然的事。</p>
+    </div>
+    <p>主題句：Governments and tourists must take action now to help preserve the cultural and natural treasures because these precious things cannot be restored once they have been spoiled.</p>
+    <p>支持細節 1：To prevent further destruction, it is important that governments lay down clear guiding principles to encourage more public participation in environmental conservation. (針對政府的部分，提供輔助方法。)</p>
+    <p>支持細節 2：Tourists, too, must act with a stronger sense of responsibility and morality than they do now. (針對觀光客的部分，提供輔助方法。)</p>
+
+    <div class="practice">
+        <h3>練習寫寫看 C</h3>
+        <p>根據主題，選出最適合的句子。</p>
+        <div>
+            <p>1. Citrus peel can be used to remove stubborn stains.</p>
+            <div class="question-options">
+                <label><input type="checkbox" name="c1[]" value="A"> (A) Squeeze some juice from the peel on the stains and rub the stains with the peel.</label>
+                <label><input type="checkbox" name="c1[]" value="B"> (B) Citrus fruits, such as oranges and lemons, are good for your health.</label>
+                <label><input type="checkbox" name="c1[]" value="C"> (C) The acid contents from citrus peel can help break down the stains.</label>
+                <label><input type="checkbox" name="c1[]" value="D"> (D) Wait for a few minutes, and the stains will gradually come off.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('c1', ['A', 'C', 'D'])">檢查</button>
+            <div class="feedback" id="c1-feedback"></div>
+        </div>
+        <div>
+            <p>2. It is interesting to go traveling in a foreign country.</p>
+            <div class="question-options">
+                <label><input type="checkbox" name="c2[]" value="A"> (A) We can visit popular tourist attractions.</label>
+                <label><input type="checkbox" name="c2[]" value="B"> (B) We can learn different customs.</label>
+                <label><input type="checkbox" name="c2[]" value="C"> (C) We should book the plane tickets before we set off.</label>
+                <label><input type="checkbox" name="c2[]" value="D"> (D) We can meet people from different cultures.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('c2', ['A', 'B', 'D'])">檢查</button>
+            <div class="feedback" id="c2-feedback"></div>
+        </div>
+        <div>
+            <p>3. There are several Halloween traditions.</p>
+            <div class="question-options">
+                <label><input type="checkbox" name="c3[]" value="A"> (A) Halloween and Christmas are national holidays in the U.S.</label>
+                <label><input type="checkbox" name="c3[]" value="B"> (B) Children would go trick-or-treating.</label>
+                <label><input type="checkbox" name="c3[]" value="C"> (C) People use pumpkins to make jack-o'-lanterns.</label>
+                <label><input type="checkbox" name="c3[]" value="D"> (D) Children dress up in special costumes.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('c3', ['B', 'C', 'D'])">檢查</button>
+            <div class="feedback" id="c3-feedback"></div>
+        </div>
+        <div>
+            <p>4. Necessity is the mother of invention.</p>
+            <div class="question-options">
+                <label><input type="checkbox" name="c4[]" value="A"> (A) Many times, people come up with ideas to meet their own needs.</label>
+                <label><input type="checkbox" name="c4[]" value="B"> (B) The solutions to the problems become great inventions that change people's lives.</label>
+                <label><input type="checkbox" name="c4[]" value="C"> (C) Teng Hung-chi invented a faucet controlled by a built-in sensing device because he did not want to touch the faucet with his dirty hands.</label>
+                <label><input type="checkbox" name="c4[]" value="D"> (D) There have been many great inventors throughout history, such as Isaac Newton, Thomas Edison, and Steve Jobs.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('c4', ['A', 'B', 'C'])">檢查</button>
+            <div class="feedback" id="c4-feedback"></div>
+        </div>
+        <div>
+            <p>5. It is not advised to heat a baby's bottle in a microwave.</p>
+            <div class="question-options">
+                <label><input type="checkbox" name="c5[]" value="A"> (A) The bottle may seem cool to the touch, but the liquid inside may become too hot to drink.</label>
+                <label><input type="checkbox" name="c5[]" value="B"> (B) Heating the bottle of milk in a microwave can cause changes in the milk.</label>
+                <label><input type="checkbox" name="c5[]" value="C"> (C) Breast milk is better for babies because it is said to encourage healthy brain development.</label>
+                <label><input type="checkbox" name="c5[]" value="D"> (D) The nutritional value of milk may be destroyed.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('c5', ['A', 'B', 'D'])">檢查</button>
+            <div class="feedback" id="c5-feedback"></div>
+        </div>
+    </div>
+
+    <h2>5-4 結語句</h2>
+    <p>一個段落的結語句 (concluding sentence) 是用來總結主題句，並強化段落的中心思想。它通常放在段落的末尾，提供一個強有力的結束，讓讀者對段落的內容留下深刻印象。結語句可以重述主題句、提出建議、呼應開頭，或預示後續發展，但避免引入新資訊。</p>
+    <p>結語句常見的問題是：</p>
+    <ol>
+        <li>過於簡短，缺乏總結力。<br>例 So, that's it. 所以，就這樣了。(太隨便，缺乏深度。)</li>
+        <li>引入新想法，使段落不完整。<br>例 And there are more examples. 還有更多例子。(引入新內容，應放在支持句。)</li>
+        <li>與主題句不相關。<br>例 It's a nice day. 今天天氣很好。(偏離主題。)</li>
+    </ol>
+    <p>結語句通常會使用過渡詞，如 in conclusion, to sum up, therefore 等。</p>
+    <h3>範例</h3>
+    <div class="example">
+        <p>We sometimes lie to cover up our mistakes. While it is true that we make
+errors from time to time, some of us don't have the courage to admit that we've
+made them. For example, some students might deceive their teacher about their
+unfinished homework. They might say that they left it at home when in fact, they
+didn't even do it. These students don't want to seem irresponsible, so they make
+up an excuse-that is, a l i e - t o save face.</p>
+        <p>有 時 候 我 們 說 謊 是 為 了 掩 蓋 我 們 的 錯 誤 。 雖 然 事 實 上 我 們 偶 爾 會 犯
+錯 ， 有 些 ⼈ 卻 沒 有 承 認 過 錯 的 勇 氣 。 舉 例 來 說 ， 有 些 學 ⽣ 可 能 功 課 沒 有 寫
+完 ， 欺 騙 ⽼ 師 說 他 們 將 功 課 留 在 家 裡 了 。 事 實 上 ， 他 們 根 本 沒 有 寫 功 課 。
+這 些 學 ⽣ 不 想 表 現 出 不 負 責 任 的 樣 ⼦ ， 所 以 他 們 編 造 藉 ⼜ ， 也 就 是 說 謊 ，
+來 保 留 顏 ⾯ 。</p>
+    </div>
+    <p>主題句：We sometimes lie to cover up our mistakes.</p>
+    <p>支持句：While it is true that we make errors from time to time, some of us don't
+have the courage to admit that we've made them. For example, some
+students might deceive their teacher about their unfinished homework.hey might say that they left it at home when in fact, they didn't even
+d o i t . （ 說 明 原 因 。 ）</p>
+    <p>結語句：These students don't want to seem irresponsible, so they make up an
+e x c u s e — t h a t i s , a l i e — t o s a v e f a c e . （ 重 述 本 段 主 旨 。 ）</p>
+    <div class="tip">
+        <strong>Tip</strong><br>
+        結語句可以是重述主題句，但用不同詞語，避免重複。也可以以問題或呼籲結束，增加互動性。
+    </div>
+
+    <div class="practice">
+        <h3>練習寫寫看 D</h3>
+        <p>選出最適合當結語句的句子。</p>
+        <div>
+            <p>1.</p>
+            <div class="question-options">
+                <label><input type="radio" name="d1" value="A"> (A) Therefore, colors affect our emotions in many ways.</label>
+                <label><input type="radio" name="d1" value="B"> (B) Red is my favorite color.</label>
+                <label><input type="radio" name="d1" value="C"> (C) Blue is often associated with calmness.</label>
+                <label><input type="radio" name="d1" value="D"> (D) Yellow can make people feel happy.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('d1', 'A')">檢查</button>
+            <div class="feedback" id="d1-feedback"></div>
+        </div>
+        <div>
+            <p>2.</p>
+            <div class="question-options">
+                <label><input type="radio" name="d2" value="A"> (A) In summary, making soup requires patience.</label>
+                <label><input type="radio" name="d2" value="B"> (B) Add salt to taste.</label>
+                <label><input type="radio" name="d2" value="C"> (C) The soup is ready to serve.</label>
+                <label><input type="radio" name="d2" value="D"> (D) Chop the vegetables finely.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('d2', 'A')">檢查</button>
+            <div class="feedback" id="d2-feedback"></div>
+        </div>
+        <div>
+            <p>3.</p>
+            <div class="question-options">
+                <label><input type="radio" name="d3" value="A"> (A) Opera has a long history.</label>
+                <label><input type="radio" name="d3" value="B"> (B) To conclude, operas can be enjoyable with the right approach.</label>
+                <label><input type="radio" name="d3" value="C"> (C) Mozart composed many operas.</label>
+                <label><input type="radio" name="d3" value="D"> (D) The costumes are beautiful.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('d3', 'B')">檢查</button>
+            <div class="feedback" id="d3-feedback"></div>
+        </div>
+        <p>寫出適當的結語句。</p>
+        <div>
+            <p>1.</p>
+            <p>Traveling broadens the mind. It allows people to experience new cultures and foods. Meeting locals can lead to lifelong friendships.</p>
+            <input type="text" id="d4-1-input" class="input-topic" placeholder="寫出結語句">
+            <button class="check-button" onclick="checkAnswer('d4-1', {type: 'text', answer: 'In conclusion, traveling is a rewarding experience.'})">檢查</button>
+            <div class="feedback" id="d4-1-feedback"></div>
+        </div>
+        <div>
+            <p>2.</p>
+            <p>Reading books improves vocabulary. It also enhances imagination and reduces stress. Many successful people attribute their success to reading habits.</p>
+            <input type="text" id="d4-2-input" class="input-topic" placeholder="寫出結語句">
+            <button class="check-button" onclick="checkAnswer('d4-2', {type: 'text', answer: 'Therefore, reading is a valuable habit for personal growth.'})">檢查</button>
+            <div class="feedback" id="d4-2-feedback"></div>
+        </div>
+        <div>
+            <p>3.</p>
+            <p>Exercise is essential for health. It strengthens muscles and improves cardiovascular function. Regular activity can prevent diseases.</p>
+            <input type="text" id="d4-3-input" class="input-topic" placeholder="寫出結語句">
+            <button class="check-button" onclick="checkAnswer('d4-3', {type: 'text', answer: 'In summary, regular exercise leads to a healthier life.'})">檢查</button>
+            <div class="feedback" id="d4-3-feedback"></div>
+        </div>
+        <div>
+            <p>4.</p>
+            <p>Learning a new language opens doors to opportunities. It helps in understanding different cultures and boosts career prospects.</p>
+            <input type="text" id="d4-4-input" class="input-topic" placeholder="寫出結語句">
+            <button class="check-button" onclick="checkAnswer('d4-4', {type: 'text', answer: 'To sum up, mastering a new language is beneficial in many ways.'})">檢查</button>
+            <div class="feedback" id="d4-4-feedback"></div>
+        </div>
+        <div>
+            <p>5.</p>
+            <p>Environmental protection is everyone's responsibility. Recycling and conserving water are simple ways to contribute. Small actions can make a big difference.</p>
+            <input type="text" id="d4-5-input" class="input-topic" placeholder="寫出結語句">
+            <button class="check-button" onclick="checkAnswer('d4-5', {type: 'text', answer: 'Therefore, let's all do our part to protect the planet.'})">檢查</button>
+            <div class="feedback" id="d4-5-feedback"></div>
+        </div>
+    </div>
+
+    <h2>5-5 段落的一致性與連貫性</h2>
+    <p>段落的一致性 (unity) 指段落的所有句子都圍繞主題句發展，沒有無關內容。連貫性 (coherence) 指句子間邏輯順暢，使用過渡詞連接想法，使文章流暢易讀。</p>
+    <p>一致性問題：引入無關句子。<br>例 In summer, I like to swim. Swimming is fun. My favorite food is ice cream. (食物無關。)</p>
+    <p>連貫性問題：句子跳躍，缺乏連接。<br>例 I woke up. I ate breakfast. I went to school. (可加then, after that。)</p>
+    <p>改善方法：</p>
+    <ol>
+        <li>使用過渡詞：first, next, however, therefore。</li>
+        <li>重複關鍵詞或使用代詞。</li>
+        <li>按時間、空間或重要性順序排列。</li>
+    </ol>
+    <h3>範例</h3>
+    <div class="example">
+        <p>Unity example: All sentences support "Exercise is beneficial."</p>
+        <p>Exercise improves health. It boosts energy levels. Regular workouts strengthen the heart. (All related.)</p>
+        <p>Coherence example: </p>
+        <p>First, prepare the ingredients. Then, mix them together. Finally, bake the cake. (Logical order.)</p>
+    </div>
+    <div class="tip">
+        <strong>Tip</strong><br>
+        檢查段落時，讀主題句和每個支持句，確保每個句都相關。使用連接詞避免斷裂。
+    </div>
+
+    <div class="practice">
+        <h3>練習寫寫看 E</h3>
+        <p>找出段落中無關的句子。</p>
+        <div>
+            <p>1.</p>
+            <p>Cars are convenient for travel. They allow flexibility in scheduling. Bicycles are eco-friendly. Public transport reduces traffic.</p>
+            <div class="question-options">
+                <label><input type="radio" name="e1" value="A"> Cars are convenient for travel.</label>
+                <label><input type="radio" name="e1" value="B"> They allow flexibility in scheduling.</label>
+                <label><input type="radio" name="e1" value="C"> Bicycles are eco-friendly.</label>
+                <label><input type="radio" name="e1" value="D"> Public transport reduces traffic.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('e1', 'C')">檢查</button>
+            <div class="feedback" id="e1-feedback"></div>
+        </div>
+        <div>
+            <p>2.</p>
+            <p>Healthy eating includes fruits and vegetables. They provide vitamins. Fast food is tasty but unhealthy. Exercise complements diet.</p>
+            <div class="question-options">
+                <label><input type="radio" name="e2" value="A"> Healthy eating includes fruits and vegetables.</label>
+                <label><input type="radio" name="e2" value="B"> They provide vitamins.</label>
+                <label><input type="radio" name="e2" value="C"> Fast food is tasty but unhealthy.</label>
+                <label><input type="radio" name="e2" value="D"> Exercise complements diet.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('e2', 'D')">檢查</button>
+            <div class="feedback" id="e2-feedback"></div>
+        </div>
+        <div>
+            <p>3.</p>
+            <p>Technology has changed communication. Social media connects people. Phones are portable. Books are made of paper.</p>
+            <div class="question-options">
+                <label><input type="radio" name="e3" value="A"> Technology has changed communication.</label>
+                <label><input type="radio" name="e3" value="B"> Social media connects people.</label>
+                <label><input type="radio" name="e3" value="C"> Phones are portable.</label>
+                <label><input type="radio" name="e3" value="D"> Books are made of paper.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('e3', 'D')">檢查</button>
+            <div class="feedback" id="e3-feedback"></div>
+        </div>
+        <div>
+            <p>4.</p>
+            <p>Learning music improves concentration. It also enhances creativity. Playing instruments is fun. Math is important in school.</p>
+            <div class="question-options">
+                <label><input type="radio" name="e4" value="A"> Learning music improves concentration.</label>
+                <label><input type="radio" name="e4" value="B"> It also enhances creativity.</label>
+                <label><input type="radio" name="e4" value="C"> Playing instruments is fun.</label>
+                <label><input type="radio" name="e4" value="D"> Math is important in school.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('e4', 'D')">檢查</button>
+            <div class="feedback" id="e4-feedback"></div>
+        </div>
+        <div>
+            <p>5.</p>
+            <p>Vacations relax the mind. They offer new experiences. Work is stressful. Family time is valuable during holidays.</p>
+            <div class="question-options">
+                <label><input type="radio" name="e5" value="A"> Vacations relax the mind.</label>
+                <label><input type="radio" name="e5" value="B"> They offer new experiences.</label>
+                <label><input type="radio" name="e5" value="C"> Work is stressful.</label>
+                <label><input type="radio" name="e5" value="D"> Family time is valuable during holidays.</label>
+            </div>
+            <button class="check-button" onclick="checkAnswer('e5', 'C')">檢查</button>
+            <div class="feedback" id="e5-feedback"></div>
+        </div>
+        <p>排列句子使段落連貫。</p>
+        <div id="practice-e1">
+            <p>1.</p>
+            <ul class="sortable" id="sortable-e1">
+                <li>Drink water regularly.</li>
+                <li>Eat balanced meals.</li>
+                <li>Health is important.</li>
+                <li>Exercise daily.</li>
+                <li>Sleep well.</li>
+            </ul>
+            <button class="check-button" onclick="checkSortable('sortable-e1', ['Health is important.','Eat balanced meals.','Drink water regularly.','Exercise daily.','Sleep well.'])">檢查排列</button>
+            <div class="feedback" id="sortable-e1-feedback"></div>
+        </div>
+        <div id="practice-e2">
+            <p>2.</p>
+            <ul class="sortable" id="sortable-e2">
+                <li>Plant seeds in spring.</li>
+                <li>Harvest in autumn.</li>
+                <li>Water the plants.</li>
+                <li>Farming cycle starts with preparation.</li>
+                <li>Add fertilizer.</li>
+            </ul>
+            <button class="check-button" onclick="checkSortable('sortable-e2', ['Farming cycle starts with preparation.','Plant seeds in spring.','Add fertilizer.','Water the plants.','Harvest in autumn.'])">檢查排列</button>
+            <div class="feedback" id="sortable-e2-feedback"></div>
+        </div>
+        <div id="practice-e3">
+            <p>3.</p>
+            <ul class="sortable" id="sortable-e3">
+                <li>Read the instructions.</li>
+                <li>Assemble the parts.</li>
+                <li>Buying a furniture kit.</li>
+                <li>Check for missing pieces.</li>
+                <li>Enjoy the new furniture.</li>
+            </ul>
+            <button class="check-button" onclick="checkSortable('sortable-e3', ['Buying a furniture kit.','Read the instructions.','Check for missing pieces.','Assemble the parts.','Enjoy the new furniture.'])">檢查排列</button>
+            <div class="feedback" id="sortable-e3-feedback"></div>
+        </div>
+        <div id="practice-e4">
+            <p>4.</p>
+            <ul class="sortable" id="sortable-e4">
+                <li>Write the draft.</li>
+                <li>Research the topic.</li>
+                <li>Edit for errors.</li>
+                <li>Writing an essay.</li>
+                <li>Outline the structure.</li>
+            </ul>
+            <button class="check-button" onclick="checkSortable('sortable-e4', ['Writing an essay.','Research the topic.','Outline the structure.','Write the draft.','Edit for errors.'])">檢查排列</button>
+            <div class="feedback" id="sortable-e4-feedback"></div>
+        </div>
+        <div id="practice-e5">
+            <p>5.</p>
+            <ul class="sortable" id="sortable-e5">
+                <li>Pack your bags.</li>
+                <li>Book tickets.</li>
+                <li>Plan the itinerary.</li>
+                <li>Traveling abroad.</li>
+                <li>Arrive at destination.</li>
+            </ul>
+            <button class="check-button" onclick="checkSortable('sortable-e5', ['Traveling abroad.','Plan the itinerary.','Book tickets.','Pack your bags.','Arrive at destination.'])">檢查排列</button>
+            <div class="feedback" id="sortable-e5-feedback"></div>
+        </div>
+    </div>
+</body>
+</html>
