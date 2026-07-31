@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>學測英文批改檢討｜黃色小鴨 × 長照翻譯</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12202e;
+  --ink-soft:#41505f;
+  --paper:#faf9f5;
+  --line:#dfe3e0;
+  --red:#d1342b;
+  --red-wash:#fdeeec;
+  --duck:#f5c518;
+  --harbor:#1b6f7f;
+  --harbor-wash:#e6f1f2;
+  --good:#2f7d4f;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --sans:"Noto Sans TC","Bricolage Grotesque",system-ui,sans-serif;
+  --display:"Bricolage Grotesque","Noto Sans TC",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:26px 26px;
+  background-position:-1px -1px;
+  line-height:1.75;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:940px;margin:0 auto;padding:0 20px 100px}
+
+/* ---------- header ---------- */
+.masthead{
+  margin:0 -20px 34px;
+  padding:38px 20px 30px;
+  background:var(--ink);
+  color:#fff;
+  border-bottom:6px solid var(--duck);
+}
+.masthead-inner{max-width:900px;margin:0 auto;display:flex;gap:28px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--duck);margin:0 0 10px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(26px,4.6vw,40px);line-height:1.2;margin:0 0 12px;letter-spacing:-.01em}
+.subtitle{margin:0;color:#b9c6d2;font-size:15px;max-width:44ch}
+.totalbox{border:2px solid var(--duck);border-radius:4px;padding:14px 22px;text-align:center;min-width:170px;background:rgba(245,197,24,.08)}
+.totalbox .label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--duck);text-transform:uppercase}
+.totalbox .num{font-family:var(--display);font-weight:800;font-size:46px;line-height:1;margin:6px 0 2px}
+.totalbox .num small{font-size:18px;color:#8fa3b4;font-weight:600}
+.totalbox .band{font-family:var(--mono);font-size:12px;color:#dfe8ef}
+
+/* ---------- toolbar ---------- */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 34px;padding:12px 16px;border:1px solid var(--line);border-radius:4px;background:#fff}
+.toolbar p{margin:0;font-size:13px;color:var(--ink-soft);flex:1;min-width:200px}
+button{font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;border-radius:3px;border:1.5px solid var(--ink);background:#fff;color:var(--ink);padding:8px 16px;transition:background .15s,color .15s}
+button:hover{background:var(--ink);color:#fff}
+button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+button:focus-visible{outline:3px solid var(--harbor);outline-offset:2px}
+
+/* ---------- sections ---------- */
+section{margin:0 0 52px;scroll-margin-top:20px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:22px}
+.sec-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--red)}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(20px,3vw,26px);margin:0;letter-spacing:-.01em}
+h3{font-family:var(--display);font-weight:700;font-size:17px;margin:26px 0 10px}
+.card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:20px 22px;margin-bottom:16px}
+.card.accent{border-left:4px solid var(--harbor)}
+.card.warn{border-left:4px solid var(--red)}
+.card.gold{border-left:4px solid var(--duck)}
+
+/* ---------- rubric ---------- */
+.rubric{display:grid;gap:12px}
+.row{display:grid;grid-template-columns:130px 1fr 66px;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 16px}
+.row .name{font-weight:700;font-size:15px}
+.row .name span{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-soft);font-weight:400;letter-spacing:.04em}
+.meter{height:12px;background:#eceeec;border-radius:2px;overflow:hidden;position:relative}
+.meter i{display:block;height:100%;background:var(--harbor)}
+.meter.low i{background:var(--red)}
+.meter.mid i{background:var(--duck)}
+.row .pt{font-family:var(--mono);font-weight:700;font-size:19px;text-align:right}
+.row .pt em{font-style:normal;font-size:12px;color:var(--ink-soft)}
+.rubric-note{font-size:13.5px;color:var(--ink-soft);grid-column:1/-1;margin:6px 0 0;padding-top:8px;border-top:1px dashed var(--line)}
+
+/* ---------- essay markup ---------- */
+.script{background:#fff;border:1px solid var(--line);border-radius:4px;padding:24px 26px;font-size:16.5px;line-height:2.15}
+.script p{margin:0 0 18px}
+.script p:last-child{margin-bottom:0}
+.para-tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--harbor);display:block;margin-bottom:4px}
+.err{
+  position:relative;
+  color:var(--red);
+  background:var(--red-wash);
+  border-bottom:2px wavy var(--red);
+  text-decoration:line-through;
+  text-decoration-color:rgba(209,52,43,.45);
+  cursor:help;
+  padding:0 1px;
+}
+.err::after{
+  content:attr(data-fix);
+  position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);
+  background:var(--ink);color:#fff;font-family:var(--sans);font-size:13px;line-height:1.5;
+  text-decoration:none;padding:7px 11px;border-radius:3px;white-space:normal;width:max-content;max-width:260px;
+  opacity:0;visibility:hidden;transition:opacity .12s;z-index:9;pointer-events:none;
+  box-shadow:0 4px 14px rgba(18,32,46,.22);
+}
+.err:hover::after,.err:focus::after{opacity:1;visibility:visible}
+.good{background:rgba(47,125,79,.12);border-bottom:2px solid var(--good);padding:0 2px}
+
+/* ---------- fix table ---------- */
+.fix{border:1px solid var(--line);border-radius:4px;background:#fff;margin-bottom:12px;overflow:hidden}
+.fix-top{display:flex;gap:12px;padding:13px 16px;align-items:flex-start}
+.fix-no{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;background:var(--ink);border-radius:2px;padding:2px 7px;flex-shrink:0;margin-top:3px}
+.orig{font-size:15.5px;color:var(--red);text-decoration:line-through;text-decoration-color:rgba(209,52,43,.5)}
+.answer{border-top:1px dashed var(--line);padding:13px 16px 14px 55px;background:#fcfdfc}
+.answer .arrow{font-family:var(--mono);color:var(--harbor);font-weight:700;margin-right:6px}
+.newtext{font-size:15.5px;font-weight:700;color:var(--harbor)}
+.why{font-size:14px;color:var(--ink-soft);margin:7px 0 0;display:flex;gap:7px}
+.why b{color:var(--ink);font-weight:700;white-space:nowrap}
+body.hide-answers .answer{display:none}
+body.hide-answers .err::after{visibility:hidden!important;opacity:0!important}
+body.hide-answers .err{text-decoration:none}
+
+/* ---------- upgrade table ---------- */
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);font-size:14.5px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;letter-spacing:.08em;font-weight:400}
+tbody tr:last-child td{border-bottom:none}
+td.from{color:var(--ink-soft);width:34%}
+td.to{font-weight:700;color:var(--harbor)}
+
+ul.tips{margin:0;padding-left:0;list-style:none}
+ul.tips li{position:relative;padding-left:24px;margin-bottom:10px;font-size:15px}
+ul.tips li::before{content:"→";position:absolute;left:0;color:var(--red);font-family:var(--mono);font-weight:700}
+
+.model{background:#fff;border:1px solid var(--line);border-left:4px solid var(--duck);border-radius:4px;padding:24px 26px;font-size:16.5px;line-height:2.05}
+.model p{margin:0 0 20px}
+.model p:last-child{margin-bottom:0}
+.wordcount{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:right;margin-top:14px;padding-top:10px;border-top:1px dashed var(--line)}
+
+.trans-q{font-family:var(--mono);font-size:12px;color:var(--red);letter-spacing:.1em;margin:0 0 6px}
+.zh{font-weight:700;font-size:16px;margin:0 0 14px}
+.score-chip{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;padding:3px 9px;border-radius:2px;background:var(--red-wash);color:var(--red);border:1px solid rgba(209,52,43,.3)}
+
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.checklist li:last-child{border-bottom:none}
+.checklist input{margin-top:6px;width:16px;height:16px;accent-color:var(--harbor);flex-shrink:0}
+footer{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding-top:26px;border-top:1px solid var(--line)}
+
+@media (max-width:640px){
+  .row{grid-template-columns:1fr 60px;gap:8px}
+  .meter{grid-column:1/-1;order:3}
+  .answer{padding-left:16px}
+  .err::after{max-width:200px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff}
+  .toolbar{display:none}
+  .masthead{background:#fff;color:#000;border-bottom:3px solid #000}
+  .masthead .subtitle,.totalbox .band{color:#333}
+  .answer{display:block!important}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <p class="eyebrow">GSAT English · Marking Sheet</p>
+      <h1>黃色小鴨作文 ＋ 長照中譯英<br>批改與檢討</h1>
+      <p class="subtitle">題目：2024 高雄「黃色小鴨」新聞圖片看圖寫作（第一段描述圖片人事物與活動；第二段說明藝術創作對城市形象與觀光的影響），文長至少 120 words。</p>
+    </div>
+    <div class="totalbox">
+      <div class="label">作文預估級分</div>
+      <div class="num">10<small>/20</small></div>
+      <div class="band">落點 9–11 分</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="toolbar">
+    <p><strong>家教模式：</strong>先按「蓋住修正答案」，讓學生自己抓錯，再一題一題掀開對答案。</p>
+    <button id="toggle" aria-pressed="false">蓋住修正答案</button>
+    <button onclick="window.print()">列印講義</button>
+  </div>
+
+  <!-- 1 -->
+  <section id="s1">
+    <div class="sec-head"><span class="sec-num">01</span><h2>預估級分與總評</h2></div>
+
+    <div class="rubric">
+      <div class="row">
+        <div class="name">內容<span>CONTENT</span></div>
+        <div class="meter mid"><i style="width:60%"></i></div>
+        <div class="pt">3<em>/5</em></div>
+      </div>
+      <div class="row">
+        <div class="name">組織<span>ORGANIZATION</span></div>
+        <div class="meter mid"><i style="width:60%"></i></div>
+        <div class="pt">3<em>/5</em></div>
+      </div>
+      <div class="row">
+        <div class="name">文法句構<span>GRAMMAR</span></div>
+        <div class="meter low"><i style="width:40%"></i></div>
+        <div class="pt">2<em>/5</em></div>
+      </div>
+      <div class="row">
+        <div class="name">詞彙拼字<span>VOCAB &amp; SPELLING</span></div>
+        <div class="meter low"><i style="width:40%"></i></div>
+        <div class="pt">2<em>/5</em></div>
+      </div>
+    </div>
+
+    <div class="card warn" style="margin-top:18px">
+      <p style="margin:0"><strong>一句話總評：</strong>文章有清楚的立場、正反並陳的架構，結尾還用對了 <em>only by… can we…</em> 的倒裝句，架構意識值得肯定；但第一段幾乎沒有「描述圖片」，加上拼字與主動詞一致的基本錯誤密集（<em>illustrate / it famous / severices / traviler</em>），使得文法與詞彙兩項被壓在低分帶。</p>
+    </div>
+    <div class="card accent">
+      <p style="margin:0;font-size:14.5px;color:var(--ink-soft)"><strong style="color:var(--ink)">扣分主因排序：</strong>① 第一段沒寫「人、地、物、活動」細節（圖中人群舉手機拍照、背景高雄流行音樂中心完全沒提）→ 內容掉到「發展不全」。② 一句一錯的基本文法。③ 專有名詞 Kaohsiung 拼錯。</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <div class="sec-head"><span class="sec-num">02</span><h2>中譯英批改（8 分）</h2></div>
+
+    <div class="card">
+      <p class="trans-q">Q1 ｜ <span class="score-chip">得分 1.5 / 4</span></p>
+      <p class="zh">因應臺灣人口老化問題，政府已經提供長照服務以減少家庭的負擔。</p>
+      <p style="margin:0"><span class="orig">To face the question of the older, government has required long-term severices to reduce the heavy of families.</span></p>
+      <div class="answer" style="margin:14px -22px -20px;border-radius:0">
+        <p style="margin:0"><span class="arrow">➡️</span><span class="newtext">In response to Taiwan's aging population, the government has provided long-term care services to reduce the burden on families.</span></p>
+        <p class="why"><b>因應</b>「因應／為了應對」固定說法是 In response to；To face 是中式直譯。</p>
+        <p class="why"><b>人口老化</b>不是 the question of the older，而是 the aging population／the problem of an aging population，且不可漏掉 Taiwan's。</p>
+        <p class="why"><b>提供</b>required（要求）＝ 用錯字，應為 provided／offered；長照＝ long-term care services，severices 為拼字錯誤。</p>
+        <p class="why"><b>負擔</b>heavy 是形容詞不能當名詞；「減少家庭的負擔」＝ reduce the burden on families（burden 後接 on）。</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="trans-q">Q2 ｜ <span class="score-chip">得分 2 / 4</span></p>
+      <p class="zh">當年長者不再能獨立生活時，他們需要各式各樣的服務選項在日常生活中協助他們。</p>
+      <p style="margin:0"><span class="orig">When the older can't live alone, they need virous options severices to help them in their daily life.</span></p>
+      <div class="answer" style="margin:14px -22px -20px;border-radius:0">
+        <p style="margin:0"><span class="arrow">➡️</span><span class="newtext">When the elderly can no longer live independently, they need a variety of service options to assist them in their daily lives.</span></p>
+        <p class="why"><b>年長者</b>the older 不成詞，應為 the elderly／older adults／senior citizens。</p>
+        <p class="why"><b>不再能</b>can't 只翻到「不能」，漏掉「不再」；用 can no longer 才完整。</p>
+        <p class="why"><b>獨立生活</b>live alone 是「獨居」，語意不同；「獨立生活」＝ live independently／live on their own。</p>
+        <p class="why"><b>各式各樣的服務選項</b>virous 拼字錯誤（various）；兩個名詞不可直接並排，應為 a variety of service options／various types of services。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <div class="sec-head"><span class="sec-num">03</span><h2>原文批改稿</h2></div>
+    <p style="font-size:14px;color:var(--ink-soft);margin-top:-8px">滑鼠移到紅字（或用鍵盤 Tab 停在紅字上）即可看到修正。</p>
+
+    <div class="script">
+      <p><span class="para-tag">PARAGRAPH 1 — 描述圖片</span>
+      The picture <span class="err" tabindex="0" data-fix="illustrates（主詞第三人稱單數）">illustrate</span> a place, <span class="err" tabindex="0" data-fix="that is well known to Taiwanese">where is known for</span> Taiwanese. In the <span class="err" tabindex="0" data-fix="At the beginning of 2024">begin of the year</span> 2024, a "Yellow Duck" appeared <span class="err" tabindex="0" data-fix="in Kaohsiung（城市用 in；拼字）">at Kioshong</span>. It attracted a lot of people to take <span class="err" tabindex="0" data-fix="photos（人多要用複數）">a picture</span> with it. Because of <span class="err" tabindex="0" data-fix="its（所有格）">it</span> cute look, <span class="err" tabindex="0" data-fix="it became popular with">it famous for</span> not only adults but also children.</p>
+
+      <p><span class="para-tag">PARAGRAPH 2 — 影響與看法</span>
+      From my perspective, I firmly believe that the duck can be the <span class="err" tabindex="0" data-fix="symbol / icon of（presence 是「存在」）">presence</span> of Kioshong. For one thing, the <span class="err" tabindex="0" data-fix="travelers post（拼字＋複數）">traviler post</span> the pictures <span class="err" tabindex="0" data-fix="on social media（兩個動詞不可連用）">upload the internet</span>. When others <span class="err" tabindex="0" data-fix="see（時態要與 will 一致）">saw</span> it on the news, they will <span class="err" tabindex="0" data-fix="search for the keywords">surf the key words</span> on the internet. <span class="err" tabindex="0" data-fix="As a result, more and more people will get to know the city.">Then, it will more and more people knows it.</span> <span class="err" tabindex="0" data-fix="On the other hand（此處是補充另一面）">In contrast</span>, it also <span class="err" tabindex="0" data-fix="may bring drawbacks（backward ≠ 缺點）">bring backward too</span>. The <span class="err" tabindex="0" data-fix="Overtourism and littering">over tourism and trash pollution</span> will also make the city <span class="err" tabindex="0" data-fix="tarnish the city's image（太口語）">look bad</span>. To sum up, <span class="good">only by striking a balance between travel and environment can we have</span> a beautiful place <span class="err" tabindex="0" data-fix="worth visiting（abroad 是副詞）">to abroad</span>.</p>
+    </div>
+    <p style="font-size:14px;color:var(--good);margin-top:12px"><strong>✓ 值得保留的亮點：</strong>結尾 <em>only by… can we…</em> 的倒裝完全正確，是全篇最有價值的一句，改寫版一定要留著。</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <div class="sec-head"><span class="sec-num">04</span><h2>詳細錯誤訂正</h2></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">01</span><span class="orig">The picture illustrate a place</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">The picture illustrates / shows / depicts a lively scene</span>
+      <p class="why"><b>主動詞一致</b>The picture 為第三人稱單數，動詞須加 -s。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">02</span><span class="orig">a place, where is known for Taiwanese</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">a landmark that is well known to Taiwanese</span>
+      <p class="why"><b>關係詞</b>where 是關係副詞，後面須接完整句；此處缺主詞，要用 that／which。</p>
+      <p class="why"><b>片語</b>be known <em>for</em> ＝以…聞名（後接特色）；be known <em>to</em> ＝為某人所熟知（後接人）。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">03</span><span class="orig">In the begin of the year 2024</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">At the beginning of 2024</span>
+      <p class="why"><b>詞性＋介系詞</b>begin 是動詞，名詞為 beginning；且固定用 <em>at</em> the beginning of。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">04</span><span class="orig">a "Yellow Duck" appeared at Kioshong</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">a giant yellow rubber duck made its debut in Kaohsiung</span>
+      <p class="why"><b>專有名詞</b>高雄＝ Kaohsiung，拼錯專有名詞在詞彙項會直接扣分。</p>
+      <p class="why"><b>介系詞</b>城市前用 in，不用 at。「黃色小鴨」英文慣稱 rubber duck。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">05</span><span class="orig">attracted a lot of people to take a picture with it</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">attracted crowds of visitors, who lined up to take photos with it</span>
+      <p class="why"><b>單複數</b>很多人拍的照片不會只有一張，用 photos；並可加關係子句補圖片細節。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">06</span><span class="orig">Because of it cute look, it famous for not only adults but also children.</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Thanks to its adorable appearance, it became popular with both adults and children.</span>
+      <p class="why"><b>所有格</b>it（它）→ its（它的）。</p>
+      <p class="why"><b>缺動詞</b>famous 是形容詞，句子沒有動詞；須寫 it <em>was</em> famous／it <em>became</em> popular。</p>
+      <p class="why"><b>搭配詞</b>be famous <em>for</em> ＋事物；受某人歡迎要用 be popular <em>with</em>／be a hit <em>among</em>。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">07</span><span class="orig">the duck can be the presence of Kioshong</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">the duck can serve as a symbol of Kaohsiung</span>
+      <p class="why"><b>用字</b>presence ＝存在感／出席，不能表「代表」；應用 symbol／icon／representative。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">08</span><span class="orig">the traviler post the pictures upload the internet</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">travelers post the photos they take on social media</span>
+      <p class="why"><b>拼字</b>traviler → traveler／traveller。</p>
+      <p class="why"><b>一句一動詞</b>post 與 upload 兩個動詞並排是中式英文；擇一即可，或用 and 連接。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">09</span><span class="orig">When others saw it on the news, they will surf the key words</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">When others see it in the news, they will search for the keywords online</span>
+      <p class="why"><b>時態一致</b>主要子句用 will（未來），附屬子句不可用過去式 saw；時間副詞子句用現在式代替未來式。</p>
+      <p class="why"><b>用字</b>surf 只能接 the Internet／the web；「搜尋關鍵字」用 search for／google。keyword 為一個字。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">10</span><span class="orig">Then, it will more and more people knows it.</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">As a result, more and more people will get to know the city.</span>
+      <p class="why"><b>句構崩壞</b>it will 後面沒有動詞，又多出一個主詞 people；一句只能有一組主詞＋動詞。</p>
+      <p class="why"><b>單複數</b>people 為複數，動詞不加 s。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">11</span><span class="orig">In contrast, it also bring backward too.</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">On the other hand, such popularity may also come at a price.</span>
+      <p class="why"><b>轉承語</b>In contrast 用於「兩個對象互相對比」；同一件事的另一面要用 On the other hand／However。</p>
+      <p class="why"><b>用字</b>backward ＝向後的（形容詞），「缺點」是 drawbacks／downsides。</p>
+      <p class="why"><b>贅字</b>also 與 too 意思重複，留一個就好；且 it 後動詞須 brings。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">12</span><span class="orig">The over tourism and trash pollution will also make the city look bad.</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Overtourism and littering can easily tarnish the city's image.</span>
+      <p class="why"><b>構詞</b>overtourism 是一個字，且為不可數，前面不加 The。</p>
+      <p class="why"><b>道地度</b>trash pollution 為自創詞，應用 littering／garbage problems；make the city look bad 太口語，改 damage／tarnish the city's image 更符合題目「城市形象」。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">13</span><span class="orig">a beautiful place to abroad</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">a destination truly worth visiting</span>
+      <p class="why"><b>詞性</b>abroad 是副詞（go abroad），不能接在 to 之後；且本題寫的是台灣的城市，用 abroad 語意也不合。</p></div></div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <div class="sec-head"><span class="sec-num">05</span><h2>高分優化建議</h2></div>
+
+    <h3>切題度：第一段「看圖說話」幾乎沒寫</h3>
+    <div class="card warn">
+      <ul class="tips" style="margin:0">
+        <li>題目明講要寫「人、地、物及活動」，四項你只碰到「物（小鴨）」。圖中<strong>成群的民眾、高舉手機自拍、背景高雄流行音樂中心的貝殼狀建築、海港</strong>全部沒出現，這是內容掉到 3 分的關鍵。</li>
+        <li>第一段的黃金公式：<strong>大景（地點）→ 中景（主角物件）→ 近景（人物動作）→ 整體氛圍</strong>，一句一層，四句就是 60 字。</li>
+        <li>第二段「影響」正反比例失衡：正面只有「被更多人知道」一個點，缺少<strong>帶動觀光收益／商家生意</strong>；建議正面兩點、負面一點，最後再收尾。</li>
+      </ul>
+    </div>
+
+    <h3>組織：轉承語要成對出現</h3>
+    <div class="card accent">
+      <ul class="tips" style="margin:0">
+        <li>用了 <em>For one thing</em> 就一定要有 <em>For another</em>，否則閱卷老師會判定「轉承語使用欠妥」。</li>
+        <li>第二段開頭先寫 <em>From my perspective, I firmly believe…</em> 是好習慣（主題句），但接著馬上跳到旅客貼照片，中間缺一句銜接。</li>
+        <li>結論句 <em>To sum up</em> 之後直接接倒裝句，收得漂亮，這個模式請固定下來當作你的結尾模板。</li>
+      </ul>
+    </div>
+
+    <h3>詞彙升級：把籠統換成具體</h3>
+    <table>
+      <thead><tr><th>你的寫法（太籠統）</th><th>學測高分替換</th></tr></thead>
+      <tbody>
+        <tr><td class="from">appeared</td><td class="to">made its debut / drew nationwide attention</td></tr>
+        <tr><td class="from">a lot of people</td><td class="to">a sea of visitors / crowds of tourists of all ages</td></tr>
+        <tr><td class="from">take a picture</td><td class="to">snap photos / pose for selfies with</td></tr>
+        <tr><td class="from">cute look</td><td class="to">adorable appearance / round, innocent eyes</td></tr>
+        <tr><td class="from">make the city look bad</td><td class="to">tarnish the city's image</td></tr>
+        <tr><td class="from">more and more people knows it</td><td class="to">put the city on travelers' must-visit lists</td></tr>
+      </tbody>
+    </table>
+
+    <h3>句型升級：三個可以直接背的高分句</h3>
+    <div class="card gold">
+      <ul class="tips" style="margin:0">
+        <li><strong>分詞構句寫畫面：</strong> <em>Standing by the harbor, a giant rubber duck floated peacefully in front of the curved buildings.</em></li>
+        <li><strong>not only 倒裝寫影響：</strong> <em>Not only did the duck attract tourists, but it also brought considerable business to local shops.</em></li>
+        <li><strong>so…that 寫程度：</strong> <em>The duck was so adorable that visitors of all ages lined up just for a photo.</em></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <div class="sec-head"><span class="sec-num">06</span><h2>滿分示範改寫</h2></div>
+    <p style="font-size:14px;color:var(--ink-soft);margin-top:-8px">保留你原本的核心想法：小鴨可以成為城市象徵、網路傳播帶來曝光、過度觀光有代價、最後以平衡作結。</p>
+
+    <div class="model">
+      <p>The picture shows a lively scene by the harbor in Kaohsiung, a city well known to almost every Taiwanese. At the beginning of 2024, a giant yellow rubber duck made its debut there, floating peacefully in front of the curved buildings of the Music Center. A sea of visitors of all ages gathered along the waterfront: some were pointing at the duck excitedly, while others raised their phones to snap photos with it. Thanks to its adorable appearance and round, innocent eyes, the duck quickly became a hit not only among adults but also among children.</p>
+
+      <p>From my perspective, artworks like this rubber duck can serve as a powerful symbol of a city. For one thing, travelers post their photos on social media, and once the news spreads, more and more people search for the keywords online and put the city on their must-visit lists. For another, the crowds they attract bring considerable business to local shops, restaurants, and hotels. On the other hand, such popularity may also come at a price, since overtourism and littering can easily tarnish the city's image. To sum up, only by striking a balance between tourism and the environment can we turn a temporary sensation into a destination truly worth visiting.</p>
+      <p class="wordcount">約 190 words ｜ 兩段結構完整 ｜ 含倒裝、分詞構句、not only…but also</p>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <div class="sec-head"><span class="sec-num">07</span><h2>本週複習任務</h2></div>
+    <div class="card">
+      <ul class="checklist">
+        <li><input type="checkbox" id="t1"><label for="t1">背熟 6 個常錯拼字：<strong>services / various / traveler / Kaohsiung / beginning / overtourism</strong></label></li>
+        <li><input type="checkbox" id="t2"><label for="t2">整理「一句一動詞」筆記，把本次 3 個雙動詞句（post…upload、it will…knows）重寫一次</label></li>
+        <li><input type="checkbox" id="t3"><label for="t3">練習「大景→中景→近景→氛圍」四句描述法，另找一張新聞圖片寫 60 字</label></li>
+        <li><input type="checkbox" id="t4"><label for="t4">背下三組轉承語配對：For one thing / For another、On the other hand、To sum up</label></li>
+        <li><input type="checkbox" id="t5"><label for="t5">默寫中譯英兩題的正確版本各三遍，重點在 in response to、the elderly、can no longer</label></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>學測英文作文批改講義 ｜ 依大考中心分項式評分指標（內容・組織・文法句構・字彙拼字）</footer>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('toggle');
+  btn.addEventListener('click',function(){
+    var on=document.body.classList.toggle('hide-answers');
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    btn.textContent=on?'顯示修正答案':'蓋住修正答案';
+  });
+})();
+</script>
+</body>
+</html>
