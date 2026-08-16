@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch14 倒裝句 · 重點整理</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root{
+  --paper:#EDEFE8;
+  --card:#FBFAF5;
+  --ink:#212E42;
+  --ink-soft:#3C4A63;
+  --muted:#6B7280;
+  --line:#D9D7C9;
+  --pen-red:#B23A2E;
+  --pen-red-soft:#F4E4E0;
+  --pen-green:#4C7A5E;
+  --pen-green-soft:#E3ECE4;
+  --gold:#B8862E;
+  --gold-soft:#F1E7D3;
+  --radius:14px;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle, rgba(33,46,66,0.055) 1px, transparent 1.2px) 0 0/22px 22px,
+    var(--paper);
+  color:var(--ink);
+  font-family:'Noto Sans TC','Inter',sans-serif;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:'Noto Serif TC',serif; color:var(--ink); margin:0;}
+.mono{font-family:'Space Mono','Courier New',monospace;}
+a{color:inherit;}
+svg{display:block;}
+
+/* ---------- layout shell ---------- */
+.shell{display:flex; max-width:1180px; margin:0 auto;}
+.sidebar{
+  width:216px; flex:none;
+  position:sticky; top:0; height:100vh;
+  padding:28px 14px 28px 24px;
+  border-right:1px solid var(--line);
+  display:flex; flex-direction:column; gap:2px;
+}
+.sidebar .brand{
+  font-family:'Noto Serif TC',serif; font-weight:900; font-size:15px;
+  color:var(--pen-red); letter-spacing:.04em; margin-bottom:18px;
+}
+.sidebar a{
+  display:flex; gap:10px; align-items:baseline;
+  padding:7px 10px; border-radius:8px;
+  text-decoration:none; font-size:13.5px; color:var(--ink-soft);
+  transition:background .15s, color .15s;
+}
+.sidebar a .num{font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); width:16px;}
+.sidebar a:hover{background:var(--card);}
+.sidebar a.active{background:var(--ink); color:#fff;}
+.sidebar a.active .num{color:#e8b2ab;}
+
+main{flex:1; min-width:0; padding:0 0 100px;}
+
+.topnav{display:none;}
+
+/* ---------- hero ---------- */
+.hero{
+  padding:64px 56px 40px;
+  border-bottom:1px solid var(--line);
+  position:relative;
+  overflow:hidden;
+}
+.hero-eyebrow{
+  font-family:'Space Mono',monospace; font-size:12px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--pen-red); margin-bottom:14px;
+}
+.hero-title-row{display:flex; align-items:flex-end; gap:22px; flex-wrap:wrap;}
+.hero-chapter{
+  font-size:clamp(52px,8vw,84px); font-weight:900; color:var(--ink);
+  line-height:.85;
+}
+.hero h1{font-size:clamp(34px,5vw,52px); font-weight:900;}
+.hero-sub{margin-top:14px; color:var(--ink-soft); font-size:16px; max-width:520px;}
+.hero-balance{position:absolute; right:40px; top:38px; width:150px; opacity:.9;}
+@media (max-width:760px){.hero-balance{display:none;}}
+
+.balance-beam{
+  transform-origin:60px 20px;
+  animation:tilt 4.5s ease-in-out infinite;
+}
+@keyframes tilt{
+  0%,100%{transform:rotate(0deg);}
+  50%{transform:rotate(-7deg);}
+}
+@media (prefers-reduced-motion:reduce){.balance-beam{animation:none;}}
+
+.legend{
+  display:flex; gap:22px; flex-wrap:wrap; margin-top:28px;
+  font-size:13px; color:var(--muted);
+}
+.legend span{display:inline-flex; align-items:center; gap:6px;}
+.legend b{color:var(--ink);}
+
+/* ---------- section ---------- */
+section.pattern{padding:52px 56px; border-bottom:1px solid var(--line);}
+section.pattern:target{background:linear-gradient(var(--card),transparent 60%);}
+.pattern-head{display:flex; gap:16px; align-items:baseline; margin-bottom:6px;}
+.pattern-index{
+  font-family:'Space Mono',monospace; font-weight:700; font-size:15px;
+  color:var(--pen-red); border:1.5px solid var(--pen-red); border-radius:999px;
+  width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+  flex:none;
+}
+.pattern-head h2{font-size:clamp(22px,3vw,28px);}
+.pattern-desc{color:var(--muted); font-size:14.5px; margin:6px 0 26px 50px; max-width:560px;}
+
+.formula-card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:20px 24px; margin:0 0 22px 50px;
+  box-shadow:0 1px 0 rgba(0,0,0,.02);
+}
+.formula-card .tag{
+  font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:.1em;
+  color:var(--gold); text-transform:uppercase; margin-bottom:10px; display:block;
+}
+.formula-card .f{
+  font-family:'Space Mono',monospace; font-size:15px; color:var(--ink); line-height:1.9;
+  white-space:pre-wrap;
+}
+.formula-card .f b{color:var(--pen-red);}
+
+.sub-head{
+  margin:28px 0 12px 50px; font-weight:700; font-size:14.5px; color:var(--ink-soft);
+  display:flex; align-items:center; gap:8px;
+}
+.sub-head::before{content:'—'; color:var(--gold);}
+
+/* compare / balance rows */
+.compare{
+  display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:center;
+  margin:0 0 18px 50px;
+}
+@media (max-width:640px){.compare{grid-template-columns:1fr; gap:8px;}}
+.compare-box{
+  background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:14px 16px;
+}
+.compare-box.inverted{border-color:var(--pen-red); background:var(--pen-red-soft);}
+.compare-label{display:block; font-size:11px; color:var(--muted); margin-bottom:6px; letter-spacing:.03em;}
+.compare-box.inverted .compare-label{color:var(--pen-red);}
+.compare-box p{margin:0; font-family:'Space Mono',monospace; font-size:14.5px;}
+.compare-box p b{color:var(--pen-red);}
+.compare-arrow{color:var(--muted); flex:none; width:26px; opacity:.7;}
+@media (max-width:640px){.compare-arrow{transform:rotate(90deg); margin:0 auto;}}
+
+.example{margin:0 0 14px 50px; padding-left:14px; border-left:3px solid var(--line);}
+.example .en{font-family:'Space Mono',monospace; font-size:14.5px; color:var(--ink);}
+.example .en b{color:var(--pen-green); font-weight:700;}
+.example .zh{color:var(--muted); font-size:13.5px; margin-top:3px;}
+
+.correct, .wrong{
+  margin:0 0 12px 50px; padding:10px 14px; border-radius:8px; font-family:'Space Mono',monospace; font-size:14px;
+  display:flex; gap:10px; align-items:flex-start;
+}
+.correct{background:var(--pen-green-soft); color:#2f4d3c;}
+.wrong{background:var(--pen-red-soft); color:#7a2c22; text-decoration:line-through; text-decoration-color:#b23a2ea0;}
+.correct::before{content:'✓'; font-weight:900; flex:none;}
+.wrong::before{content:'✗'; font-weight:900; flex:none; text-decoration:none;}
+
+table.negtable{
+  margin:0 0 22px 50px; border-collapse:collapse; width:calc(100% - 50px);
+  font-size:14px; background:var(--card); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+}
+table.negtable th, table.negtable td{padding:10px 16px; border-bottom:1px solid var(--line); text-align:left;}
+table.negtable th{background:var(--ink); color:#fff; font-weight:700; font-size:13px;}
+table.negtable td:first-child{font-weight:700; color:var(--ink-soft); width:110px;}
+table.negtable td.mono{font-family:'Space Mono',monospace; font-size:13.5px;}
+table.negtable tr:last-child td{border-bottom:none;}
+
+/* trap / warning callout */
+.trap{
+  margin:22px 0 8px 50px; position:relative;
+  background:var(--pen-red-soft); border:1.5px dashed var(--pen-red);
+  border-radius:var(--radius); padding:18px 22px 18px 52px;
+}
+.trap::before{
+  content:'⚠';
+  position:absolute; left:16px; top:16px; font-size:18px; color:var(--pen-red);
+}
+.trap .stamp{
+  font-family:'Space Mono',monospace; font-weight:700; font-size:11px; letter-spacing:.08em;
+  color:var(--pen-red); text-transform:uppercase; display:block; margin-bottom:6px;
+}
+.trap p{margin:0 0 6px; font-size:14.5px; color:#5c2a24;}
+.trap p:last-child{margin-bottom:0;}
+.trap p b{color:var(--pen-red);}
+
+.tip{
+  margin:22px 0 8px 50px;
+  background:var(--gold-soft); border-left:4px solid var(--gold);
+  border-radius:0 var(--radius) var(--radius) 0; padding:16px 20px;
+}
+.tip .stamp{font-family:'Space Mono',monospace; font-weight:700; font-size:11px; letter-spacing:.08em; color:var(--gold); text-transform:uppercase; display:block; margin-bottom:6px;}
+.tip p{margin:0; font-size:14.5px; color:#5a4419;}
+
+/* traps section (bonus) */
+.trapgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-left:0;}
+@media (max-width:900px){.trapgrid{grid-template-columns:1fr;}}
+.trapcard{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:22px; position:relative;
+}
+.trapcard .num{
+  font-family:'Space Mono',monospace; font-weight:900; font-size:34px; color:var(--pen-red-soft);
+  -webkit-text-stroke:1.5px var(--pen-red); position:absolute; right:16px; top:10px;
+}
+.trapcard h3{font-size:16px; margin-bottom:10px; padding-right:30px;}
+.trapcard p{font-size:13.8px; color:var(--ink-soft); margin:0 0 10px;}
+.trapcard .en{font-family:'Space Mono',monospace; font-size:13px; background:var(--paper); padding:8px 10px; border-radius:6px;}
+
+/* cheat sheet */
+.cheat{padding:52px 56px;}
+.cheat h2{margin-bottom:8px;}
+.cheat > p.lead{color:var(--muted); margin:0 0 26px; font-size:14.5px;}
+.cheatgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+@media (max-width:760px){.cheatgrid{grid-template-columns:1fr;}}
+.cheat-item{
+  background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px;
+}
+.cheat-item .n{font-family:'Space Mono',monospace; color:var(--pen-red); font-size:11px; font-weight:700;}
+.cheat-item h4{font-family:'Noto Serif TC',serif; font-size:15px; margin:4px 0 8px;}
+.cheat-item .f{font-family:'Space Mono',monospace; font-size:12.5px; color:var(--ink-soft); line-height:1.7;}
+.cheat-item .trapline{margin-top:8px; font-size:12.5px; color:var(--pen-red); display:flex; gap:6px;}
+.cheat-item .trapline::before{content:'⚠';}
+
+footer{padding:36px 56px; text-align:center; color:var(--muted); font-size:12.5px;}
+
+/* section title icon spacing fix for mobile (no left margin) */
+@media (max-width:640px){
+  .hero{padding:52px 22px 30px;}
+  section.pattern{padding:40px 22px;}
+  .cheat{padding:40px 22px;}
+  footer{padding:30px 22px;}
+  .pattern-desc, .formula-card, .sub-head, .compare, .example, .correct, .wrong, table.negtable, .trap, .tip{
+    margin-left:0 !important; width:100% !important;
+  }
+  .pattern-index{width:28px; height:28px; font-size:13px;}
+}
+
+/* sidebar collapse -> top chip bar */
+@media (max-width:900px){
+  .shell{flex-direction:column;}
+  .sidebar{display:none;}
+  .topnav{
+    display:flex; gap:8px; overflow-x:auto; position:sticky; top:0; z-index:20;
+    background:rgba(237,239,232,.92); backdrop-filter:blur(6px);
+    padding:12px 16px; border-bottom:1px solid var(--line);
+  }
+  .topnav a{
+    flex:none; font-size:12.5px; padding:7px 12px; border-radius:999px;
+    border:1px solid var(--line); text-decoration:none; color:var(--ink-soft);
+    background:var(--card); white-space:nowrap;
+  }
+  .topnav a.active{background:var(--ink); color:#fff; border-color:var(--ink);}
+}
+</style>
+</head>
+<body>
+
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+  <symbol id="i-balance" viewBox="0 0 120 60">
+    <line x1="60" y1="8" x2="60" y2="22" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="60,22 48,42 72,42" fill="currentColor"/>
+    <line x1="60" y1="20" x2="60" y2="20" stroke="currentColor"/>
+    <g class="beam-g">
+      <line x1="18" y1="15" x2="102" y2="15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <line x1="18" y1="15" x2="18" y2="26" stroke="currentColor" stroke-width="2"/>
+      <line x1="102" y1="15" x2="102" y2="26" stroke="currentColor" stroke-width="2"/>
+      <circle cx="18" cy="30" r="7" fill="currentColor"/>
+      <circle cx="102" cy="30" r="7" fill="currentColor" opacity=".45"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="topnav" id="topnav">
+  <a href="#s1" class="nav-link" data-n="1">01 地方副詞</a>
+  <a href="#s2" class="nav-link" data-n="2">02 假設語氣</a>
+  <a href="#s3" class="nav-link" data-n="3">03 讓步子句</a>
+  <a href="#s4" class="nav-link" data-n="4">04 So/Neither/Nor</a>
+  <a href="#s5" class="nav-link" data-n="5">05 Only</a>
+  <a href="#s6" class="nav-link" data-n="6">06 否定副詞</a>
+  <a href="#s7" class="nav-link" data-n="7">07 So/Such</a>
+  <a href="#s8" class="nav-link" data-n="8">08 主詞補語</a>
+  <a href="#s9" class="nav-link" data-n="9">09 三大地雷</a>
+  <a href="#s10" class="nav-link" data-n="10">10 速查表</a>
+</div>
+
+<div class="shell">
+  <nav class="sidebar">
+    <div class="brand">CH.14 倒裝句</div>
+    <a href="#s1" class="nav-link" data-n="1"><span class="num">01</span>地方副詞置於句首</a>
+    <a href="#s2" class="nav-link" data-n="2"><span class="num">02</span>假設語氣倒裝</a>
+    <a href="#s3" class="nav-link" data-n="3"><span class="num">03</span>讓步子句倒裝</a>
+    <a href="#s4" class="nav-link" data-n="4"><span class="num">04</span>So／Neither／Nor</a>
+    <a href="#s5" class="nav-link" data-n="5"><span class="num">05</span>Only 置於句首</a>
+    <a href="#s6" class="nav-link" data-n="6"><span class="num">06</span>否定副詞置於句首</a>
+    <a href="#s7" class="nav-link" data-n="7"><span class="num">07</span>So／Such 倒裝</a>
+    <a href="#s8" class="nav-link" data-n="8"><span class="num">08</span>主詞補語置於句首</a>
+    <a href="#s9" class="nav-link" data-n="9"><span class="num">09</span>三大延伸地雷</a>
+    <a href="#s10" class="nav-link" data-n="10"><span class="num">10</span>速查表</a>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="hero-eyebrow">Grammar Notes · 文法重點整理</div>
+      <div class="hero-title-row">
+        <div class="hero-chapter">14</div>
+        <h1>倒裝句</h1>
+      </div>
+      <p class="hero-sub">倒裝的邏輯只有一個：<b>找出動詞這個支點，把想強調的部分搬到句首，主詞跟著跟動詞對調位置。</b> 這份筆記把 8 種句型跟最常考、最容易搞混的地雷都標出來了。</p>
+      <svg class="hero-balance" viewBox="0 0 120 60" style="color:var(--ink)">
+        <line x1="60" y1="8" x2="60" y2="22" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="60,22 48,42 72,42" fill="currentColor"/>
+        <g class="balance-beam">
+          <line x1="18" y1="15" x2="102" y2="15" stroke="var(--pen-red)" stroke-width="3" stroke-linecap="round"/>
+          <line x1="18" y1="15" x2="18" y2="26" stroke="currentColor" stroke-width="2"/>
+          <line x1="102" y1="15" x2="102" y2="26" stroke="currentColor" stroke-width="2"/>
+          <circle cx="18" cy="30" r="7" fill="currentColor"/>
+          <circle cx="102" cy="30" r="7" fill="var(--pen-red)"/>
+        </g>
+      </svg>
+      <div class="legend">
+        <span>📐 <b>公式卡</b>：句型結構</span>
+        <span>✓ / ✗ <b>正確／錯誤</b>：常見誤寫對照</span>
+        <span>⚠️ <b style="color:var(--pen-red)">易混淆地雷</b>：最容易考錯的地方</span>
+      </div>
+    </div>
+
+    <!-- 01 -->
+    <section class="pattern" id="s1">
+      <div class="pattern-head"><div class="pattern-index">01</div><h2>地方副詞置於句首</h2></div>
+      <p class="pattern-desc">改寫步驟：① 先找出動詞，以動詞為支點　② 再把主詞和地方副詞對調。</p>
+
+      <div class="formula-card">
+        <span class="tag">📐 formula</span>
+        <div class="f">Here / There ─┬─ V + S（名詞）
+              └─ S（代名詞）+ V
+
+表地方的副詞（up／down／away／off／out）─┬─ V + S（名詞）
+                              └─ S（代名詞）+ V
+
+表地方的副詞片語（on top of / inside...） ─┬─ V + S（名詞）
+                              └─ S（代名詞）+ V</div>
+      </div>
+
+      <div class="compare">
+        <div class="compare-box"><span class="compare-label">主詞是代名詞 → 不倒裝</span><p>There <b>it</b> comes.</p></div>
+        <div class="compare-arrow"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+        <div class="compare-box inverted"><span class="compare-label">主詞是名詞 → 倒裝</span><p>There <b>comes</b> Bus No. 5.</p></div>
+      </div>
+
+      <div class="example"><div class="en">Away <b>flew</b> the bat.</div><div class="zh">蝙蝠飛走了。</div></div>
+      <div class="example"><div class="en">On top of the mountain <b>stands</b> an old church.</div><div class="zh">在山頂上矗立著一座老教堂。</div></div>
+
+      <div class="wrong">Next to the church has a 7-11.</div>
+      <div class="correct">Next to the church is a 7-11.</div>
+      <div class="wrong">Under the sofa is three cats.</div>
+      <div class="correct">Under the sofa are three cats.</div>
+
+      <div class="trap">
+        <span class="stamp">易混淆</span>
+        <p>動詞要跟<b>真正的主詞</b>一致，不要被中文的「有」騙走：<b>Next to the church is a 7-11</b>（主詞是 7-11，不是教堂）；<b>Under the sofa are three cats</b>（three cats 是複數，別因為前面看起來像單數地點就用 is/was）。</p>
+      </div>
+    </section>
+
+    <!-- 02 -->
+    <section class="pattern" id="s2">
+      <div class="pattern-head"><div class="pattern-index">02</div><h2>假設語氣倒裝</h2></div>
+      <p class="pattern-desc">把 if 去掉，將 <span class="mono">were / had / should</span> 移到句首即可。</p>
+
+      <div class="formula-card">
+        <span class="tag">📐 formula</span>
+        <div class="f">與現在事實相反：If + S + were..., S + 助動詞+ VR
+                = <b>Were</b> + S..., S + 助動詞 + VR
+
+與過去事實相反：If + S + had + p.p., S + 助動詞 + have + p.p.
+                = <b>Had</b> + S + p.p., S + 助動詞 + have + p.p.
+
+表「萬一」：    If + S + should..., S + 助動詞 + VR
+                = <b>Should</b> + S..., S + 助動詞 + VR</div>
+      </div>
+
+      <div class="example"><div class="en"><b>Were</b> I a billionaire, I would give you one million.</div><div class="zh">如果我擁有十億之身價，我就賞你一百萬元。</div></div>
+      <div class="example"><div class="en"><b>Had</b> I had time then, I would have gone out with you.</div><div class="zh">如果我那時候有時間，我就會跟你出去。</div></div>
+      <div class="example"><div class="en"><b>Should</b> it rain tomorrow, we will cancel the picnic.</div><div class="zh">萬一明天下雨，我們會取消野餐活動。</div></div>
+
+      <div class="trap">
+        <span class="stamp">易混淆</span>
+        <p>能提到句首的只有這<b>三個</b>：were、had、should。其他情態助動詞（could、would...）都不能這樣倒裝。</p>
+      </div>
+    </section>
+
+    <!-- 03 -->
+    <section class="pattern" id="s3">
+      <div class="pattern-head"><div class="pattern-index">03</div><h2>讓步子句倒裝</h2></div>
+      <p class="pattern-desc">表達「儘管⋯⋯／雖然⋯⋯」，句首可放形容詞、副詞或名詞。</p>
+
+      <div class="formula-card">
+        <span class="tag">📐 formula</span>
+        <div class="f">Although / Though + S + V + adv./adj./N, S + V....
+= adv./adj./N + <b>as / though</b> + S + V, S + V....
+（美式口語）= <b>As</b> + adj./adv. + as + S + V, S + V....</div>
+      </div>
+
+      <div class="example"><div class="en"><b>Hard as</b> he studied, he didn't get good grades.</div><div class="zh">雖然他很用功，還是考不好。</div></div>
+      <div class="example"><div class="en"><b>Difficult though</b> the task is, it is rewarding.</div><div class="zh">雖然這個任務很艱難，但很值得。</div></div>
+      <div class="example"><div class="en"><b>Child as</b> she is, she is sophisticated.</div><div class="zh">雖然她是小孩，但她很懂得人情世故。（沒有冠詞！）</div></div>
+
+      <div class="trap">
+        <span class="stamp">易混淆</span>
+        <p>① 倒裝句裡<b>絕對不能用 although</b>，只能用 as／though。② 名詞放句首時要<b>省略冠詞</b>：是 Child as she is，不是 A child as she is。</p>
+      </div>
+    </section>
+
+    <!-- 04 -->
+    <section class="pattern" id="s4">
+      <div class="pattern-head"><div class="pattern-index">04</div><h2>So／Neither／Nor 倒裝</h2></div>
+      <p class="pattern-desc">表示「也是⋯⋯」／「也不⋯⋯」。動詞要跟前一句的動詞「同類型」對應。</p>
+
+      <div class="formula-card">
+        <span class="tag">📐 formula</span>
+        <div class="f">肯定句, and so + be-V/助動詞 + S.        （也是⋯）
+否定句, nor + be-V/助動詞 + S.             （也不⋯，nor 直接接否定句）
+否定句, and neither + be-V/助動詞 + S.    （也不⋯，neither 前面要加 and）</div>
+      </div>
+
+      <table class="negtable">
+        <tr><th>前句動詞</th><th>so／neither／nor 後面用</th></tr>
+        <tr><td>be 動詞</td><td class="mono">be 動詞</td></tr>
+        <tr><td>情態助動詞（will, can...）</td><td class="mono">同一個情態助動詞</td></tr>
+        <tr><td>完成式（have/has/had）</td><td class="mono">have / has / had</td></tr>
+        <tr><td>一般動詞</td><td class="mono">do / does / did</td></tr>
+      </table>
+
+      <div class="example"><div class="en">Helen is beautiful, and <b>so is</b> her sister.</div><div class="zh">Helen 很漂亮，她姐姐也是。</div></div>
+      <div class="example"><div class="en">Ken plays the piano well, and <b>so does</b> Mary.</div><div class="zh">Ken 彈得一手好鋼琴，Mary 也是。</div></div>
+      <div class="example"><div class="en">Judy isn't a child anymore, and <b>neither is</b> her sister.</div><div class="zh">Judy 不再是個小孩了，她妹妹也不是。</div></div>
+      <div class="example"><div class="en">Suzy won't go to the party, <b>nor will</b> she visit us tomorrow.</div><div class="zh">Suzy 不會去參加舞會，她明天也不會來拜訪我們。</div></div>
+
+      <div class="trap">
+        <span class="stamp">易混淆</span>
+        <p>nor <b>直接</b>接在否定句後面（不用加 and）；neither 前面<b>一定要先加 and</b> 才能接在否定句後。</p>
+      </div>
+      <div class="tip">
+        <span class="stamp">萬用規則</span>
+        <p>這張「be動詞／情態助動詞／完成式／一般動詞 → do/does/did」的對應表，之後 Only、否定副詞、So 倒裝都會重複用到，先在這裡背熟，後面全部通用。</p>
+      </div>
+    </section>
+
+    <!-- 05 -->
+    <section class="pattern" id="s5">
+      <div class="pattern-head"><div class="pattern-index">05</div><h2>Only 置於句首</h2></div>
+      <p class="pattern-desc">強調「唯有在某種情況下，或藉由某方式才能⋯⋯」。</p>
+
+      <div class="formula-card">
+        <span class="tag">📐 formula</span>
+        <div class="f">Only + if/after/when + S + V ...   ─┬─ be-V + S
+Only + in/with/on... （介系詞片語）  ─┘   或 助動詞 + S + V</div>
+      </div>
+
+      <div class="compare">
+        <div class="compare-box"><span class="compare-label">一般句</span><p>We realize the value of friendship <b>only when</b> we are faced with difficulties.</p></div>
+        <div class="compare-arrow"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+        <div class="compare-box inverted"><span class="compare-label">倒裝句</span><p><b>Only when</b> we are faced with difficulties <b>do</b> we realize the value of friendship.</p></div>
+      </div>
+      <div class="example"><div class="zh">只有在面臨困難時，我們才會了解友誼的可貴。</div></div>
+
+      <div class="example"><div class="en"><b>Only by</b> studying hard <b>do</b> you get good grades.</div><div class="zh">只有努力用功，才會有好成績。</div></div>
+
+      <div class="trap">
+        <span class="stamp">易混淆</span>
+        <p>only 後面接的是副詞子句或介系詞片語時才需要倒裝，動詞的選擇一樣照第 4 節那張對應表（一般動詞 → do/does/did）。</p>
+      </div>
+    </section>
+
+    <!-- 06 -->
+    <section class="pattern" id="s6">
+      <div class="pattern-head"><div class="pattern-index">06</div><h2>否定副詞置於句首</h2></div>
+      <p class="pattern-desc">這節地雷最多、延伸也最多，是整章的重頭戲。</p>
+
+      <div class="formula-card">
+        <span class="tag">📐 formula</span>
+        <div class="f">否定副詞 + be-V + S
+否定副詞 + 助動詞 + S + V</div>
+      </div>
+
+      <table class="negtable">
+        <tr><th>意思</th><th>常見否定副詞</th></tr>
+        <tr><td>絕不</td><td class="mono">In no way, On no account, By no means, Under no circumstances</td></tr>
+        <tr><td>從未／很少</td><td class="mono">Never, Rarely, Seldom</td></tr>
+        <tr><td>幾乎不／簡直不</td><td class="mono">Barely, Hardly, Scarcely</td></tr>
+        <tr><td>毫不</td><td class="mono">Little（常搭配 think / know / realize）</td></tr>
+        <tr><td>無處</td><td class="mono">Nowhere</td></tr>
+        <tr><td>不但⋯而且</td><td class="mono">Not only...but (also)...</td></tr>
+        <tr><td>直到⋯才</td><td class="mono">Not until</td></tr>
+        <tr><td>一⋯就⋯</td><td class="mono">No sooner had S + p.p.... than + S + V-ed</td></tr>
+      </table>
+
+      <div class="example"><div class="en"><b>Rarely does</b> the superstar talk about his private life.</div><div class="zh">這個超級巨星很少談到他的私人生活。</div></div>
+      <div class="example"><div class="en"><b>By no means can</b> you tell her the truth.</div><div class="zh">你絕對不可以對她說實話。</div></div>
+      <div class="example"><div class="en"><b>Never have</b> I seen such a cute baby.</div><div class="zh">我從沒看過這樣可愛的嬰兒。</div></div>
+      <div class="example"><div class="en"><b>Nowhere was</b> my adorable puppy to be found.</div><div class="zh">到處都找不到我可愛的小狗。（原型：nowhere to be seen／found）</div></div>
+
+      <div class="sub-head">延伸① Little did + think／know／realize（沒想到⋯）</div>
+      <div class="example"><div class="en"><b>Little did</b> he think that his brother would land the job.</div><div class="zh">他不認為他的弟弟會得到那份工作。</div></div>
+
+      <div class="sub-head">延伸② Not only...but (also)...（不但⋯而且⋯）</div>
+      <div class="example"><div class="en"><b>Not only is</b> Lily a good pianist, <b>but</b> she is a great writer <b>as well</b>.</div><div class="zh">Lily 不僅是一名優秀的鋼琴家，也是一位很棒的作家。</div></div>
+      <div class="trap" style="margin-top:0;">
+        <span class="stamp">易混淆</span>
+        <p>Not only 後面的子句要倒裝，<b>但 but (also) 後面不倒裝</b>。also 放在一般動詞前、be 動詞後，句尾也可以用 as well 取代。</p>
+      </div>
+
+      <div class="sub-head">延伸③ Not until（直到⋯才⋯）</div>
+      <div class="example"><div class="en">Bear did not finish his assignment until midnight.</div><div class="zh">一般句</div></div>
+      <div class="example"><div class="en">= <b>Not until</b> midnight <b>did</b> Bear finish his assignment.</div><div class="zh">倒裝句</div></div>
+      <div class="example"><div class="en">= It was <b>not until midnight that</b> Bear finished his assignment.</div><div class="zh">強調句（分裂句）</div></div>
+
+      <div class="sub-head">延伸④ 一⋯就⋯（No sooner／As soon as／Upon）</div>
+      <div class="example"><div class="en">As soon as Bunny saw the snake, she passed out.</div><div class="zh">一般句</div></div>
+      <div class="example"><div class="en">= <b>No sooner had</b> Bunny seen the snake <b>than</b> she passed out.</div><div class="zh">倒裝句：先發生用過去完成式，後發生用過去簡單式</div></div>
+      <div class="example"><div class="en">= <b>Upon seeing</b> the snake, Bunny passed out.</div><div class="zh">Upon + V-ing（主詞須與主要子句相同）</div></div>
+
+      <div class="wrong">Upon opening the door, a fly flew into my nostril.</div>
+      <div class="correct">As soon as I opened the door, a fly flew into my nostril.</div>
+
+      <div class="trap">
+        <span class="stamp">易混淆總整理</span>
+        <p>① Little did + think/know/realize 是固定用法，表「沒想到」。② No sooner...than：先發生的用<b>過去完成式</b>，後發生的用<b>過去簡單式</b>。③ Upon/On + V-ing 的動作主詞必須跟主要子句主詞<b>相同</b>——不然會出現「蒼蠅自己開門」這種荒謬句子。</p>
+      </div>
+    </section>
+
+    <!-- 07 -->
+    <section class="pattern" id="s7">
+      <div class="pattern-head"><div class="pattern-index">07</div><h2>So／Such 倒裝</h2></div>
+      <p class="pattern-desc">強調「如此的⋯⋯」，that 子句表示結果，結果子句不倒裝。</p>
+
+      <div class="formula-card">
+        <span class="tag">📐 formula · So（後接形容詞／副詞）</span>
+        <div class="f">So + adj./adv. + be-V/助動詞 + S + VR ...that + S + V....</div>
+      </div>
+      <div class="example"><div class="en"><b>So nervous was</b> he <b>that</b> he could not say a single word.</div><div class="zh">他非常緊張，所以一個字都說不出來。</div></div>
+      <div class="example"><div class="en"><b>So fast did</b> he run <b>that</b> nobody could outrun him.</div><div class="zh">他跑得超快，因此沒有其他參賽者可以超過他。</div></div>
+
+      <div class="formula-card">
+        <span class="tag">📐 formula · Such（後接名詞）</span>
+        <div class="f">Such + be-V + S + that + S + V....</div>
+      </div>
+      <div class="example"><div class="en"><b>Such was</b> his performance <b>that</b> he received a standing ovation.</div><div class="zh">他的表演非常精采，因此觀眾們都起立鼓掌。</div></div>
+      <div class="example"><div class="en"><b>Such was</b> Bunny's beauty <b>that</b> no guy could take his eyes off her.</div><div class="zh">小兔超美，每個人都忍不住盯著她看。</div></div>
+
+      <div class="trap">
+        <span class="stamp">易混淆</span>
+        <p><b>So</b> 後面接<b>形容詞／副詞</b>（So nervous was he）；<b>Such</b> 後面接<b>名詞</b>（Such was his performance）——這是整節最容易考錯的一組，看到 that 子句先確認前面接的是形容詞還是名詞。</p>
+      </div>
+    </section>
+
+    <!-- 08 -->
+    <section class="pattern" id="s8">
+      <div class="pattern-head"><div class="pattern-index">08</div><h2>主詞補語置於句首</h2></div>
+      <p class="pattern-desc">當主詞後面帶有修飾片語或子句、主詞太長時，把補語移到句首讓句意更清楚。</p>
+
+      <div class="formula-card">
+        <span class="tag">📐 formula</span>
+        <div class="f">主詞補語 + be-V + S</div>
+      </div>
+
+      <div class="compare">
+        <div class="compare-box"><span class="compare-label">主詞好長，補語好短</span><p>Those who count their blessings are <b>blessed</b>.</p></div>
+        <div class="compare-arrow"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+        <div class="compare-box inverted"><span class="compare-label">補語提前，更清楚</span><p><b>Blessed are</b> those who count their blessings.</p></div>
+      </div>
+      <div class="example"><div class="zh">懂得惜福的人是有福氣的。</div></div>
+      <div class="example"><div class="en"><b>Gone are</b> the days when people traveled by horse.</div><div class="zh">人們騎馬旅行的日子已經過去了。</div></div>
+      <div class="example"><div class="en"><b>Happy are</b> those who are young at heart.</div><div class="zh">心境年輕的人是快樂的。</div></div>
+    </section>
+
+    <!-- 09 bonus traps -->
+    <section class="pattern" id="s9" style="border-bottom:none;">
+      <div class="pattern-head"><div class="pattern-index">09</div><h2>三大延伸地雷總複習</h2></div>
+      <p class="pattern-desc">這三個規則分散在第 6 節裡，但最容易在考試中被單獨挖出來考，特別整理一次。</p>
+
+      <div class="trapgrid">
+        <div class="trapcard">
+          <span class="num">01</span>
+          <h3>Little did + think/know/realize</h3>
+          <p>表示「某人沒想到／不知道某事竟然是真的」，是固定搭配，別跟一般 little 混用。</p>
+          <div class="en"><b>Little did</b> I realize that he would one day become a superstar.</div>
+        </div>
+        <div class="trapcard">
+          <span class="num">02</span>
+          <h3>No sooner...than 的時態</h3>
+          <p>先發生的動作用<b>過去完成式</b>（had p.p.），後發生的動作用<b>過去簡單式</b>（V-ed）。順序不能反。</p>
+          <div class="en"><b>No sooner had</b> Bunny seen the snake <b>than</b> she passed out.</div>
+        </div>
+        <div class="trapcard">
+          <span class="num">03</span>
+          <h3>Upon/On + V-ing 的主詞</h3>
+          <p>V-ing 的邏輯主詞必須跟主要子句的主詞<b>完全相同</b>，不同就不能用這個句型改寫。</p>
+          <div class="en"><b>Upon seeing</b> the snake, Bunny passed out. <span style="opacity:.6">(✓ 主詞都是 Bunny)</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 cheat sheet -->
+    <section class="cheat" id="s10">
+      <h2>速查表 · 8 種倒裝一次看</h2>
+      <p class="lead">考前掃過一遍，公式＋地雷都在這裡。</p>
+      <div class="cheatgrid">
+        <div class="cheat-item"><span class="n">01</span><h4>地方副詞置於句首</h4><div class="f">Here/There/地方副詞(片語) + V+S(名詞)<br>S(代名詞) + V</div><div class="trapline">動詞跟真正主詞一致，別被「有」騙</div></div>
+        <div class="cheat-item"><span class="n">02</span><h4>假設語氣倒裝</h4><div class="f">Were/Had/Should + S..., S + 助動詞(+have) + VR/p.p.</div><div class="trapline">只有 were／had／should 能提前</div></div>
+        <div class="cheat-item"><span class="n">03</span><h4>讓步子句倒裝</h4><div class="f">adj./adv./N + as/though + S+V, S+V</div><div class="trapline">絕不用 although；名詞省略冠詞</div></div>
+        <div class="cheat-item"><span class="n">04</span><h4>So／Neither／Nor</h4><div class="f">肯定, and so+be/助動詞+S<br>否定, nor / and neither +be/助動詞+S</div><div class="trapline">nor 直接接；neither 前要加 and</div></div>
+        <div class="cheat-item"><span class="n">05</span><h4>Only 置於句首</h4><div class="f">Only+子句/片語, be-V/助動詞+S(+V)</div><div class="trapline">動詞規則同 04 對應表</div></div>
+        <div class="cheat-item"><span class="n">06</span><h4>否定副詞置於句首</h4><div class="f">否定副詞 + be-V+S / 助動詞+S+V</div><div class="trapline">Not only...but 不倒裝；No sooner 時態；Upon 主詞須同</div></div>
+        <div class="cheat-item"><span class="n">07</span><h4>So／Such 倒裝</h4><div class="f">So+adj./adv.+be/助動詞+S...that+S+V<br>Such+be-V+S+that+S+V</div><div class="trapline">So 接形容詞/副詞；Such 接名詞</div></div>
+        <div class="cheat-item"><span class="n">08</span><h4>主詞補語置於句首</h4><div class="f">主詞補語 + be-V + S</div><div class="trapline">主詞太長時用，讓句意更清楚</div></div>
+      </div>
+    </section>
+
+    <footer>整理自 Ch14 倒裝句課本筆記 · 隨手複習用</footer>
+  </main>
+</div>
+
+<script>
+// scrollspy: highlight nav link matching current section
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+function setActive(id){
+  navLinks.forEach(l=>l.classList.toggle('active', l.getAttribute('href') === '#'+id));
+}
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) setActive(e.target.id);
+  });
+}, {rootMargin:'-20% 0px -70% 0px', threshold:0});
+sections.forEach(s=>io.observe(s));
+</script>
+
+</body>
+</html>

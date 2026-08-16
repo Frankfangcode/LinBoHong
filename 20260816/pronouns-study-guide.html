@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代名詞重點整理｜Pronouns Study Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Noto+Sans+TC:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#191d1a;
+    --bg-2:#12140f;
+    --card:#f6f1e1;
+    --card-2:#efe8d2;
+    --line:#ddd3ae;
+    --ink:#2b241a;
+    --ink-soft:#6f6552;
+    --amber:#e8a23d;
+    --amber-deep:#c07f22;
+    --blue:#3e6fa6;
+    --blue-soft:#e7eef6;
+    --red:#c1443c;
+    --red-soft:#f7e6e3;
+    --green:#4c8c5b;
+    --green-soft:#e6efe4;
+    --shadow: 0 18px 40px -20px rgba(0,0,0,.55);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(232,162,61,.08), transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(62,111,166,.10), transparent 40%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','Segoe UI',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:'Fraunces','Noto Serif TC',serif;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- top nav ---------- */
+  .topnav{
+    position:sticky; top:0; z-index:50;
+    display:flex; gap:6px; overflow-x:auto;
+    padding:14px 18px;
+    background:rgba(18,20,15,.86);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid rgba(232,162,61,.18);
+    scrollbar-width:none;
+  }
+  .topnav::-webkit-scrollbar{display:none;}
+  .navpill{
+    flex:0 0 auto;
+    display:flex; align-items:center; gap:6px;
+    padding:7px 14px;
+    border-radius:999px;
+    border:1px solid rgba(246,241,225,.16);
+    color:#cfc9b8;
+    font-size:13px; font-weight:500;
+    white-space:nowrap;
+    text-decoration:none;
+    transition:.2s;
+  }
+  .navpill b{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:16px;height:16px; border-radius:50%;
+    background:rgba(232,162,61,.25); color:var(--amber);
+    font-size:10px; font-family:'JetBrains Mono',monospace;
+  }
+  .navpill.active, .navpill:hover{
+    border-color:var(--amber);
+    background:rgba(232,162,61,.14);
+    color:#f6efe0;
+  }
+  .navpill.active b{background:var(--amber); color:#1b1f1a;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:70px 20px 50px;
+    max-width:960px; margin:0 auto;
+    text-align:center;
+  }
+  .hero .eyebrow{
+    color:var(--amber); letter-spacing:.35em; font-size:11px;
+    font-weight:600; text-transform:uppercase; margin-bottom:18px;
+  }
+  .hero h1{
+    color:#f6f1e1;
+    font-size:clamp(34px,6vw,58px);
+    font-weight:600; line-height:1.15; margin:0 0 14px;
+  }
+  .hero h1 em{color:var(--amber); font-style:italic; font-weight:500;}
+  .hero p{color:#a9a290; font-size:15.5px; max-width:520px; margin:0 auto 40px; line-height:1.7;}
+
+  .swap-demo{
+    max-width:640px; margin:0 auto;
+    background:var(--card);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 26px 22px;
+    text-align:left;
+    position:relative;
+    transform:rotate(-.6deg);
+  }
+  .swap-demo::before{
+    content:"拖泥帶水 → 言簡意賅";
+    position:absolute; top:-13px; left:24px;
+    background:var(--amber); color:#231a08;
+    font-size:11px; font-weight:700; letter-spacing:.05em;
+    padding:4px 12px; border-radius:999px;
+  }
+  .swap-line{font-size:15px; line-height:2; color:var(--ink-soft);}
+  .swap-line s{color:#b7ac91; text-decoration-color:var(--red);}
+  .swap-line .arrow{color:var(--amber-deep); font-weight:700; margin:0 4px;}
+  .swap-line .kept{
+    background:rgba(232,162,61,.28);
+    padding:1px 5px; border-radius:4px; font-weight:700; color:var(--ink);
+  }
+
+  /* ---------- section shell ---------- */
+  section.point{
+    max-width:960px; margin:0 auto;
+    padding:70px 20px 10px;
+  }
+  .point-head{
+    display:flex; align-items:center; gap:16px;
+    margin-bottom:26px;
+  }
+  .point-badge{
+    flex:0 0 auto;
+    width:52px; height:52px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #f6d99b, var(--amber) 70%);
+    color:#241b06; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:20px;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 5px rgba(232,162,61,.14), 0 10px 22px -8px rgba(232,162,61,.55);
+  }
+  .point-head h2{
+    color:#f6f1e1; font-size:clamp(22px,3.4vw,30px); margin:0; font-weight:600;
+  }
+  .point-head span{display:block; color:var(--amber); font-size:12px; letter-spacing:.2em; text-transform:uppercase; margin-bottom:4px;}
+
+  /* ---------- cards ---------- */
+  .card{
+    background:var(--card);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    padding:26px 28px;
+    margin-bottom:22px;
+    position:relative;
+  }
+  .card.tilt-l{transform:rotate(-.4deg);}
+  .card.tilt-r{transform:rotate(.4deg);}
+  .tape{
+    position:absolute; top:-11px; left:32px;
+    width:64px; height:22px;
+    background:repeating-linear-gradient(115deg, rgba(232,162,61,.55) 0 6px, rgba(232,162,61,.35) 6px 12px);
+    opacity:.85; transform:rotate(-3deg);
+    border-radius:2px;
+  }
+  .card h3{
+    margin:0 0 14px; font-size:17px; font-weight:700; color:var(--ink);
+    display:flex; align-items:center; gap:8px;
+  }
+  .card h4{margin:22px 0 10px; font-size:14.5px; font-weight:700; color:var(--ink);}
+  .card p{line-height:1.85; font-size:14.5px; color:var(--ink);}
+  .sub{color:var(--ink-soft); font-size:13px;}
+
+  /* ---------- tables ---------- */
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:6px 0 4px;}
+  th,td{padding:9px 10px; text-align:center; border-bottom:1px solid var(--line);}
+  th{background:var(--card-2); color:var(--ink); font-weight:700; font-size:12.5px;}
+  td.lbl{text-align:left; font-weight:600; background:var(--card-2);}
+  td{color:var(--ink);}
+  .tbl-wrap{overflow-x:auto;}
+
+  /* ---------- formula ---------- */
+  .formula{
+    background:var(--blue-soft);
+    border:1px dashed var(--blue);
+    border-radius:9px;
+    padding:14px 16px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px; color:#254566;
+    margin:10px 0 16px;
+    line-height:1.9;
+    overflow-x:auto;
+  }
+  .formula b{color:var(--blue);}
+
+  /* ---------- examples ---------- */
+  .ex{margin:10px 0; padding-left:14px; border-left:3px solid var(--card-2); font-size:14.5px;}
+  .ex .en{color:var(--ink); font-weight:500;}
+  .ex .en b{color:var(--amber-deep);}
+  .ex .zh{color:var(--ink-soft); font-size:13px; margin-top:2px;}
+
+  /* ---------- callouts ---------- */
+  .callout{
+    border-radius:8px; padding:10px 14px; margin:8px 0;
+    font-size:14px; display:flex; gap:8px; align-items:flex-start;
+  }
+  .callout.right{background:var(--green-soft); color:#274a2f;}
+  .callout.wrong{background:var(--red-soft); color:#5c211d;}
+  .callout b{flex:0 0 auto;}
+
+  /* ---------- grids ---------- */
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+  @media(max-width:720px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+  .idiom{
+    background:var(--card-2); border-radius:8px; padding:10px 12px;
+    font-size:13.5px;
+  }
+  .idiom b{color:var(--amber-deep); display:block; font-family:'JetBrains Mono',monospace; font-size:13px;}
+
+  /* ---------- count diagram ---------- */
+  .count-row{display:flex; align-items:flex-end; gap:22px; flex-wrap:wrap; margin:14px 0 6px;}
+  .count-item{text-align:center; font-size:12px; color:var(--ink-soft);}
+  .dots{display:flex; gap:5px; justify-content:center; margin-bottom:6px;}
+  .dot{width:13px;height:13px;border-radius:50%; background:var(--amber);}
+  .dot.out{background:none; border:1.5px solid var(--ink-soft);}
+  .count-item b{display:block; font-family:'JetBrains Mono',monospace; color:var(--ink); font-size:12.5px; margin-top:2px;}
+
+  /* ---------- trap footer ---------- */
+  .traps{
+    max-width:960px; margin:80px auto 0; padding:0 20px 90px;
+  }
+  .traps h2{color:#f6f1e1; text-align:center; font-size:clamp(24px,4vw,32px); margin-bottom:10px;}
+  .traps > p.sub2{text-align:center; color:#a9a290; margin-bottom:34px; font-size:14px;}
+  .trapgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
+  @media(max-width:720px){.trapgrid{grid-template-columns:1fr;}}
+  .trapcard{
+    background:var(--card); border-radius:10px; padding:18px 20px;
+    box-shadow:var(--shadow); border-left:5px solid var(--red);
+  }
+  .trapcard b{display:block; font-size:14.5px; margin-bottom:6px; color:var(--ink);}
+  .trapcard span{font-size:13px; color:var(--ink-soft); line-height:1.7;}
+
+  footer{
+    text-align:center; padding:26px 20px 50px; color:#6b6555; font-size:12px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav" id="topnav">
+  <a class="navpill" href="#p1"><b>1</b>人稱代名詞</a>
+  <a class="navpill" href="#p2"><b>2</b>it 的用法</a>
+  <a class="navpill" href="#p3"><b>3</b>反身代名詞</a>
+  <a class="navpill" href="#p4"><b>4</b>所有代名詞</a>
+  <a class="navpill" href="#p5"><b>5</b>指示代名詞</a>
+  <a class="navpill" href="#p6"><b>6</b>不定代名詞</a>
+  <a class="navpill" href="#p7"><b>7</b>疑問代名詞</a>
+  <a class="navpill" href="#traps"><b>★</b>常見陷阱</a>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">Chapter 13 · 代名詞</div>
+  <h1>代名詞<em>重點整理</em></h1>
+  <p>代名詞的唯一目的：代替前面講過的名詞，讓句子不重複囉唆。這份筆記把整章拆成 7 個重點，每個都附上例句、公式、和最容易考錯的陷阱。</p>
+
+  <div class="swap-demo">
+    <div class="swap-line"><s>Romeo</s> texted a message to <s>Juliet</s>. <span class="arrow">→</span> <span class="kept">He</span> texted a message to <span class="kept">her</span>.</div>
+    <div class="swap-line" style="margin-top:2px;"><s>Romeo</s> loved <s>Juliet</s>. <span class="arrow">→</span> <span class="kept">He</span> loved <span class="kept">her</span>.</div>
+  </div>
+</div>
+
+<!-- ================= 1 人稱代名詞 ================= -->
+<section class="point" id="p1">
+  <div class="point-head">
+    <div class="point-badge">1</div>
+    <div><span>Point 01</span><h2>人稱代名詞</h2></div>
+  </div>
+
+  <div class="card tilt-l">
+    <div class="tape"></div>
+    <h3>三個格位</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>人稱</th><th>主格</th><th>所有格</th><th>受格</th></tr>
+      <tr><td class="lbl">第一人稱單/複</td><td>I / we</td><td>my / our</td><td>me / us</td></tr>
+      <tr><td class="lbl">第二人稱</td><td>you</td><td>your</td><td>you</td></tr>
+      <tr><td class="lbl">第三人稱單</td><td>he / she / it</td><td>his / her / its</td><td>him / her / it</td></tr>
+      <tr><td class="lbl">第三人稱複</td><td>they</td><td>their</td><td>them</td></tr>
+    </table>
+    </div>
+
+    <h4>主格：當主詞</h4>
+    <div class="ex"><div class="en">John is my brother. <b>He</b> is a college student.</div><div class="zh">John 是我哥哥。他是個大學生。</div></div>
+
+    <h4>受格：及物動詞的受詞 / 介系詞的受詞</h4>
+    <div class="ex"><div class="en">The teacher punished <b>him</b> for his mischief.</div><div class="zh">老師處罰他調皮搗蛋。</div></div>
+    <div class="ex"><div class="en">Her mother took good care of <b>her</b>.</div><div class="zh">她媽媽無微不至地照顧她。（介系詞 of 的受詞）</div></div>
+
+    <h4>所有格：功能相當於形容詞，後面一定接名詞</h4>
+    <div class="ex"><div class="en">I have a dog. <b>Its</b> name is Snoopy.</div><div class="zh">我養了一隻狗。牠的名字是 Snoopy。</div></div>
+
+    <div class="callout wrong"><b>★易混淆</b><span><span class="mono">its</span>＝所有格（它的，後接名詞）；<span class="mono">it's</span>＝ it is / it has 的縮寫。看後面接不接名詞就能分辨。</span></div>
+  </div>
+</section>
+
+<!-- ================= 2 it 的用法 ================= -->
+<section class="point" id="p2">
+  <div class="point-head">
+    <div class="point-badge">2</div>
+    <div><span>Point 02</span><h2>it 的特殊用法</h2></div>
+  </div>
+
+  <div class="card tilt-r">
+    <div class="tape"></div>
+    <h3>① 代替前面提過的特定名詞</h3>
+    <div class="ex"><div class="en">My dad bought me a new cell phone, but I lost <b>it</b> the next day.</div><div class="zh">我爸買了新手機給我，但我隔天就弄丟了。</div></div>
+
+    <h4>② 表時間／天氣／距離／日期（無實際意義的虛主詞）</h4>
+    <div class="grid-3">
+      <div class="idiom"><b>時間</b>It's ten past twelve.</div>
+      <div class="idiom"><b>天氣</b>It is hot in summer.</div>
+      <div class="idiom"><b>距離</b>It is 3 miles to the airport.</div>
+    </div>
+  </div>
+
+  <div class="card tilt-l">
+    <div class="tape"></div>
+    <h3>③ 強調句（分裂句）</h3>
+    <div class="formula"><b>It is/was</b> + 強調部分 + <b>that</b> + S + V（剩下的句子）</div>
+    <p class="sub">原句：Amy ran into Jasmine in the restaurant yesterday.</p>
+    <div class="ex"><div class="en">It was <b>Amy</b> that ran into Jasmine in the restaurant yesterday.</div><div class="zh">強調主詞</div></div>
+    <div class="ex"><div class="en">It was <b>Jasmine</b> that Amy ran into in the restaurant yesterday.</div><div class="zh">強調受詞</div></div>
+    <div class="ex"><div class="en">It was <b>in the restaurant</b> that Amy ran into Jasmine yesterday.</div><div class="zh">強調地點</div></div>
+    <div class="ex"><div class="en">It was <b>yesterday</b> that Amy ran into Jasmine in the restaurant.</div><div class="zh">強調時間</div></div>
+
+    <h4>檢查法：拿掉 It is/was 和 that，句子要能還原成完整句</h4>
+    <div class="callout wrong"><b>✗</b><span>It was the scary movie that I couldn't fall asleep.（拿掉後不通）</span></div>
+    <div class="callout right"><b>✓</b><span>It was <b>because of</b> the scary movie that I couldn't fall asleep.</span></div>
+  </div>
+
+  <div class="card tilt-r">
+    <div class="tape"></div>
+    <h3>④ 虛主詞 / 虛受詞</h3>
+    <p class="sub">因為真正的主詞／受詞太長，先用 it 佔位，避免頭重腳輕。</p>
+
+    <h4>虛主詞</h4>
+    <div class="formula"><b>It</b> + is/was + adj./N + { to VR ｜ V-ing ｜ that+S+V ｜ wh-+S+V }</div>
+    <div class="ex"><div class="en">It is thrilling <b>to take</b> a roller coaster ride.</div><div class="zh">坐雲霄飛車很刺激。</div></div>
+    <div class="ex"><div class="en">It is a known fact <b>that</b> Santa Claus doesn't really exist.</div><div class="zh">聖誕老人不存在是眾所皆知的事實。</div></div>
+
+    <h4>虛受詞</h4>
+    <div class="formula"><b>主詞</b> + believe/think/find/make... + <b>it</b> + adj./N + { to VR ｜ that+S+V }</div>
+    <div class="ex"><div class="en">I find <b>it</b> hard <b>to believe</b> that J.K. Rowling used to live on welfare.</div><div class="zh">我很難相信 J.K. Rowling 曾經靠社會福利過活。</div></div>
+
+    <h4>常用固定片語</h4>
+    <div class="grid-2">
+      <div class="idiom"><b>make it clear</b>把⋯表明清楚</div>
+      <div class="idiom"><b>make it possible (for sb.)</b>使⋯能夠</div>
+      <div class="idiom"><b>make it a rule</b>習慣做⋯</div>
+      <div class="idiom"><b>take it for granted</b>視為理所當然</div>
+    </div>
+  </div>
+
+  <div class="card tilt-l">
+    <div class="tape"></div>
+    <h3>for sb. vs of sb. — 選詞關鍵題</h3>
+    <div class="grid-2">
+      <div>
+        <div class="formula" style="margin-bottom:8px;">It is + adj. + <b>for</b> sb. + to VR</div>
+        <p class="sub">形容詞修飾「這件事」本身：easy, important, dangerous, possible, necessary...</p>
+        <div class="ex"><div class="en">It is important <b>for</b> us to hand in homework on time.</div></div>
+      </div>
+      <div>
+        <div class="formula" style="margin-bottom:8px;">It is + adj. + <b>of</b> sb. + to VR</div>
+        <p class="sub">形容詞形容「人的個性」：foolish, brave, kind, generous, rude...</p>
+        <div class="ex"><div class="en">It was brave <b>of</b> you to stand up to those bullies.</div></div>
+      </div>
+    </div>
+    <div class="callout right"><b>技巧</b><span>把動作套進「他很＿＿」，說得通就用 of（他很勇敢 ✓）；說不通就用 for（不是「我們很重要」）。</span></div>
+  </div>
+</section>
+
+<!-- ================= 3 反身代名詞 ================= -->
+<section class="point" id="p3">
+  <div class="point-head">
+    <div class="point-badge">3</div>
+    <div><span>Point 03</span><h2>反身代名詞</h2></div>
+  </div>
+
+  <div class="card tilt-r">
+    <div class="tape"></div>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>單數</th><td>myself</td><td>yourself</td><td>himself / herself / itself</td></tr>
+      <tr><th>複數</th><td>ourselves</td><td>yourselves</td><td>themselves</td></tr>
+    </table>
+    </div>
+    <p class="sub">常見拼字錯誤：ourselves / themselves 不能漏掉字尾的 s。</p>
+
+    <h4>用法① 主詞與受詞是同一人 → 受詞用反身代名詞</h4>
+    <div class="ex"><div class="en">She killed <b>herself</b>. He felt ashamed of <b>himself</b>.</div></div>
+
+    <h4>用法② 加強語氣「某人自己⋯」</h4>
+    <div class="ex"><div class="en">I <b>myself</b> do not like this idea.</div><div class="zh">我個人本身不喜歡這個點子。</div></div>
+
+    <h4>用法③ (by) oneself ＝靠自己／獨自一人</h4>
+    <div class="ex"><div class="en">I accomplished the task <b>myself</b>.（沒人幫忙）　I went to the wedding <b>by myself</b>.（獨自沒人陪）</div></div>
+
+    <h4>用法④ 及物動詞 + 反身代名詞 ＝ be + p.p.（固定搭配，常考）</h4>
+    <div class="ex"><div class="en">Mother Teresa <b>devoted herself to</b> helping the poor. ＝ was <b>devoted to</b> helping the poor.</div></div>
+    <div class="callout wrong"><b>✗</b><span>不要漏掉 herself／themselves 等反身代名詞，且 to 是介系詞，後面接 <span class="mono">V-ing</span>。</span></div>
+  </div>
+
+  <div class="card tilt-l">
+    <div class="tape"></div>
+    <h3>反身代名詞慣用語（整組背）</h3>
+    <div class="grid-3">
+      <div class="idiom"><b>by oneself</b>獨自；靠自己</div>
+      <div class="idiom"><b>in itself</b>本身；本質上</div>
+      <div class="idiom"><b>pride oneself on</b>以⋯為榮</div>
+      <div class="idiom"><b>enjoy oneself</b>玩得愉快</div>
+      <div class="idiom"><b>come to oneself</b>甦醒</div>
+      <div class="idiom"><b>help oneself to</b>自行取用</div>
+      <div class="idiom"><b>adapt oneself to</b>習慣於</div>
+      <div class="idiom"><b>make yourself at home</b>不必拘束</div>
+      <div class="idiom"><b>seat oneself</b>坐下</div>
+      <div class="idiom"><b>absorb/lose oneself in</b>專注於</div>
+      <div class="idiom"><b>commit oneself to</b>下定決心做⋯</div>
+      <div class="idiom"><b>apply oneself to</b>專心於</div>
+    </div>
+    <div class="callout wrong" style="margin-top:14px;"><b>注意</b><span>relax、rest、feel、concentrate 這類動詞後面接反身代名詞時要特別小心，很多情況下單獨使用（不加反身代名詞）才是正確的。</span></div>
+  </div>
+</section>
+
+<!-- ================= 4 所有代名詞 ================= -->
+<section class="point" id="p4">
+  <div class="point-head">
+    <div class="point-badge">4</div>
+    <div><span>Point 04</span><h2>所有代名詞</h2></div>
+  </div>
+
+  <div class="card tilt-r">
+    <div class="tape"></div>
+    <div class="formula">所有代名詞 <b>＝</b> 所有格 + 名詞</div>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>所有格</th><td>my</td><td>your</td><td>his</td><td>her</td><td>its</td><td>our</td><td>their</td></tr>
+      <tr><th>所有代名詞</th><td>mine</td><td>yours</td><td>his</td><td>hers</td><td>its</td><td>ours</td><td>theirs</td></tr>
+    </table>
+    </div>
+    <div class="ex"><div class="en">I've got my ticket, but Cindy can't find <b>hers</b>.（= her ticket）</div></div>
+
+    <h4>常考句型：Some/Any friend(s) of + 所有代名詞</h4>
+    <div class="ex"><div class="en">Some friends <b>of my dad's</b> will visit him this Saturday.</div><div class="zh">＝ Some of my dad's friends will visit him.</div></div>
+    <div class="callout wrong"><b>✗</b><span>不可直接照中文語序寫成 "my dad's some friends"。</span></div>
+  </div>
+</section>
+
+<!-- ================= 5 指示代名詞 ================= -->
+<section class="point" id="p5">
+  <div class="point-head">
+    <div class="point-badge">5</div>
+    <div><span>Point 05</span><h2>指示代名詞</h2></div>
+  </div>
+
+  <div class="card tilt-l">
+    <div class="tape"></div>
+    <h3>this/these（近）vs that/those（遠）</h3>
+    <div class="ex"><div class="en">This is my book; that is yours.</div></div>
+
+    <h4>★ that / those 代替前面的名詞，避免重複（比較句必考）</h4>
+    <p class="sub">單數名詞 → that　｜　複數名詞 → those　｜　絕不能用 this/these</p>
+    <div class="ex"><div class="en">The pace of life in a big city is faster than <b>that</b>（= the pace of life）in the country.</div></div>
+    <div class="callout wrong"><b>✗</b><span>His educational background is different from his colleagues.</span></div>
+    <div class="callout right"><b>✓</b><span>His educational background is different from <b>that of</b> his colleagues.（背景比背景，不是人比人）</span></div>
+
+    <h4>前者⋯後者⋯</h4>
+    <p class="sub">單數：that（前者）...this（後者）　｜　單複數皆可：the former...the latter（考試較常用）</p>
+    <div class="ex"><div class="en">She chose <b>the former</b>（family）instead of <b>the latter</b>（career）.</div></div>
+
+    <h4>「凡是⋯的人」句型</h4>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>先行詞</th><th>關代</th><th>動詞</th></tr>
+      <tr><td>those / people / they</td><td>who</td><td>複數動詞</td></tr>
+      <tr><td>he / one / anyone</td><td>who</td><td>單數動詞</td></tr>
+    </table>
+    </div>
+    <div class="ex"><div class="en">I look down on <b>those who are</b> cruel to animals.</div></div>
+    <div class="callout right"><b>注意</b><span>此句型的關係代名詞只能用 who，不能用 that。</span></div>
+  </div>
+</section>
+
+<!-- ================= 6 不定代名詞 ================= -->
+<section class="point" id="p6">
+  <div class="point-head">
+    <div class="point-badge">6</div>
+    <div><span>Point 06</span><h2>不定代名詞</h2></div>
+  </div>
+
+  <div class="card tilt-r">
+    <div class="tape"></div>
+    <h3>both / all・either / any・neither / none</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>詞</th><th>用於</th><th>意思</th><th>動詞</th></tr>
+      <tr><td>both</td><td>兩者</td><td>兩者皆</td><td>複數</td></tr>
+      <tr><td>all</td><td>三者以上</td><td>全都</td><td>依名詞而定</td></tr>
+      <tr><td>either</td><td>兩者之一</td><td>任一</td><td>單數</td></tr>
+      <tr><td>any</td><td>任何</td><td>任何</td><td>依名詞而定</td></tr>
+      <tr><td>neither</td><td>兩者</td><td>皆不</td><td>單（正式）</td></tr>
+      <tr><td>none</td><td>三者以上</td><td>都不</td><td>單（正式）</td></tr>
+    </table>
+    </div>
+    <div class="ex"><div class="en"><b>Both of</b> your parents are great.（複數動詞）</div></div>
+    <div class="ex"><div class="en">A: Tea or coffee? B: <b>Either</b> is fine.（單數動詞）</div></div>
+
+    <h4>some vs any</h4>
+    <p class="sub">some → 肯定句、疑問句表邀請　｜　any → 疑問句、否定句、條件句</p>
+    <div class="ex"><div class="en">We need <b>some</b> flour. There isn't <b>any</b> left.</div></div>
+  </div>
+
+  <div class="card tilt-l">
+    <div class="tape"></div>
+    <h3>one / another / the other 家族 — 數字決定用字</h3>
+
+    <div class="count-row">
+      <div class="count-item"><div class="dots"><span class="dot"></span><span class="dot"></span></div>one … the other<b>總數＝2</b></div>
+      <div class="count-item"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>one … another … the other<b>總數＝3</b></div>
+      <div class="count-item"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot out"></span><span class="dot out"></span></div>one … another … the others<b>總數＞3，其餘全部</b></div>
+    </div>
+
+    <div class="ex"><div class="en">I have two brothers. <b>One</b> is a teacher, and <b>the other</b> is a doctor.</div></div>
+    <div class="ex"><div class="en">There are 3 channels. <b>One</b> plays Titanic, <b>another</b> plays Shrek, and <b>the other</b> plays Avatar.</div></div>
+    <div class="ex"><div class="en">There are 4 students. <b>One</b> is studying. <b>Another</b> is on the computer. <b>The others</b> are chatting.</div></div>
+
+    <div class="tbl-wrap" style="margin-top:14px;">
+    <table>
+      <tr><th>情境</th><th>句型</th></tr>
+      <tr><td>還沒講完，任一個</td><td>one ... another ...（可一直延伸）</td></tr>
+      <tr><td>只列舉兩三種，還有其他沒講</td><td>some ... others ...</td></tr>
+      <tr><td>只有兩種類別，第二種＝全部剩下</td><td>some ... the others ...</td></tr>
+    </table>
+    </div>
+    <div class="callout right"><b>口訣</b><span>還沒講完用 another / others（不加 the）；講到「最後剩下、確定的」就要加 the。</span></div>
+  </div>
+
+  <div class="card tilt-r">
+    <div class="tape"></div>
+    <h3>each vs every</h3>
+    <div class="grid-2">
+      <div>
+        <p class="sub"><b>each</b>：強調「每一個分子」，可用於<b>兩者以上</b>，可單獨當代名詞。</p>
+        <div class="ex"><div class="en"><b>Each</b> of us has a locker.</div></div>
+      </div>
+      <div>
+        <p class="sub"><b>every</b>：強調「整體」，用於<b>三者以上</b>，不可單獨當代名詞。</p>
+        <div class="ex"><div class="en">✗ Every of us... → ✓ <b>Every one</b> of us has a locker.</div></div>
+      </div>
+    </div>
+    <h4>each other（兩者互相）vs one another（三者以上互相）</h4>
+    <div class="ex"><div class="en">George and Mary love <b>each other</b>. Bunny, Bear, and Piggy visit <b>one another's</b> houses.</div></div>
+    <h4>Not + all/every/both = 部分否定</h4>
+    <div class="ex"><div class="en"><b>Not every</b> student pays attention in class.</div><div class="zh">並非每個學生都認真聽（不是全部都不專心）。</div></div>
+  </div>
+</section>
+
+<!-- ================= 7 疑問代名詞 ================= -->
+<section class="point" id="p7">
+  <div class="point-head">
+    <div class="point-badge">7</div>
+    <div><span>Point 07</span><h2>疑問代名詞</h2></div>
+  </div>
+
+  <div class="card tilt-l">
+    <div class="tape"></div>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>主格</th><th>所有格</th><th>受格</th></tr>
+      <tr><td class="lbl">誰</td><td>who</td><td>whose</td><td>whom</td></tr>
+      <tr><td class="lbl">什麼</td><td>what</td><td>—</td><td>what</td></tr>
+      <tr><td class="lbl">哪一個</td><td>which</td><td>—</td><td>which</td></tr>
+    </table>
+    </div>
+    <div class="ex"><div class="en"><b>Who</b> is that man?（詢問人：姓名／身分／關係）</div></div>
+    <div class="ex"><div class="en"><b>Whom</b> would you like to invite?（受詞）　<b>Whom</b> did you talk <b>to</b>?（介系詞受詞）</div></div>
+    <div class="callout right"><b>注意</b><span>口語中 whom 常被 who 取代，但正式書寫仍建議用 whom。</span></div>
+    <div class="ex"><div class="en"><b>Whose</b> book is this?</div></div>
+    <div class="ex"><div class="en"><b>What</b> are you talking about?（問東西／事）</div></div>
+    <div class="ex"><div class="en"><b>Which</b> do you like better, pork or beef?（特定範圍中做選擇）</div></div>
+  </div>
+</section>
+
+<!-- ================= 常見陷阱 ================= -->
+<div class="traps" id="traps">
+  <h2 class="display">最容易考錯的 7 個地方</h2>
+  <p class="sub2">如果時間不夠，優先複習這幾項</p>
+  <div class="trapgrid">
+    <div class="trapcard"><b>① it / that / one 選錯</b><span>it＝同一個東西；that/those＝同類但不同一個（比較句必用）；one/ones＝同類、不特定的一個。</span></div>
+    <div class="trapcard"><b>② for vs of</b><span>形容「事」用 for，形容「人的個性」用 of。套「他很＿＿」通不通來判斷。</span></div>
+    <div class="trapcard"><b>③ one/another/the other 數字題</b><span>還沒講完用 another／others（不加 the）；最後剩下、確定的要加 the。</span></div>
+    <div class="trapcard"><b>④ each 可當代名詞，every 不行</b><span>Each of us ✓　／　Every of us ✗，要說 Every one of us。</span></div>
+    <div class="trapcard"><b>⑤ 強調句拿掉 It...that 要能還原</b><span>還原不成完整句，代表漏了介系詞（because of / in / while...）。</span></div>
+    <div class="trapcard"><b>⑥ that/those 代替前面名詞</b><span>中文常省略重複的名詞，但英文比較句一定要補回 that/those。</span></div>
+    <div class="trapcard"><b>⑦ Not + all/every/both</b><span>＝部分否定「不是全部」，不是「全部都不」。</span></div>
+  </div>
+</div>
+
+<footer>代名詞 Chapter 13 · 重點整理筆記</footer>
+
+<script>
+  const pills = document.querySelectorAll('.navpill');
+  const sections = [...pills].map(p => document.querySelector(p.getAttribute('href')));
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        pills.forEach(p => p.classList.toggle('active', p.getAttribute('href') === id));
+      }
+    });
+  }, {rootMargin:'-40% 0px -50% 0px'});
+  sections.forEach(s => s && io.observe(s));
+</script>
+</body>
+</html>
