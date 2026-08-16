@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>學測英文批改檢討 ②｜線上課程作文 × 機車駕照翻譯</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12202e;--ink-soft:#41505f;--paper:#faf9f5;--line:#dfe3e0;
+  --red:#d1342b;--red-wash:#fdeeec;--duck:#f5c518;--harbor:#1b6f7f;--harbor-wash:#e6f1f2;--good:#2f7d4f;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --sans:"Noto Sans TC","Bricolage Grotesque",system-ui,sans-serif;
+  --display:"Bricolage Grotesque","Noto Sans TC",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--ink);background-color:var(--paper);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:26px 26px;background-position:-1px -1px;line-height:1.75;-webkit-text-size-adjust:100%}
+.wrap{max-width:940px;margin:0 auto;padding:0 20px 100px}
+
+.masthead{margin:0 -20px 34px;padding:38px 20px 30px;background:var(--ink);color:#fff;border-bottom:6px solid var(--duck)}
+.masthead-inner{max-width:900px;margin:0 auto;display:flex;gap:28px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--duck);margin:0 0 10px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(26px,4.6vw,40px);line-height:1.2;margin:0 0 12px;letter-spacing:-.01em}
+.subtitle{margin:0;color:#b9c6d2;font-size:15px;max-width:46ch}
+.totalbox{border:2px solid var(--duck);border-radius:4px;padding:14px 22px;text-align:center;min-width:170px;background:rgba(245,197,24,.08)}
+.totalbox .label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--duck);text-transform:uppercase}
+.totalbox .num{font-family:var(--display);font-weight:800;font-size:46px;line-height:1;margin:6px 0 2px}
+.totalbox .num small{font-size:18px;color:#8fa3b4;font-weight:600}
+.totalbox .band{font-family:var(--mono);font-size:12px;color:#dfe8ef}
+
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 34px;padding:12px 16px;border:1px solid var(--line);border-radius:4px;background:#fff}
+.toolbar p{margin:0;font-size:13px;color:var(--ink-soft);flex:1;min-width:200px}
+button{font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;border-radius:3px;border:1.5px solid var(--ink);background:#fff;color:var(--ink);padding:8px 16px;transition:background .15s,color .15s}
+button:hover{background:var(--ink);color:#fff}
+button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+button:focus-visible{outline:3px solid var(--harbor);outline-offset:2px}
+
+section{margin:0 0 52px;scroll-margin-top:20px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:22px}
+.sec-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--red)}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(20px,3vw,26px);margin:0;letter-spacing:-.01em}
+h3{font-family:var(--display);font-weight:700;font-size:17px;margin:26px 0 10px}
+.card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:20px 22px;margin-bottom:16px}
+.card.accent{border-left:4px solid var(--harbor)}
+.card.warn{border-left:4px solid var(--red)}
+.card.gold{border-left:4px solid var(--duck)}
+.card.win{border-left:4px solid var(--good)}
+
+.rubric{display:grid;gap:12px}
+.row{display:grid;grid-template-columns:130px 1fr 66px;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 16px}
+.row .name{font-weight:700;font-size:15px}
+.row .name span{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-soft);font-weight:400;letter-spacing:.04em}
+.meter{height:12px;background:#eceeec;border-radius:2px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--harbor)}
+.meter.low i{background:var(--red)}
+.meter.mid i{background:var(--duck)}
+.row .pt{font-family:var(--mono);font-weight:700;font-size:19px;text-align:right}
+.row .pt em{font-style:normal;font-size:12px;color:var(--ink-soft)}
+
+/* code legend */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+.chip{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:2px;background:var(--ink);color:#fff;white-space:nowrap}
+.chip.sm{font-size:10px;padding:2px 6px}
+.legend .item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft);border:1px solid var(--line);border-radius:3px;padding:4px 8px 4px 4px;background:#fff}
+
+.script{background:#fff;border:1px solid var(--line);border-radius:4px;padding:24px 26px;font-size:16.5px;line-height:2.3}
+.script p{margin:0 0 18px}
+.script p:last-child{margin-bottom:0}
+.para-tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--harbor);display:block;margin-bottom:4px}
+.err{position:relative;color:var(--red);background:var(--red-wash);border-bottom:2px wavy var(--red);cursor:help;padding:0 1px}
+.err sup{font-family:var(--mono);font-size:9.5px;font-weight:700;color:#fff;background:var(--red);border-radius:2px;padding:1px 3px;margin-left:2px;vertical-align:super}
+.err::after{content:attr(data-fix);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);
+  background:var(--ink);color:#fff;font-family:var(--sans);font-size:13px;line-height:1.5;padding:7px 11px;border-radius:3px;
+  white-space:normal;width:max-content;max-width:270px;opacity:0;visibility:hidden;transition:opacity .12s;z-index:9;pointer-events:none;
+  box-shadow:0 4px 14px rgba(18,32,46,.22)}
+.err:hover::after,.err:focus::after{opacity:1;visibility:visible}
+.good{background:rgba(47,125,79,.12);border-bottom:2px solid var(--good);padding:0 2px}
+
+.fix{border:1px solid var(--line);border-radius:4px;background:#fff;margin-bottom:12px;overflow:hidden}
+.fix-top{display:flex;gap:10px;padding:13px 16px;align-items:flex-start;flex-wrap:wrap}
+.fix-no{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;background:var(--ink);border-radius:2px;padding:2px 7px;flex-shrink:0;margin-top:3px}
+.orig{font-size:15.5px;color:var(--red);text-decoration:line-through;text-decoration-color:rgba(209,52,43,.5);flex:1;min-width:60%}
+.answer{border-top:1px dashed var(--line);padding:13px 16px 14px 55px;background:#fcfdfc}
+.answer .arrow{font-family:var(--mono);color:var(--harbor);font-weight:700;margin-right:6px}
+.newtext{font-size:15.5px;font-weight:700;color:var(--harbor)}
+.why{font-size:14px;color:var(--ink-soft);margin:7px 0 0;display:flex;gap:7px}
+.why b{color:var(--ink);font-weight:700;white-space:nowrap}
+body.hide-answers .answer{display:none}
+body.hide-answers .err::after{visibility:hidden!important;opacity:0!important}
+
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);font-size:14.5px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;letter-spacing:.08em;font-weight:400}
+tbody tr:last-child td{border-bottom:none}
+td.from{color:var(--ink-soft);width:36%}
+td.to{font-weight:700;color:var(--harbor)}
+td.yes{color:var(--good);font-weight:700}
+td.no{color:var(--red);font-weight:700}
+
+ul.tips{margin:0;padding-left:0;list-style:none}
+ul.tips li{position:relative;padding-left:24px;margin-bottom:10px;font-size:15px}
+ul.tips li::before{content:"→";position:absolute;left:0;color:var(--red);font-family:var(--mono);font-weight:700}
+
+.model{background:#fff;border:1px solid var(--line);border-left:4px solid var(--duck);border-radius:4px;padding:24px 26px;font-size:16.5px;line-height:2.05}
+.model p{margin:0 0 20px}
+.model p:last-child{margin-bottom:0}
+.wordcount{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:right;margin-top:14px;padding-top:10px;border-top:1px dashed var(--line)}
+
+.trans-q{font-family:var(--mono);font-size:12px;color:var(--red);letter-spacing:.1em;margin:0 0 6px}
+.zh{font-weight:700;font-size:16px;margin:0 0 12px}
+
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.checklist li:last-child{border-bottom:none}
+.checklist input{margin-top:6px;width:16px;height:16px;accent-color:var(--harbor);flex-shrink:0}
+footer{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding-top:26px;border-top:1px solid var(--line)}
+
+@media (max-width:640px){
+  .row{grid-template-columns:1fr 60px;gap:8px}
+  .meter{grid-column:1/-1;order:3}
+  .answer{padding-left:16px}
+  .err::after{max-width:200px}
+  td.from{width:44%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff}
+  .toolbar{display:none}
+  .masthead{background:#fff;color:#000;border-bottom:3px solid #000}
+  .masthead .subtitle,.totalbox .band{color:#333}
+  .answer{display:block!important}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <p class="eyebrow">GSAT English · Marking Sheet 02 · 8/3</p>
+      <h1>線上課程作文<br>批改與檢討</h1>
+      <p class="subtitle">題目：第一段描述你個人正面與／或負面的線上課程經驗；第二段說明你對線上課程的感想。文長至少 120 words。</p>
+    </div>
+    <div class="totalbox">
+      <div class="label">作文預估級分</div>
+      <div class="num">9<small>/20</small></div>
+      <div class="band">落點 8–10 分</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="toolbar">
+    <p><strong>家教模式：</strong>先按「只給錯誤代碼」，學生依代碼自己改一輪，再掀開修正對答案。</p>
+    <button id="toggle" aria-pressed="false">只給錯誤代碼</button>
+    <button onclick="window.print()">列印講義</button>
+  </div>
+
+  <!-- 1 -->
+  <section id="s1">
+    <div class="sec-head"><span class="sec-num">01</span><h2>預估級分與總評</h2></div>
+
+    <div class="rubric">
+      <div class="row"><div class="name">內容<span>CONTENT</span></div><div class="meter low"><i style="width:40%"></i></div><div class="pt">2<em>/5</em></div></div>
+      <div class="row"><div class="name">組織<span>ORGANIZATION</span></div><div class="meter mid"><i style="width:60%"></i></div><div class="pt">3<em>/5</em></div></div>
+      <div class="row"><div class="name">文法句構<span>GRAMMAR</span></div><div class="meter low"><i style="width:40%"></i></div><div class="pt">2<em>/5</em></div></div>
+      <div class="row"><div class="name">詞彙拼字<span>VOCAB &amp; SPELLING</span></div><div class="meter low"><i style="width:40%"></i></div><div class="pt">2<em>/5</em></div></div>
+    </div>
+
+    <div class="card warn" style="margin-top:18px">
+      <p style="margin:0"><strong>一句話總評：</strong>字數達標（約 200 字）、四大段落功能齊備，結尾倒裝句也成功從上一篇遷移過來；但題目要求寫「<strong>你個人的</strong>線上課程經驗」，全文從頭到尾都是泛論，沒有任何一個屬於你自己的具體場景，加上片段句（沒有主詞或動詞的半句話）過多，內容與文法兩項被壓在低分帶。</p>
+    </div>
+
+    <div class="card warn">
+      <p style="margin:0 0 8px"><strong>致命傷：前後矛盾（LOG）</strong></p>
+      <p style="margin:0;font-size:14.5px;color:var(--ink-soft)">第一段寫 <em>“There is no denying that online class can replace the real class.”</em>（線上課無疑能取代實體課），第二段卻寫 <em>“I don't really like online class.”</em>（我不喜歡線上課）。閱卷老師看到立場自相矛盾，內容分會直接往下壓。<strong>整篇只能有一個立場</strong>，優點段要寫成「雖然方便，但……」。</p>
+    </div>
+  </section>
+
+  <!-- 2 進步追蹤 -->
+  <section id="s2">
+    <div class="sec-head"><span class="sec-num">02</span><h2>與上一篇（黃色小鴨）對照</h2></div>
+    <table>
+      <thead><tr><th>檢核項目</th><th>上篇表現</th><th>本篇表現</th><th>結論</th></tr></thead>
+      <tbody>
+        <tr><td>結尾倒裝 only by… can we…</td><td>用對</td><td>句型用對</td><td class="yes">✓ 成功遷移</td></tr>
+        <tr><td>字數是否達標</td><td>約 140 字</td><td>約 200 字</td><td class="yes">✓ 明顯進步</td></tr>
+        <tr><td>依提示寫「具體細節」</td><td>沒寫圖中人物活動</td><td>沒寫個人經驗</td><td class="no">✗ 同一病根</td></tr>
+        <tr><td>主詞動詞一致（SV）</td><td>illustrate、it famous</td><td>online class have、Every students</td><td class="no">✗ 未改善</td></tr>
+        <tr><td>轉承語成對</td><td>For one thing 沒有 For another</td><td>First 沒有 Second</td><td class="no">✗ 未改善</td></tr>
+        <tr><td>片段句（FRAG）</td><td>幾乎沒有</td><td>出現 4 次</td><td class="no">✗ 新增問題</td></tr>
+      </tbody>
+    </table>
+    <div class="card win" style="margin-top:16px">
+      <p style="margin:0"><strong>診斷：</strong>兩篇的核心問題是同一個——<strong>提示要求什麼細節，就沒寫什麼細節</strong>。上次題目說「描述人、地、物、活動」，你寫了小鴨；這次題目說「你個人的經驗」，你寫了大家的優缺點。<br><strong>解法：</strong>動筆前先把提示裡的關鍵詞圈起來，每個關鍵詞至少配一句話。</p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <div class="sec-head"><span class="sec-num">03</span><h2>原文批改稿</h2></div>
+    <div class="card" style="padding:14px 16px">
+      <div class="legend">
+        <span class="item"><span class="chip sm">SV</span>主動詞一致</span>
+        <span class="item"><span class="chip sm">T</span>時態</span>
+        <span class="item"><span class="chip sm">FRAG</span>片段句</span>
+        <span class="item"><span class="chip sm">WW</span>用字錯誤</span>
+        <span class="item"><span class="chip sm">SP</span>拼字</span>
+        <span class="item"><span class="chip sm">ART</span>冠詞</span>
+        <span class="item"><span class="chip sm">PL</span>單複數</span>
+        <span class="item"><span class="chip sm">PREP</span>介系詞</span>
+        <span class="item"><span class="chip sm">CH</span>中式英文</span>
+        <span class="item"><span class="chip sm">P</span>標點</span>
+        <span class="item"><span class="chip sm">LOG</span>邏輯矛盾</span>
+      </div>
+    </div>
+
+    <div class="script">
+      <p><span class="para-tag">PARAGRAPH 1 — 應寫「個人經驗」</span>
+      <span class="err" tabindex="0" data-fix="During the COVID-19 pandemic, we took online classes for a long time.">It had been a long time to have online class<sup>T</sup></span> during Covid-19. <span class="err" tabindex="0" data-fix="Most students have probably had the experience of skipping class.">Most of the student may had an experience to skip class.<sup>SV·PL</sup></span> <span class="err" tabindex="0" data-fix="Online learning has both pros and cons.（to talk about it 是贅字）">There are some pros and cons to talk about it.<sup>CH</sup></span> First, <span class="err" tabindex="0" data-fix="online classes are extremely convenient for learning">online class have been extreme convinence to learning<sup>SV·SP</sup></span>. <span class="err" tabindex="0" data-fix="與第二段立場矛盾，建議整句刪除或改為 can never fully replace">There is no denying that, online class can replace the real class.<sup>LOG·P</sup></span> <span class="err" tabindex="0" data-fix="It was a great relief.（idea 可數要加 a；cool 太口語）">It can be very cool idea.<sup>ART·WW</sup></span> We don't need to get up early and <span class="err" tabindex="0" data-fix="or spend a long time taking a bus or even a taxi">need to take a bus or even taxic for long time<sup>SP·ART</sup></span>. <span class="err" tabindex="0" data-fix="On the other hand, this method also has serious drawbacks.">In other hand. This method should have a big problem.<sup>WW·P</sup></span> <span class="err" tabindex="0" data-fix="Not every student studies hard or listens to the teacher.">Every students will not study hard and won't listen to teacher.<sup>PL·ART</sup></span> <span class="err" tabindex="0" data-fix="During exams, some students may even cheat on tests.">When during the exam. Students should cheat on test.<sup>FRAG·WW</sup></span></p>
+
+      <p><span class="para-tag">PARAGRAPH 2 — 應寫「整體感想」</span>
+      <span class="err" tabindex="0" data-fix="From my perspective, I firmly believe that online classes can never replace real ones.（that 後面必須接完整句）">From my perspective., I firmly believe that.<sup>FRAG·P</sup></span> I don't really like online <span class="err" tabindex="0" data-fix="classes（泛指用複數）">class<sup>PL</sup></span>. <span class="err" tabindex="0" data-fix="You cannot meet your friends in person; instead, you simply stare at a screen.">You can't meet with friends, and just only looking at the camera.<sup>FRAG·CH</sup></span> <span class="err" tabindex="0" data-fix="You have to speak into a microphone to answer questions.">Speaking from microphone to answer the question.<sup>FRAG·PREP</sup></span> You will feel lonely, and if you can't pay attention to the class, you may <span class="err" tabindex="0" data-fix="end up with poor grades">get bad score<sup>ART·CH</sup></span>. Also, <span class="err" tabindex="0" data-fix="staring at electronic devices for too long damages your eyes">looking to 3C produces for too long to damage your eyes<sup>WW·CH</sup></span>, it may cause a serious problem. To sum up, <span class="good">only by striking a balance between</span> <span class="err" tabindex="0" data-fix="online convenience and face-to-face interaction（比較對象要對等）">students and 3C produce<sup>LOG</sup></span> can we have a <span class="err" tabindex="0" data-fix="make the most of our learning">good study effect<sup>CH</sup></span>.</p>
+    </div>
+    <p style="font-size:14px;color:var(--good);margin-top:12px"><strong>✓ 亮點：</strong>結尾倒裝 <em>only by… can we…</em> 又用對了一次，句型本身零錯誤——這已經是你的招牌句，繼續保留。</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <div class="sec-head"><span class="sec-num">04</span><h2>詳細錯誤訂正</h2></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">01</span><span class="orig">It had been a long time to have online class during Covid-19.</span><span class="chip sm">T</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">During the COVID-19 pandemic, we took online classes for a long time.</span>
+      <p class="why"><b>時態</b>過去完成式 had been 必須有另一個過去時間點當基準，這裡沒有，用簡單過去式即可。</p>
+      <p class="why"><b>句型</b>「有一段時間沒／已經很久了」的固定句型是 It has been a long time <em>since</em> + 過去式子句，不是 to have。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">02</span><span class="orig">Most of the student may had an experience to skip class.</span><span class="chip sm">SV</span><span class="chip sm">PL</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Most students have probably had the experience of skipping class.</span>
+      <p class="why"><b>單複數</b>most of the students（有 of 要加 the＋複數）或直接 most students；不可寫 most of the student。</p>
+      <p class="why"><b>助動詞</b>may 後面一定接原形動詞：may have，不可 may had。</p>
+      <p class="why"><b>搭配</b>the experience <em>of</em> + V-ing，不是 to V。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">03</span><span class="orig">online class have been extreme convinence to learning</span><span class="chip sm">SV</span><span class="chip sm">SP</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">online classes are extremely convenient for learning</span>
+      <p class="why"><b>主動詞一致</b>online class（單數）配 have 是錯的；泛指要用複數 online classes are。</p>
+      <p class="why"><b>詞性</b>修飾形容詞要用副詞：extreme → extremely。</p>
+      <p class="why"><b>拼字</b>convinence → convenient（形容詞）／convenience（名詞）；此處需形容詞。</p>
+      <p class="why"><b>介系詞</b>be convenient <em>for</em>，不是 to。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">04</span><span class="orig">There is no denying that, online class can replace the real class.</span><span class="chip sm">LOG</span><span class="chip sm">P</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">刪除，或改為：There is no denying that online classes can never fully replace face-to-face ones.</span>
+      <p class="why"><b>邏輯</b>這句說「線上課能取代實體課」，第二段卻說「我不喜歡線上課、不能見朋友」，立場前後打架。</p>
+      <p class="why"><b>標點</b>that 引導名詞子句，後面不加逗號。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">05</span><span class="orig">It can be very cool idea.</span><span class="chip sm">ART</span><span class="chip sm">WW</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">It was a real relief for me.</span>
+      <p class="why"><b>冠詞</b>idea 是可數單數名詞，前面必須有 a：a very cool idea。</p>
+      <p class="why"><b>語域</b>cool 在學測作文太口語，換成 a great advantage／a real relief。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">06</span><span class="orig">We don't need to get up early and need to take a bus or even taxic for long time.</span><span class="chip sm">SP</span><span class="chip sm">ART</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">We no longer had to get up early or spend a long time on a crowded bus.</span>
+      <p class="why"><b>連接詞</b>否定句中並列要用 or，不用 and；且 need to 重複，第二個可省略。</p>
+      <p class="why"><b>拼字</b>taxic → taxi。</p>
+      <p class="why"><b>冠詞</b>for <em>a</em> long time，不可省略 a。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">07</span><span class="orig">In other hand. This method should have a big problem.</span><span class="chip sm">WW</span><span class="chip sm">P</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">On the other hand, this method also has serious drawbacks.</span>
+      <p class="why"><b>片語</b>固定寫法是 <em>On</em> the other hand（不能用 In，也不能少 the）。</p>
+      <p class="why"><b>標點</b>轉承語後面接逗號，不是句號。</p>
+      <p class="why"><b>用字</b>should 是「應該」，此處要陳述事實，用 has／does have。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">08</span><span class="orig">Every students will not study hard and won't listen to teacher.</span><span class="chip sm">PL</span><span class="chip sm">ART</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Not every student studies hard or listens to the teacher.</span>
+      <p class="why"><b>單複數</b>every 後面永遠接單數名詞：every student。</p>
+      <p class="why"><b>部分否定</b>「不是每個人都…」要寫 Not every student…；寫成 Every student will not… 語意會變成「每個人都不」。</p>
+      <p class="why"><b>冠詞</b>listen to <em>the</em> teacher。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">09</span><span class="orig">When during the exam. Students should cheat on test.</span><span class="chip sm">FRAG</span><span class="chip sm">WW</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">During exams, some students may even cheat on tests.</span>
+      <p class="why"><b>片段句</b>When 是連接詞，後面必須接主詞＋動詞；When during 兩個時間詞疊在一起，且整句沒有主要子句。</p>
+      <p class="why"><b>用字</b>should（應該作弊？）語意錯誤，要用 may／might。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">10</span><span class="orig">From my perspective., I firmly believe that. I don't really like online class.</span><span class="chip sm">FRAG</span><span class="chip sm">P</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">From my perspective, I firmly believe that online learning can never take the place of the classroom.</span>
+      <p class="why"><b>片段句</b>believe that 後面必須接完整句子，不能句點結束。</p>
+      <p class="why"><b>標點</b>perspective 後面出現「., 」兩個標點，只留逗號。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">11</span><span class="orig">You can't meet with friends, and just only looking at the camera.</span><span class="chip sm">FRAG</span><span class="chip sm">CH</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">You cannot meet your friends in person; instead, you simply stare at a screen.</span>
+      <p class="why"><b>對等連接</b>and 前後動詞形式要一致：can't meet … and can only look…；looking 不是動詞形式。</p>
+      <p class="why"><b>贅字</b>just 與 only 意思重複，留一個。</p>
+      <p class="why"><b>用字</b>meet with 多指正式會談，同學朋友用 meet／hang out with。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">12</span><span class="orig">Speaking from microphone to answer the question.</span><span class="chip sm">FRAG</span><span class="chip sm">PREP</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">You have to speak into a microphone just to answer a question.</span>
+      <p class="why"><b>片段句</b>整句沒有主詞與主要動詞，只是一個分詞片語。</p>
+      <p class="why"><b>介系詞</b>對著麥克風說話是 speak <em>into</em> a microphone。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">13</span><span class="orig">you may get bad score</span><span class="chip sm">ART</span><span class="chip sm">CH</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">you may end up with poor grades / fall behind in class</span>
+      <p class="why"><b>冠詞</b>score 可數，至少要寫 a bad score／bad scores。</p>
+      <p class="why"><b>道地度</b>成績不好慣用 poor grades／low grades。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">14</span><span class="orig">looking to 3C produces for too long to damage your eyes</span><span class="chip sm">WW</span><span class="chip sm">CH</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">staring at electronic devices for too long damages your eyes</span>
+      <p class="why"><b>用字</b>「看著」是 look <em>at</em>／stare <em>at</em>，look to 是「指望、求助於」。</p>
+      <p class="why"><b>中式英文</b>「3C 產品」是台灣特有說法，英文用 electronic devices／digital screens；produce 是「農產品」，產品是 products。</p>
+      <p class="why"><b>句型誤用</b>too…to… 表「太…以致於不能」（too tired to walk）；此處要表「因為太久而傷眼」，直接用 for too long + 動詞即可。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">15</span><span class="orig">only by striking a balance between students and 3C produce can we have a good study effect</span><span class="chip sm">LOG</span><span class="chip sm">CH</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">only by striking a balance between online convenience and face-to-face interaction can we make the most of our learning</span>
+      <p class="why"><b>倒裝句型正確，扣分在內容</b>：between A and B 的 A、B 必須是可以互相權衡的兩件事；students 和 3C 產品不對等。</p>
+      <p class="why"><b>中式英文</b>study effect 不存在，學習成效是 learning outcomes／study efficiency。</p></div></div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <div class="sec-head"><span class="sec-num">05</span><h2>高分優化建議</h2></div>
+
+    <h3>切題度：整篇最大的漏洞</h3>
+    <div class="card warn">
+      <ul class="tips" style="margin:0">
+        <li>提示白紙黑字寫「<strong>你個人有哪些正面與／或負面的線上課程經驗</strong>」，你寫的卻是「大家可能會蹺課、可能會作弊」——這是別人的事，不是你的經驗，內容分因此只能給 2 分。</li>
+        <li>個人經驗要有<strong>時間、科目、動作、結果</strong>四要素。例：<em>During the lockdown in 2021, I once fell asleep in a math class with my camera off, and no one noticed until the midterm.</em> 一個具體場景抵十句泛論。</li>
+        <li>第二段是「整體感想」，不要再重複第一段的缺點清單；要寫「回頭看，我學到了什麼」。可用 <em>Looking back, …</em> 開頭。</li>
+      </ul>
+    </div>
+
+    <h3>組織：兩個馬上可修的毛病</h3>
+    <div class="card accent">
+      <ul class="tips" style="margin:0">
+        <li>用了 First 就要有 Second／Besides；否則閱卷判定轉承語使用欠妥（這是連續兩篇的同一個問題）。</li>
+        <li>正面經驗與負面經驗<strong>不要塞在同一段的前後半</strong>而沒有明顯分界；用 <em>At first… / Before long, however, …</em> 做時間轉折，段落會立刻清楚。</li>
+        <li>片段句（沒有主詞或動詞的半句）本篇出現 4 次。檢查訣竅：<strong>每個句點前，先確認「誰＋做什麼」都在</strong>。</li>
+      </ul>
+    </div>
+
+    <h3>詞彙升級</h3>
+    <table>
+      <thead><tr><th>你的寫法</th><th>學測高分替換</th></tr></thead>
+      <tbody>
+        <tr><td class="from">3C produces</td><td class="to">electronic devices / digital screens</td></tr>
+        <tr><td class="from">very cool idea</td><td class="to">a real relief / a huge advantage</td></tr>
+        <tr><td class="from">get bad score</td><td class="to">fall behind / end up with poor grades</td></tr>
+        <tr><td class="from">feel lonely</td><td class="to">feel isolated from my classmates</td></tr>
+        <tr><td class="from">a good study effect</td><td class="to">better learning outcomes</td></tr>
+        <tr><td class="from">skip class</td><td class="to">sneak away from class / log in but tune out</td></tr>
+      </tbody>
+    </table>
+
+    <h3>句型升級：三個寫「個人經驗」超好用的句子</h3>
+    <div class="card gold">
+      <ul class="tips" style="margin:0">
+        <li><strong>Not until… 倒裝寫轉折：</strong> <em>Not until my grades dropped did I realize how little I had learned online.</em></li>
+        <li><strong>What 名詞子句寫感受：</strong> <em>What frustrated me most was staring at a screen full of black squares.</em></li>
+        <li><strong>While 對比正負面：</strong> <em>While online classes saved me an hour of commuting, they also cost me the chance to talk with my classmates.</em></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <div class="sec-head"><span class="sec-num">06</span><h2>滿分示範改寫</h2></div>
+    <p style="font-size:14px;color:var(--ink-soft);margin-top:-8px">保留你原本的核心想法：方便、不用早起通勤／難專心、看不到同學、傷眼睛／最後以平衡作結。差別在於全部改成「我的」經驗。</p>
+
+    <div class="model">
+      <p>When the pandemic hit in 2021, my school suddenly moved every class online. At first, I found it a real relief. I no longer had to get up at six or spend an hour on a crowded bus, and I could replay the recorded lessons whenever a concept confused me. Before long, however, the downside appeared. Sitting alone in front of a screen, I found it almost impossible to concentrate; during one math class, I even fell asleep with my camera off. Since my teacher could not see my face, nobody noticed that I had fallen behind until the midterm results came out.</p>
+
+      <p>Looking back, I firmly believe that online learning is a useful tool but never a replacement for the classroom. What I missed most was not the lessons themselves but the people — the chats during breaks and the chance to raise my hand and get an immediate answer. Staring at electronic devices for hours also left my eyes sore and my mind exhausted. To sum up, only by striking a balance between online convenience and face-to-face interaction can we truly make the most of our learning.</p>
+      <p class="wordcount">約 190 words ｜ 兩段功能分明 ｜ 含分詞構句、What 名詞子句、倒裝句</p>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <div class="sec-head"><span class="sec-num">07</span><h2>本回中譯英（機車駕照）</h2></div>
+    <div class="card accent"><p style="margin:0;font-size:14.5px">這次只收到作文，沒有學生的翻譯作答。以下先提供標準答案與拆解，可以當堂上口頭練習：先讓學生翻，再對照。</p></div>
+
+    <div class="card">
+      <p class="trans-q">Q1</p>
+      <p class="zh">很多臺灣的青少年，滿十八歲後做的第一件事，就是去考機車駕照。</p>
+      <div class="answer" style="margin:0 -22px -20px;border-radius:0">
+        <p style="margin:0"><span class="arrow">➡️</span><span class="newtext">For many teenagers in Taiwan, the first thing they do after turning eighteen is to take the scooter license test.</span>
+        <p class="why"><b>滿十八歲</b>turn eighteen／reach the age of eighteen；不要寫 full eighteen。</p>
+        <p class="why"><b>句型</b>The first thing (that) they do is (to) V — 主詞是 thing，動詞用 is，不可用 are。</p>
+        <p class="why"><b>考駕照</b>take／get a driver's license test；機車在台灣多為 scooter，motorcycle 亦可。</p></div>
+    </div>
+
+    <div class="card">
+      <p class="trans-q">Q2</p>
+      <p class="zh">然而根據統計，新手的機車騎士，在第一年發生車禍的機率比較高。</p>
+      <div class="answer" style="margin:0 -22px -20px;border-radius:0">
+        <p style="margin:0"><span class="arrow">➡️</span><span class="newtext">However, according to statistics, novice motorcyclists are more likely to be involved in accidents during their first year on the road.</span>
+        <p class="why"><b>根據統計</b>according to statistics（複數、不加 the）。</p>
+        <p class="why"><b>新手騎士</b>novice／inexperienced riders／beginning motorcyclists。</p>
+        <p class="why"><b>機率比較高</b>be more likely to V 或 have a higher chance of V-ing；不要寫 the probability is more high。</p></div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <div class="sec-head"><span class="sec-num">08</span><h2>本週複習任務</h2></div>
+    <div class="card">
+      <ul class="checklist">
+        <li><input type="checkbox" id="t1"><label for="t1"><strong>片段句大掃除：</strong>把本篇 4 個 FRAG 句子各補上主詞與動詞，重寫一次</label></li>
+        <li><input type="checkbox" id="t2"><label for="t2"><strong>主動詞一致：</strong>造 5 句以 online classes / most students / every student 開頭的句子，動詞形式要對</label></li>
+        <li><input type="checkbox" id="t3"><label for="t3"><strong>個人經驗訓練：</strong>用「時間＋科目＋動作＋結果」寫一段 50 字的真實線上課回憶</label></li>
+        <li><input type="checkbox" id="t4"><label for="t4"><strong>背熟拼字：</strong>convenient / convenience / taxi / device / product / statistics</label></li>
+        <li><input type="checkbox" id="t5"><label for="t5"><strong>轉承語成對：</strong>First… Second… Besides… / At first… Before long, however… 各造一組</label></li>
+        <li><input type="checkbox" id="t6"><label for="t6"><strong>下次動筆前：</strong>先把題目提示的關鍵詞圈起來，每個關鍵詞至少寫一句</label></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>學測英文作文批改講義 ② ｜ 依大考中心分項式評分指標（內容・組織・文法句構・字彙拼字）</footer>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('toggle');
+  btn.addEventListener('click',function(){
+    var on=document.body.classList.toggle('hide-answers');
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    btn.textContent=on?'顯示修正答案':'只給錯誤代碼';
+  });
+})();
+</script>
+</body>
+</html>
