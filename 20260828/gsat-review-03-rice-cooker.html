@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>學測英文批改檢討 ③｜舊電鍋事件議論文</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12202e;--ink-soft:#41505f;--paper:#faf9f5;--line:#dfe3e0;
+  --red:#d1342b;--red-wash:#fdeeec;--duck:#f5c518;--harbor:#1b6f7f;--good:#2f7d4f;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --sans:"Noto Sans TC","Bricolage Grotesque",system-ui,sans-serif;
+  --display:"Bricolage Grotesque","Noto Sans TC",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--ink);background-color:var(--paper);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:26px 26px;background-position:-1px -1px;line-height:1.75;-webkit-text-size-adjust:100%}
+.wrap{max-width:940px;margin:0 auto;padding:0 20px 100px}
+
+.masthead{margin:0 -20px 34px;padding:38px 20px 30px;background:var(--ink);color:#fff;border-bottom:6px solid var(--duck)}
+.masthead-inner{max-width:900px;margin:0 auto;display:flex;gap:28px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--duck);margin:0 0 10px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(26px,4.6vw,40px);line-height:1.2;margin:0 0 12px;letter-spacing:-.01em}
+.subtitle{margin:0;color:#b9c6d2;font-size:15px;max-width:46ch}
+.totalbox{border:2px solid var(--duck);border-radius:4px;padding:14px 22px;text-align:center;min-width:170px;background:rgba(245,197,24,.08)}
+.totalbox .label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--duck);text-transform:uppercase}
+.totalbox .num{font-family:var(--display);font-weight:800;font-size:46px;line-height:1;margin:6px 0 2px}
+.totalbox .num small{font-size:18px;color:#8fa3b4;font-weight:600}
+.totalbox .band{font-family:var(--mono);font-size:12px;color:#dfe8ef}
+
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 34px;padding:12px 16px;border:1px solid var(--line);border-radius:4px;background:#fff}
+.toolbar p{margin:0;font-size:13px;color:var(--ink-soft);flex:1;min-width:200px}
+button{font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;border-radius:3px;border:1.5px solid var(--ink);background:#fff;color:var(--ink);padding:8px 16px;transition:background .15s,color .15s}
+button:hover{background:var(--ink);color:#fff}
+button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+button:focus-visible{outline:3px solid var(--harbor);outline-offset:2px}
+
+section{margin:0 0 52px;scroll-margin-top:20px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:22px}
+.sec-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--red)}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(20px,3vw,26px);margin:0;letter-spacing:-.01em}
+h3{font-family:var(--display);font-weight:700;font-size:17px;margin:26px 0 10px}
+.card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:20px 22px;margin-bottom:16px}
+.card.accent{border-left:4px solid var(--harbor)}
+.card.warn{border-left:4px solid var(--red)}
+.card.gold{border-left:4px solid var(--duck)}
+.card.win{border-left:4px solid var(--good)}
+
+.rubric{display:grid;gap:12px}
+.row{display:grid;grid-template-columns:130px 1fr 66px;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 16px}
+.row .name{font-weight:700;font-size:15px}
+.row .name span{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-soft);font-weight:400;letter-spacing:.04em}
+.meter{height:12px;background:#eceeec;border-radius:2px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--harbor)}
+.meter.low i{background:var(--red)}
+.meter.mid i{background:var(--duck)}
+.row .pt{font-family:var(--mono);font-weight:700;font-size:19px;text-align:right}
+.row .pt em{font-style:normal;font-size:12px;color:var(--ink-soft)}
+
+.chip{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:2px;background:var(--ink);color:#fff;white-space:nowrap}
+.chip.sm{font-size:10px;padding:2px 6px}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+.legend .item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft);border:1px solid var(--line);border-radius:3px;padding:4px 8px 4px 4px;background:#fff}
+
+.script{background:#fff;border:1px solid var(--line);border-radius:4px;padding:24px 26px;font-size:16.5px;line-height:2.35}
+.script p{margin:0 0 18px}
+.script p:last-child{margin-bottom:0}
+.para-tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--harbor);display:block;margin-bottom:4px}
+.err{position:relative;color:var(--red);background:var(--red-wash);border-bottom:2px wavy var(--red);cursor:help;padding:0 1px}
+.err sup{font-family:var(--mono);font-size:9.5px;font-weight:700;color:#fff;background:var(--red);border-radius:2px;padding:1px 3px;margin-left:2px;vertical-align:super}
+.err::after{content:attr(data-fix);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);
+  background:var(--ink);color:#fff;font-family:var(--sans);font-size:13px;line-height:1.5;padding:7px 11px;border-radius:3px;
+  white-space:normal;width:max-content;max-width:270px;opacity:0;visibility:hidden;transition:opacity .12s;z-index:9;pointer-events:none;
+  box-shadow:0 4px 14px rgba(18,32,46,.22)}
+.err:hover::after,.err:focus::after{opacity:1;visibility:visible}
+.good{background:rgba(47,125,79,.12);border-bottom:2px solid var(--good);padding:0 2px}
+
+.fix{border:1px solid var(--line);border-radius:4px;background:#fff;margin-bottom:12px;overflow:hidden}
+.fix-top{display:flex;gap:10px;padding:13px 16px;align-items:flex-start;flex-wrap:wrap}
+.fix-no{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;background:var(--ink);border-radius:2px;padding:2px 7px;flex-shrink:0;margin-top:3px}
+.orig{font-size:15.5px;color:var(--red);text-decoration:line-through;text-decoration-color:rgba(209,52,43,.5);flex:1;min-width:60%}
+.answer{border-top:1px dashed var(--line);padding:13px 16px 14px 55px;background:#fcfdfc}
+.answer .arrow{font-family:var(--mono);color:var(--harbor);font-weight:700;margin-right:6px}
+.newtext{font-size:15.5px;font-weight:700;color:var(--harbor)}
+.why{font-size:14px;color:var(--ink-soft);margin:7px 0 0;display:flex;gap:7px}
+.why b{color:var(--ink);font-weight:700;white-space:nowrap}
+body.hide-answers .answer{display:none}
+body.hide-answers .err::after{visibility:hidden!important;opacity:0!important}
+
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);font-size:14.5px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;letter-spacing:.08em;font-weight:400}
+tbody tr:last-child td{border-bottom:none}
+td.from{color:var(--ink-soft);width:36%}
+td.to{font-weight:700;color:var(--harbor)}
+td.yes{color:var(--good);font-weight:700}
+td.no{color:var(--red);font-weight:700}
+
+ul.tips{margin:0;padding-left:0;list-style:none}
+ul.tips li{position:relative;padding-left:24px;margin-bottom:10px;font-size:15px}
+ul.tips li::before{content:"→";position:absolute;left:0;color:var(--red);font-family:var(--mono);font-weight:700}
+
+.sides{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.side{background:#fff;border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.side h4{margin:0 0 10px;font-family:var(--display);font-size:15px}
+.side.pro{border-top:4px solid var(--harbor)}
+.side.con{border-top:4px solid var(--duck)}
+.side ul{margin:0;padding-left:18px;font-size:14.5px}
+.side li{margin-bottom:8px}
+
+.model{background:#fff;border:1px solid var(--line);border-left:4px solid var(--duck);border-radius:4px;padding:24px 26px;font-size:16.5px;line-height:2.05}
+.model p{margin:0 0 20px}
+.model p:last-child{margin-bottom:0}
+.wordcount{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:right;margin-top:14px;padding-top:10px;border-top:1px dashed var(--line)}
+
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.checklist li:last-child{border-bottom:none}
+.checklist input{margin-top:6px;width:16px;height:16px;accent-color:var(--harbor);flex-shrink:0}
+footer{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding-top:26px;border-top:1px solid var(--line)}
+
+@media (max-width:640px){
+  .row{grid-template-columns:1fr 60px;gap:8px}
+  .meter{grid-column:1/-1;order:3}
+  .answer{padding-left:16px}
+  .err::after{max-width:200px}
+  .sides{grid-template-columns:1fr}
+  td.from{width:44%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff}
+  .toolbar{display:none}
+  .masthead{background:#fff;color:#000;border-bottom:3px solid #000}
+  .masthead .subtitle,.totalbox .band{color:#333}
+  .answer{display:block!important}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <p class="eyebrow">GSAT English · Marking Sheet 03</p>
+      <h1>舊電鍋事件<br>議論文批改與檢討</h1>
+      <p class="subtitle">題目：清潔隊員將民眾丟棄的舊電鍋轉送拾荒婦人卻遭起訴。第一段說明雙方的立場與其理由；第二段說明你對此事件的看法。文長至少 120 words。</p>
+    </div>
+    <div class="totalbox">
+      <div class="label">作文預估級分</div>
+      <div class="num">8<small>/20</small></div>
+      <div class="band">落點 7–9 分</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="toolbar">
+    <p><strong>家教模式：</strong>先按「只給錯誤代碼」，學生依代碼自己改一輪，再掀開修正對答案。</p>
+    <button id="toggle" aria-pressed="false">只給錯誤代碼</button>
+    <button onclick="window.print()">列印講義</button>
+  </div>
+
+  <!-- 1 -->
+  <section id="s1">
+    <div class="sec-head"><span class="sec-num">01</span><h2>預估級分與總評</h2></div>
+
+    <div class="rubric">
+      <div class="row"><div class="name">內容<span>CONTENT</span></div><div class="meter low"><i style="width:40%"></i></div><div class="pt">2<em>/5</em></div></div>
+      <div class="row"><div class="name">組織<span>ORGANIZATION</span></div><div class="meter low"><i style="width:40%"></i></div><div class="pt">2<em>/5</em></div></div>
+      <div class="row"><div class="name">文法句構<span>GRAMMAR</span></div><div class="meter low"><i style="width:40%"></i></div><div class="pt">2<em>/5</em></div></div>
+      <div class="row"><div class="name">詞彙拼字<span>VOCAB &amp; SPELLING</span></div><div class="meter low"><i style="width:40%"></i></div><div class="pt">2<em>/5</em></div></div>
+    </div>
+
+    <div class="card warn" style="margin-top:18px">
+      <p style="margin:0"><strong>一句話總評：</strong>字數達標、有清楚的立場，First / Second / Third 這次終於成對出現（前兩篇的目標達成）；但第一段沒有真正寫出「支持判決那一方的理由」，題目要求的雙方論述只完成一半，加上結論句跑到「政府與公司」「貧窮比例」完全離題，四項全部落在低分帶。</p>
+    </div>
+
+    <div class="card warn">
+      <p style="margin:0 0 8px"><strong>致命傷一：雙方理由只有一方</strong></p>
+      <p style="margin:0 0 14px;font-size:14.5px;color:var(--ink-soft)">你寫「These two sides may have their reasons.」之後給了 First 和 Second 兩個理由——但這兩個理由（東西丟了就不屬於任何人／法律沒說不能拿）<strong>都是在幫清潔隊員說話</strong>，支持判決那一方的理由一個都沒有。題目第一段的核心要求就是「雙方的立場<u>與其理由</u>」，這裡直接失分一半。</p>
+      <p style="margin:0 0 8px"><strong>致命傷二：結論離題</strong></p>
+      <p style="margin:0;font-size:14.5px;color:var(--ink-soft)"><em>a balance between the government and the company</em> — 這個事件裡<strong>沒有任何公司</strong>；<em>decrease the percent of the poor</em>（降低窮人比例）也和「法律 vs 人情」無關。倒裝句型是對的，但填進去的內容整段跑掉，閱卷會判定「與主題無關」。</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <div class="sec-head"><span class="sec-num">02</span><h2>三篇累積追蹤</h2></div>
+    <table>
+      <thead><tr><th>檢核項目</th><th>① 黃色小鴨</th><th>② 線上課程</th><th>③ 舊電鍋</th></tr></thead>
+      <tbody>
+        <tr><td>轉承語成對（First→Second）</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓ 達成</td></tr>
+        <tr><td>字數達標</td><td class="yes">140</td><td class="yes">200</td><td class="yes">約 170</td></tr>
+        <tr><td>結尾倒裝句型</td><td class="yes">✓ 正確</td><td class="yes">✓ 正確</td><td class="no">✗ 缺主詞 we</td></tr>
+        <tr><td>依提示寫齊該寫的內容</td><td class="no">✗ 沒寫圖中人物</td><td class="no">✗ 沒寫個人經驗</td><td class="no">✗ 沒寫正方理由</td></tr>
+        <tr><td>主詞動詞一致（SV）</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗ 連錯三篇</td></tr>
+        <tr><td>拼字（SP）</td><td class="no">Kioshong</td><td class="no">convinence, taxic</td><td class="no">gonvernment, thik, though</td></tr>
+        <tr><td>冠詞 a / an / the（ART）</td><td>零星</td><td class="no">a bad score</td><td class="no">a electronic, a women, a paper</td></tr>
+      </tbody>
+    </table>
+    <div class="card win" style="margin-top:16px">
+      <p style="margin:0 0 10px"><strong>✓ 這次真的進步的地方：</strong>First / Second / Third 三點論述完整成對，第二段的論證層次是三篇裡最清楚的一次。這是前兩篇一直提醒的項目，記得肯定他。</p>
+      <p style="margin:0"><strong>三篇不動如山的病根：</strong>① 提示要求什麼，就漏寫什麼；② 主詞動詞一致；③ 拼字。<strong>下一篇請把火力全部集中在「提示逐句拆解」這一項</strong>，其他先放。</p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <div class="sec-head"><span class="sec-num">03</span><h2>原文批改稿</h2></div>
+    <div class="card" style="padding:14px 16px">
+      <div class="legend">
+        <span class="item"><span class="chip sm">SV</span>主動詞一致</span>
+        <span class="item"><span class="chip sm">T</span>時態／動詞形式</span>
+        <span class="item"><span class="chip sm">ART</span>冠詞</span>
+        <span class="item"><span class="chip sm">SP</span>拼字</span>
+        <span class="item"><span class="chip sm">WW</span>用字錯誤</span>
+        <span class="item"><span class="chip sm">FRAG</span>片段句</span>
+        <span class="item"><span class="chip sm">MISS</span>缺主詞／缺字</span>
+        <span class="item"><span class="chip sm">CH</span>中式英文</span>
+        <span class="item"><span class="chip sm">PL</span>單複數</span>
+        <span class="item"><span class="chip sm">LOG</span>離題／邏輯</span>
+      </div>
+    </div>
+
+    <div class="script">
+      <p><span class="para-tag">PARAGRAPH 1 — 應寫「雙方立場與理由」</span>
+      <span class="err" tabindex="0" data-fix="At the end of 2025,（時間片語缺介系詞）">The end of 2025,<sup>MISS</sup></span> a cleaner gave <span class="err" tabindex="0" data-fix="an old electric rice cooker to a woman（an＋母音；electric＝電動的；woman 單數）">a electronic pot to a women<sup>ART·WW</sup></span>. <span class="err" tabindex="0" data-fix="However, he was later reported and prosecuted.（漏掉「被起訴」這個關鍵事實）">But this action was not allowed.<sup>LOG</sup></span> <span class="err" tabindex="0" data-fix="Some people argued that the ruling followed the law.（though→thought）">Some of the people though the law was correct.<sup>SP·PL</sup></span> But other people thought it was too strict, <span class="err" tabindex="0" data-fix="and failed to take real situations into account（逗號後直接接動詞，子句不完整）">couldn't hold real condition on the first sight<sup>FRAG·CH</sup></span>. These two sides may have their reasons. <span class="err" tabindex="0" data-fix="First, once people throw something away, it no longer belongs to anyone.">First, the thing they don't want, and then throw away. It may belongs noone.<sup>FRAG·SV·SP</sup></span> <span class="err" tabindex="0" data-fix="Second, the law does not clearly state that recyclables cannot be given away with the owner's consent.">Second the law didn't said that the recycle can't take away under agree.<sup>T·CH</sup></span></p>
+
+      <p><span class="para-tag">PARAGRAPH 2 — 應寫「你的看法」</span>
+      From my perspective, I don't agree with <span class="err" tabindex="0" data-fix="the ruling（你不同意的是判決，不是新聞）">the news<sup>WW</sup></span>. I don't <span class="err" tabindex="0" data-fix="think the law takes ordinary citizens into consideration">thik the law had consider of the citizen<sup>SP·T</sup></span>. First, the garbage was thrown already, <span class="err" tabindex="0" data-fix="which means anyone who wants it can take it away">so that means anyone who want can take it away<sup>SV·CH</sup></span>. Second, <span class="err" tabindex="0" data-fix="not everyone can afford to buy a new appliance（not everyone 視為單數；electronic 是形容詞）">not everyone have enough budget to have an electronic<sup>SV·WW</sup></span>. Third, I think <span class="err" tabindex="0" data-fix="the law exists only on paper（慣用語是 on paper，不加 a）">the law is just a paper<sup>ART</sup></span>. <span class="err" tabindex="0" data-fix="No written rule can cover every situation in real life.（their→there；all lot of→a lot of）">On the paper, their have all lot of thing can't write completely.<sup>SP·CH</sup></span> To sum up, <span class="good">Only by striking a balance between</span> <span class="err" tabindex="0" data-fix="the letter of the law and human compassion（本案沒有公司；gonvernment 拼字）">the gonvernment and the company<sup>LOG·SP</sup></span>, <span class="err" tabindex="0" data-fix="can we reduce…（倒裝句一定要有主詞 we，且 only by 片語後不加逗號）">can decrease the percent of the poor<sup>MISS</sup></span> and make <span class="err" tabindex="0" data-fix="society better（society 泛指不加 the）">the society better<sup>ART</sup></span>.</p>
+    </div>
+    <p style="font-size:14px;color:var(--good);margin-top:12px"><strong>✓ 亮點：</strong>第二段 First / Second / Third 三點論述層次分明，這是三篇以來最好的一次組織表現。</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <div class="sec-head"><span class="sec-num">04</span><h2>詳細錯誤訂正</h2></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">01</span><span class="orig">The end of 2025, a cleaner gave a electronic pot to a women.</span><span class="chip sm">MISS</span><span class="chip sm">ART</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">At the end of 2025, a sanitation worker gave an old electric rice cooker to a woman who collected recyclables.</span>
+      <p class="why"><b>缺介系詞</b>時間片語必須寫 <em>At</em> the end of 2025；直接以名詞片語開頭句子不成立。</p>
+      <p class="why"><b>冠詞</b>a → an（electronic 以母音開頭）。</p>
+      <p class="why"><b>用字</b>electronic＝電子的（電腦、手機）；電鍋是 <em>electric</em> rice cooker。pot 是鍋子／花盆，電鍋要寫 rice cooker。</p>
+      <p class="why"><b>單複數</b>a women 錯，a woman（單數）／women（複數）。清潔隊員用 sanitation worker 比 cleaner 精確。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">02</span><span class="orig">But this action was not allowed.</span><span class="chip sm">LOG</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">However, he was later reported and even prosecuted, which sparked heated debate.</span>
+      <p class="why"><b>內容不足</b>題目的關鍵事實是「遭檢舉並被起訴」，was not allowed 太籠統，讀者看不出事情有多嚴重，也交代不出後面為何會有兩派意見。</p>
+      <p class="why"><b>語域</b>But 連用兩次放句首，改用 However／Nevertheless 較正式。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">03</span><span class="orig">Some of the people though the law was correct.</span><span class="chip sm">SP</span><span class="chip sm">PL</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Some people argue that the ruling was made strictly according to the law.</span>
+      <p class="why"><b>拼字</b>though（雖然）→ thought（認為）。這兩個字差一個字母但詞性完全不同，是高頻扣分點。</p>
+      <p class="why"><b>用法</b>泛指「有些人」直接用 some people，不加 of the。</p>
+      <p class="why"><b>精確度</b>the law was correct 太模糊；題目講的是「判決依法辦理」＝ the ruling followed the law。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">04</span><span class="orig">But other people thought it was too strict, couldn't hold real condition on the first sight.</span><span class="chip sm">FRAG</span><span class="chip sm">CH</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Others, however, question whether the law is too rigid to take human kindness and real situations into account.</span>
+      <p class="why"><b>句構</b>逗號後直接接 couldn't，這個子句沒有主詞，變成破碎句；應加 and it／which，或改成不定詞片語。</p>
+      <p class="why"><b>中式英文</b>hold real condition 是「握住真實情況」，中文的「兼顧」英文用 take … into account／balance／consider。</p>
+      <p class="why"><b>用字</b>on the first sight 應為 at first sight，但此處語意不合，直接刪除。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">05</span><span class="orig">First, the thing they don't want, and then throw away. It may belongs noone.</span><span class="chip sm">FRAG</span><span class="chip sm">SV</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">First, once people throw something away, it no longer belongs to anyone.</span>
+      <p class="why"><b>片段句</b>「the thing they don't want, and then throw away」只有名詞片語，沒有主要動詞，整句不成立。</p>
+      <p class="why"><b>動詞形式</b>may 後面接原形：may belong，不可 may belongs。</p>
+      <p class="why"><b>搭配＋拼字</b>belong 一定接 to：belong to no one；noone 不是英文字，要分開寫 no one。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">06</span><span class="orig">Second the law didn't said that the recycle can't take away under agree.</span><span class="chip sm">T</span><span class="chip sm">CH</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Second, the law does not clearly state that recyclables cannot be given away with the owner's consent.</span>
+      <p class="why"><b>動詞形式</b>didn't 後面接原形 say，不可 didn't said。</p>
+      <p class="why"><b>詞性</b>recycle 是動詞（回收）；「回收物」名詞是 recyclables／recycled items。</p>
+      <p class="why"><b>語態</b>回收物是「被拿走」，須用被動 cannot be taken away。</p>
+      <p class="why"><b>中式英文</b>under agree 不成詞；「經同意」＝ with consent／with permission。</p>
+      <p class="why"><b>標點</b>Second 後面要加逗號。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">07</span><span class="orig">I don't agree with the news.</span><span class="chip sm">WW</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">I cannot agree with the ruling / the court's decision.</span>
+      <p class="why"><b>用字</b>你不同意的是「判決」，不是「新聞」本身；news 是報導這件事的媒體內容。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">08</span><span class="orig">I don't thik the law had consider of the citizen.</span><span class="chip sm">SP</span><span class="chip sm">T</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">I don't think the law takes ordinary citizens into consideration.</span>
+      <p class="why"><b>拼字</b>thik → think。</p>
+      <p class="why"><b>動詞形式</b>had consider 錯誤；完成式須用過去分詞 had considered，但此處在談現況，用現在式 takes 即可。</p>
+      <p class="why"><b>搭配</b>consider 是及物動詞，後面不加 of；或用 take … into consideration。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">09</span><span class="orig">so that means anyone who want can take it away</span><span class="chip sm">SV</span><span class="chip sm">CH</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">which means anyone who wants it can take it away</span>
+      <p class="why"><b>關係代名詞</b>要承接前面「整句話」，用 which means；so that means 是中文「所以那意思是」的直譯。</p>
+      <p class="why"><b>主動詞一致</b>先行詞 anyone 是單數，關係子句動詞要加 s：who wants；且 want 是及物動詞，需受詞 it。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">10</span><span class="orig">Second, not everyone have enough budget to have an electronic.</span><span class="chip sm">SV</span><span class="chip sm">WW</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Second, not everyone can afford to buy a new appliance.</span>
+      <p class="why"><b>主動詞一致</b>everyone／not everyone 都視為<strong>單數</strong>，動詞要用 has。</p>
+      <p class="why"><b>用字</b>budget 指預算（公司、政府編列），個人「買不起」用 cannot afford。</p>
+      <p class="why"><b>詞性</b>electronic 是形容詞，不能單獨當名詞；家電是 an appliance／an electrical appliance。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">11</span><span class="orig">Third, I think the law is just a paper. On the paper, their have all lot of thing can't write completely.</span><span class="chip sm">ART</span><span class="chip sm">SP</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Third, the law exists only on paper; no written rule can cover every situation in real life.</span>
+      <p class="why"><b>慣用語</b>a paper 是「一張紙／一篇論文」；「紙上談兵、只存在於紙面」固定說 <em>on paper</em>（不加冠詞）。</p>
+      <p class="why"><b>拼字</b>their（他們的）→ there；「有…」的句型是 there are。</p>
+      <p class="why"><b>用字</b>all lot of → a lot of；thing 要複數 things。</p>
+      <p class="why"><b>中式英文</b>can't write completely 是「寫不完整」的直譯；英文要說「法條無法涵蓋所有情況」＝ cannot cover every situation。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">12</span><span class="orig">Only by striking a balance between the gonvernment and the company, can decrease the percent of the poor and make the society better.</span><span class="chip sm">LOG</span><span class="chip sm">MISS</span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Only by striking a balance between the letter of the law and human compassion can we build a society that is both orderly and warm.</span>
+      <p class="why"><b>離題</b>本案的兩方是「法律條文」與「人情／實際情況」，不是政府與公司；「降低窮人比例」也不是本題要談的結論。<strong>結論一定要扣回題目的爭點。</strong></p>
+      <p class="why"><b>缺主詞</b>倒裝句 Only by… can + <u>主詞</u> + 原形動詞；你少了 we，變成沒有主詞的句子。</p>
+      <p class="why"><b>標點</b>Only by 片語與倒裝的主要子句之間<strong>不加逗號</strong>。</p>
+      <p class="why"><b>拼字＋冠詞</b>gonvernment → government；society 泛指時不加 the。</p></div></div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <div class="sec-head"><span class="sec-num">05</span><h2>高分優化建議</h2></div>
+
+    <h3>第一段：議論題的「雙方」寫法模板</h3>
+    <div class="card accent">
+      <p style="margin:0 0 12px;font-size:14.5px;color:var(--ink-soft)">背景一句 → 正方立場＋理由兩句 → 反方立場＋理由兩句。<strong>兩邊的句數要對稱</strong>，這樣閱卷一眼就看得出你寫齊了。</p>
+      <div class="sides">
+        <div class="side pro">
+          <h4>支持判決（你完全沒寫）</h4>
+          <ul>
+            <li>回收物一旦被清潔隊收走，即屬<strong>公有財產</strong>，公務員不得私自處分。</li>
+            <li>若人人可自行決定送誰，制度將難以管理，也可能衍生私相授受。</li>
+            <li>句型：<em>Those who support the ruling argue that…</em></li>
+          </ul>
+        </div>
+        <div class="side con">
+          <h4>質疑法律過嚴（你寫的方向）</h4>
+          <ul>
+            <li>那只是被丟棄的舊電鍋，<strong>沒有任何人受損失</strong>。</li>
+            <li>法律若毫無裁量空間，就無法兼顧人情與實際情況。</li>
+            <li>句型：<em>Others, however, contend that…</em></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3>切題度：三個非寫不可的關鍵字</h3>
+    <div class="card warn">
+      <ul class="tips" style="margin:0">
+        <li>提示裡的 <strong>「遭檢舉並被起訴」</strong>（was reported and prosecuted）、<strong>「依法辦理」</strong>（followed the law）、<strong>「人情與實際情況」</strong>（human kindness and real circumstances）——這三個關鍵詞的英文一定要出現在文章裡，這是閱卷判斷你「有沒有讀懂題目」的直接證據。</li>
+        <li>動筆前先做 30 秒：把提示每一句圈出關鍵詞，寫在稿紙邊，寫完檢查每個關鍵詞有沒有被用到。這是你三篇以來最需要建立的習慣。</li>
+      </ul>
+    </div>
+
+    <h3>詞彙升級</h3>
+    <table>
+      <thead><tr><th>你的寫法</th><th>學測高分替換</th></tr></thead>
+      <tbody>
+        <tr><td class="from">a cleaner</td><td class="to">a sanitation worker</td></tr>
+        <tr><td class="from">a electronic pot</td><td class="to">an old electric rice cooker</td></tr>
+        <tr><td class="from">a women（拾荒婦人）</td><td class="to">a woman who makes a living collecting recyclables</td></tr>
+        <tr><td class="from">the law was correct</td><td class="to">the ruling followed the letter of the law</td></tr>
+        <tr><td class="from">too strict</td><td class="to">overly rigid / inflexible</td></tr>
+        <tr><td class="from">the law is just a paper</td><td class="to">the law exists only on paper</td></tr>
+        <tr><td class="from">make the society better</td><td class="to">build a more compassionate society</td></tr>
+      </tbody>
+    </table>
+
+    <h3>句型升級：議論文三把刀</h3>
+    <div class="card gold">
+      <ul class="tips" style="margin:0">
+        <li><strong>對立句：</strong> <em>Those who support the ruling argue that…, while others contend that the law is too rigid.</em></li>
+        <li><strong>讓步句：</strong> <em>It is true that rules must be followed; however, a law without room for discretion may do more harm than good.</em></li>
+        <li><strong>No matter how 讓步：</strong> <em>No matter how carefully a law is written, it can never cover every situation in real life.</em></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <div class="sec-head"><span class="sec-num">06</span><h2>滿分示範改寫</h2></div>
+    <p style="font-size:14px;color:var(--ink-soft);margin-top:-8px">保留你原本的核心想法：東西已被丟棄、不是人人買得起、法條無法涵蓋所有情況、最後以平衡作結。差別在於補上正方理由，並把結論拉回「法律 vs 人情」。</p>
+
+    <div class="model">
+      <p>At the end of 2025, a sanitation worker in Taipei gave an old electric rice cooker, which someone had thrown away, to a woman who made a living collecting recyclables. He was later reported and even prosecuted, and the case soon sparked heated debate. Those who support the ruling argue that once garbage is collected, it becomes public property, and no public employee should decide privately what to do with it; otherwise, the whole system would be impossible to manage. Others, however, contend that the law is far too rigid. In their eyes, an abandoned rice cooker harmed no one, and a law that ignores human kindness and real circumstances is hard to accept.</p>
+
+      <p>From my perspective, the worker deserves sympathy rather than punishment. First, the cooker had already been thrown away, which means its original owner lost nothing at all. Second, not everyone can afford to buy a new appliance, and giving the cooker a second life helped both the woman and the environment. Third, no matter how carefully a law is written, it can never cover every situation in real life; that is exactly why discretion matters. To sum up, only by striking a balance between the letter of the law and human compassion can we build a society that is both orderly and warm.</p>
+      <p class="wordcount">約 215 words ｜ 雙方理由對稱 ｜ 含關係子句、no matter how 讓步句、倒裝句</p>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <div class="sec-head"><span class="sec-num">07</span><h2>本週複習任務</h2></div>
+    <div class="card">
+      <ul class="checklist">
+        <li><input type="checkbox" id="t1"><label for="t1"><strong>單一目標（本週唯一重點）：</strong>下一篇動筆前，先把提示的每個關鍵詞圈出來列成清單，寫完逐項打勾</label></li>
+        <li><input type="checkbox" id="t2"><label for="t2"><strong>正方理由補寫：</strong>用 <em>Those who support the ruling argue that…</em> 為本題的支持方寫兩個理由</label></li>
+        <li><input type="checkbox" id="t3"><label for="t3"><strong>主動詞一致：</strong>造 5 句以 everyone / not everyone / anyone who… 開頭的句子（全部要用單數動詞）</label></li>
+        <li><input type="checkbox" id="t4"><label for="t4"><strong>背熟拼字：</strong>thought / think / government / no one / there are / recyclables</label></li>
+        <li><input type="checkbox" id="t5"><label for="t5"><strong>倒裝句補主詞：</strong>Only by… can <u>we</u> V — 造三句，每句都要有主詞，且 only by 片語後不加逗號</label></li>
+        <li><input type="checkbox" id="t6"><label for="t6"><strong>冠詞專練：</strong>a / an / the 選擇題 20 題（重點：母音前用 an、可數單數必加冠詞、society 泛指不加 the）</label></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>學測英文作文批改講義 ③ ｜ 依大考中心分項式評分指標（內容・組織・文法句構・字彙拼字）</footer>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('toggle');
+  btn.addEventListener('click',function(){
+    var on=document.body.classList.toggle('hide-answers');
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    btn.textContent=on?'顯示修正答案':'只給錯誤代碼';
+  });
+})();
+</script>
+</body>
+</html>

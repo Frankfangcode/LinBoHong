@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>英文作文教材｜舊電鍋議論文</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12233b;
+  --ink-soft:#3c5170;
+  --duck:#f4c518;
+  --paper:#fdfcf7;
+  --line:#dfe6ef;
+  --red:#c8362c;
+  --green:#26610a;
+  --green-pale:#f1f6ec;
+  --amber-bg:#fff7ed;
+  --amber-line:#e66100;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/100% 28px,
+    var(--paper);
+  color:var(--ink);
+  font-family:'Noto Sans TC',system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.85;
+}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 80px}
+
+.masthead{
+  background:var(--ink);color:#fff;
+  margin:0 -20px 34px;padding:38px 26px 30px;
+  border-bottom:7px solid var(--duck);
+}
+.masthead .kicker{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--duck);margin:0 0 10px;
+}
+.masthead h1{
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+  font-size:clamp(1.55rem,4.6vw,2.35rem);line-height:1.2;margin:0 0 12px;
+}
+.masthead p{margin:0;color:#c3d0e0;font-size:.94rem}
+
+.toolbar{
+  position:sticky;top:0;z-index:30;
+  display:flex;gap:10px;flex-wrap:wrap;
+  padding:12px 0;margin:0 0 30px;
+  background:linear-gradient(var(--paper) 72%,rgba(253,252,247,0));
+}
+.btn{
+  font-family:'Noto Sans TC',sans-serif;font-weight:700;font-size:.86rem;
+  border:2px solid var(--ink);background:#fff;color:var(--ink);
+  padding:9px 17px;border-radius:8px;cursor:pointer;
+  transition:transform .12s ease,background .15s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--duck);border-color:var(--ink)}
+.btn:focus-visible{outline:3px solid var(--amber-line);outline-offset:2px}
+
+section{margin:0 0 46px;scroll-margin-top:70px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:20px}
+.sec-num{font-family:var(--mono);font-weight:700;font-size:.82rem;color:#fff;background:var(--ink);padding:3px 9px;border-radius:5px}
+.sec-head h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.28rem;margin:0}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.callout{background:var(--amber-bg);border-left:5px solid var(--amber-line);border-radius:0 10px 10px 0;padding:16px 20px;margin:18px 0}
+.callout strong{color:var(--amber-line)}
+.goal{background:var(--ink);color:#fff;border-radius:12px;padding:22px 24px;text-align:center}
+.goal .label{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;color:var(--duck);text-transform:uppercase}
+.goal .big{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.3rem,4.4vw,1.85rem);margin:8px 0 6px}
+.goal .sub{color:#c3d0e0;font-size:.9rem;margin:0}
+
+/* prompt box */
+.prompt{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:22px 24px}
+.prompt .t{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 12px}
+.prompt ol{margin:12px 0 0;padding-left:22px}
+.prompt li{margin-bottom:8px}
+.prompt .hl{background:linear-gradient(transparent 58%,var(--duck) 58%);font-weight:700}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem;background:#fff}
+th{background:var(--green);color:#fff;text-align:left;padding:10px 12px;font-weight:700;font-size:.86rem}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even){background:var(--green-pale)}
+.en{font-family:'Bricolage Grotesque',sans-serif;font-weight:600}
+
+.err{border:1px solid var(--line);background:#fff;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.err .top{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-weight:700;font-size:.72rem;background:var(--red);color:#fff;padding:2px 8px;border-radius:4px;flex-shrink:0;margin-top:3px}
+.orig{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;text-decoration:underline wavy var(--red) 1.5px;text-underline-offset:4px}
+.fix{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.fix .arrow{color:var(--green);font-weight:700}
+.fix .why{display:block;font-size:.88rem;color:var(--ink-soft);margin-top:4px}
+body.hide-answers .fix{display:none}
+body.hide-answers .err::after{content:'▸ 先自己想想看';font-family:var(--mono);font-size:.76rem;color:var(--ink-soft)}
+
+/* code legend */
+.legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin-top:6px}
+.legend div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:.86rem}
+.legend b{font-family:var(--mono);color:var(--red);font-size:.78rem;margin-right:6px}
+
+.bank{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:18px;background:#fff}
+.bank h3{margin:0;background:var(--green-pale);color:var(--green);font-family:'Bricolage Grotesque',sans-serif;font-size:1rem;padding:12px 18px;border-bottom:1px solid var(--line)}
+.bank .body{padding:14px 18px}
+.sent{margin-bottom:12px}
+.sent .s{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:1.02rem;display:block}
+.sent .zh{font-size:.86rem;color:var(--ink-soft)}
+.lv{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;padding:2px 7px;border-radius:4px;margin-right:6px;vertical-align:2px}
+.lv-a{background:var(--green-pale);color:var(--green)}
+.lv-b{background:#fdeceb;color:var(--red)}
+.warn{font-size:.86rem;color:var(--amber-line);margin-top:6px}
+
+.drill{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:12px}
+.drill .q{font-weight:700;margin-bottom:8px}
+.drill .step{font-size:.92rem;margin:4px 0}
+.drill .step b{color:var(--green)}
+.blank{display:block;border-bottom:1.5px dashed var(--line);height:30px;margin:6px 0}
+body.hide-answers .drill .ans{display:none}
+
+.model{background:#fff;border:1px solid var(--line);border-left:5px solid var(--duck);border-radius:0 10px 10px 0;padding:18px 22px}
+.model p{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:1rem;line-height:1.9;margin:0 0 14px}
+
+.check{list-style:none;padding:0;margin:0}
+.check li{display:flex;gap:11px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line)}
+.check li::before{content:'☐';font-size:1.2rem;color:var(--green);line-height:1.3}
+
+footer{text-align:center;color:var(--ink-soft);font-size:.84rem;border-top:2px solid var(--ink);padding-top:20px;margin-top:50px}
+
+@media(max-width:600px){body{font-size:15px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff}
+  body.hide-answers .fix,body.hide-answers .drill .ans{display:block!important}
+  body.hide-answers .err::after{content:''}
+  .toolbar{display:none}
+  .masthead{margin:0 0 20px;background:#12233b!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  section{page-break-inside:avoid}
+  th{background:#26610a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body class="hide-answers">
+<div class="wrap">
+
+<header class="masthead">
+  <p class="kicker">English Writing · Worksheet 04</p>
+  <h1>舊電鍋議論文</h1>
+  <p>今天只練一件事——題目叫你寫什麼，你就寫什麼。</p>
+</header>
+
+<div class="toolbar">
+  <button class="btn primary" id="toggle">顯示答案</button>
+  <button class="btn" onclick="window.print()">列印</button>
+</div>
+
+<!-- 01 -->
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>今天的目標</h2></div>
+  <div class="goal">
+    <div class="label">Today's Target</div>
+    <div class="big">題目要求什麼，就寫什麼</div>
+    <p class="sub">拼字、時態今天先不管。一次只練一個地方，才練得起來。</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>題目</h2></div>
+  <div class="prompt">
+    <p class="t">2025 年年底，臺北市一位清潔隊員將民眾丟棄的舊電鍋轉送給一位拾荒婦人，後來遭到起訴。請根據這則新聞寫一篇英文作文，文長至少 120 字。</p>
+    <ol>
+      <li>第一段：說明<span class="hl">支持與反對這項判決的雙方立場，以及各自的理由</span>。</li>
+      <li>第二段：說明你對這件事的看法。</li>
+    </ol>
+  </div>
+  <div class="callout">
+    <strong>動筆前 30 秒</strong>把題目每一個要求圈起來，寫成清單。寫完一項打一個勾，全部打完才交卷。
+  </div>
+  <div class="card">
+    <p><b>本題的清單長這樣：</b></p>
+    <ul class="check">
+      <li>支持判決的立場 ＋ 理由（至少 2 個）</li>
+      <li>反對判決的立場 ＋ 理由（至少 2 個）</li>
+      <li>我自己的看法 ＋ 理由</li>
+      <li>分兩段</li>
+      <li>超過 120 字</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 03 -->
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>錯誤代碼自我訂正</h2></div>
+  <p style="margin-top:-8px;color:var(--ink-soft);font-size:.92rem">先只看代碼，自己改。改完再按上面「顯示答案」對照。</p>
+
+  <div class="legend">
+    <div><b>SP</b>拼字</div>
+    <div><b>SV</b>主詞動詞一致</div>
+    <div><b>T</b>時態</div>
+    <div><b>ART</b>冠詞</div>
+    <div><b>PL</b>單複數</div>
+    <div><b>PREP</b>介系詞</div>
+    <div><b>WW</b>用字錯誤</div>
+    <div><b>CH</b>中式英文</div>
+    <div><b>CONT</b>口語</div>
+    <div><b>LOG</b>邏輯離題</div>
+    <div><b>MISS</b>漏字</div>
+  </div>
+
+  <div style="height:18px"></div>
+
+  <div class="err"><div class="top"><span class="chip">PREP</span><span class="orig">The end of 2025</span></div>
+    <div class="fix"><span class="arrow">➡️</span> At the end of 2025<span class="why">時間點要加介系詞 at。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">ART / WW</span><span class="orig">a electronic pot</span></div>
+    <div class="fix"><span class="arrow">➡️</span> an old electric rice cooker<span class="why">母音前用 an；electronic 是「電子的」，電鍋要用 electric。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">PL</span><span class="orig">a women</span></div>
+    <div class="fix"><span class="arrow">➡️</span> a woman<span class="why">a 後面接單數。women 是複數。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">SP</span><span class="orig">Some of the people though</span></div>
+    <div class="fix"><span class="arrow">➡️</span> thought<span class="why">though（雖然）與 thought（認為）不同字。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">CH</span><span class="orig">couldn't hold real condition</span></div>
+    <div class="fix"><span class="arrow">➡️</span> failed to take real situations into account<span class="why">「兼顧」＝ take … into account，不是 hold。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">SV / PREP</span><span class="orig">It may belongs noone</span></div>
+    <div class="fix"><span class="arrow">➡️</span> It may belong to no one<span class="why">may 後接原形動詞；belong 必須接 to；no one 要分開寫。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">T</span><span class="orig">the law didn't said</span></div>
+    <div class="fix"><span class="arrow">➡️</span> didn't say<span class="why">did 已經表示過去，後面用原形。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">WW</span><span class="orig">the recycle can't take away</span></div>
+    <div class="fix"><span class="arrow">➡️</span> recyclables cannot be taken away<span class="why">recycle 是動詞；回收物的名詞是 recyclables。而且要用被動。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">WW</span><span class="orig">under agree</span></div>
+    <div class="fix"><span class="arrow">➡️</span> with consent<span class="why">「經過同意」的固定說法。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">LOG</span><span class="orig">I don't agree with the news</span></div>
+    <div class="fix"><span class="arrow">➡️</span> the ruling<span class="why">你不同意的是「判決」，不是「新聞」。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">SP</span><span class="orig">I don't thik</span></div>
+    <div class="fix"><span class="arrow">➡️</span> think<span class="why">漏了字母 n。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">T / WW</span><span class="orig">the law had consider of the citizen</span></div>
+    <div class="fix"><span class="arrow">➡️</span> the law takes citizens into consideration<span class="why">had 後面要用過去分詞；consider of 沒有這種用法。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">CONT</span><span class="orig">so that means</span></div>
+    <div class="fix"><span class="arrow">➡️</span> which means<span class="why">太口語，作文改用關係代名詞。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">SV</span><span class="orig">anyone who want</span></div>
+    <div class="fix"><span class="arrow">➡️</span> anyone who wants<span class="why">anyone 是單數，動詞加 s。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">SV</span><span class="orig">not everyone have</span></div>
+    <div class="fix"><span class="arrow">➡️</span> not everyone has<span class="why">everyone 是單數。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">WW</span><span class="orig">to have an electronic</span></div>
+    <div class="fix"><span class="arrow">➡️</span> to afford a new appliance<span class="why">electronic 是形容詞，不能當名詞用。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">ART / CH</span><span class="orig">the law is just a paper</span></div>
+    <div class="fix"><span class="arrow">➡️</span> the law exists only on paper<span class="why">「淪為一紙空文」的英文說法；paper 這裡不可數。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">SP / WW</span><span class="orig">their have all lot of</span></div>
+    <div class="fix"><span class="arrow">➡️</span> there are a lot of<span class="why">their（他們的）跟 there（有）不同字。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">SP</span><span class="orig">the gonvernment</span></div>
+    <div class="fix"><span class="arrow">➡️</span> the government<span class="why">多打了一個 n。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">MISS</span><span class="orig">Only by … , can decrease the percent</span></div>
+    <div class="fix"><span class="arrow">➡️</span> only when the law is applied with common sense <b>can it</b> truly serve people<span class="why">倒裝句漏了主詞；only by 片語後面不加逗號。</span></div></div>
+
+  <div class="err"><div class="top"><span class="chip">LOG</span><span class="orig">a balance between the government and the company</span></div>
+    <div class="fix"><span class="arrow">➡️</span> 整句刪掉重寫<span class="why">這件事裡面沒有任何「公司」。為了用背過的句型而硬塞內容，是最傷的失分。</span></div></div>
+
+  <div class="callout">
+    <strong>提醒</strong><span class="en">only by striking a balance between…</span> 這句已經連續用了三篇。<b>句型是工具，不是填空題</b>——只有真的有兩方在拉扯的時候才能用。
+  </div>
+</section>
+
+<!-- 04 -->
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>句型庫：四組八句</h2></div>
+  <p style="margin-top:-8px;color:var(--ink-soft);font-size:.92rem">先求對，再求好。基礎版全部都是你已經會的字，抄三遍，抄到不用想就寫得出來。</p>
+
+  <div class="bank">
+    <h3>① 主題句 · 每段第一句</h3>
+    <div class="body">
+      <div class="sent"><span class="lv lv-a">基礎</span><span class="s">Many people are talking about this news.</span><span class="zh">很多人在討論這則新聞。</span></div>
+      <div class="sent"><span class="lv lv-a">基礎</span><span class="s">People have different opinions about this case.</span><span class="zh">大家對這件事看法不同。</span></div>
+      <div class="sent"><span class="lv lv-b">進階</span><span class="s">The case has sparked heated debate.</span><span class="zh">這案子引發激烈爭論。</span></div>
+      <p class="warn">⚠ 常見錯：把「背景介紹」當主題句。<span class="en">At the end of 2025, a sanitation worker…</span> 那是在講故事，不是主題句。背景可以留，但要往後放。</p>
+      <p class="warn">✓ 自我檢查：把每段第一句單獨抽出來讀，如果光讀這兩句就能猜出整篇在寫什麼，主題句就合格了。</p>
+    </div>
+  </div>
+
+  <div class="bank">
+    <h3>② 反方轉折</h3>
+    <div class="body">
+      <div class="sent"><span class="lv lv-a">基礎</span><span class="s">Other people think the law is too strict.</span><span class="zh">另一些人覺得法律太嚴。</span></div>
+      <div class="sent"><span class="lv lv-a">基礎</span><span class="s">Some people say it hurts no one.</span><span class="zh">有些人說這沒有傷害到任何人。</span></div>
+      <div class="sent"><span class="lv lv-b">進階</span><span class="s">Others, however, contend that the law is far too rigid.</span><span class="zh">然而也有人主張法律過於僵化。</span></div>
+      <div class="sent"><span class="lv lv-b">進階</span><span class="s">Those who disagree point out that no real harm was done.</span><span class="zh">反對的人指出並沒有造成實質損害。</span></div>
+      <p class="warn">✓ 公式：<b>先講誰 → 再講怎麼說 → 再講說什麼</b>（主詞 ＋ contend / point out / argue ＋ that 子句）</p>
+      <p class="warn">⚠ 什麼時候不能用：題目只要你寫自己的看法時，一句都不要用。</p>
+    </div>
+  </div>
+
+  <div class="bank">
+    <h3>③ 引出理由</h3>
+    <div class="body">
+      <div class="sent"><span class="lv lv-a">基礎</span><span class="s">The reason is that the trash belongs to the government.</span><span class="zh">理由是垃圾屬於政府。</span></div>
+      <div class="sent"><span class="lv lv-a">基礎</span><span class="s">This is because he is a public worker.</span><span class="zh">因為他是公務人員。</span></div>
+      <div class="sent"><span class="lv lv-b">進階</span><span class="s">What concerns them most is that the whole system would break down.</span><span class="zh">他們最擔心的是整個制度會垮掉。</span></div>
+      <p class="warn">⚠ 理由講完<b>一定要接一個例子或說明</b>，不可以直接跳到 To sum up。</p>
+      <p class="warn">⚠ 進階句易錯：What 子句當主詞是<b>單數</b>，要用 is 不是 are。</p>
+    </div>
+  </div>
+
+  <div class="bank">
+    <h3>④ 結論</h3>
+    <div class="body">
+      <div class="sent"><span class="lv lv-a">基礎</span><span class="s">In my opinion, the law should be kinder to people.</span><span class="zh">我認為法律應該對人更寬容。</span></div>
+      <div class="sent"><span class="lv lv-a">基礎</span><span class="s">I think the law needs to consider real situations.</span><span class="zh">我覺得法律需要考慮真實情況。</span></div>
+      <div class="sent"><span class="lv lv-b">進階</span><span class="s">All things considered, the law should leave room for compassion.</span><span class="zh">整體而言，法律應該留有人情空間。</span></div>
+      <div class="sent"><span class="lv lv-b">進階</span><span class="s">Only when the law is applied with common sense can it truly serve people.</span><span class="zh">唯有合理適用，法律才能真正服務人民。</span></div>
+      <p class="warn">⚠ 倒裝句 Only when 開頭，後面 <b>can it</b> 要顛倒，<b>主詞不可以省略</b>。</p>
+      <p class="warn">⚠ 結論<b>不可以冒出前面沒提過的東西</b>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>中文簡化練習</h2></div>
+  <div class="callout">
+    <strong>為什麼要練這個</strong>翻不出來，常常不是英文不會，是<b>中文想得太複雜</b>。先把中文改成小學生講得出來的話，英文自然就出來了。
+  </div>
+
+  <div class="card">
+    <p><b>三步驟：</b></p>
+    <p><b>1 · 找出動作。</b>抽象中文的問題是沒有動作，全是名詞。先問自己：<b>誰做了什麼？</b></p>
+    <p><b>2 · 一句只留一個動作。</b>三個動作就切成三句。</p>
+    <p><b>3 · 數字數。</b>超過 15 個字就砍。砍掉的通常是形容詞，那些本來就翻不出來。</p>
+    <p style="color:var(--amber-line)"><b>關鍵：</b>抽象名詞當主詞，一定翻不出來。改成具體的人或東西當主詞就通了。</p>
+  </div>
+
+  <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-size:1.05rem">示範</h3>
+
+  <div class="drill">
+    <div class="q">1. 法律缺乏彈性難以兼顧人情</div>
+    <div class="ans">
+      <p class="step"><b>小學生版：</b>法律太死。它不管人的感情。</p>
+      <p class="step"><b>英文：</b><span class="en">The law is too strict. It does not care about people's feelings.</span></p>
+    </div>
+  </div>
+
+  <div class="drill">
+    <div class="q">2. 善意不應被制度所扼殺</div>
+    <div class="ans">
+      <p class="step"><b>小學生版：</b>他想幫助別人。規定不應該處罰他。</p>
+      <p class="step"><b>英文：</b><span class="en">He wanted to help someone. The rule should not punish him.</span></p>
+    </div>
+  </div>
+
+  <div class="drill">
+    <div class="q">3. 資源再利用有助於環境永續</div>
+    <div class="ans">
+      <p class="step"><b>小學生版：</b>舊東西可以再用。這樣對環境好。</p>
+      <p class="step"><b>英文：</b><span class="en">Old things can be used again. This is good for the environment.</span></p>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-size:1.05rem;margin-top:26px">換你做</h3>
+
+  <div class="drill">
+    <div class="q">1. 科技的進步改變了人們的溝通方式</div>
+    <span class="blank"></span><span class="blank"></span>
+    <div class="ans"><p class="step"><b>參考：</b>科技變得更好。我們用不同方式聊天。<br><span class="en">Technology has become better. We talk to each other in new ways.</span></p></div>
+  </div>
+
+  <div class="drill">
+    <div class="q">2. 過度使用手機對健康造成負面影響</div>
+    <span class="blank"></span><span class="blank"></span>
+    <div class="ans"><p class="step"><b>參考：</b>我們用手機太久。這樣對身體不好。<br><span class="en">We use our phones too much. This is bad for our health.</span></p>
+    <p class="step" style="color:var(--amber-line)">「過度使用」→「用太久」，「造成負面影響」→「不好」，「健康」→「身體」。全部都是你會的字。</p></div>
+  </div>
+
+  <div class="drill">
+    <div class="q">3. 公共藝術能提升城市的觀光價值</div>
+    <span class="blank"></span><span class="blank"></span>
+    <div class="ans"><p class="step"><b>參考：</b>城市裡有藝術品。更多遊客會來玩。<br><span class="en">There is public art in the city. More tourists will come to visit.</span></p></div>
+  </div>
+
+  <div class="drill">
+    <div class="q">4. 線上學習缺乏面對面互動的真實感</div>
+    <span class="blank"></span><span class="blank"></span>
+    <div class="ans"><p class="step"><b>參考：</b>我們在網路上上課。我們看不到真的同學。<br><span class="en">We take classes online. We cannot meet our classmates in person.</span></p></div>
+  </div>
+
+  <div class="drill">
+    <div class="q">5. 長照制度減輕了家庭的照顧負擔</div>
+    <span class="blank"></span><span class="blank"></span>
+    <div class="ans"><p class="step"><b>參考：</b>政府照顧老人。家人就沒那麼累。<br><span class="en">The government takes care of old people. Their families are not so tired.</span></p>
+    <p class="step" style="color:var(--amber-line)">原句主詞是「制度」（抽象）；改完主詞變成「家人」（具體的人）。這一步學會了，翻譯就通了大半。</p></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>評分標準</h2></div>
+  <table>
+    <thead><tr><th style="width:26%">項目</th><th>怎麼拿分</th></tr></thead>
+    <tbody>
+      <tr><td><b>內容 5–4 分</b></td><td>主題句清楚切題，並有<b>具體、完整</b>的相關細節支持</td></tr>
+      <tr><td><b>內容 3 分</b></td><td>主題不夠清楚，部分敘述發展不全</td></tr>
+      <tr><td><b>字數不足</b></td><td>總分直接扣 1 分</td></tr>
+      <tr><td><b>沒有分段</b></td><td>總分再扣 1 分</td></tr>
+      <tr><td><b>等級</b></td><td>19–20 特優｜15–18 優｜10–14 可｜5–9 差｜0–4 劣</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <strong>白送的分</strong>字數不足、沒有分段——這兩項是不寫就沒有、寫了就有的分數。你的字數一直都夠，這兩項已經拿到了。
+  </div>
+</section>
+
+<!-- 07 -->
+<section>
+  <div class="sec-head"><span class="sec-num">07</span><h2>參考範文</h2></div>
+  <p style="margin-top:-8px;color:var(--ink-soft);font-size:.92rem">保留你原本的想法，補上支持判決那一方的理由。約 215 字。</p>
+  <div class="model">
+    <p>At the end of 2025, a sanitation worker in Taipei gave an old electric rice cooker, which someone had thrown away, to a woman who made a living collecting recyclables. He was later reported and even prosecuted, and the case soon sparked heated debate. Those who support the ruling argue that once garbage is collected, it becomes public property, and no public employee should decide privately what to do with it; otherwise, the whole system would be impossible to manage. Others, however, contend that the law is far too rigid. In their eyes, an abandoned rice cooker harmed no one, and a law that ignores human kindness and real circumstances is hard to accept.</p>
+    <p>From my perspective, the ruling deserves respect, but the law should leave more room for compassion. First, once something is thrown away, it no longer serves its original owner, and giving it to someone in need wastes nothing. Second, not everyone can afford a new appliance, and a small act of kindness may mean a great deal to a person living on the edge. Third, a law that exists only on paper cannot cover every situation in real life; that is exactly why judgment matters. All things considered, only when the law is applied with common sense can it truly serve the people it was written to protect.</p>
+  </div>
+  <div class="callout">
+    <strong>注意字數</strong>這篇只比你原本多 45 個字。<b>字數從來不是你的問題</b>——同樣的長度，重點是每一句都在做事。不用寫更多，要寫更準。
+  </div>
+</section>
+
+<!-- 08 -->
+<section>
+  <div class="sec-head"><span class="sec-num">08</span><h2>今天的任務</h2></div>
+  <ul class="check">
+    <li>把題目的每個要求圈起來，寫成清單</li>
+    <li>用錯誤代碼自己訂正一遍，再看答案</li>
+    <li>用<b>中文</b>寫出「支持判決」的兩個理由，一句不超過 15 個字</li>
+    <li>把那兩句翻成英文，開頭用 <span class="en">Those who support the ruling argue that…</span></li>
+    <li>只補這兩句，其他一個字都不要動</li>
+    <li>寫完讀出聲一遍，只檢查一件事：<b>動詞有沒有加 s</b></li>
+    <li>句型庫基礎八句，各抄三遍</li>
+  </ul>
+</section>
+
+<footer>
+  英文作文 · Worksheet 04 · 舊電鍋議論文<br>
+  題目叫你寫什麼，你就寫什麼。
+</footer>
+
+</div>
+
+<script>
+const b=document.body,t=document.getElementById('toggle');
+t.addEventListener('click',()=>{
+  b.classList.toggle('hide-answers');
+  t.textContent=b.classList.contains('hide-answers')?'顯示答案':'隱藏答案';
+});
+</script>
+</body>
+</html>
