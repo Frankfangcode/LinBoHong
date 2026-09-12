@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>動筆前大綱表｜英文作文</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12233b;--ink-soft:#3c5170;--duck:#f4c518;--paper:#fdfcf7;
+  --line:#dfe6ef;--red:#c8362c;--green:#26610a;--green-pale:#f1f6ec;
+  --amber-bg:#fff7ed;--amber-line:#e66100;--mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+font-family:'Noto Sans TC',system-ui,sans-serif;font-size:16px;line-height:1.8}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 70px}
+
+.masthead{background:var(--ink);color:#fff;margin:0 -20px 26px;padding:32px 26px 26px;border-bottom:7px solid var(--duck)}
+.masthead .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--duck);margin:0 0 8px}
+.masthead h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.5rem,4.4vw,2.15rem);margin:0 0 10px}
+.masthead p{margin:0;color:#c3d0e0;font-size:.93rem}
+
+.rule{background:var(--duck);color:var(--ink);border-radius:10px;padding:14px 18px;font-weight:700;margin-bottom:24px;text-align:center}
+
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.btn{font-family:'Noto Sans TC',sans-serif;font-weight:700;font-size:.84rem;border:2px solid var(--ink);
+background:#fff;color:var(--ink);padding:8px 15px;border-radius:8px;cursor:pointer}
+.btn.on{background:var(--ink);color:#fff}
+.btn:focus-visible{outline:3px solid var(--amber-line);outline-offset:2px}
+.hint{font-size:.86rem;color:var(--ink-soft);margin:0 0 26px}
+
+.step{margin-bottom:30px}
+.step-head{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.step-num{font-family:var(--mono);font-weight:700;font-size:.8rem;color:#fff;background:var(--ink);padding:3px 10px;border-radius:5px}
+.step-head h2{font-family:'Bricolage Grotesque',sans-serif;font-size:1.15rem;margin:0}
+.step-head .tag{font-size:.8rem;color:var(--ink-soft);margin-left:auto}
+
+.box{background:#fff;border:2px solid var(--ink);border-radius:10px;padding:16px 18px}
+.box.thin{border-width:1px;border-color:var(--line)}
+.q{font-weight:700;margin:0 0 8px}
+.sub{font-size:.85rem;color:var(--ink-soft);margin:0 0 10px}
+
+.write{border:none;border-bottom:1.5px solid var(--line);min-height:34px;outline:none;
+padding:4px 2px;font-family:inherit;font-size:.97rem;line-height:1.9}
+.write:focus{border-bottom-color:var(--amber-line);background:#fffdf5}
+.write:empty::before{content:attr(data-ph);color:#b9c4d2}
+
+/* 大綱格子 */
+.grid-row{display:grid;grid-template-columns:108px 1fr 1fr;gap:0;border:1px solid var(--line);border-top:none;background:#fff}
+.grid-row:first-of-type{border-top:1px solid var(--line);border-radius:8px 8px 0 0}
+.grid-row:last-of-type{border-radius:0 0 8px 8px}
+.grid-head{display:grid;grid-template-columns:108px 1fr 1fr;background:var(--green);color:#fff;
+font-size:.82rem;font-weight:700;border-radius:8px 8px 0 0}
+.grid-head div{padding:9px 12px;border-right:1px solid rgba(255,255,255,.2)}
+.grid-head div:last-child{border-right:none}
+.grid-head+.grid-row{border-top:none;border-radius:0}
+.grid-row>div{padding:11px 12px;border-right:1px solid var(--line);min-height:74px}
+.grid-row>div:last-child{border-right:none}
+.grid-row .lab{background:var(--green-pale);font-weight:700;font-size:.84rem;color:var(--green);line-height:1.5}
+.grid-row .lab small{display:block;font-weight:400;color:var(--ink-soft);font-size:.74rem;margin-top:3px}
+.grid-row .cell{cursor:text}
+.grid-row .cell:focus{background:#fffdf5;outline:none;box-shadow:inset 0 0 0 2px var(--duck)}
+.grid-row .cell:empty::before{content:attr(data-ph);color:#b9c4d2;font-size:.88rem}
+.grid-row .cell.en{font-family:'Bricolage Grotesque',sans-serif;font-weight:600}
+
+.gate{background:var(--amber-bg);border-left:5px solid var(--amber-line);border-radius:0 10px 10px 0;
+padding:14px 18px;margin:14px 0 0;font-weight:700}
+.gate span{color:var(--amber-line)}
+
+.callout{background:var(--amber-bg);border-left:5px solid var(--amber-line);border-radius:0 10px 10px 0;padding:15px 18px;margin:16px 0}
+.callout strong{color:var(--amber-line)}
+.danger{background:#fdeceb;border-left-color:var(--red)}
+.danger strong{color:var(--red)}
+
+.check{list-style:none;padding:0;margin:0}
+.check li{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);font-size:.95rem}
+.check li::before{content:'☐';font-size:1.15rem;color:var(--green);line-height:1.3}
+
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.chips span{background:#fff;border:1px solid var(--line);border-radius:99px;padding:4px 12px;font-size:.83rem}
+
+.skeleton{display:none}
+.skeleton.active{display:block}
+
+footer{text-align:center;color:var(--ink-soft);font-size:.83rem;border-top:2px solid var(--ink);padding-top:18px;margin-top:40px}
+
+@media(max-width:640px){
+  body{font-size:15px}
+  .grid-head{display:none}
+  .grid-row{grid-template-columns:1fr;border-radius:8px;border-top:1px solid var(--line);margin-bottom:10px}
+  .grid-row>div{border-right:none;border-bottom:1px solid var(--line);min-height:60px}
+  .grid-row>div:last-child{border-bottom:none}
+  .grid-row .cell::after{content:'';display:block}
+}
+@media print{
+  body{background:#fff}
+  .toolbar,.hint{display:none}
+  .masthead{margin:0 0 16px;background:#12233b!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .grid-head{background:#26610a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rule,.grid-row .lab,.gate,.callout{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .skeleton{display:block!important;page-break-before:always}
+  .skeleton:first-of-type{page-break-before:auto}
+  .step{page-break-inside:avoid}
+  .grid-row>div{min-height:66px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="kicker">Pre-Writing Outline</p>
+  <h1>動筆前大綱表</h1>
+  <p>格子沒填完，不准寫英文。填格子 5 分鐘，省下重寫的 40 分鐘。</p>
+</header>
+
+<div class="rule">寫作順序：圈題目 → 填中文格子 → 給老師看 → 才寫英文</div>
+
+<!-- STEP 1 -->
+<div class="step">
+  <div class="step-head"><span class="step-num">STEP 1</span><h2>先拆題目</h2><span class="tag">3 分鐘</span></div>
+  <div class="box">
+    <p class="q">把提示裡的每一個要求抄下來，一項一行。</p>
+    <p class="sub">看到「請說明」「請描述」「並說明原因」這些字，每一個都是一項要求。有幾項就寫幾行。</p>
+    <div class="write" contenteditable data-ph="要求 1："></div>
+    <div class="write" contenteditable data-ph="要求 2："></div>
+    <div class="write" contenteditable data-ph="要求 3："></div>
+    <div class="write" contenteditable data-ph="要求 4："></div>
+    <div class="gate">✋ <span>數一數：你寫了幾項？</span>等一下每寫完一項，回來打一個勾。</div>
+  </div>
+
+  <div class="callout danger">
+    <strong>最容易搞錯的一題</strong>
+    <b>題目有圖片 ≠ 要你描述圖片。</b>要看提示怎麼問——<br>
+    問「哪一個」→ <b>選一個</b>，不要三個都介紹。<br>
+    問「圖中發生什麼事」→ 才是要你描述。
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step">
+  <div class="step-head"><span class="step-num">STEP 2</span><h2>選骨架</h2><span class="tag">30 秒</span></div>
+  <div class="toolbar">
+    <button class="btn on" data-sk="a">A · 選擇 ＋ 理由</button>
+    <button class="btn" data-sk="b">B · 雙方立場 ＋ 己見</button>
+    <button class="btn" data-sk="c">C · 描述 ＋ 感想／回憶</button>
+  </div>
+  <p class="hint">選錯骨架，後面寫得再好都沒用。不確定就回去看 STEP 1 的清單。（列印時三種都會印出來。）</p>
+
+  <!-- A -->
+  <div class="skeleton active" id="sk-a">
+    <div class="callout"><strong>什麼時候用 A</strong>提示裡出現「你對<b>哪一個</b>最感興趣」「你會<b>選擇</b>哪一個」「你<b>比較喜歡</b>哪個」。</div>
+
+    <div class="step-head" style="margin-top:18px"><span class="step-num">§1</span><h2>第一段</h2></div>
+    <div class="grid-head"><div>格子</div><div>先寫中文</div><div>再翻英文</div></div>
+    <div class="grid-row"><div class="lab">表態<small>第一句就講你選哪個</small></div>
+      <div class="cell" contenteditable data-ph="我選＿＿＿"></div><div class="cell en" contenteditable data-ph="Among the three…, the one that appeals to me most is…"></div></div>
+    <div class="grid-row"><div class="lab">理由 1</div>
+      <div class="cell" contenteditable data-ph="因為＿＿＿（15 字內）"></div><div class="cell en" contenteditable data-ph="The main reason is that…"></div></div>
+    <div class="grid-row"><div class="lab">例子 1<small>理由不能光講</small></div>
+      <div class="cell" contenteditable data-ph="舉例：＿＿＿"></div><div class="cell en" contenteditable data-ph="For example, …"></div></div>
+    <div class="grid-row"><div class="lab">理由 2</div>
+      <div class="cell" contenteditable data-ph="還有一個原因＿＿＿"></div><div class="cell en" contenteditable data-ph="Another reason is that…"></div></div>
+    <div class="grid-row"><div class="lab">例子 2</div>
+      <div class="cell" contenteditable data-ph="舉例：＿＿＿"></div><div class="cell en" contenteditable data-ph="Besides, …"></div></div>
+
+    <div class="step-head" style="margin-top:22px"><span class="step-num">§2</span><h2>第二段</h2></div>
+    <div class="grid-head"><div>格子</div><div>先寫中文</div><div>再翻英文</div></div>
+    <div class="grid-row"><div class="lab">主題句<small>只講「一件」事</small></div>
+      <div class="cell" contenteditable data-ph="最難忘的是＿＿＿"></div><div class="cell en" contenteditable data-ph="The most unforgettable… was…"></div></div>
+    <div class="grid-row"><div class="lab">經過<small>時間、地點、做什麼</small></div>
+      <div class="cell" contenteditable data-ph="＿＿＿"></div><div class="cell en" contenteditable data-ph="（過去式）"></div></div>
+    <div class="grid-row"><div class="lab">細節<small>看到／聽到／感覺到什麼</small></div>
+      <div class="cell" contenteditable data-ph="＿＿＿"></div><div class="cell en" contenteditable data-ph=""></div></div>
+    <div class="grid-row"><div class="lab">為什麼難忘</div>
+      <div class="cell" contenteditable data-ph="因為＿＿＿"></div><div class="cell en" contenteditable data-ph="What impressed me most was…"></div></div>
+    <div class="grid-row"><div class="lab">收尾</div>
+      <div class="cell" contenteditable data-ph="到現在我還＿＿＿"></div><div class="cell en" contenteditable data-ph="Even now, whenever I think of…"></div></div>
+  </div>
+
+  <!-- B -->
+  <div class="skeleton" id="sk-b">
+    <div class="callout"><strong>什麼時候用 B</strong>提示裡出現「說明<b>雙方</b>的立場」「正反<b>兩方</b>的理由」「贊成與反對」。</div>
+
+    <div class="step-head" style="margin-top:18px"><span class="step-num">§1</span><h2>第一段 · 兩邊都要寫</h2></div>
+    <div class="grid-head"><div>格子</div><div>先寫中文</div><div>再翻英文</div></div>
+    <div class="grid-row"><div class="lab">主題句<small>說明有爭議</small></div>
+      <div class="cell" contenteditable data-ph="這件事大家看法不同"></div><div class="cell en" contenteditable data-ph="People have different opinions about…"></div></div>
+    <div class="grid-row"><div class="lab">正方 理由 1</div>
+      <div class="cell" contenteditable data-ph="支持的人認為＿＿＿"></div><div class="cell en" contenteditable data-ph="Those who support… argue that…"></div></div>
+    <div class="grid-row"><div class="lab">正方 理由 2</div>
+      <div class="cell" contenteditable data-ph="＿＿＿"></div><div class="cell en" contenteditable data-ph="What concerns them most is that…"></div></div>
+    <div class="grid-row"><div class="lab">反方 理由 1</div>
+      <div class="cell" contenteditable data-ph="反對的人認為＿＿＿"></div><div class="cell en" contenteditable data-ph="Others, however, contend that…"></div></div>
+    <div class="grid-row"><div class="lab">反方 理由 2</div>
+      <div class="cell" contenteditable data-ph="＿＿＿"></div><div class="cell en" contenteditable data-ph="They point out that…"></div></div>
+    <div class="gate">✋ <span>正方幾個？反方幾個？</span>兩邊數字要一樣，這叫寫齊。少一邊，內容分砍一半。</div>
+
+    <div class="step-head" style="margin-top:22px"><span class="step-num">§2</span><h2>第二段 · 我的看法</h2></div>
+    <div class="grid-head"><div>格子</div><div>先寫中文</div><div>再翻英文</div></div>
+    <div class="grid-row"><div class="lab">立場<small>第一句就表態</small></div>
+      <div class="cell" contenteditable data-ph="我覺得＿＿＿"></div><div class="cell en" contenteditable data-ph="From my perspective, …"></div></div>
+    <div class="grid-row"><div class="lab">理由 1</div>
+      <div class="cell" contenteditable data-ph="第一＿＿＿"></div><div class="cell en" contenteditable data-ph="First, …"></div></div>
+    <div class="grid-row"><div class="lab">理由 2</div>
+      <div class="cell" contenteditable data-ph="第二＿＿＿"></div><div class="cell en" contenteditable data-ph="Second, …"></div></div>
+    <div class="grid-row"><div class="lab">例子／說明</div>
+      <div class="cell" contenteditable data-ph="舉例：＿＿＿"></div><div class="cell en" contenteditable data-ph="For example, …"></div></div>
+    <div class="grid-row"><div class="lab">收尾<small>只能收前面講過的</small></div>
+      <div class="cell" contenteditable data-ph="總之＿＿＿"></div><div class="cell en" contenteditable data-ph="All things considered, …"></div></div>
+    <div class="gate">✋ <span>收尾檢查：</span>結論裡有沒有前面沒提過的東西？有就刪掉。</div>
+  </div>
+
+  <!-- C -->
+  <div class="skeleton" id="sk-c">
+    <div class="callout"><strong>什麼時候用 C</strong>提示裡出現「<b>描述</b>圖片中的人事物」「圖中<b>發生了什麼事</b>」——這時候才需要描述圖片。</div>
+
+    <div class="step-head" style="margin-top:18px"><span class="step-num">§1</span><h2>第一段 · 描述</h2></div>
+    <div class="grid-head"><div>格子</div><div>先寫中文</div><div>再翻英文</div></div>
+    <div class="grid-row"><div class="lab">整體<small>這是什麼場面</small></div>
+      <div class="cell" contenteditable data-ph="圖中是＿＿＿"></div><div class="cell en" contenteditable data-ph="The picture shows…"></div></div>
+    <div class="grid-row"><div class="lab">地點</div>
+      <div class="cell" contenteditable data-ph="在＿＿＿"></div><div class="cell en" contenteditable data-ph="It takes place in / at…"></div></div>
+    <div class="grid-row"><div class="lab">人<small>有誰？在做什麼？</small></div>
+      <div class="cell" contenteditable data-ph="＿＿＿正在＿＿＿"></div><div class="cell en" contenteditable data-ph="Some people are …ing, while others…"></div></div>
+    <div class="grid-row"><div class="lab">細節<small>至少 2 個具體的東西</small></div>
+      <div class="cell" contenteditable data-ph="還可以看到＿＿＿"></div><div class="cell en" contenteditable data-ph="In the background, there is…"></div></div>
+    <div class="grid-row"><div class="lab">氣氛</div>
+      <div class="cell" contenteditable data-ph="感覺很＿＿＿"></div><div class="cell en" contenteditable data-ph="The whole scene looks…"></div></div>
+
+    <div class="step-head" style="margin-top:22px"><span class="step-num">§2</span><h2>第二段 · 感想／影響</h2></div>
+    <div class="grid-head"><div>格子</div><div>先寫中文</div><div>再翻英文</div></div>
+    <div class="grid-row"><div class="lab">主題句</div>
+      <div class="cell" contenteditable data-ph="我認為＿＿＿"></div><div class="cell en" contenteditable data-ph="In my opinion, …"></div></div>
+    <div class="grid-row"><div class="lab">理由 1</div>
+      <div class="cell" contenteditable data-ph="第一＿＿＿"></div><div class="cell en" contenteditable data-ph="First, …"></div></div>
+    <div class="grid-row"><div class="lab">例子 1</div>
+      <div class="cell" contenteditable data-ph="舉例：＿＿＿"></div><div class="cell en" contenteditable data-ph="For example, …"></div></div>
+    <div class="grid-row"><div class="lab">理由 2</div>
+      <div class="cell" contenteditable data-ph="第二＿＿＿"></div><div class="cell en" contenteditable data-ph="Second, …"></div></div>
+    <div class="grid-row"><div class="lab">收尾</div>
+      <div class="cell" contenteditable data-ph="所以＿＿＿"></div><div class="cell en" contenteditable data-ph="That is why…"></div></div>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step">
+  <div class="step-head"><span class="step-num">STEP 3</span><h2>中文先簡化</h2><span class="tag">翻不出來就回來這一步</span></div>
+  <div class="box thin">
+    <p class="q">中文格子裡有任何一句超過 15 個字，先砍。</p>
+    <p class="sub">砍法：① 先問「誰做了什麼」　② 一句只留一個動作　③ 抽象名詞當主詞就換成具體的人或東西</p>
+    <div class="chips">
+      <span>法律缺乏彈性 → 法律太死</span>
+      <span>造成負面影響 → 對身體不好</span>
+      <span>具有公有財產性質 → 變成公家的</span>
+      <span>資源再利用 → 舊東西可以再用</span>
+    </div>
+  </div>
+  <div class="gate">✋ <span>過關條件：</span>每一格中文都能用小學生的話念出來，才可以動筆寫英文。</div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step">
+  <div class="step-head"><span class="step-num">STEP 4</span><h2>寫完只檢查三樣</h2><span class="tag">2 分鐘</span></div>
+  <div class="box thin">
+    <ul class="check">
+      <li>用手指<b>逐個動詞</b>點過去：時態對不對？該過去式的有沒有都改？</li>
+      <li>數字、all、many、two 後面的名詞，<b>有沒有加 s</b>？</li>
+      <li>a 還是 an？後面是母音就用 an。</li>
+    </ul>
+    <p class="sub" style="margin:12px 0 0">只查這三樣。不要查拼字、不要重讀整篇找靈感——時間不夠，而且這三樣就佔了你一半的錯誤。</p>
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="step">
+  <div class="step-head"><span class="step-num">STEP 5</span><h2>交卷前回頭打勾</h2><span class="tag">30 秒</span></div>
+  <div class="box">
+    <p class="q">回到 STEP 1 的清單，一項一項打勾。</p>
+    <ul class="check">
+      <li>每一項要求都有對應的段落或句子？</li>
+      <li>有沒有哪一項我根本沒寫到？</li>
+      <li>有沒有寫了題目沒要求的東西？（那是白寫的字）</li>
+      <li>分兩段了嗎？超過 120 字了嗎？</li>
+    </ul>
+  </div>
+  <div class="callout">
+    <strong>記住一句話</strong>題目叫你寫什麼，你就寫什麼。<br>
+    寫得再漂亮，只要答錯題，內容分就拿不到——而內容是四項裡最重的一項。
+  </div>
+</div>
+
+<footer>
+  動筆前大綱表 · 英文作文<br>
+  格子沒填完，不准寫英文。
+</footer>
+
+</div>
+
+<script>
+const btns=[...document.querySelectorAll('.btn[data-sk]')];
+btns.forEach(b=>b.addEventListener('click',()=>{
+  btns.forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  document.querySelectorAll('.skeleton').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sk-'+b.dataset.sk).classList.add('active');
+}));
+</script>
+</body>
+</html>
