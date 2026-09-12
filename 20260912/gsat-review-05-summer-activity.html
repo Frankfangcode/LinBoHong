@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>作文批改 05｜暑假戶外活動</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12233b;--ink-soft:#3c5170;--duck:#f4c518;--paper:#fdfcf7;
+  --line:#dfe6ef;--red:#c8362c;--green:#26610a;--green-pale:#f1f6ec;
+  --amber-bg:#fff7ed;--amber-line:#e66100;--mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(var(--line) 1px,transparent 1px) 0 0/100% 28px,var(--paper);
+color:var(--ink);font-family:'Noto Sans TC',system-ui,sans-serif;font-size:16px;line-height:1.85}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 80px}
+
+.masthead{background:var(--ink);color:#fff;margin:0 -20px 34px;padding:38px 26px 30px;border-bottom:7px solid var(--duck)}
+.masthead .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--duck);margin:0 0 10px}
+.masthead h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.55rem,4.6vw,2.35rem);line-height:1.2;margin:0 0 12px}
+.masthead p{margin:0;color:#c3d0e0;font-size:.94rem}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.meta span{font-family:var(--mono);font-size:.74rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);padding:5px 11px;border-radius:99px}
+
+.toolbar{position:sticky;top:0;z-index:30;display:flex;gap:10px;flex-wrap:wrap;padding:12px 0;margin:0 0 30px;
+background:linear-gradient(var(--paper) 72%,rgba(253,252,247,0))}
+.btn{font-family:'Noto Sans TC',sans-serif;font-weight:700;font-size:.86rem;border:2px solid var(--ink);
+background:#fff;color:var(--ink);padding:9px 17px;border-radius:8px;cursor:pointer;transition:transform .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--duck)}
+.btn:focus-visible{outline:3px solid var(--amber-line);outline-offset:2px}
+
+section{margin:0 0 46px;scroll-margin-top:70px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:20px}
+.sec-num{font-family:var(--mono);font-weight:700;font-size:.82rem;color:#fff;background:var(--ink);padding:3px 9px;border-radius:5px}
+.sec-head h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.28rem;margin:0}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.callout{background:var(--amber-bg);border-left:5px solid var(--amber-line);border-radius:0 10px 10px 0;padding:16px 20px;margin:18px 0}
+.callout strong{color:var(--amber-line)}
+.danger{background:#fdeceb;border-left:5px solid var(--red)}
+.danger strong{color:var(--red)}
+
+/* score */
+.score-top{background:var(--ink);color:#fff;border-radius:12px;padding:24px;text-align:center;margin-bottom:18px}
+.score-top .n{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:3.2rem;line-height:1;color:var(--duck)}
+.score-top .d{font-size:1rem;color:#c3d0e0}
+.score-top .range{font-family:var(--mono);font-size:.8rem;color:#c3d0e0;margin-top:8px}
+.bar-row{display:grid;grid-template-columns:96px 1fr 44px;gap:12px;align-items:center;margin-bottom:11px}
+.bar-row .lab{font-weight:700;font-size:.92rem}
+.bar{height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);border-radius:99px}
+.bar i.low{background:var(--red)}
+.bar-row .v{font-family:var(--mono);font-weight:700;font-size:.88rem;text-align:right}
+
+.prompt{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:20px 22px}
+.prompt .t{font-weight:700;margin:0 0 10px}
+.prompt ol{margin:10px 0 0;padding-left:22px}
+.prompt li{margin-bottom:7px}
+.hl{background:linear-gradient(transparent 58%,var(--duck) 58%);font-weight:700}
+
+.essay{background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px 22px 18px;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;line-height:2.4;position:relative}
+.essay p{margin:0 0 18px}
+.essay sup{font-family:var(--mono);font-size:.62rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:2px;vertical-align:super}
+.offtopic{background:#fdeceb;border-radius:6px;padding:2px 0}
+
+/* hover 修正氣泡 */
+.bad{
+  position:relative;display:inline;cursor:help;
+  text-decoration:underline wavy var(--red) 1.5px;text-underline-offset:5px;
+  border-radius:3px;transition:background .15s ease;
+}
+.bad:hover,.bad:focus-visible,.bad.open{background:#ffe9a8;outline:none}
+.bad .tip{
+  position:absolute;left:50%;bottom:calc(100% + 12px);transform:translateX(-50%) translateY(4px);
+  width:max-content;max-width:min(340px,78vw);
+  background:var(--ink);color:#fff;border-radius:10px;padding:11px 14px;
+  font-family:'Noto Sans TC',sans-serif;font-weight:400;font-size:.85rem;line-height:1.6;
+  text-align:left;text-decoration:none;
+  opacity:0;visibility:hidden;pointer-events:none;z-index:60;
+  box-shadow:0 8px 24px rgba(18,35,59,.28);
+  transition:opacity .16s ease,transform .16s ease;
+}
+.bad:hover .tip,.bad:focus-visible .tip,.bad.open .tip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.bad .tip::after{
+  content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:7px solid transparent;border-top-color:var(--ink);
+}
+.bad .tip b{color:var(--duck);font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:.95rem}
+.bad .tip i{display:block;color:#b8c6d8;font-style:normal;font-size:.79rem;margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,.18)}
+/* 靠邊的氣泡改貼左／右緣，避免溢出 */
+.bad.edge-l .tip{left:0;transform:translateX(0) translateY(4px)}
+.bad.edge-l:hover .tip,.bad.edge-l:focus-visible .tip,.bad.edge-l.open .tip{transform:translateX(0) translateY(0)}
+.bad.edge-l .tip::after{left:28px}
+.bad.edge-r .tip{left:auto;right:0;transform:translateX(0) translateY(4px)}
+.bad.edge-r:hover .tip,.bad.edge-r:focus-visible .tip,.bad.edge-r.open .tip{transform:translateX(0) translateY(0)}
+.bad.edge-r .tip::after{left:auto;right:28px;transform:none}
+body.hide-answers .bad .tip{display:none}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem;background:#fff}
+th{background:var(--green);color:#fff;text-align:left;padding:10px 12px;font-weight:700;font-size:.86rem}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even){background:var(--green-pale)}
+.en{font-family:'Bricolage Grotesque',sans-serif;font-weight:600}
+.yes{color:var(--green);font-weight:700}
+.no{color:var(--red);font-weight:700}
+
+.err{border:1px solid var(--line);background:#fff;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.err .top{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-weight:700;font-size:.72rem;background:var(--red);color:#fff;padding:2px 8px;border-radius:4px;flex-shrink:0;margin-top:3px}
+.num{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);flex-shrink:0;margin-top:4px}
+.orig{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;text-decoration:underline wavy var(--red) 1.5px;text-underline-offset:4px}
+.fix{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.fix .arrow{color:var(--green);font-weight:700}
+.fix .why{display:block;font-size:.88rem;color:var(--ink-soft);margin-top:4px}
+body.hide-answers .fix{display:none}
+body.hide-answers .err::after{content:'▸ 先自己想想看';font-family:var(--mono);font-size:.76rem;color:var(--ink-soft)}
+
+.legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin:6px 0 18px}
+.legend div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:.86rem}
+.legend b{font-family:var(--mono);color:var(--red);font-size:.78rem;margin-right:6px}
+
+.model{background:#fff;border:1px solid var(--line);border-left:5px solid var(--duck);border-radius:0 10px 10px 0;padding:18px 22px}
+.model p{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:1rem;line-height:1.95;margin:0 0 14px}
+.model .zh{font-family:'Noto Sans TC',sans-serif;font-weight:400;font-size:.86rem;color:var(--ink-soft);line-height:1.7;margin:-8px 0 18px}
+
+.bank{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:18px;background:#fff}
+.bank h3{margin:0;background:var(--green-pale);color:var(--green);font-family:'Bricolage Grotesque',sans-serif;font-size:1rem;padding:12px 18px;border-bottom:1px solid var(--line)}
+.bank .body{padding:14px 18px}
+.sent{margin-bottom:12px}
+.sent .s{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:1.02rem;display:block}
+.sent .zh{font-size:.86rem;color:var(--ink-soft)}
+.warn{font-size:.86rem;color:var(--amber-line);margin-top:6px}
+
+.check{list-style:none;padding:0;margin:0}
+.check li{display:flex;gap:11px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line)}
+.check li::before{content:'☐';font-size:1.2rem;color:var(--green);line-height:1.3}
+
+footer{text-align:center;color:var(--ink-soft);font-size:.84rem;border-top:2px solid var(--ink);padding-top:20px;margin-top:50px}
+
+@media(max-width:600px){
+  body{font-size:15px}
+  .bar-row{grid-template-columns:78px 1fr 40px;gap:8px}
+  table{font-size:.86rem}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff}
+  body.hide-answers .fix{display:block!important}
+  body.hide-answers .err::after{content:''}
+  .toolbar{display:none}
+  .masthead{margin:0 0 20px;background:#12233b!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  section{page-break-inside:avoid}
+  th{background:#26610a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="kicker">Essay Review · 05</p>
+  <h1>暑假戶外活動（看圖選擇）</h1>
+  <p>字數夠、句子敢寫——但第一段整段答錯題。這次要練的就是這個。</p>
+  <div class="meta">
+    <span>字數 約 132</span>
+    <span>有效內容 約 64 字</span>
+    <span>預估 7 / 20</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button class="btn primary" id="toggle">只給錯誤代碼</button>
+  <button class="btn" onclick="window.print()">列印</button>
+</div>
+
+<!-- 01 -->
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>預估級分</h2></div>
+  <div class="score-top">
+    <div class="n">7</div>
+    <div class="d">／ 20</div>
+    <div class="range">落點區間 6 – 8　｜　等級：差（5–9）</div>
+  </div>
+  <div class="card">
+    <div class="bar-row"><span class="lab">內容</span><span class="bar"><i class="low" style="width:20%"></i></span><span class="v">1/5</span></div>
+    <div class="bar-row"><span class="lab">組織</span><span class="bar"><i class="low" style="width:40%"></i></span><span class="v">2/5</span></div>
+    <div class="bar-row"><span class="lab">文法句構</span><span class="bar"><i class="low" style="width:40%"></i></span><span class="v">2/5</span></div>
+    <div class="bar-row"><span class="lab">詞彙拼寫</span><span class="bar"><i class="low" style="width:40%"></i></span><span class="v">2/5</span></div>
+  </div>
+  <div class="card">
+    <p><b>一句話總評：</b>敢動筆、字數達標、第二段有畫面感（風吹過臉上那句寫得很好）；但第一段整段在描述圖片，而題目根本沒有要你描述圖片——內容分幾乎歸零。</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>題目要什麼</h2></div>
+  <div class="prompt">
+    <p class="t">暑假時你最喜歡從事什麼戶外活動？請仔細觀察以下三張圖片的廣告內容，然後寫一篇英文作文。文分兩段，至少 120 字。</p>
+    <ol>
+      <li>第一段：<span class="hl">說明你對哪一個活動最感興趣</span>，並<span class="hl">說明原因</span>。</li>
+      <li>第二段：<span class="hl">描述你過去度過最難忘的一個暑假</span>，說明何事令你留下深刻回憶。</li>
+    </ol>
+  </div>
+
+  <table>
+    <thead><tr><th style="width:42%">題目要求</th><th style="width:14%">有寫嗎</th><th>實際狀況</th></tr></thead>
+    <tbody>
+      <tr><td>選出「一個」最感興趣的活動</td><td class="no">✗</td><td>三個都在描述，一個都沒選</td></tr>
+      <tr><td>說明選擇的原因</td><td class="no">✗</td><td>完全沒有</td></tr>
+      <tr><td>描述最難忘的一個暑假</td><td class="yes">△</td><td>寫了兩件事（騎車、營隊），焦點分散</td></tr>
+      <tr><td>說明何事令你印象深刻</td><td class="yes">✓</td><td>有寫到交朋友，但不夠具體</td></tr>
+      <tr><td>分兩段</td><td class="yes">✓</td><td>有</td></tr>
+      <tr><td>至少 120 字</td><td class="yes">✓</td><td>約 132 字</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout danger">
+    <strong>致命傷：第一段 68 字全部是白寫的</strong>
+    全文 132 字，但第一段整整 68 字都在描述三張圖片——題目沒有要你描述圖片。扣掉之後，<b>真正回答題目的只剩 64 字</b>，等於字數不足。<br><br>
+    這一段不是寫得不好，是<b>答錯題</b>。閱卷老師看到第一段沒有選任何活動、沒有任何原因，內容分就只能給 1 分。
+  </div>
+
+  <div class="callout">
+    <strong>為什麼會寫成這樣？</strong>
+    這是把上一份「看圖寫作」的模板直接搬過來了。上一次的題目確實要描述圖片，但<b>這次的三張圖只是選項，不是描述對象</b>。<br><br>
+    <b>圖片出現 ≠ 要你描述圖片。</b>要看提示怎麼說——這次提示寫的是「你對<b>哪一個</b>活動最感興趣」，那就是叫你<b>選一個</b>。
+  </div>
+</section>
+
+<!-- 03 -->
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>原文批改稿</h2></div>
+  <p style="margin-top:-8px;color:var(--ink-soft);font-size:.92rem">🖱️ 滑鼠移到紅線上就會跳出正確版本（手機用點的）。粉紅底＝整段離題。</p>
+  <div class="essay">
+    <p><span class="offtopic">The three pictures describe <span class="bad" tabindex="0">different kinds of competitions<span class="tip"><b>three different summer programs</b><i>WW / LOG · 三張是活動廣告，不是比賽。音樂節和健行都不是 competition。</i></span></span><sup>1</sup>. In the first picture, we can see there are many camps on the ground. <span class="bad" tabindex="0">It surrounding by the grass<span class="tip"><b>It is surrounded by grass</b><i>SV / PASS · 被動語態＝be ＋ 過去分詞，少了 is。</i></span></span><sup>2</sup>. <span class="bad" tabindex="0">Near the camps has a food trucks<span class="tip"><b>There are food trucks near the camps</b><i>CH / ART · 中文的「有」不能翻成 has，要用 There are。a 不能接複數。</i></span></span><sup>3</sup>. There is a huge stage <span class="bad" tabindex="0">for concert<span class="tip"><b>for concerts</b><i>ART · concert 可數，泛指時用複數。</i></span></span><sup>4</sup><span class="bad" tabindex="0">, there are<span class="tip"><b>, and there are</b><i>RO · 兩個完整句不能只用逗號連接，要加 and 或改句號。</i></span></span><sup>5</sup> some instruments on <span class="bad" tabindex="0">two different side<span class="tip"><b>two different sides</b><i>PL · two 後面一定是複數。</i></span></span><sup>6</sup>. <span class="bad" tabindex="0">The second pictures is<span class="tip"><b>The second picture is</b><i>PL · the second 指一張，用單數。</i></span></span><sup>7</sup> <span class="bad" tabindex="0">a activity hiking<span class="tip"><b>an outdoor activity: hiking</b><i>ART · 母音前用 an；兩個名詞並排要用冒號連接。</i></span></span><sup>8</sup> in the mountain. The last one is about <span class="bad" tabindex="0">a soccer team play<span class="tip"><b>a soccer training program</b><i>WW · 廣告上寫的就是 training program，照抄圖上的字最安全。</i></span></span><sup>9</sup>.</span></p>
+    <p>In my summer vacation, <span class="bad" tabindex="0">I ride<span class="tip"><b>I rode</b><i>T · 寫過去的暑假，整段要用過去式。</i></span></span><sup>10</sup> a bike up and down in the mountain, feeling the wind <span class="bad" tabindex="0">blowing my face<span class="tip"><b>blowing against my face</b><i>PREP · 風吹「在」臉上要加 against 或 on。這句畫面很好，補個介系詞就完整了。</i></span></span><sup>11</sup>. It was cool, and <span class="bad" tabindex="0">I very like it<span class="tip"><b>I liked it a lot</b><i>CH · very 不能修飾動詞，要用 a lot / very much 放句尾。</i></span></span><sup>12</sup>. <span class="bad" tabindex="0">The most impression is<span class="tip"><b>What impressed me most was</b><i>WW · impression 是名詞，不能這樣用。這句直接背起來。</i></span></span><sup>13</sup> I joined a <span class="bad" tabindex="0">financial camp<span class="tip"><b>改成戶外的活動</b><i>LOG · 題目主題是「戶外」活動，財金營是室內的，會被判偏題。</i></span></span><sup>14</sup>. During the camp, <span class="bad" tabindex="0">I associate with<span class="tip"><b>I made</b><i>WW / T · 「交朋友」就是 make friends；時態也要改過去式。</i></span></span><sup>15</sup> a lot of <span class="bad" tabindex="0">friends They are come from<span class="tip"><b>friends, who came from</b><i>RO / T · 漏標點，兩句黏在一起；are come 是兩個動詞並排。</i></span></span><sup>16</sup> all <span class="bad" tabindex="0">different place<span class="tip"><b>over the country</b><i>PL · all different 後面要複數；更道地的說法是 all over the country。</i></span></span><sup>17</sup>. <span class="bad" tabindex="0">I feel<span class="tip"><b>I felt</b><i>T · 講過去的事用過去式。</i></span></span><sup>18</sup> very excited and <span class="bad" tabindex="0">never forget<span class="tip"><b>will never forget</b><i>T · 「永遠不會忘記」講的是未來，要用 will never。</i></span></span><sup>19</sup> the valuable experience.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>錯誤訂正</h2></div>
+  <div class="legend">
+    <div><b>SV</b>主詞動詞一致</div>
+    <div><b>T</b>時態</div>
+    <div><b>ART</b>冠詞</div>
+    <div><b>PL</b>單複數</div>
+    <div><b>PREP</b>介系詞</div>
+    <div><b>WW</b>用字錯誤</div>
+    <div><b>CH</b>中式英文</div>
+    <div><b>RO</b>逗號連接句</div>
+    <div><b>LOG</b>邏輯離題</div>
+    <div><b>PASS</b>被動語態</div>
+  </div>
+
+  <div class="err"><div class="top"><span class="num">01</span><span class="chip">WW / LOG</span><span class="orig">different kinds of competitions</span></div>
+    <div class="fix"><span class="arrow">➡️</span> three different summer programs<span class="why">三張是活動廣告，不是比賽。音樂節和健行都不是 competition。用字錯了，整段的立足點就跟著錯。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">02</span><span class="chip">SV / PASS</span><span class="orig">It surrounding by the grass</span></div>
+    <div class="fix"><span class="arrow">➡️</span> It is surrounded by grass<span class="why">被動語態是 be + 過去分詞。少了 is，surrounding 也該用 surrounded。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">03</span><span class="chip">CH / ART</span><span class="orig">Near the camps has a food trucks</span></div>
+    <div class="fix"><span class="arrow">➡️</span> There are food trucks near the camps<span class="why">中文「附近<b>有</b>」不能直譯成 has。英文的「有」要用 There is / There are。而且 a 不能接複數。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">04</span><span class="chip">ART</span><span class="orig">a huge stage for concert</span></div>
+    <div class="fix"><span class="arrow">➡️</span> a huge stage for concerts<span class="why">concert 是可數名詞，泛指時用複數。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">05</span><span class="chip">RO</span><span class="orig">…for concert, there are some instruments…</span></div>
+    <div class="fix"><span class="arrow">➡️</span> …for concerts, <b>and</b> there are some instruments…<span class="why">兩個完整句子不能只用逗號連起來。要加連接詞，或改成句號。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">06</span><span class="chip">PL</span><span class="orig">on two different side</span></div>
+    <div class="fix"><span class="arrow">➡️</span> on two different sides<span class="why">two 後面一定是複數。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">07</span><span class="chip">PL / SV</span><span class="orig">The second pictures is</span></div>
+    <div class="fix"><span class="arrow">➡️</span> The second picture is<span class="why">the second 指一張，用單數。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">08</span><span class="chip">ART</span><span class="orig">a activity hiking</span></div>
+    <div class="fix"><span class="arrow">➡️</span> an outdoor activity: hiking<span class="why">母音前用 an。兩個名詞並排要用冒號或 about 連接。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">09</span><span class="chip">WW</span><span class="orig">a soccer team play</span></div>
+    <div class="fix"><span class="arrow">➡️</span> a soccer training program<span class="why">廣告上寫的是 training program，照抄圖上的字最安全。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">10</span><span class="chip">T</span><span class="orig">I ride a bike</span></div>
+    <div class="fix"><span class="arrow">➡️</span> I rode a bike<span class="why">寫「過去的暑假」全段要用過去式。這是本段最大的文法問題。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">11</span><span class="chip">PREP</span><span class="orig">the wind blowing my face</span></div>
+    <div class="fix"><span class="arrow">➡️</span> the wind blowing against my face<span class="why">風「吹在」臉上要加 against 或 on。這句畫面很好，補個介系詞就完整了。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">12</span><span class="chip">CH</span><span class="orig">I very like it</span></div>
+    <div class="fix"><span class="arrow">➡️</span> I liked it a lot<span class="why">中文「我<b>很</b>喜歡」直譯的錯誤。very 不能修飾動詞，要用 a lot / very much 放句尾。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">13</span><span class="chip">WW</span><span class="orig">The most impression is</span></div>
+    <div class="fix"><span class="arrow">➡️</span> What impressed me most was<span class="why">impression 是名詞，不能這樣用。這句可以直接背起來，議論文敘事都用得到。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">14</span><span class="chip">LOG</span><span class="orig">a financial camp</span></div>
+    <div class="fix"><span class="arrow">➡️</span> 改成戶外的活動，或說明它跟戶外的關聯<span class="why">題目主題是<b>戶外</b>活動。財金營是室內的，放進來會讓閱卷老師覺得偏題。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">15</span><span class="chip">WW / T</span><span class="orig">I associate with a lot of friends</span></div>
+    <div class="fix"><span class="arrow">➡️</span> I made a lot of friends<span class="why">associate with 偏正式且語意是「與…來往」。「交朋友」就是 make friends。時態也要改過去式。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">16</span><span class="chip">RO / T</span><span class="orig">friends They are come from</span></div>
+    <div class="fix"><span class="arrow">➡️</span> friends<b>, who</b> came from<span class="why">兩處錯：漏標點（兩句黏在一起）；are come 是兩個動詞並排，不能同時出現。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">17</span><span class="chip">PL</span><span class="orig">all different place</span></div>
+    <div class="fix"><span class="arrow">➡️</span> all over the country<span class="why">all different 後面要複數；更道地的說法是 all over the country / from all walks of life。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">18</span><span class="chip">T</span><span class="orig">I feel very excited</span></div>
+    <div class="fix"><span class="arrow">➡️</span> I felt very excited<span class="why">講過去的事，用過去式。</span></div></div>
+
+  <div class="err"><div class="top"><span class="num">19</span><span class="chip">T</span><span class="orig">never forget the valuable experience</span></div>
+    <div class="fix"><span class="arrow">➡️</span> will never forget that valuable experience<span class="why">「永遠不會忘記」是講未來，要用 will never。</span></div></div>
+
+  <div class="callout">
+    <strong>統計一下</strong>19 個錯誤裡，<b>時態錯 4 個、單複數錯 4 個</b>——這兩類加起來將近一半。第二段整段該用過去式卻用現在式，這是寫完沒有回頭檢查的典型徵兆。
+  </div>
+</section>
+
+<!-- 05 -->
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>怎麼改才會變高分</h2></div>
+
+  <div class="card">
+    <p><b>① 第一段整段重寫，不要留。</b></p>
+    <p>第一句就要表態，直接說你選哪一個。句型：</p>
+    <p class="en" style="font-size:1.05rem">Among the three programs, the one that appeals to me most is ______.</p>
+    <p>然後給<b>兩個原因</b>，每個原因後面接一個具體說明或例子。這一段就完成了。</p>
+  </div>
+
+  <div class="card">
+    <p><b>② 第二段只留一件事。</b></p>
+    <p>你寫了騎腳踏車和財金營兩件事，中間沒有連結，讀起來像兩篇文章。<b>選一件寫深</b>，比兩件都寫淺好。</p>
+    <p>建議留騎腳踏車那件——因為它是<b>戶外</b>的，切題；而且「風吹過臉上」那句本來就寫得有畫面。</p>
+  </div>
+
+  <div class="card">
+    <p><b>③ 寫完只檢查兩件事。</b></p>
+    <p>這次不要檢查拼字，只看兩樣：<b>動詞是不是都用過去式</b>、<b>數字或 all / many 後面有沒有加 s</b>。光這兩項就能救回四五個錯。</p>
+  </div>
+
+  <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-size:1.05rem;margin-top:28px">用字升級表</h3>
+  <table>
+    <thead><tr><th style="width:38%">你寫的</th><th>升級</th></tr></thead>
+    <tbody>
+      <tr><td class="en">I very like it</td><td class="en">I enjoyed every minute of it</td></tr>
+      <tr><td class="en">The most impression is</td><td class="en">What impressed me most was</td></tr>
+      <tr><td class="en">It was cool</td><td class="en">It was refreshing / It felt amazing</td></tr>
+      <tr><td class="en">a lot of friends</td><td class="en">friends I still keep in touch with</td></tr>
+      <tr><td class="en">I feel very excited</td><td class="en">my heart was pounding with excitement</td></tr>
+      <tr><td class="en">valuable experience</td><td class="en">an experience I will treasure for years</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 06 -->
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>這類題目的萬用句型</h2></div>
+
+  <div class="bank">
+    <h3>① 選擇 · 第一段第一句</h3>
+    <div class="body">
+      <div class="sent"><span class="s">Among the three programs, the one that appeals to me most is the Summer Adventure.</span><span class="zh">三個活動裡，最吸引我的是夏日探險。</span></div>
+      <div class="sent"><span class="s">If I had to choose one, I would definitely pick the hiking tour.</span><span class="zh">如果只能選一個，我一定選健行。</span></div>
+      <p class="warn">⚠ 有「哪一個」三個字，就是叫你<b>選一個</b>，不是叫你三個都介紹。</p>
+    </div>
+  </div>
+
+  <div class="bank">
+    <h3>② 說原因</h3>
+    <div class="body">
+      <div class="sent"><span class="s">The main reason is that I have always loved being outdoors.</span><span class="zh">主要理由是我一直很喜歡待在戶外。</span></div>
+      <div class="sent"><span class="s">Another reason is that hiking gives me a sense of achievement.</span><span class="zh">另一個理由是健行給我成就感。</span></div>
+      <p class="warn">⚠ 原因講完<b>一定要接一句說明或例子</b>，不能講完就換下一個原因。</p>
+    </div>
+  </div>
+
+  <div class="bank">
+    <h3>③ 進入回憶 · 第二段第一句</h3>
+    <div class="body">
+      <div class="sent"><span class="s">The most unforgettable summer of my life was the one I spent cycling in the mountains.</span><span class="zh">我人生中最難忘的暑假，是在山裡騎車的那一個。</span></div>
+      <div class="sent"><span class="s">I will never forget the summer when I learned to ride in the mountains.</span><span class="zh">我永遠不會忘記那個學會在山裡騎車的夏天。</span></div>
+      <p class="warn">⚠ 第二段從第一個字開始就要<b>全部用過去式</b>。</p>
+    </div>
+  </div>
+
+  <div class="bank">
+    <h3>④ 收尾 · 說明為何印象深刻</h3>
+    <div class="body">
+      <div class="sent"><span class="s">What impressed me most was not the ride itself but the people I met.</span><span class="zh">最讓我印象深刻的不是騎車本身，而是遇到的人。</span></div>
+      <div class="sent"><span class="s">Even now, whenever I think of that summer, I still feel excited.</span><span class="zh">直到現在，每次想起那個夏天我還是很興奮。</span></div>
+      <p class="warn">✓ <span class="en">not A but B</span> 這個句型很好用，能立刻讓句子有層次。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section>
+  <div class="sec-head"><span class="sec-num">07</span><h2>參考範文</h2></div>
+  <p style="margin-top:-8px;color:var(--ink-soft);font-size:.92rem">保留你原本的騎車回憶，但第一段改成正確回答題目。約 200 字。</p>
+  <div class="model">
+    <p>Among the three summer programs, the one that appeals to me most is the Summer Adventure hiking tour. The main reason is that I have always loved being outdoors, and walking along beautiful trails sounds far more exciting to me than standing in a crowded concert. Hiking also gives me something a music festival cannot: a sense of achievement. Every time I reach the top of a mountain, I feel that all my effort has finally paid off. Besides, the tour comes with a guide, so a beginner like me can enjoy the scenery without worrying about losing the way.</p>
+    <p class="zh">三個活動中最吸引我的是健行。理由一：我一向喜歡戶外，走在美麗步道上比擠在人群裡看演唱會有趣得多。理由二：健行能給我成就感，每次登頂都覺得努力有了回報。而且有嚮導帶隊，新手也不怕迷路。</p>
+    <p>The most unforgettable summer of my life was the one I spent cycling in the mountains. I rode up and down the winding roads for a whole afternoon, feeling the cool wind blowing against my face. My legs were sore, but I enjoyed every minute of it. What impressed me most, however, was not the ride itself but the people I met along the way. At a small rest stop, I made friends with other cyclists who came from all over the country, and we shared snacks and stories until the sun went down. Even now, whenever I think of that summer, my heart still beats a little faster.</p>
+    <p class="zh">最難忘的暑假是在山裡騎車那次。整個下午上坡下坡，涼風吹在臉上；腿很酸，但我很享受。最印象深刻的不是騎車本身，而是路上遇到的人——在休息站認識了來自各地的車友，一起分零食聊天到太陽下山。直到現在想起那個夏天，心跳都還會快一點。</p>
+  </div>
+  <div class="callout">
+    <strong>比較一下</strong>範文 200 字，你原本 132 字，只多了 68 字。但範文<b>每一句都在回答題目</b>——選了活動、給了兩個原因、回憶只講一件事而且講到細節（腿酸、休息站、太陽下山）。<br><br>
+    <b>不是寫更多，是寫更準。</b>
+  </div>
+</section>
+
+<!-- 08 -->
+<section>
+  <div class="sec-head"><span class="sec-num">08</span><h2>這次的任務</h2></div>
+  <ul class="check">
+    <li>把題目的提示句圈起來，數一數總共幾個要求，寫成清單</li>
+    <li>用錯誤代碼自己訂正 19 條，改完再看答案</li>
+    <li><b>第一段整段重寫</b>：選一個活動 ＋ 兩個原因，每個原因後面接一句說明</li>
+    <li>第二段刪掉財金營，只留騎腳踏車，把細節寫多一點（當時幾點？路上看到什麼？累不累？）</li>
+    <li>第二段全部改成過去式，改完用手指逐個動詞點過去檢查一遍</li>
+    <li>句型庫八句各抄三遍</li>
+  </ul>
+  <div class="callout">
+    <strong>寫作前的三十秒</strong>
+    以後每一篇動筆前，先做一件事：<b>把提示裡的每個要求圈起來、編號、寫成清單</b>，寫完一項打一個勾。<br><br>
+    你的字數、你的句型、你敢寫長句——這些都不是問題。你唯一要補的，就是這三十秒。
+  </div>
+</section>
+
+<footer>
+  英文作文批改 · 05 · 暑假戶外活動（看圖選擇）<br>
+  圖片出現 ≠ 要你描述圖片。先看提示怎麼說。
+</footer>
+
+</div>
+
+<script>
+const b=document.body,t=document.getElementById('toggle');
+t.addEventListener('click',()=>{
+  b.classList.toggle('hide-answers');
+  t.textContent=b.classList.contains('hide-answers')?'顯示修正答案':'只給錯誤代碼';
+});
+
+/* 氣泡：手機點擊開關 */
+const bads=[...document.querySelectorAll('.bad')];
+bads.forEach(el=>{
+  el.addEventListener('click',e=>{
+    if(b.classList.contains('hide-answers'))return;
+    e.stopPropagation();
+    const was=el.classList.contains('open');
+    bads.forEach(o=>o.classList.remove('open'));
+    if(!was){el.classList.add('open');place(el);}
+  });
+  el.addEventListener('mouseenter',()=>place(el));
+  el.addEventListener('focus',()=>place(el));
+});
+document.addEventListener('click',()=>bads.forEach(o=>o.classList.remove('open')));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')bads.forEach(o=>o.classList.remove('open'))});
+
+/* 靠近視窗邊緣時把氣泡貼齊，避免被切掉 */
+function place(el){
+  el.classList.remove('edge-l','edge-r');
+  const r=el.getBoundingClientRect(),c=r.left+r.width/2,w=Math.min(340,innerWidth*0.78);
+  if(c-w/2<12)el.classList.add('edge-l');
+  else if(c+w/2>innerWidth-12)el.classList.add('edge-r');
+}
+</script>
+</body>
+</html>
