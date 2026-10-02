@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>作文批改 07｜網路評論的優缺點</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12233b;--ink-soft:#3c5170;--duck:#f4c518;--paper:#fdfcf7;
+  --line:#dfe6ef;--red:#c8362c;--green:#26610a;--green-pale:#f1f6ec;
+  --amber-bg:#fff7ed;--amber-line:#e66100;--mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(var(--line) 1px,transparent 1px) 0 0/100% 28px,var(--paper);
+color:var(--ink);font-family:'Noto Sans TC',system-ui,sans-serif;font-size:16px;line-height:1.85}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 80px}
+
+.masthead{background:var(--ink);color:#fff;margin:0 -20px 34px;padding:38px 26px 30px;border-bottom:7px solid var(--duck)}
+.masthead .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--duck);margin:0 0 10px}
+.masthead h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.55rem,4.6vw,2.35rem);line-height:1.2;margin:0 0 12px}
+.masthead p{margin:0;color:#c3d0e0;font-size:.94rem}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.meta span{font-family:var(--mono);font-size:.74rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);padding:5px 11px;border-radius:99px}
+.meta span.win{background:var(--duck);color:var(--ink);border-color:var(--duck);font-weight:700}
+
+.toolbar{position:sticky;top:0;z-index:30;display:flex;gap:10px;flex-wrap:wrap;padding:12px 0;margin:0 0 30px;
+background:linear-gradient(var(--paper) 72%,rgba(253,252,247,0))}
+.btn{font-family:'Noto Sans TC',sans-serif;font-weight:700;font-size:.86rem;border:2px solid var(--ink);
+background:#fff;color:var(--ink);padding:9px 17px;border-radius:8px;cursor:pointer;transition:transform .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--duck)}
+.btn:focus-visible{outline:3px solid var(--amber-line);outline-offset:2px}
+
+section{margin:0 0 46px;scroll-margin-top:70px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:20px}
+.sec-num{font-family:var(--mono);font-weight:700;font-size:.82rem;color:#fff;background:var(--ink);padding:3px 9px;border-radius:5px}
+.sec-head h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.28rem;margin:0}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.callout{background:var(--amber-bg);border-left:5px solid var(--amber-line);border-radius:0 10px 10px 0;padding:16px 20px;margin:18px 0}
+.callout strong{color:var(--amber-line)}
+.good{background:var(--green-pale);border-left-color:var(--green)}
+.good strong{color:var(--green)}
+.danger{background:#fdeceb;border-left-color:var(--red)}
+.danger strong{color:var(--red)}
+
+.score-top{background:var(--ink);color:#fff;border-radius:12px;padding:24px;text-align:center;margin-bottom:18px}
+.score-top .jump{font-family:var(--mono);font-size:.8rem;color:#c3d0e0;margin-bottom:6px}
+.score-top .n{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:3.2rem;line-height:1;color:var(--duck)}
+.score-top .d{font-size:1rem;color:#c3d0e0}
+.score-top .range{font-family:var(--mono);font-size:.8rem;color:#c3d0e0;margin-top:8px}
+.score-top .lvl{display:inline-block;margin-top:12px;background:rgba(255,255,255,.12);color:#fff;font-weight:700;
+padding:5px 16px;border-radius:99px;font-size:.88rem;border:1px solid rgba(255,255,255,.25)}
+.bar-row{display:grid;grid-template-columns:96px 1fr 68px;gap:12px;align-items:center;margin-bottom:11px}
+.bar-row .lab{font-weight:700;font-size:.92rem}
+.bar{height:12px;background:var(--line);border-radius:99px;overflow:hidden;position:relative}
+.bar i{display:block;height:100%;background:var(--green);border-radius:99px}
+.bar i.low{background:var(--red)}
+.bar u{position:absolute;top:-3px;width:2px;height:18px;background:var(--amber-line);text-decoration:none}
+.bar-row .v{font-family:var(--mono);font-weight:700;font-size:.85rem;text-align:right}
+.bar-row .v s{color:var(--ink-soft);font-size:.76rem;margin-right:4px}
+
+.essay{background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px 22px 18px;
+font-family:'Bricolage Grotesque',sans-serif;font-weight:600;line-height:2.4;position:relative}
+.essay p{margin:0 0 18px}
+.essay sup{font-family:var(--mono);font-size:.62rem;background:var(--red);color:#fff;padding:1px 5px;border-radius:3px;margin-left:2px;vertical-align:super}
+.keep{background:#e9f3e0;border-radius:5px;padding:2px 3px}
+.offtopic{background:#fdeceb;border-radius:6px;padding:2px 2px}
+.bad{position:relative;display:inline;cursor:help;text-decoration:underline wavy var(--red) 1.5px;
+text-underline-offset:5px;border-radius:3px;transition:background .15s ease}
+.bad:hover,.bad:focus-visible,.bad.open{background:#ffe9a8;outline:none}
+.bad .tip{position:absolute;left:50%;bottom:calc(100% + 12px);transform:translateX(-50%) translateY(4px);
+width:max-content;max-width:min(340px,78vw);background:var(--ink);color:#fff;border-radius:10px;padding:11px 14px;
+font-family:'Noto Sans TC',sans-serif;font-weight:400;font-size:.85rem;line-height:1.6;text-align:left;text-decoration:none;
+opacity:0;visibility:hidden;pointer-events:none;z-index:60;box-shadow:0 8px 24px rgba(18,35,59,.28);
+transition:opacity .16s ease,transform .16s ease}
+.bad:hover .tip,.bad:focus-visible .tip,.bad.open .tip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.bad .tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:7px solid transparent;border-top-color:var(--ink)}
+.bad .tip b{color:var(--duck);font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:.95rem}
+.bad .tip i{display:block;color:#b8c6d8;font-style:normal;font-size:.79rem;margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,.18)}
+.bad.edge-l .tip{left:0;transform:translateX(0) translateY(4px)}
+.bad.edge-l:hover .tip,.bad.edge-l:focus-visible .tip,.bad.edge-l.open .tip{transform:translateX(0) translateY(0)}
+.bad.edge-l .tip::after{left:28px}
+.bad.edge-r .tip{left:auto;right:0;transform:translateX(0) translateY(4px)}
+.bad.edge-r:hover .tip,.bad.edge-r:focus-visible .tip,.bad.edge-r.open .tip{transform:translateX(0) translateY(0)}
+.bad.edge-r .tip::after{left:auto;right:28px;transform:none}
+body.hide-answers .bad .tip{display:none}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem;background:#fff}
+th{background:var(--green);color:#fff;text-align:left;padding:10px 12px;font-weight:700;font-size:.86rem}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even){background:var(--green-pale)}
+.en{font-family:'Bricolage Grotesque',sans-serif;font-weight:600}
+.yes{color:var(--green);font-weight:700}
+.no{color:var(--red);font-weight:700}
+
+.err{border:1px solid var(--line);background:#fff;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.err .top{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-weight:700;font-size:.72rem;background:var(--red);color:#fff;padding:2px 8px;border-radius:4px;flex-shrink:0;margin-top:3px}
+.num{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);flex-shrink:0;margin-top:4px}
+.orig{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;text-decoration:underline wavy var(--red) 1.5px;text-underline-offset:4px}
+.fix{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.fix .arrow{color:var(--green);font-weight:700}
+.fix .why{display:block;font-size:.88rem;color:var(--ink-soft);margin-top:4px}
+body.hide-answers .fix{display:none}
+body.hide-answers .err::after{content:'▸ 先自己想想看';font-family:var(--mono);font-size:.76rem;color:var(--ink-soft)}
+
+.legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin:6px 0 18px}
+.legend div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:.86rem}
+.legend b{font-family:var(--mono);color:var(--red);font-size:.78rem;margin-right:6px}
+
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:9px;margin-top:10px}
+.sp-grid div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:.9rem}
+.sp-grid s{color:var(--red);font-family:'Bricolage Grotesque',sans-serif;font-weight:600}
+.sp-grid b{color:var(--green);font-family:'Bricolage Grotesque',sans-serif;font-weight:600}
+
+.model{background:#fff;border:1px solid var(--line);border-left:5px solid var(--duck);border-radius:0 10px 10px 0;padding:18px 22px}
+.model p{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:1rem;line-height:1.95;margin:0 0 14px}
+.model .zh{font-family:'Noto Sans TC',sans-serif;font-weight:400;font-size:.86rem;color:var(--ink-soft);line-height:1.7;margin:-8px 0 18px}
+
+.check{list-style:none;padding:0;margin:0}
+.check li{display:flex;gap:11px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line)}
+.check li::before{content:'☐';font-size:1.2rem;color:var(--green);line-height:1.3}
+
+footer{text-align:center;color:var(--ink-soft);font-size:.84rem;border-top:2px solid var(--ink);padding-top:20px;margin-top:50px}
+
+@media(max-width:600px){
+  body{font-size:15px}
+  .bar-row{grid-template-columns:74px 1fr 62px;gap:8px}
+  table{font-size:.86rem}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff}
+  body.hide-answers .fix{display:block!important}
+  body.hide-answers .err::after{content:''}
+  .toolbar{display:none}
+  .masthead{margin:0 0 20px;background:#12233b!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  section{page-break-inside:avoid}
+  th{background:#26610a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="kicker">Essay Review · 07</p>
+  <h1>網路評論的優缺點</h1>
+  <p>優缺點兩邊都寫了、個人經驗也舉了——但沒填格子，離題又回來了。</p>
+  <div class="meta">
+    <span class="win">優缺點兩邊都有 ✓</span>
+    <span class="win">有個人經驗 ✓</span>
+    <span>字數 約 195</span>
+    <span>預估 10 / 20</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button class="btn primary" id="toggle">只給錯誤代碼</button>
+  <button class="btn" onclick="window.print()">列印</button>
+</div>
+
+<!-- 01 -->
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>預估級分</h2></div>
+  <div class="score-top">
+    <div class="jump">上一篇（有填格子）12 分　→　這一篇（沒填格子）</div>
+    <div class="n">10</div>
+    <div class="d">／ 20</div>
+    <div class="range">落點區間 9 – 11</div>
+    <div class="lvl">等級：可（10–14）的最下緣</div>
+  </div>
+  <div class="card">
+    <div class="bar-row"><span class="lab">內容</span><span class="bar"><i style="width:60%"></i><u style="left:60%"></u></span><span class="v">3/5</span></div>
+    <div class="bar-row"><span class="lab">組織</span><span class="bar"><i style="width:60%"></i><u style="left:60%"></u></span><span class="v">3/5</span></div>
+    <div class="bar-row"><span class="lab">文法句構</span><span class="bar"><i class="low" style="width:40%"></i><u style="left:60%"></u></span><span class="v"><s>3</s>2/5</span></div>
+    <div class="bar-row"><span class="lab">詞彙拼寫</span><span class="bar"><i class="low" style="width:40%"></i><u style="left:60%"></u></span><span class="v"><s>3</s>2/5</span></div>
+    <p style="font-size:.82rem;color:var(--ink-soft);margin:10px 0 0">橘線＝上一篇的位置</p>
+  </div>
+  <div class="callout good">
+    <strong>先講進步的地方，這兩項是真的變好了</strong>
+    ① 第一段<b>優點和缺點兩邊都寫了</b>，還用了 In the positive way / On the other side 成對轉承。<br>
+    ② 第二段<b>舉了自己的經驗</b>（出國前看 YouTube 找美食和拍照點）——這是題目明確要求的，你以前都漏掉。<br>
+    這兩件事是前幾篇一直在練的，這次自己做到了。
+  </div>
+  <div class="callout danger">
+    <strong>但文法和拼寫掉下去了</strong>
+    這一篇有 <b>10 個拼字錯誤</b>、<b>3 個片段句</b>。上一篇是照格子慢慢寫的，這一篇像是一口氣寫完沒回頭看。<br>
+    寫完那三分鐘的檢查，省不得。
+  </div>
+</section>
+
+<!-- 02 -->
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>題目對照</h2></div>
+  <div class="card">
+    <p style="margin:0"><b>提示：</b>現代人在用餐、旅遊或購物前，經常透過網路評論（Google、IG 等）來決定餐廳、景點或商品。請以此為題寫一篇英文作文，文長至少 120 字。第一段<b>詳述這種做法的優缺點</b>。第二段說明<b>你是否會透過網路評論來做相關決定</b>，並<b>舉自己或親友的經驗為例</b>，來支持你的想法。</p>
+  </div>
+  <table>
+    <thead><tr><th style="width:38%">題目要求</th><th style="width:12%">有寫</th><th>狀況</th></tr></thead>
+    <tbody>
+      <tr><td>優點</td><td class="yes">✓</td><td>容易找到高評分餐廳</td></tr>
+      <tr><td>缺點</td><td class="yes">✓</td><td>不能全信、評論看不到全貌</td></tr>
+      <tr><td>你是否會這樣做</td><td class="yes">✓</td><td>Even me, I also check…</td></tr>
+      <tr><td>舉自己或親友的經驗</td><td class="yes">✓</td><td>出國前看 YouTube 找美食和拍照景點</td></tr>
+      <tr><td>結論回答題目</td><td class="no">✗</td><td>結論跑去講「把難忘經驗分享給陌生人」，跟題目無關</td></tr>
+    </tbody>
+  </table>
+  <div class="callout danger">
+    <strong>三處離題，全部都是「講到旁邊去了」</strong>
+    <b>① 第一段：</b>many teenagers are keen of visit Instagrammable spots, hope to attract more followers——這是在講「網美打卡現象」，不是「看評論的優點」。<br>
+    <b>② 第二段開頭：</b>Many people nowadays dream of being internet celebrities——第二段要講你自己，不是講別人的網紅夢。<br>
+    <b>③ 結論：</b>share the memorable experience for everyone even we don't know each other——題目問的是「你會不會用評論做決定」，結論要回答這個。<br><br>
+    這三處加起來約 <b>45 個字</b>，等於白寫。
+  </div>
+</section>
+
+<!-- 03 -->
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>第四次了：only … can we</h2></div>
+  <div class="card">
+    <p style="margin-top:0">這個倒裝句型，你已經連續<b>四篇</b>用在結尾了：</p>
+    <table>
+      <thead><tr><th style="width:20%">篇次</th><th>結尾</th><th style="width:18%">切題嗎</th></tr></thead>
+      <tbody>
+        <tr><td>黃色小鴨</td><td class="en">only by striking a balance between travel and environment…</td><td class="yes">✓</td></tr>
+        <tr><td>線上課程</td><td class="en">only by striking a balance between students and 3C…</td><td class="yes">✓</td></tr>
+        <tr><td>舊電鍋</td><td class="en">only by striking a balance between the government and <b>the company</b></td><td class="no">✗ 案子裡沒有公司</td></tr>
+        <tr><td>這一篇</td><td class="en">only using the internet carefully can we <b>share the memorable experience</b></td><td class="no">✗ 題目沒問分享</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-bottom:0">前兩次好用，後兩次都<b>為了把句型塞進去而離題</b>。這不是句型的問題，是使用方式的問題。</p>
+  </div>
+  <div class="callout">
+    <strong>新規定：結論先寫中文，再決定要不要用這個句型</strong>
+    順序是——① 先用中文寫一句「我的結論是＿＿＿」　② 看這句能不能塞進倒裝　③ <b>塞不進去就換一句普通的</b>，不要改結論去遷就句型。<br><br>
+    這一題的結論用最簡單的講法就好：<span class="en">Online reviews are a useful map, but the final choice should always be my own.</span>
+  </div>
+</section>
+
+<!-- 04 -->
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>原文批改稿</h2></div>
+  <p style="margin-top:-8px;color:var(--ink-soft);font-size:.92rem">🖱️ 滑鼠移到紅線上會跳出正確版本（手機用點的）。<span class="keep">綠底</span>＝寫得好保留的句子，<span class="offtopic">粉紅底</span>＝離題。</p>
+  <div class="essay">
+    <p>In <span class="bad" tabindex="0">morden<span class="tip"><b>modern</b><i>SP · d 和 e 順序寫反了。</i></span></span><sup>1</sup> society, some people often <span class="bad" tabindex="0">check the information from<span class="tip"><b>check reviews on</b><i>WW / ART · the information 太籠統，題目講的是「評論」。平台前面用 on。</i></span></span><sup>2</sup> Google, Instagram before traveling, shopping or even having a meal. If the restaurant got <span class="bad" tabindex="0">"five starts"<span class="tip"><b>five stars</b><i>SP · start 是「開始」，star 才是「星星」。</i></span></span><sup>3</sup>, we may <span class="bad" tabindex="0">consider to give<span class="tip"><b>consider giving</b><i>句型 · consider 後面只能接動名詞（-ing），不能接 to。</i></span></span><sup>4</sup> it a try. In contrast, if the comments are <span class="bad" tabindex="0">not well and we<span class="tip"><b>negative, we</b><i>WW / MISS · well 是副詞，評論好壞要用 good / negative。而且 if 子句後面不能再加 and。</i></span></span><sup>5</sup> will not choose it.</p>
+
+    <p><span class="bad" tabindex="0">It may cause some positive and negetive influences<span class="tip"><b>This practice has both advantages and disadvantages.</b><i>SP / WW · negetive → negative。而且「優缺點」的標準說法是 advantages and disadvantages，比 influences 精準。</i></span></span><sup>6</sup>. In the positive way, we can <span class="bad" tabindex="0">identify more easly to choose high-point rate restaurant<span class="tip"><b>more easily find highly rated restaurants</b><i>SP / WW / PL · easly → easily；identify…to choose 兩個動詞疊在一起；high-point rate → highly rated；餐廳泛指用複數。</i></span></span><sup>7</sup>.</p>
+
+    <p><span class="offtopic">Recently, many teenagers are <span class="bad" tabindex="0">keen of visit<span class="tip"><b>keen on visiting</b><i>PREP · be keen <b>on</b> ＋ 動名詞，這是固定用法。</i></span></span><sup>8</sup> Instagrammable spots, <span class="bad" tabindex="0">hope to attract<span class="tip"><b>hoping to attract</b><i>分詞構句 · 一句裡不能有兩個並列動詞，第二個要改成 -ing。</i></span></span><sup>9</sup> more followers and <span class="bad" tabindex="0">make more people to visit<span class="tip"><b>整段刪掉（離題）</b><i>LOG · 這句在講網美打卡現象，不是「看評論的優點」。與題目無關。</i></span></span><sup>10</sup>.</span></p>
+
+    <p><span class="bad" tabindex="0">On the other side<span class="tip"><b>On the other hand</b><i>WW · 固定片語是 on the other hand，不是 side。</i></span></span><sup>11</sup>, we can't just believe what <span class="bad" tabindex="0">others visiters<span class="tip"><b>other visitors</b><i>SP / PL · visiters → visitors；others 當形容詞時要用 other。</i></span></span><sup>12</sup> say. <span class="bad" tabindex="0">Their openion can't show all shape of the shop<span class="tip"><b>Their opinions cannot reveal the whole picture of a shop.</b><i>SP / CH · openion → opinion；「全貌」英文是 the whole picture，不是 all shape。</i></span></span><sup>13</sup>.</p>
+
+    <p><span class="offtopic"><span class="bad" tabindex="0">Many people nowadays dream of being internet celebrities. Some are exploring different country, sharing their openion they eat.<span class="tip"><b>整段刪掉，改成直接表態</b><i>LOG · 第二段要講「你自己會不會用評論」，不是別人的網紅夢。而且 sharing their opinion they eat 語意不清。</i></span></span><sup>14</sup></span> <span class="bad" tabindex="0">Even me, I also check<span class="tip"><b>Personally, I do check</b><i>CH · Even me 是中文「連我也」的直譯。要強調就用 Personally / I am no exception。</i></span></span><sup>15</sup> the information before the trip.</p>
+
+    <p><span class="bad" tabindex="0">Through the words and pictures uploaded by the travelers. I can consider which is the benefical ones.<span class="tip"><b>Through the words and pictures uploaded by travelers, I can tell which places are worth visiting.</b><i>FRAG / SP · 第一句沒有主詞動詞，是片段句，要用逗號併進下一句。benefical → beneficial，但這裡用 worth visiting 更自然。</i></span></span><sup>16</sup></p>
+
+    <p><span class="bad" tabindex="0">From my experience, when I'm planning to go abroad. I watched the video<span class="tip"><b>Last summer, when I was planning a trip abroad, I watched several videos</b><i>FRAG / T · 又是片段句；而且 I'm planning（現在）配 I watched（過去）時態打架。敘述過去經驗就全部用過去式。</i></span></span><sup>17</sup> <span class="bad" tabindex="0">which is introduce<span class="tip"><b>that introduced</b><i>句型 · which is 後面不能直接接原形動詞。關係子句的動詞要自己變化。</i></span></span><sup>18</sup> the famous food, and the place where I can take photos.</p>
+
+    <p>With the help of the Youtubers, I could <span class="bad" tabindex="0">quickly and accuracy to plaining the trip<span class="tip"><b>plan the trip quickly and accurately</b><i>SP / 詞性 · accuracy 是名詞，副詞是 accurately；plaining → planning；could 後面接原形 plan。</i></span></span><sup>19</sup>.</p>
+
+    <p><span class="offtopic">To sum up, <span class="bad" tabindex="0">only useing the internet carefully can we share the memorable experience for everyone even we don't know each other.<span class="tip"><b>Online reviews are a useful map, but the final choice should always be my own.</b><i>SP / LOG · useing → using。更重要的是：題目問「你會不會用評論做決定」，結論要回答這個，不是講「分享經驗給陌生人」。</i></span></span><sup>20</sup></span></p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>拼字：這次 10 個</h2></div>
+  <p style="margin-top:-8px;color:var(--ink-soft);font-size:.92rem">這些不是難字，都是你會的字打錯。交卷前掃一遍就能救回來。</p>
+  <div class="sp-grid">
+    <div><s>morden</s> → <b>modern</b></div>
+    <div><s>starts</s> → <b>stars</b></div>
+    <div><s>negetive</s> → <b>negative</b></div>
+    <div><s>easly</s> → <b>easily</b></div>
+    <div><s>openion</s> → <b>opinion</b></div>
+    <div><s>visiters</s> → <b>visitors</b></div>
+    <div><s>benefical</s> → <b>beneficial</b></div>
+    <div><s>useing</s> → <b>using</b></div>
+    <div><s>plaining</s> → <b>planning</b></div>
+    <div><s>accuracy</s> → <b>accurately</b></div>
+  </div>
+  <div class="callout">
+    <strong>兩個規則能修掉其中三個</strong>
+    字尾是 <b>-e</b> 的動詞加 -ing，要<b>去掉 e</b>：use → using，不是 useing。<br>
+    字尾是<b>短母音＋子音</b>的動詞加 -ing，要<b>雙寫子音</b>：plan → planning，不是 plaining。<br>
+    這兩條記起來，這類錯就少一半。
+  </div>
+</section>
+
+<!-- 06 -->
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>片段句：這次 3 個</h2></div>
+  <div class="card">
+    <p style="margin-top:0"><b>什麼是片段句：</b>一個句子裡沒有「主詞＋動詞」的完整組合，卻打了句號。</p>
+    <p style="margin-top:12px"><span class="en" style="color:var(--red)">✗ Through the words and pictures uploaded by the travelers.</span><br>
+    <span class="en" style="color:var(--green)">✓ Through the words and pictures uploaded by travelers, I can tell which places are worth visiting.</span></p>
+    <p style="margin-top:12px"><span class="en" style="color:var(--red)">✗ From my experience, when I'm planning to go abroad.</span><br>
+    <span class="en" style="color:var(--green)">✓ Last summer, when I was planning a trip abroad, I watched several videos…</span></p>
+    <p style="margin-top:12px"><span class="en" style="color:var(--red)">✗ Some are exploring different country, sharing their openion they eat.</span><br>
+    <span class="en" style="color:var(--green)">✓ 整句離題，直接刪掉。</span></p>
+    <p style="margin:14px 0 0;color:var(--amber-line)"><b>自我檢查法：</b>每看到一個句號，往前找「誰」和「做了什麼」。找不到，那個句號就要改成逗號。</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section>
+  <div class="sec-head"><span class="sec-num">07</span><h2>參考範文</h2></div>
+  <p style="margin-top:-8px;color:var(--ink-soft);font-size:.92rem">保留你的兩個優缺點和 YouTube 找美食的經驗，刪掉三處離題，結論改成回答題目。約 205 字。</p>
+  <div class="model">
+    <p>Before traveling, shopping, or even having a meal, many people today check online reviews on Google or Instagram. This practice has both advantages and disadvantages. On the positive side, reviews save us a great deal of time. If a restaurant has five stars and hundreds of comments, we can decide in seconds whether it is worth a try, instead of wandering down the street and hoping for the best. On the other hand, we cannot simply believe everything other visitors say. Some reviews are written by people whose tastes are nothing like ours, and a few are even paid advertisements. A handful of opinions can never reveal the whole picture of a shop.</p>
+    <p class="zh">現代人用餐、旅遊、購物前常查 Google 或 IG 的評論。這種做法有優點也有缺點。好處是省時間——看到五星加上幾百則評論，幾秒鐘就能決定要不要去，不必在街上亂晃碰運氣。壞處是不能全信別人說的：有些評論的人口味跟我們完全不同，甚至有業配。少數幾則意見永遠看不到一家店的全貌。</p>
+    <p>Personally, I do rely on online reviews, but I never let them make the final decision for me. Last summer, when I was planning a trip abroad, I watched several videos that introduced local food and photo spots. With the help of those travelers' words and pictures, I planned my route quickly and accurately, and I even found a small noodle shop I would never have discovered on my own. However, one highly rated café turned out to be crowded and overpriced, which taught me a lesson. To sum up, online reviews are a useful map, but the final choice should always be my own.</p>
+    <p class="zh">我自己會看評論，但不會讓評論幫我做最後決定。去年夏天準備出國時，我看了幾支介紹當地美食和拍照景點的影片，靠那些旅人的文字和照片，很快又準確地規劃好路線，還找到一家自己絕對不會發現的小麵店。不過有一家高評分咖啡廳去了才發現又擠又貴，也給我上了一課。總之，網路評論是好用的地圖，但最後的選擇還是要自己做。</p>
+  </div>
+  <div class="callout good">
+    <strong>注意結尾的寫法</strong>
+    範文結尾沒有用倒裝，就是一句普通的 but 句。<b>但它直接回答了題目問的「你會不會用評論做決定」。</b><br>
+    普通句子答對題，勝過漂亮句型答錯題。
+  </div>
+</section>
+
+<!-- 08 -->
+<section>
+  <div class="sec-head"><span class="sec-num">08</span><h2>這次的任務</h2></div>
+  <ul class="check">
+    <li>20 條訂正先用代碼自己改，改完再看答案</li>
+    <li>10 個拼字錯抄三遍，特別是 opinion、using、planning</li>
+    <li>把三處離題（網美打卡、網紅夢、結論）整段刪掉重寫</li>
+    <li>結論重寫：先用中文寫「我的結論是＿＿＿」，再翻英文，<b>這次不准用倒裝</b></li>
+    <li>找出三個片段句，把句號改成逗號併進下一句</li>
+    <li>下一篇作文，<b>先填大綱格子再動筆</b>——上一篇 12 分就是這樣來的</li>
+  </ul>
+  <div class="callout">
+    <strong>這次最值得記住的一句</strong>
+    優缺點你寫齊了，個人經驗你也舉了——<b>該寫的都寫了，但多寫了 45 個字不該寫的</b>。<br>
+    下一步不是學新東西，是學會停下來：寫每一句之前先確認，這一句在回答題目的哪一項。
+  </div>
+</section>
+
+<footer>
+  英文作文批改 · 07 · 網路評論的優缺點<br>
+  普通句子答對題，勝過漂亮句型答錯題。
+</footer>
+
+</div>
+
+<script>
+const b=document.body,t=document.getElementById('toggle');
+t.addEventListener('click',()=>{
+  b.classList.toggle('hide-answers');
+  t.textContent=b.classList.contains('hide-answers')?'顯示修正答案':'只給錯誤代碼';
+});
+const bads=[...document.querySelectorAll('.bad')];
+bads.forEach(el=>{
+  el.addEventListener('click',e=>{
+    if(b.classList.contains('hide-answers'))return;
+    e.stopPropagation();
+    const was=el.classList.contains('open');
+    bads.forEach(o=>o.classList.remove('open'));
+    if(!was){el.classList.add('open');place(el);}
+  });
+  el.addEventListener('mouseenter',()=>place(el));
+  el.addEventListener('focus',()=>place(el));
+});
+document.addEventListener('click',()=>bads.forEach(o=>o.classList.remove('open')));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')bads.forEach(o=>o.classList.remove('open'))});
+function place(el){
+  el.classList.remove('edge-l','edge-r');
+  const r=el.getBoundingClientRect(),c=r.left+r.width/2,w=Math.min(340,innerWidth*0.78);
+  if(c-w/2<12)el.classList.add('edge-l');
+  else if(c+w/2>innerWidth-12)el.classList.add('edge-r');
+}
+</script>
+</body>
+</html>
