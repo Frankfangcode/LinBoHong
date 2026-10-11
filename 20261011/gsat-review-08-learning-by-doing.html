@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>北模作文批改｜Learning by Doing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: marking sheet on graph paper — ink masthead, numbered review sections, hover-to-reveal corrections */
+:root{
+  --ink:#12202e;--ink-soft:#4a5866;--paper:#faf9f5;--card:#ffffff;--line:#dfe3e0;
+  --red:#c8342b;--red-wash:#fdeeec;--duck:#f5c518;--harbor:#1b6f7f;--harbor-wash:#e6f1f2;--good:#2f7d4f;--good-wash:#e7f3ec;
+  --mast-bg:#12202e;--mast-fg:#ffffff;--mast-soft:#b9c6d2;--tip-bg:#12202e;--tip-fg:#ffffff;--btn-bg:#ffffff;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --sans:"Noto Sans TC","Bricolage Grotesque",system-ui,sans-serif;
+  --display:"Bricolage Grotesque","Noto Sans TC",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#e6ebf0;--ink-soft:#a3b0bc;--paper:#11171d;--card:#18212a;--line:#26313b;
+  --red:#ff7b6e;--red-wash:#3a1f1d;--duck:#f5c518;--harbor:#5fc0cf;--harbor-wash:#173037;--good:#6fcf97;--good-wash:#18301f;
+  --mast-bg:#0a0f14;--mast-fg:#ffffff;--mast-soft:#9fb0c0;--tip-bg:#f1f4f7;--tip-fg:#12202e;--btn-bg:#18212a;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --ink:#e6ebf0;--ink-soft:#a3b0bc;--paper:#11171d;--card:#18212a;--line:#26313b;
+  --red:#ff7b6e;--red-wash:#3a1f1d;--duck:#f5c518;--harbor:#5fc0cf;--harbor-wash:#173037;--good:#6fcf97;--good-wash:#18301f;
+  --mast-bg:#0a0f14;--mast-fg:#ffffff;--mast-soft:#9fb0c0;--tip-bg:#f1f4f7;--tip-fg:#12202e;--btn-bg:#18212a;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--ink);background-color:var(--paper);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:26px 26px;background-position:-1px -1px;line-height:1.75;font-size:16px}
+.wrap{max-width:940px;margin:0 auto;padding:0 16px 90px}
+
+.masthead{background:var(--mast-bg);color:var(--mast-fg);padding:36px 16px 28px;border-bottom:6px solid var(--duck);margin-bottom:30px}
+.mast-inner{max-width:908px;margin:0 auto;display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between}
+.mast-inner>div:first-child{min-width:0;flex:1 1 380px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--duck);margin:0 0 10px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(26px,4.6vw,40px);line-height:1.2;margin:0 0 12px;text-wrap:balance}
+.subtitle{margin:0;color:var(--mast-soft);font-size:15px;max-width:52ch}
+.totalbox{border:2px solid var(--duck);border-radius:4px;padding:14px 22px;text-align:center;min-width:160px;background:rgba(245,197,24,.08)}
+.totalbox .label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--duck)}
+.totalbox .num{font-family:var(--display);font-weight:800;font-size:46px;line-height:1;margin:6px 0 2px;font-variant-numeric:tabular-nums}
+.totalbox .num small{font-size:18px;color:var(--mast-soft);font-weight:600}
+.totalbox .band{font-family:var(--mono);font-size:12px;color:var(--mast-soft)}
+
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:0 0 34px;padding:12px 16px;border:1px solid var(--line);border-radius:4px;background:var(--card)}
+.toolbar p{margin:0;font-size:13.5px;color:var(--ink-soft);flex:1;min-width:200px}
+button{font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;border-radius:3px;border:1.5px solid var(--ink);background:var(--btn-bg);color:var(--ink);padding:8px 16px}
+button:hover{background:var(--ink);color:var(--paper)}
+button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+button:focus-visible,.err:focus-visible{outline:3px solid var(--harbor);outline-offset:2px}
+
+section{margin:0 0 52px;scroll-margin-top:20px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:22px}
+.sec-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--red)}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(20px,3vw,26px);margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:700;font-size:17px;margin:26px 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px 20px;margin-bottom:14px}
+.card p{margin:0}
+.card.accent{border-left:4px solid var(--harbor)}
+.card.warn{border-left:4px solid var(--red)}
+.card.gold{border-left:4px solid var(--duck)}
+.note{font-size:14px;color:var(--ink-soft);margin:-8px 0 14px}
+
+.rubric{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:130px 1fr 70px;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 16px}
+.row .name{font-weight:700;font-size:15px}
+.row .name span{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-soft);font-weight:400;letter-spacing:.04em}
+.meter{height:12px;background:var(--line);border-radius:2px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--harbor)}
+.meter.low i{background:var(--red)}
+.meter.mid i{background:var(--duck)}
+.row .pt{font-family:var(--mono);font-weight:700;font-size:19px;text-align:right;font-variant-numeric:tabular-nums}
+.row .pt em{font-style:normal;font-size:12px;color:var(--ink-soft)}
+
+.prompt{background:var(--card);border:1px dashed var(--harbor);border-radius:4px;padding:18px 20px}
+.prompt .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;background:var(--harbor-wash);color:var(--harbor);padding:2px 8px;border-radius:2px;margin-bottom:8px}
+.prompt ol{margin:8px 0 0;padding-left:22px}
+.pics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.pic{border:1px solid var(--line);border-radius:3px;padding:10px 12px;font-size:14px}
+.pic b{font-family:var(--mono);color:var(--red);display:block;font-size:12px}
+
+.script{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px 24px;font-size:16.5px;line-height:2.2}
+.script p{margin:0 0 18px}.script p:last-child{margin:0}
+.para-tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--harbor);display:block;margin-bottom:2px;line-height:1.6}
+.err{position:relative;color:var(--red);background:var(--red-wash);border-bottom:2px wavy var(--red);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--red) 50%,transparent);cursor:help;padding:0 1px}
+.err::after{content:attr(data-fix);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);background:var(--tip-bg);color:var(--tip-fg);font-family:var(--sans);font-size:13px;line-height:1.5;padding:7px 11px;border-radius:3px;width:max-content;max-width:240px;opacity:0;visibility:hidden;transition:opacity .12s;z-index:9;pointer-events:none;box-shadow:0 4px 14px rgba(0,0,0,.25);text-decoration:none;white-space:normal}
+.err:hover::after,.err:focus::after{opacity:1;visibility:visible}
+.code{font-family:var(--mono);font-size:10.5px;font-weight:700;vertical-align:super;color:var(--red);margin-left:1px}
+.good{background:var(--good-wash);border-bottom:2px solid var(--good);padding:0 2px}
+
+.fix{border:1px solid var(--line);border-radius:4px;background:var(--card);margin-bottom:10px;overflow:hidden}
+.fix-top{display:flex;gap:12px;padding:12px 16px;align-items:flex-start;flex-wrap:wrap}
+.fix-no{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--paper);background:var(--ink);border-radius:2px;padding:2px 7px;flex-shrink:0;margin-top:3px}
+.orig{font-size:15.5px;color:var(--red);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--red) 50%,transparent);flex:1;min-width:0}
+.chips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;border:1px solid var(--red);color:var(--red)}
+.fix.big{border-color:var(--red)}
+.fix.big .fix-top{background:var(--red-wash)}
+.answer{border-top:1px dashed var(--line);padding:12px 16px 13px 55px}
+.answer .arrow{margin-right:6px}
+.newtext{font-size:15.5px;font-weight:700;color:var(--harbor)}
+.why{font-size:14px;color:var(--ink-soft);margin:6px 0 0}
+body.hide-answers .answer{display:none}
+body.hide-answers .err::after{visibility:hidden!important;opacity:0!important}
+body.hide-answers .err{text-decoration:none}
+body.hide-answers .note-hide{display:block}
+.note-hide{display:none}
+
+.para-h{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--harbor);margin:24px 0 10px}
+
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);font-size:14.5px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:12px;letter-spacing:.08em;font-weight:400}
+tbody tr:last-child td{border-bottom:none}
+td.from{color:var(--ink-soft);width:36%}
+td.to{font-weight:700;color:var(--harbor)}
+
+ul.tips{margin:0;padding:0;list-style:none}
+ul.tips li{position:relative;padding-left:24px;margin-bottom:10px;font-size:15px}
+ul.tips li:last-child{margin-bottom:0}
+ul.tips li::before{content:"→";position:absolute;left:0;color:var(--red);font-family:var(--mono);font-weight:700}
+
+.model{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--duck);border-radius:4px;padding:22px 24px;font-size:16.5px;line-height:2.05}
+.model p{margin:0 0 20px}
+.wordcount{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:right;margin:0!important;padding-top:10px;border-top:1px dashed var(--line)}
+footer{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding-top:24px;border-top:1px solid var(--line)}
+
+@media (max-width:640px){
+  .row{grid-template-columns:1fr 60px;gap:8px}
+  .meter{grid-column:1/-1;order:3}
+  .answer{padding-left:16px}
+  .pics{grid-template-columns:1fr}
+  .script,.model{padding:18px 16px}
+}
+@media print{body{background:#fff}.toolbar{display:none}.answer{display:block!important}.err::after{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+
+<header class="masthead">
+  <div class="mast-inner">
+    <div>
+      <p class="eyebrow">GSAT English · 北模 Marking Sheet</p>
+      <h1>Learning by Doing 看圖作文<br>批改與檢討</h1>
+      <p class="subtitle">林柏宏・北區模擬考英文作文（115-E2）。題目依文章內容推測，若題本作答提示不同，以題本為準。</p>
+    </div>
+    <div class="totalbox">
+      <div class="label">作文預估級分</div>
+      <div class="num">10<small>/20</small></div>
+      <div class="band">落點 9–11 分</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="toolbar">
+    <p><strong>自己訂正：</strong>先按「蓋住修正答案」，看紅字和錯誤代碼自己改，改完再掀開對答案。</p>
+    <button id="toggle" type="button" aria-pressed="false">蓋住修正答案</button>
+    <button type="button" onclick="window.print()">列印講義</button>
+  </div>
+
+  <section id="s1">
+    <div class="sec-head"><span class="sec-num">01</span><h2>預估級分與總評</h2></div>
+    <div class="rubric">
+      <div class="row"><div class="name">內容<span>CONTENT</span></div><div class="meter mid"><i style="width:60%"></i></div><div class="pt">3<em>/5</em></div></div>
+      <div class="row"><div class="name">組織<span>ORGANIZATION</span></div><div class="meter mid"><i style="width:60%"></i></div><div class="pt">3<em>/5</em></div></div>
+      <div class="row"><div class="name">文法句構<span>GRAMMAR</span></div><div class="meter low"><i style="width:30%"></i></div><div class="pt">1.5<em>/4</em></div></div>
+      <div class="row"><div class="name">字彙拼字<span>VOCAB &amp; SPELLING</span></div><div class="meter low"><i style="width:38%"></i></div><div class="pt">1.5<em>/4</em></div></div>
+      <div class="row"><div class="name">體例<span>FORMAT</span></div><div class="meter mid"><i style="width:50%"></i></div><div class="pt">1<em>/2</em></div></div>
+    </div>
+    <div class="card warn" style="margin-top:16px">
+      <p><strong>一句話總評：</strong>有扣題，兩段分工也正確，第一段的圖片描述算完整；但句構錯誤很密集，常常一句裡有兩個動詞、還有中式英文，第二段的理由也太單薄，所以卡在中段。</p>
+    </div>
+    <div class="card accent">
+      <p style="font-size:14.5px;color:var(--ink-soft)"><strong style="color:var(--ink)">扣分主因排序：</strong>① 一句兩個動詞的中式句構（出現 5 次以上）。② <em>mocking trail</em> 這類用字錯誤讓句意完全走樣。③ 第二段沒說明「親身去做能學到什麼」，沒扣緊 learning by doing。</p>
+    </div>
+  </section>
+
+  <section id="s2">
+    <div class="sec-head"><span class="sec-num">02</span><h2>題目（推測）</h2></div>
+    <div class="prompt">
+      <span class="tag">依文章反推，非原題</span>
+      <p style="margin:0">下面三張圖是學校的「Learning by Doing（做中學）」課程。寫一篇至少 120 字、分兩段的英文作文：</p>
+      <ol>
+        <li>第一段描述圖片中的三個活動。</li>
+        <li>第二段說明你最想參加哪一個，以及原因。</li>
+      </ol>
+      <div class="pics">
+        <div class="pic"><b>PICTURE A</b>動物收容所志工：掃狗屋、餵狗、遛狗、拖地</div>
+        <div class="pic"><b>PICTURE B</b>模擬法庭：老師帶學生演出審判</div>
+        <div class="pic"><b>PICTURE C</b>機器人組裝課：學生分組討論</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="s3">
+    <div class="sec-head"><span class="sec-num">03</span><h2>原文批改稿</h2></div>
+    <p class="note">滑鼠移到紅字上（手機點一下）就會看到修正；右上角小字是錯誤代碼。</p>
+    <div class="script">
+      <p><span class="para-tag">PARAGRAPH 1 — 描述圖片</span>
+      The three pictures <span class="err" tabindex="0" data-fix="illustrate three activities that embody">illustrate an activity is</span><span class="code">CH</span> "Learning by Doing". <span class="err" tabindex="0" data-fix="In Picture A">In the picture A</span><span class="code">ART</span>, we can see four students <span class="err" tabindex="0" data-fix="are volunteering at an animal shelter">have an experience to be a volunteer</span><span class="code">WW</span>. They <span class="err" tabindex="0" data-fix="are doing different kinds of jobs">have all different kinds job</span><span class="code">MISS</span>. On the left side, a girl is <span class="err" tabindex="0" data-fix="sweeping out the dog kennel">swiping the house of the dogs</span><span class="code">SP</span>. On the ground, there are some dogs <span class="err" tabindex="0" data-fix="fed（feed–fed–fed）">feeded</span><span class="code">SP</span> by a girl <span class="err" tabindex="0" data-fix="拆成兩句：Next to her, a boy is walking a black dog.">and a boy walking a black dog</span><span class="code">CH</span>. Behind them, <span class="err" tabindex="0" data-fix="there is a boy">there have a boy</span><span class="code">CH</span> cleaning the floor. In picture B, the teacher <span class="err" tabindex="0" data-fix="is teaching the students">in teaching the student</span><span class="code">PL</span>. <span class="err" tabindex="0" data-fix="They are holding a mock trial.">They are mocking trail.</span><span class="code">WW</span> <span class="err" tabindex="0" data-fix="Through this class, students can easily learn how a trial works.">through the class. Students can easily learning how the trail working.</span><span class="code">FRAG</span> In picture C, there is a robot assembly class. <span class="err" tabindex="0" data-fix="The students are divided into several groups.">All students seperate in different groups.</span><span class="code">SP</span> They are thinking about how to make a robot.</p>
+
+      <p><span class="para-tag">PARAGRAPH 2 — 選擇與理由</span>
+      <span class="err" tabindex="0" data-fix="From my perspective, I would most like to join the animal shelter volunteering activity.">From my perspective. I extremely want to enjoy the stray animal shelter class.</span><span class="code">P</span> First, because <span class="err" tabindex="0" data-fix="many cats and dogs are abandoned on the streets">there are many cats and dogs were lose on the road</span><span class="code">CH</span> and <span class="err" tabindex="0" data-fix="do not have a safe home">don't have a safety home</span><span class="code">WW</span>. <span class="err" tabindex="0" data-fix="Therefore,">So that,</span><span class="code">WW</span> I want to <span class="err" tabindex="0" data-fix="gain experience in taking care of the animals">have an experience to take good care of the pets</span><span class="code">WW</span> in the shelter. Second, I think <span class="err" tabindex="0" data-fix="a volunteer needs a kind heart to do this job well, and I happen to have one">the volunteer needs a kind heart to have a job and I have too</span><span class="code">REF</span>. To sum up, <span class="good">I firmly believe that</span> <span class="err" tabindex="0" data-fix="schools should offer more classes of this kind">the school can make have these kind of the class</span><span class="code">CH</span>. <span class="err" tabindex="0" data-fix="…so that more students can discover that learning by doing is a meaningful way to learn.">Let more students can have a chance to know "Learning by Doing" is a good chace of learning.</span><span class="code">FRAG</span></p>
+    </div>
+    <p style="font-size:14px;color:var(--good);margin-top:12px"><strong>✓ 值得保留：</strong>第一段用 <em>On the left side / On the ground / Behind them</em> 依位置描述圖片，空間順序很清楚；<em>From my perspective</em>、<em>I firmly believe that</em> 也是好用的主題句開頭。</p>
+  </section>
+
+  <section id="s4">
+    <div class="sec-head"><span class="sec-num">04</span><h2>詳細錯誤訂正</h2></div>
+    <p class="note-hide card gold" style="font-size:14px">答案目前蓋住中。先對照每一條的錯誤代碼自己改寫，再按上方按鈕掀開。</p>
+
+    <p class="para-h">PARAGRAPH 1</p>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">01</span><span class="orig">The three pictures illustrate an activity is "Learning by Doing".</span><span class="chips"><span class="chip">CH</span><span class="chip">PL</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">The three pictures illustrate three activities that embody "learning by doing."</span>
+      <p class="why">一個子句裡有 illustrate 和 is 兩個動詞，要用關係代名詞 that 連接。三張圖畫的是三個活動，所以用複數。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">02</span><span class="orig">In the picture A</span><span class="chips"><span class="chip">ART</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">In Picture A</span>
+      <p class="why">「Picture + 編號」視為專有名稱，不加 the。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">03</span><span class="orig">four students have an experience to be a volunteer</span><span class="chips"><span class="chip">WW</span><span class="chip">PL</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">four students are volunteering at an animal shelter</span>
+      <p class="why">have an experience to be 是中文「有當志工的經驗」直譯。主詞是四個人，volunteer 也要複數，直接用 volunteering 最自然。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">04</span><span class="orig">They have all different kinds job.</span><span class="chips"><span class="chip">MISS</span><span class="chip">PL</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">They are doing different kinds of jobs.</span>
+      <p class="why">kinds 後面要接 of，而且 job 要用複數。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">05</span><span class="orig">a girl is swiping the house of the dogs</span><span class="chips"><span class="chip">SP</span><span class="chip">WW</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">a girl is sweeping out the dog kennel</span>
+      <p class="why">swipe 是「滑（手機）、刷（卡）」，掃地是 sweep。狗屋是 kennel 或 doghouse，不說 the house of the dogs。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">06</span><span class="orig">some dogs feeded by a girl</span><span class="chips"><span class="chip">SP</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">some dogs fed by a girl</span>
+      <p class="why">feed 是不規則動詞，三態是 feed–fed–fed。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">07</span><span class="orig">…fed by a girl and a boy walking a black dog.</span><span class="chips"><span class="chip">CH</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">…fed by a girl. Next to her, a boy is walking a black dog.</span>
+      <p class="why">原句會被讀成「狗被一個女孩和一個遛狗的男孩餵」，語意不清，應拆成兩句。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">08</span><span class="orig">there have a boy cleaning the floor</span><span class="chips"><span class="chip">CH</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">there is a boy cleaning the floor</span>
+      <p class="why">「有」在英文要用 there is/are，不能用 there have。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">09</span><span class="orig">the teacher in teaching the student</span><span class="chips"><span class="chip">MISS</span><span class="chip">PL</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">the teacher is teaching the students</span>
+      <p class="why">少了 be 動詞 is（in 應該是筆誤），學生不只一位，要用複數。</p></div></div>
+
+    <div class="fix big"><div class="fix-top"><span class="fix-no">10</span><span class="orig">They are mocking trail.</span><span class="chips"><span class="chip">WW</span><span class="chip">SP</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">They are holding a mock trial.</span>
+      <p class="why"><strong>全篇最嚴重的錯誤。</strong>mock 當動詞是「嘲笑」，trail 是「小徑」，原句變成「他們在嘲笑小路」。模擬法庭是 a mock trial，這裡 mock 是形容詞。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">11</span><span class="orig">through the class. Students can easily learning how the trail working.</span><span class="chips"><span class="chip">FRAG</span><span class="chip">P</span><span class="chip">T</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Through this class, students can easily learn how a trial works.</span>
+      <p class="why">through the class 單獨成句是不完整句，句首也沒大寫。can 後面接原形動詞。how 引導的間接問句用直述語序：主詞＋動詞（a trial works）。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">12</span><span class="orig">All students seperate in different groups.</span><span class="chips"><span class="chip">SP</span><span class="chip">WW</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">The students are divided into several groups.</span>
+      <p class="why">separate 拼錯（中間是 -par-）。「被分組」用被動語態 be divided into 最自然。</p></div></div>
+
+    <p class="para-h">PARAGRAPH 2</p>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">13</span><span class="orig">From my perspective. I extremely want to enjoy the stray animal shelter class.</span><span class="chips"><span class="chip">P</span><span class="chip">FRAG</span><span class="chip">WW</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">From my perspective, I would most like to join the animal shelter volunteering activity.</span>
+      <p class="why">From my perspective 後面用逗號，不能用句號。extremely 不能修飾 want，要說 really want 或 would most like to。上課用 join 或 take，不用 enjoy。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">14</span><span class="orig">because there are many cats and dogs were lose on the road</span><span class="chips"><span class="chip">CH</span><span class="chip">SP</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">because many cats and dogs are abandoned on the streets</span>
+      <p class="why">there are 和 were 兩個動詞重複。lose 是動詞「遺失」，形容詞是 lost。流浪動物多半是「被棄養」，用 abandoned 更精準。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">15</span><span class="orig">don't have a safety home</span><span class="chips"><span class="chip">WW</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">do not have a safe home</span>
+      <p class="why">safety 是名詞「安全」，修飾名詞要用形容詞 safe。正式作文不用縮寫。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">16</span><span class="orig">So that, I want to…</span><span class="chips"><span class="chip">WW</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Therefore, I want to…</span>
+      <p class="why">so that 是連接詞，表示「以便」，不能放句首加逗號當「所以」用。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">17</span><span class="orig">have an experience to take good care of the pets</span><span class="chips"><span class="chip">WW</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">gain experience in taking care of the animals</span>
+      <p class="why">「累積經驗」的固定搭配是 gain experience in + V-ing。收容所的動物還沒有主人，用 animals 比 pets 精準。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">18</span><span class="orig">the volunteer needs a kind heart to have a job and I have too</span><span class="chips"><span class="chip">REF</span><span class="chip">MISS</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">a volunteer needs a kind heart to do this job well, and I happen to have one</span>
+      <p class="why">to have a job 語意怪，應是「把這工作做好」。I have too 少了受詞，要說 I have one。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">19</span><span class="orig">the school can make have these kind of the class</span><span class="chips"><span class="chip">CH</span><span class="chip">PL</span><span class="chip">ART</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">schools should offer more classes of this kind</span>
+      <p class="why">make 和 have 兩個動詞連用不合文法。these kind 單複數不一致（this kind／these kinds）。of 後面的 the class 不需要 the。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">20</span><span class="orig">Let more students can have a chance to know…</span><span class="chips"><span class="chip">FRAG</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">…so that more students can discover that…</span>
+      <p class="why">Let 開頭變成祈使句，而且 let + 受詞後面接原形動詞，不能加 can。這裡用 so that 接到上一句最順。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">21</span><span class="orig">is a good chace of learning</span><span class="chips"><span class="chip">SP</span><span class="chip">WW</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">is a meaningful way to learn</span>
+      <p class="why">chance 拼錯。做中學是一種「方式」，不是一個「機會」。</p></div></div>
+  </section>
+
+  <section id="s5">
+    <div class="sec-head"><span class="sec-num">05</span><h2>高分優化建議</h2></div>
+
+    <h3>切題度：第二段要回扣「做中學」</h3>
+    <div class="card warn">
+      <ul class="tips">
+        <li>題目核心是 <em>learning by doing</em>，但兩個理由都在講「動物很可憐」和「我很善良」，沒說明親身去做能學到什麼。高分作文會寫出具體收穫：責任感、耐心、照顧動物的實際技能、課本教不到的東西。</li>
+        <li><em>I have a kind heart</em> 只是自我宣稱，說服力弱。改成「我想把善心化為行動」或「我想學會和不會說話的動物溝通」會好很多。</li>
+        <li>結論變成呼籲學校多開課，可以當收尾，但要先把「我」的收穫講清楚再帶過去。</li>
+      </ul>
+    </div>
+
+    <h3>組織邏輯：字數要分給第二段</h3>
+    <div class="card accent">
+      <ul class="tips">
+        <li>第一段描述約 120 字，第二段論述只有約 90 字。分數多半在第二段，第一段每張圖精簡成 1–2 句就夠。</li>
+        <li>第二段先用一句主題句點出選擇（<em>Of the three activities, I would most like to…</em>），再用 <em>To begin with / Moreover / All in all</em> 帶出理由。</li>
+      </ul>
+    </div>
+
+    <h3>把籠統換成具體</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>原本寫法</th><th>進階替換</th></tr></thead>
+        <tbody>
+          <tr><td class="from">have an experience</td><td class="to">gain hands-on experience in…</td></tr>
+          <tr><td class="from">I want to take care of them</td><td class="to">Instead of merely feeling sorry for them, I want to roll up my sleeves and help.</td></tr>
+          <tr><td class="from">it is a good chance of learning</td><td class="to">Learning by doing teaches us lessons that no textbook can.</td></tr>
+          <tr><td class="from">I have a kind heart</td><td class="to">I hope to turn my kindness into real action.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="s6">
+    <div class="sec-head"><span class="sec-num">06</span><h2>滿分示範改寫</h2></div>
+    <p class="note">保留原本的想法：三張圖的描述、選收容所、流浪動物沒有家、想學會照顧牠們、需要善心、學校應多開這類課。</p>
+    <div class="model">
+      <p>The three pictures show three different activities that put the idea of "learning by doing" into practice. In Picture A, four students are volunteering at an animal shelter, each with a different task. A girl on the left is sweeping out a dog kennel, while another girl is feeding a group of hungry dogs. Next to her, a boy is walking a black dog, and behind them, another boy is mopping the floor. In Picture B, students are acting out a mock trial under their teacher's guidance. By playing different roles in a courtroom, they can easily understand how a real trial works. In Picture C, students are taking a robot assembly class. Divided into small groups, they are discussing how to put their robots together.</p>
+      <p>Of the three activities, I would most like to volunteer at the animal shelter. To begin with, countless cats and dogs are abandoned on the streets every year, and many of them never find a safe home. Instead of merely feeling sorry for them, I want to roll up my sleeves and learn how to take proper care of these animals—how to feed them, clean their living space, and win their trust. Moreover, I believe that working with animals requires patience and a kind heart, two qualities I have always valued. Through hands-on experience at the shelter, I could turn my kindness into real action and learn responsibility in a way no textbook can teach. All in all, I firmly believe that schools should offer more activities like these, so that more students can discover that learning by doing is one of the most meaningful ways to learn.</p>
+      <p class="wordcount">約 250 words ｜ 兩段結構完整 ｜ 圖 B 細節依原文推測，請對照題本圖片</p>
+    </div>
+  </section>
+
+  <footer>學測英文作文批改講義 ｜ 依大考中心分項評分指標（內容・組織・文法句構・字彙拼字・體例）</footer>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('toggle');
+  btn.addEventListener('click',function(){
+    var on=document.body.classList.toggle('hide-answers');
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    btn.textContent=on?'顯示修正答案':'蓋住修正答案';
+  });
+})();
+</script>
+
+</body>
+</html>
