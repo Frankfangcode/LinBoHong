@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<title>柏宏段考文法複習單</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: single reading column; each chapter = rule cards, then typed blanks graded per section; MC set graded on tap */
+:root{
+  --bg:#FBFCF9; --paper:#FFFFFF; --ink:#1E2A17; --muted:#5D6B55; --line:#D9E3D0;
+  --green:#26610A; --tint:#F1F6EC; --warm:#FFF7ED; --orange:#C75400;
+  --display:"Noto Serif TC",serif; --body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121710; --paper:#1A2117; --ink:#E6EDE0; --muted:#A3B198; --line:#33402C;
+  --green:#8FCB6B; --tint:#1F2A1A; --warm:#2A2016; --orange:#F2994A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121710; --paper:#1A2117; --ink:#E6EDE0; --muted:#A3B198; --line:#33402C;
+  --green:#8FCB6B; --tint:#1F2A1A; --warm:#2A2016; --orange:#F2994A; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.9 var(--body);padding-inline:16px;padding-block:24px 64px}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1{font:900 clamp(26px,5vw,36px)/1.25 var(--display);margin:0;text-wrap:balance}
+h2{font:700 22px/1.35 var(--display);margin:0;color:var(--green);text-wrap:balance}
+h3{font:700 16px/1.5 var(--body);margin:0}
+.sub{color:var(--muted);margin:4px 0 0;line-height:1.75}
+header{display:flex;flex-direction:column;gap:12px;border-bottom:2px solid var(--green);padding-bottom:16px}
+button{font:500 15px var(--body);background:var(--green);color:var(--paper);border:0;border-radius:6px;padding:8px 18px;cursor:pointer}
+button.ghost{background:transparent;color:var(--green);border:1px solid var(--green)}
+button:focus-visible,input:focus-visible,.opt:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+section{display:flex;flex-direction:column;gap:14px}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+.rule{background:var(--tint);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;line-height:1.75}
+.f{font:500 14px/1.6 var(--mono);background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:2px 6px;overflow-wrap:anywhere}
+.trap{background:var(--warm);border-left:3px solid var(--orange);padding:10px 14px;font-size:15px;line-height:1.75}
+.trap b{color:var(--orange)}
+ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:10px}
+li{padding-left:4px}
+.zh{color:var(--muted);font-size:14px}
+table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}
+.tw{overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+th{background:var(--tint);font-weight:700}
+/* typed blanks */
+.blank{font:500 16px var(--body);color:var(--ink);background:var(--paper);border:0;border-bottom:2px solid var(--muted);border-radius:0;padding:0 4px;min-width:4.5em;max-width:100%;text-align:center}
+.blank.ok{border-bottom-color:var(--green);color:var(--green);background:var(--tint)}
+.blank.no{border-bottom-color:var(--orange);color:var(--orange);background:var(--warm)}
+.fix{font-size:14px;font-weight:700;color:var(--green);margin-left:4px}
+.fix::before{content:"→ "}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.result{font:500 14px var(--mono);color:var(--green);font-variant-numeric:tabular-nums}
+/* multiple choice */
+.score{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--bg);font:500 14px var(--mono);color:var(--green);padding:6px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.grp{font:700 15px var(--body);color:var(--orange);margin:18px 0 4px}
+.q{display:flex;flex-direction:column;gap:8px;padding:12px 0;border-bottom:1px solid var(--line);line-height:1.7}
+.stem{display:flex;gap:8px}.stem .n{font:500 14px var(--mono);color:var(--muted);min-width:2.2em;padding-top:2px;font-variant-numeric:tabular-nums}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:6px;padding-left:2.7em}
+.opt{font:400 15px/1.5 var(--body);text-align:left;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 10px;cursor:pointer;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--green)}
+.opt.right{background:var(--tint);border-color:var(--green);color:var(--green);font-weight:700}
+.opt.wrong{background:var(--warm);border-color:var(--orange);color:var(--orange);text-decoration:line-through}
+.why{padding-left:2.7em;font-size:14px;color:var(--muted)}
+.why b{color:var(--green)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">段考衝刺 · CH13–15</div>
+  <h1>代名詞 · 倒裝句 · 句型大補帖</h1>
+  <p class="sub">在空格裡直接打答案，寫完一節按「批改」。打錯的格子會變橘色並顯示正確答案，可以改完再按一次批改。選擇題點一下就會告訴你對錯。</p>
+</header>
+
+<!-- WARM-UP -->
+<section class="drill">
+  <div class="eyebrow">Part 0 · 暖身診斷（5 分鐘）</div>
+  <h2>先測測看你還記得多少</h2>
+  <ol>
+    <li>The coach insisted that every player <span class="ans">arrive</span> on time. <span class="zh">(arrive)</span></li>
+    <li>The test results suggest that he <span class="ans" data-alt="is|was">is</span> innocent. <span class="zh">(be)</span></li>
+    <li>Seldom <span class="ans">does</span> my brother eat breakfast.</li>
+    <li>On the hill <span class="ans">stand</span> two old temples. <span class="zh">(stand)</span></li>
+    <li>It was in Tainan <span class="ans">that</span> I learned to swim.</li>
+    <li>The weather in Taipei is wetter than <span class="ans">that</span> in Kaohsiung.</li>
+    <li>It's very kind <span class="ans">of</span> you to help me.</li>
+    <li>Let's take a break, <span class="ans">shall we</span>?</li>
+    <li>You've never been to Japan, <span class="ans">have you</span>?</li>
+    <li>I have two pens. One is red, and <span class="ans">the other</span> is blue.</li>
+  </ol>
+</section>
+
+<!-- CH13 -->
+<section>
+  <div class="eyebrow">Part 1 · CH13 代名詞</div>
+  <h2>強調句、虛主詞、that / those、one / another / the other</h2>
+
+  <div class="rule">
+    <h3>① 強調句 It is/was ＿＿ that …</h3>
+    <div><span class="f">It was [被強調的部分] that + 剩下的句子</span></div>
+    <div>檢驗法：把 <b>It was</b> 和 <b>that</b> 遮掉，剩下的要是一個完整、正確的句子。</div>
+  </div>
+  <div class="trap"><b>經典錯誤</b>　It was the rain that the game was cancelled. → 遮掉後變 “The rain the game was cancelled.” 不通！要補 <b>because of</b>。</div>
+
+  <div class="rule">
+    <h3>② It is + adj. + for / of + 人 + to V</h3>
+    <div><span class="f">for</span>：形容「這件事」（easy, hard, important, necessary, dangerous）</div>
+    <div><span class="f">of</span>：形容「這個人」（kind, nice, foolish, brave, careless, rude）</div>
+    <div>小技巧：能說「<b>人</b> is kind」就用 of；說「<b>人</b> is easy」很怪就用 for。</div>
+  </div>
+
+  <div class="rule">
+    <h3>③ 比較時用 that / those 代替重複的名詞</h3>
+    <div>單數 / 不可數 → <span class="f">that</span>　複數 → <span class="f">those</span>　（不能用 this / these）</div>
+  </div>
+
+  <div class="rule">
+    <h3>④ one / another / the other / the others</h3>
+    <div class="tw"><table>
+      <tr><th>總數</th><th>寫法</th></tr>
+      <tr><td>2 個</td><td>one … the other</td></tr>
+      <tr><td>3 個</td><td>one … another … the other</td></tr>
+      <tr><td>很多，只講兩種</td><td>some … others</td></tr>
+      <tr><td>一群人分兩邊</td><td>some … the others（剩下全部）</td></tr>
+    </table></div>
+    <div>兩者：both / either / neither　　三者以上：all / any / none</div>
+  </div>
+  <div class="trap"><b>也常錯</b>　concentrate / relax / feel 後面<b>不加</b>反身代名詞；Every 不能當代名詞（<s>Every of us</s> → Each of us）；ourselves 不要拼成 ourself。</div>
+
+  <div class="drill">
+    <h3>練習 1　填空</h3>
+    <ol>
+      <li>It was at the library <span class="ans">that</span> I lost my umbrella.</li>
+      <li>It is careless <span class="ans">of</span> him to leave the door unlocked.</li>
+      <li>It is hard <span class="ans">for</span> me to wake up at six.</li>
+      <li>I find <span class="ans">it</span> impossible to finish all the homework tonight.</li>
+      <li>The population of Taipei is larger than <span class="ans">that</span> of Tainan.</li>
+      <li>The students in this class work harder than <span class="ans">those</span> in that class.</li>
+      <li>I have three cousins. One lives in Taichung, <span class="ans">another</span> lives in Hualien, and <span class="ans">the other</span> lives in Japan.</li>
+      <li>There are 30 students in my class. Some like PE, and <span class="ans">others</span> prefer music.</li>
+      <li><span class="ans">Neither</span> of my two sisters is married.</li>
+      <li>None of the five boys <span class="ans">has</span> a phone. <span class="zh">(have，正式寫作)</span></li>
+      <li>She prides <span class="ans">herself</span> on her cooking.</li>
+      <li>Please help <span class="ans">yourselves</span> to the snacks, everyone!</li>
+    </ol>
+  </div>
+</section>
+
+<!-- CH14 -->
+<section>
+  <div class="eyebrow">Part 2 · CH14 倒裝句</div>
+  <h2>一條規則打天下：把 be / 助動詞搬到主詞前面</h2>
+
+  <div class="rule">
+    <h3>萬用規則（跟 so / neither 一樣）</h3>
+    <div>原句有 <b>be 動詞</b> → 搬 be　｜　有 <b>助動詞</b>（can, will）→ 搬助動詞</div>
+    <div>有 <b>完成式</b> → 搬 have/has/had　｜　<b>一般動詞</b> → 補 do / does / did，後面動詞變原形</div>
+  </div>
+
+  <div class="tw"><table>
+    <tr><th>類型</th><th>句型</th><th>例</th></tr>
+    <tr><td>地方副詞放句首</td><td>地方 + V + S（主詞是代名詞不倒裝）</td><td>On the desk <b>is</b> my phone.</td></tr>
+    <tr><td>否定副詞放句首</td><td>Never / Rarely / Seldom / Little / By no means + 助 + S</td><td>Never <b>have I</b> seen it.</td></tr>
+    <tr><td>Only + 副詞片語/子句</td><td>Only by/when … + 助 + S + V</td><td>Only then <b>did I</b> understand.</td></tr>
+    <tr><td>Not until</td><td>Not until … + 助 + S + V</td><td>Not until ten <b>did he</b> leave.</td></tr>
+    <tr><td>No sooner</td><td>No sooner had S p.p. than S V-ed</td><td>No sooner <b>had I</b> sat down than …</td></tr>
+    <tr><td>Not only</td><td>Not only + 助 + S …, but S also …</td><td>Not only <b>is she</b> smart, but …</td></tr>
+    <tr><td>假設語氣</td><td>去掉 if，把 were / had / should 搬前面</td><td><b>Had I</b> known, …</td></tr>
+    <tr><td>讓步</td><td>adj./adv./N(無冠詞) + as/though + S + V</td><td>Tired <b>as</b> he was, …</td></tr>
+    <tr><td>so / such</td><td>So + adj. + be + S + that … ／ Such + be + S + that …</td><td>So tired <b>was he</b> that …</td></tr>
+    <tr><td>補語放句首</td><td>adj. + be + S</td><td>Happy <b>are</b> those who …</td></tr>
+  </table></div>
+
+  <div class="trap"><b>三大陷阱</b>　① Next to the school <s>has</s> <b>is</b> a park.（地方倒裝不是「有」）② 倒裝後動詞跟著<b>後面的主詞</b>變單複數：Under the bed <b>are</b> two cats.　③ 讓步倒裝<b>不能用 although</b>，名詞放前面要<b>去冠詞</b>：Child as she is …</div>
+
+  <div class="drill">
+    <h3>練習 2　填空</h3>
+    <ol>
+      <li>Rarely <span class="ans">is</span> Mr. Lin late for class.</li>
+      <li>Not until midnight <span class="ans">did</span> she finish her report.</li>
+      <li>Only by practicing every day <span class="ans">can you</span> improve your English.</li>
+      <li><span class="ans">Had</span> I known about the party, I would have come.</li>
+      <li><span class="ans">Should</span> you need any help, just call me.</li>
+      <li><span class="ans">Were</span> I a bird, I would fly to you.</li>
+      <li>Tired <span class="ans" data-alt="as|though">as</span> he was, he kept working.</li>
+      <li>Mary loves cats, and so <span class="ans">do</span> I.</li>
+      <li>Tom can't swim, nor <span class="ans">can</span> his brother.</li>
+      <li>So hungry <span class="ans">was</span> I that I ate three bowls of rice.</li>
+      <li><span class="ans">Such</span> was his anger that nobody dared to speak.</li>
+      <li>Next to the school <span class="ans">is</span> a convenience store.</li>
+      <li>Under the table <span class="ans">are</span> two sleeping dogs.</li>
+      <li>No sooner <span class="ans">had</span> he arrived than it started to rain.</li>
+      <li>Little <span class="ans">did</span> I know that he was a famous singer.</li>
+      <li>Not only <span class="ans">does</span> Amy sing well, but she also dances beautifully.</li>
+      <li>Happy <span class="ans">are</span> those who are content with what they have.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- CH15 -->
+<section>
+  <div class="eyebrow">Part 3 · CH15 句型大補帖</div>
+  <h2>省略 should、感歎句、附加問句、雙重否定</h2>
+
+  <div class="rule">
+    <h3>① 省略 should：後面一律接原形動詞</h3>
+    <div><span class="f">S + insist/suggest/demand/require/order … + that + S + (should) + VR</span></div>
+    <div><span class="f">It is important/necessary/essential/urgent … + that + S + (should) + VR</span></div>
+    <div><span class="f">… lest + S + (should) + VR</span>（以免）</div>
+  </div>
+  <div class="trap"><b>雙重身分</b>　suggest 當「<b>顯示</b>」、insist 當「<b>堅稱</b>」時，後面<b>正常變化動詞</b>，不用 should。<br>The study suggests that sleep <b>is</b> important.／He insisted that he <b>was</b> innocent.<br><b>不能寫</b> suggest/insist/demand <s>sb. to V</s>。</div>
+
+  <div class="rule">
+    <h3>② 感歎句</h3>
+    <div><span class="f">How + adj./adv. (+ S + V)!</span>　→ 後面<b>沒有名詞</b></div>
+    <div><span class="f">What + (a/an) + (adj.) + N (+ S + V)!</span>　→ 後面<b>有名詞</b></div>
+    <div>How 後接形容詞還是副詞？看後面的動詞：be / look / sound → 形容詞；sing / run → 副詞。</div>
+  </div>
+
+  <div class="rule">
+    <h3>③ 附加問句：前肯後否、前否後肯</h3>
+    <div class="tw"><table>
+      <tr><th>前句</th><th>附加問句</th></tr>
+      <tr><td>has p.p.（完成式）／had better</td><td>hasn't … ／ hadn't …</td></tr>
+      <tr><td>have to V／have + N（一般動詞）</td><td>don't … ／ doesn't … ／ didn't …</td></tr>
+      <tr><td>used to V</td><td>didn't …</td></tr>
+      <tr><td>I am …</td><td>aren't I? ／ am I not?</td></tr>
+      <tr><td>There is/are …</td><td>isn't there? ／ aren't there?</td></tr>
+      <tr><td>V-ing / To V 當主詞</td><td>… it?</td></tr>
+      <tr><td>祈使句（Close …, Don't …）</td><td>will you?</td></tr>
+      <tr><td>Let's …</td><td>shall we?</td></tr>
+      <tr><td>含 seldom / rarely / few / little / never</td><td>視為否定 → 用肯定</td></tr>
+    </table></div>
+  </div>
+
+  <div class="rule">
+    <h3>④ 雙重否定</h3>
+    <div><span class="f">否定詞 … without + N / V-ing</span>　= 每次…都會…（強調）</div>
+    <div><span class="f">not + un-/in-/im-/ir- + adj.</span>　= 語氣委婉的肯定（not uncommon = 還蠻常見的）</div>
+  </div>
+
+  <div class="drill">
+    <h3>練習 3　填空</h3>
+    <ol>
+      <li>The doctor suggested that she <span class="ans">eat</span> less sugar. <span class="zh">(eat)</span></li>
+      <li>He insisted that he <span class="ans">was</span> innocent. <span class="zh">(be，堅稱)</span></li>
+      <li>It is necessary that every student <span class="ans">wear</span> a uniform. <span class="zh">(wear)</span></li>
+      <li>The teacher demanded that the phone <span class="ans">be</span> turned off. <span class="zh">(被關掉)</span></li>
+      <li>Ella took a coat lest she <span class="ans" data-alt="catch|should catch">catch</span> a cold. <span class="zh">(catch)</span></li>
+      <li>What <span class="ans">a</span> lovely day it is!</li>
+      <li>How <span class="ans">beautifully</span> she dances! <span class="zh">(beautiful)</span></li>
+      <li>How <span class="ans">tired</span> you look! <span class="zh">(tired / tiredly)</span></li>
+      <li>You had better go now, <span class="ans">hadn't you</span>?</li>
+      <li>He has to work today, <span class="ans">doesn't he</span>?</li>
+      <li>Studying abroad is expensive, <span class="ans">isn't it</span>?</li>
+      <li>There is a cat under the car, <span class="ans">isn't there</span>?</li>
+      <li>I'm late again, <span class="ans" data-alt="aren't I|am I not">aren't I</span>?</li>
+      <li>Few students like exams, <span class="ans">do they</span>?</li>
+      <li>She never travels <span class="ans">without</span> her camera.</li>
+      <li>It is not <span class="ans">uncommon</span> to see people using phones on the MRT.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- MC -->
+<section id="mc">
+  <div class="eyebrow">Part 4 · 段考模擬選擇題</div>
+  <h2>37 題選擇題：點選答案，馬上看對錯和解析</h2>
+  <div class="score" id="score">已作答 0 / 37　答對 0</div>
+  <div id="mcList"></div>
+  <div class="actions"><button type="button" id="mcReset" class="ghost">清除重做</button></div>
+</section>
+</div>
+
+<script>
+/* ---------- typed blanks ---------- */
+const norm=s=>s.toLowerCase().replace(/[’‘`]/g,"'").replace(/[.?!,]/g,"").replace(/\s+/g," ").trim();
+let bid=0;
+document.querySelectorAll('.drill').forEach(drill=>{
+  drill.querySelectorAll('.ans').forEach(sp=>{
+    const key=sp.textContent.trim(), alts=(sp.dataset.alt||key).split('|');
+    const inp=document.createElement('input');
+    inp.type='text';inp.className='blank';inp.id='b'+(++bid);
+    inp.setAttribute('autocomplete','off');inp.setAttribute('autocapitalize','off');inp.setAttribute('autocorrect','off');inp.spellcheck=false;
+    inp.setAttribute('aria-label','第 '+bid+' 格');
+    inp.style.width=Math.max(4.5,key.length*0.75+2)+'em';
+    inp.dataset.key=key;inp.dataset.alts=JSON.stringify(alts.map(norm));
+    inp.addEventListener('input',()=>{inp.classList.remove('ok','no');const f=inp.nextElementSibling;if(f&&f.classList.contains('fix'))f.remove()});
+    sp.replaceWith(inp);
+  });
+  const bar=document.createElement('div');bar.className='actions';
+  bar.innerHTML='<button type="button">批改</button><button type="button" class="ghost">清除</button><span class="result" aria-live="polite"></span>';
+  const [gradeBtn,clearBtn,res]=bar.children;
+  drill.appendChild(bar);
+  const inputs=[...drill.querySelectorAll('.blank')];
+  gradeBtn.addEventListener('click',()=>{
+    let ok=0,filled=0;
+    inputs.forEach(inp=>{
+      const f=inp.nextElementSibling;if(f&&f.classList.contains('fix'))f.remove();
+      const v=norm(inp.value);if(v)filled++;
+      const good=JSON.parse(inp.dataset.alts).includes(v);
+      inp.classList.toggle('ok',good);inp.classList.toggle('no',!good);
+      if(good)ok++;else{const s=document.createElement('span');s.className='fix';s.textContent=inp.dataset.key;inp.after(s)}
+    });
+    res.textContent=`答對 ${ok} / ${inputs.length}`+(filled<inputs.length?`（${inputs.length-filled} 格空白）`:'');
+  });
+  clearBtn.addEventListener('click',()=>{inputs.forEach(inp=>{inp.value='';inp.classList.remove('ok','no');const f=inp.nextElementSibling;if(f&&f.classList.contains('fix'))f.remove()});res.textContent=''});
+  inputs.forEach((inp,i)=>inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();(inputs[i+1]||gradeBtn).focus()}}));
+});
+
+/* ---------- multiple choice ---------- */
+const MC=[
+["CH13 代名詞"],
+["It was because of the typhoon ___ the school trip was canceled.",["which","when","that","so"],2,"強調句 It was … that，遮掉後 Because of the typhoon the school trip was canceled 通順。"],
+["It is very thoughtful ___ you to remember my birthday.",["for","of","to","with"],1,"thoughtful 形容「人」→ of。"],
+["The climate of Taiwan is warmer than ___ of Korea.",["it","this","that","those"],2,"代替單數 the climate → that。"],
+["The prices in this store are lower than ___ in the department store.",["that","those","these","ones"],1,"代替複數 the prices → those；比較不能用 these。"],
+["I have two brothers. One is a nurse, and ___ is a pilot.",["another","other","the other","the others"],2,"總共兩個 → one … the other。"],
+["Ten students joined the club. Three are from Class A, and ___ are from Class B.",["others","the others","another","the other"],1,"特定一群裡「剩下全部」→ the others。"],
+["I invited Ken and Amy, but ___ of them came.",["none","neither","either","both"],1,"兩個人都沒來 → neither；none 用於三者以上。"],
+["The new law makes ___ illegal to ride a scooter without a helmet.",["that","this","it","them"],2,"虛受詞 make it + adj. + to V。"],
+["We enjoyed ___ very much at the night market.",["us","ours","ourself","ourselves"],3,"enjoy oneself；複數拼 ourselves。"],
+["___ came to the party last night.",["My cousin's some friends","Some friends of my cousin's","Some my cousin's friends","Some of friends my cousin"],1,"some friends of my cousin's = some of my cousin's friends。"],
+["CH14 倒裝句"],
+["Seldom ___ to bed before midnight.",["my sister goes","does my sister go","my sister does go","does my sister goes"],1,"否定副詞放句首，一般動詞要補 does，後面動詞用原形。"],
+["Not until the bell rang ___ the room.",["the students left","did the students leave","did the students left","the students did leave"],1,"Not until 倒裝：did + S + 原形。"],
+["In front of the station ___ two tall trees.",["stand","stands","has","have"],0,"地方倒裝，主詞是 two trees（複數）；不能用 has 表示「有」。"],
+["Only when you lose your health ___ how important it is.",["you realize","do you realize","you will realize","realize you"],1,"Only + 子句放句首 → 主要子句倒裝。"],
+["___ more carefully, he would have passed the test.",["If he studied","Had he studied","Has he studied","Did he study"],1,"與過去相反 If he had studied → Had he studied。"],
+["___ you have any questions, please raise your hand.",["Were","Had","Should","Would"],2,"「萬一」If you should … → Should you …。"],
+["___, he never gives up.",["Although poor he is","Poor although he is","Poor as he is","As poor he is"],2,"讓步倒裝 adj. + as/though + S + V，不能用 although。"],
+["___, she knows a lot about life.",["A child as she is","Child as she is","Child as is she","Although child she is"],1,"名詞放句首要去冠詞，as 後面不倒裝。"],
+["Jenny didn't go to the concert, and ___.",["so did I","neither did I","neither I did","I didn't, too"],1,"否定句後接「也不」→ and neither did I。"],
+["So exciting ___ that nobody wanted to leave.",["the game was","was the game","did the game","the game is"],1,"So + adj. + be + S + that …"],
+["No sooner ___ home than it began to pour.",["I got","I had got","had I got","did I get"],2,"No sooner had S p.p. than S V-ed。"],
+["___ was her kindness that everyone loved her.",["So","Such","Very","What"],1,"Such + be + S + that；So 後面要接形容詞。"],
+["Not only ___ English, but she also speaks French.",["she speaks","does she speak","she does speak","speaks she"],1,"Not only 放句首前半倒裝，but 後面不倒裝。"],
+["CH15 句型大補帖"],
+["The teacher required that each student ___ a report.",["hands in","handed in","hand in","to hand in"],2,"require that S (should) VR → 原形 hand in。"],
+["The evidence suggests that the man ___ the thief.",["be","is","should be","being"],1,"suggest 當「顯示」→ 正常變化，不用 should。"],
+["It is essential that the problem ___ right away.",["solve","solves","be solved","is solved"],2,"It is essential that S (should) VR；問題是「被」解決 → be solved。"],
+["The doctor advised ___ more water.",["me to drinking","that I drink","me drink","that I drank"],1,"advise that S (should) VR → I drink。"],
+["Lisa insisted that she ___ the window; it was her brother.",["not break","didn't break","hasn't broken","not to break"],1,"insist 當「堅稱」→ 正常時態，過去式 didn't break。"],
+["I spoke quietly lest I ___ the baby.",["woke","wake","waking","to wake"],1,"lest S (should) VR → wake。"],
+["___ interesting story it is!",["How","What","What an","How an"],2,"後面有單數名詞 story → What + an + adj. + N。"],
+["How ___ the flowers smell!",["sweet","sweetly","sweetness","sweets"],0,"smell 是連綴動詞 → 接形容詞 sweet。"],
+["You have to finish it today, ___?",["haven't you","don't you","aren't you","didn't you"],1,"have to 的 have 是一般動詞 → don't you。"],
+["He seldom eats breakfast, ___?",["does he","doesn't he","is he","isn't he"],0,"seldom 是否定 → 用肯定附加問句 does he。"],
+["Let's go swimming, ___?",["will you","don't we","shall we","won't we"],2,"Let's … , shall we?"],
+["Keep quiet, ___?",["do you","will you","shall we","don't you"],1,"祈使句 → will you?"],
+["There is no rule ___ exceptions.",["with","without","for","of"],1,"雙重否定 no … without：凡規則必有例外。"],
+["It is not ___ for teenagers to feel stressed before exams.",["common","usual","unusual","commonly"],2,"not + un- 形容詞 = 委婉肯定（還蠻常見的）。"]
+];
+const L="ABCD",list=document.getElementById('mcList'),scoreEl=document.getElementById('score');
+let n=0,total=0,done=0,right=0;
+MC.forEach(it=>{
+  if(it.length===1){const h=document.createElement('div');h.className='grp';h.textContent=it[0];list.appendChild(h);return}
+  n++;total++;const [stem,opts,ok,why]=it;
+  const q=document.createElement('div');q.className='q';
+  q.innerHTML=`<div class="stem"><span class="n">${n}.</span><span>${stem}</span></div><div class="opts"></div><div class="why" hidden></div>`;
+  const box=q.querySelector('.opts'),w=q.querySelector('.why');
+  opts.forEach((o,i)=>{const bt=document.createElement('button');bt.type='button';bt.className='opt';bt.textContent=`(${L[i]}) ${o}`;
+    bt.addEventListener('click',()=>{if(q.dataset.done)return;q.dataset.done=1;done++;
+      if(i===ok){bt.classList.add('right');right++}else{bt.classList.add('wrong');box.children[ok].classList.add('right')}
+      w.innerHTML=`<b>答案 (${L[ok]})</b>　${why}`;w.hidden=false;upd()});
+    box.appendChild(bt)});
+  list.appendChild(q)});
+function upd(){scoreEl.textContent=`已作答 ${done} / ${total}　答對 ${right}`}
+upd();
+document.getElementById('mcReset').addEventListener('click',()=>{done=right=0;list.querySelectorAll('.q').forEach(q=>{delete q.dataset.done;q.querySelector('.why').hidden=true;q.querySelectorAll('.opt').forEach(o=>o.classList.remove('right','wrong'))});upd()});
+</script>
+
+</body>
+</html>

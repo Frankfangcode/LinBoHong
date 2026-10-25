@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>作文批改｜住宿舍或租屋</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: marking sheet on graph paper — ink masthead, numbered review sections, hover-to-reveal corrections */
+:root{
+  --ink:#12202e;--ink-soft:#4a5866;--paper:#faf9f5;--card:#ffffff;--line:#dfe3e0;
+  --red:#c8342b;--red-wash:#fdeeec;--duck:#f5c518;--harbor:#1b6f7f;--harbor-wash:#e6f1f2;--good:#2f7d4f;--good-wash:#e7f3ec;
+  --mast-bg:#12202e;--mast-fg:#ffffff;--mast-soft:#b9c6d2;--tip-bg:#12202e;--tip-fg:#ffffff;--btn-bg:#ffffff;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --sans:"Noto Sans TC","Bricolage Grotesque",system-ui,sans-serif;
+  --display:"Bricolage Grotesque","Noto Sans TC",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#e6ebf0;--ink-soft:#a3b0bc;--paper:#11171d;--card:#18212a;--line:#26313b;
+  --red:#ff7b6e;--red-wash:#3a1f1d;--duck:#f5c518;--harbor:#5fc0cf;--harbor-wash:#173037;--good:#6fcf97;--good-wash:#18301f;
+  --mast-bg:#0a0f14;--mast-fg:#ffffff;--mast-soft:#9fb0c0;--tip-bg:#f1f4f7;--tip-fg:#12202e;--btn-bg:#18212a;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --ink:#e6ebf0;--ink-soft:#a3b0bc;--paper:#11171d;--card:#18212a;--line:#26313b;
+  --red:#ff7b6e;--red-wash:#3a1f1d;--duck:#f5c518;--harbor:#5fc0cf;--harbor-wash:#173037;--good:#6fcf97;--good-wash:#18301f;
+  --mast-bg:#0a0f14;--mast-fg:#ffffff;--mast-soft:#9fb0c0;--tip-bg:#f1f4f7;--tip-fg:#12202e;--btn-bg:#18212a;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--ink);background-color:var(--paper);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:26px 26px;background-position:-1px -1px;line-height:1.75;font-size:16px}
+.wrap{max-width:940px;margin:0 auto;padding:0 16px 90px}
+
+.masthead{background:var(--mast-bg);color:var(--mast-fg);padding:36px 16px 28px;border-bottom:6px solid var(--duck);margin-bottom:30px}
+.mast-inner{max-width:908px;margin:0 auto;display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between}
+.mast-inner>div:first-child{min-width:0;flex:1 1 380px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--duck);margin:0 0 10px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(26px,4.6vw,40px);line-height:1.2;margin:0 0 12px;text-wrap:balance}
+.subtitle{margin:0;color:var(--mast-soft);font-size:15px;max-width:52ch}
+.totalbox{border:2px solid var(--duck);border-radius:4px;padding:14px 22px;text-align:center;min-width:160px;background:rgba(245,197,24,.08)}
+.totalbox .label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--duck)}
+.totalbox .num{font-family:var(--display);font-weight:800;font-size:46px;line-height:1;margin:6px 0 2px;font-variant-numeric:tabular-nums}
+.totalbox .num small{font-size:18px;color:var(--mast-soft);font-weight:600}
+.totalbox .band{font-family:var(--mono);font-size:12px;color:var(--mast-soft)}
+
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:0 0 34px;padding:12px 16px;border:1px solid var(--line);border-radius:4px;background:var(--card)}
+.toolbar p{margin:0;font-size:13.5px;color:var(--ink-soft);flex:1;min-width:200px}
+button{font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;border-radius:3px;border:1.5px solid var(--ink);background:var(--btn-bg);color:var(--ink);padding:8px 16px}
+button:hover{background:var(--ink);color:var(--paper)}
+button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+button:focus-visible,.err:focus-visible{outline:3px solid var(--harbor);outline-offset:2px}
+
+section{margin:0 0 52px;scroll-margin-top:20px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:22px}
+.sec-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--red)}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(20px,3vw,26px);margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:700;font-size:17px;margin:26px 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px 20px;margin-bottom:14px}
+.card p{margin:0}
+.card.accent{border-left:4px solid var(--harbor)}
+.card.warn{border-left:4px solid var(--red)}
+.card.gold{border-left:4px solid var(--duck)}
+.note{font-size:14px;color:var(--ink-soft);margin:-8px 0 14px}
+
+.rubric{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:130px 1fr 70px;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 16px}
+.row .name{font-weight:700;font-size:15px}
+.row .name span{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-soft);font-weight:400;letter-spacing:.04em}
+.meter{height:12px;background:var(--line);border-radius:2px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--harbor)}
+.meter.low i{background:var(--red)}
+.meter.mid i{background:var(--duck)}
+.row .pt{font-family:var(--mono);font-weight:700;font-size:19px;text-align:right;font-variant-numeric:tabular-nums}
+.row .pt em{font-style:normal;font-size:12px;color:var(--ink-soft)}
+
+.prompt{background:var(--card);border:1px dashed var(--harbor);border-radius:4px;padding:18px 20px}
+.prompt .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;background:var(--harbor-wash);color:var(--harbor);padding:2px 8px;border-radius:2px;margin-bottom:8px}
+.prompt ol{margin:8px 0 0;padding-left:22px}
+.pics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.pic{border:1px solid var(--line);border-radius:3px;padding:10px 12px;font-size:14px}
+.pic b{font-family:var(--mono);color:var(--red);display:block;font-size:12px}
+
+.script{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px 24px;font-size:16.5px;line-height:2.2}
+.script p{margin:0 0 18px}.script p:last-child{margin:0}
+.para-tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--harbor);display:block;margin-bottom:2px;line-height:1.6}
+.err{position:relative;color:var(--red);background:var(--red-wash);border-bottom:2px wavy var(--red);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--red) 50%,transparent);cursor:help;padding:0 1px}
+.err::after{content:attr(data-fix);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);background:var(--tip-bg);color:var(--tip-fg);font-family:var(--sans);font-size:13px;line-height:1.5;padding:7px 11px;border-radius:3px;width:max-content;max-width:240px;opacity:0;visibility:hidden;transition:opacity .12s;z-index:9;pointer-events:none;box-shadow:0 4px 14px rgba(0,0,0,.25);text-decoration:none;white-space:normal}
+.err:hover::after,.err:focus::after{opacity:1;visibility:visible}
+.code{font-family:var(--mono);font-size:10.5px;font-weight:700;vertical-align:super;color:var(--red);margin-left:1px}
+.good{background:var(--good-wash);border-bottom:2px solid var(--good);padding:0 2px}
+
+.fix{border:1px solid var(--line);border-radius:4px;background:var(--card);margin-bottom:10px;overflow:hidden}
+.fix-top{display:flex;gap:12px;padding:12px 16px;align-items:flex-start;flex-wrap:wrap}
+.fix-no{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--paper);background:var(--ink);border-radius:2px;padding:2px 7px;flex-shrink:0;margin-top:3px}
+.orig{font-size:15.5px;color:var(--red);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--red) 50%,transparent);flex:1;min-width:0}
+.chips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:11px;font-weight:700;padding:2px 7px;border-radius:2px;border:1px solid var(--red);color:var(--red)}
+.fix.big{border-color:var(--red)}
+.fix.big .fix-top{background:var(--red-wash)}
+.answer{border-top:1px dashed var(--line);padding:12px 16px 13px 55px}
+.answer .arrow{margin-right:6px}
+.newtext{font-size:15.5px;font-weight:700;color:var(--harbor)}
+.why{font-size:14px;color:var(--ink-soft);margin:6px 0 0}
+body.hide-answers .answer{display:none}
+body.hide-answers .err::after{visibility:hidden!important;opacity:0!important}
+body.hide-answers .err{text-decoration:none}
+body.hide-answers .note-hide{display:block}
+.note-hide{display:none}
+
+.para-h{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--harbor);margin:24px 0 10px}
+
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);font-size:14.5px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:12px;letter-spacing:.08em;font-weight:400}
+tbody tr:last-child td{border-bottom:none}
+td.from{color:var(--ink-soft);width:36%}
+td.to{font-weight:700;color:var(--harbor)}
+
+ul.tips{margin:0;padding:0;list-style:none}
+ul.tips li{position:relative;padding-left:24px;margin-bottom:10px;font-size:15px}
+ul.tips li:last-child{margin-bottom:0}
+ul.tips li::before{content:"→";position:absolute;left:0;color:var(--red);font-family:var(--mono);font-weight:700}
+
+.model{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--duck);border-radius:4px;padding:22px 24px;font-size:16.5px;line-height:2.05}
+.model p{margin:0 0 20px}
+.wordcount{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:right;margin:0!important;padding-top:10px;border-top:1px dashed var(--line)}
+footer{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding-top:24px;border-top:1px solid var(--line)}
+
+@media (max-width:640px){
+  .row{grid-template-columns:1fr 60px;gap:8px}
+  .meter{grid-column:1/-1;order:3}
+  .answer{padding-left:16px}
+  .pics{grid-template-columns:1fr}
+  .script,.model{padding:18px 16px}
+}
+@media print{body{background:#fff}.toolbar{display:none}.answer{display:block!important}.err::after{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="mast-inner">
+    <div>
+      <p class="eyebrow">GSAT English · Marking Sheet 09</p>
+      <h1>住宿舍還是租房子<br>批改與檢討</h1>
+      <p class="subtitle">林柏宏・英文作文。第一段選擇住宿舍或在外租屋並說明原因；第二段討論這個選擇可能面對的挑戰，以及如何解決。文長至少 120 words。</p>
+    </div>
+    <div class="totalbox">
+      <div class="label">作文預估級分</div>
+      <div class="num">9<small>/20</small></div>
+      <div class="band">落點 8–10 分</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="toolbar">
+    <p><strong>自己訂正：</strong>先按「蓋住修正答案」，看紅字和錯誤代碼自己改，改完再掀開對答案。</p>
+    <button id="toggle" type="button" aria-pressed="false">蓋住修正答案</button>
+    <button type="button" onclick="window.print()">列印講義</button>
+  </div>
+
+  <section id="s1">
+    <div class="sec-head"><span class="sec-num">01</span><h2>預估級分與總評</h2></div>
+    <div class="rubric">
+      <div class="row"><div class="name">內容<span>CONTENT</span></div><div class="meter low"><i style="width:40%"></i></div><div class="pt">2<em>/5</em></div></div>
+      <div class="row"><div class="name">組織<span>ORGANIZATION</span></div><div class="meter mid"><i style="width:60%"></i></div><div class="pt">3<em>/5</em></div></div>
+      <div class="row"><div class="name">文法句構<span>GRAMMAR</span></div><div class="meter low"><i style="width:38%"></i></div><div class="pt">1.5<em>/4</em></div></div>
+      <div class="row"><div class="name">字彙拼字<span>VOCAB &amp; SPELLING</span></div><div class="meter low"><i style="width:38%"></i></div><div class="pt">1.5<em>/4</em></div></div>
+      <div class="row"><div class="name">體例<span>FORMAT</span></div><div class="meter"><i style="width:75%"></i></div><div class="pt">1.5<em>/2</em></div></div>
+    </div>
+    <div class="card warn" style="margin-top:16px">
+      <p><strong>一句話總評：</strong>第一段有選擇、有三個理由，第二段也用了自己的夏令營住宿經驗，素材很真實；但第二段完全沒寫「怎麼解決」，題目的要求少了一半，再加上句構錯誤很密集，內容分被壓得很低。</p>
+    </div>
+    <div class="card accent">
+      <p style="font-size:14.5px;color:var(--ink-soft)"><strong style="color:var(--ink)">扣分主因排序：</strong>① 第二段只寫挑戰、沒寫解決方法，題目要求少一半。② 立場放在第一段最後一句，還先替「在外租屋」講話，立場模糊。③ 少 be 動詞、make me can't、can makes 這類基本句構錯誤。</p>
+    </div>
+  </section>
+
+  <section id="s2">
+    <div class="sec-head"><span class="sec-num">02</span><h2>題目</h2></div>
+    <div class="prompt">
+      <span class="tag">題本原文</span>
+      <p style="margin:0">上大學後，許多人面臨著住在學校宿舍（live in the school dorm）或是自己租屋（rent an apartment）的選擇。請同學寫一篇兩段的文章：</p>
+      <ol>
+        <li>第一段討論在上述兩者中，你會挑選哪一個，並說明原因。</li>
+        <li>第二段請討論你會因為這樣的選擇而可能面對到的<strong>挑戰</strong>以及<strong>可以如何解決</strong>。</li>
+      </ol>
+      <p style="margin:10px 0 0;font-size:14px;color:var(--red)"><strong>這次漏掉的：</strong>第二段的「可以如何解決」。</p>
+    </div>
+  </section>
+
+  <section id="s3">
+    <div class="sec-head"><span class="sec-num">03</span><h2>原文批改稿</h2></div>
+    <p class="note">滑鼠移到紅字上（手機點一下）就會看到修正；右上角小字是錯誤代碼。</p>
+    <div class="script">
+      <p><span class="para-tag">PARAGRAPH 1 — 選擇與原因</span>
+      After graduating from high school, many people <span class="err" tabindex="0" data-fix="need to choose between living in a school dorm and renting an apartment">needs to make a choice for live in the school dorm or rent an apartment</span><span class="code">SV</span>. Both choices have their advantages and disadvantages. First, <span class="err" tabindex="0" data-fix="living in a school dorm is cheaper than renting an apartment">the school dorm would cheaper than the house you rent outside</span><span class="code">MISS</span>. You can save more money for <span class="err" tabindex="0" data-fix="entertainment and transportation, or even for the future">your entertainments, traffic or even prepare for future</span><span class="code">PL</span>. Second, it might be safer than <span class="err" tabindex="0" data-fix="renting an apartment">rent an apartment</span><span class="code">WW</span>. <span class="err" tabindex="0" data-fix="If something goes wrong, you have roommates to help you.">You can face the problems with your roommates.</span><span class="code">LOG</span> Third, <span class="err" tabindex="0" data-fix="the dorm is usually closer to your classrooms than an off-campus apartment">the distance in school dorm may closer than your apartment</span><span class="code">MISS</span>. You can <span class="err" tabindex="0" data-fix="take your time walking to class and enjoy the campus">slow down your step to look around the school</span><span class="code">WW</span>. <span class="err" tabindex="0" data-fix="建議刪掉；或改 However, if you care more about privacy, you may prefer to live off campus.">But, if you are worried about the quality in school dorm. You may properably choose to live outside.</span><span class="code">FRAG</span> For me, I would <span class="err" tabindex="0" data-fix="prefer（不加 more）">more prefer</span><span class="code">WW</span> to live in the school dorm.</p>
+
+      <p><span class="para-tag">PARAGRAPH 2 — 挑戰與解決</span>
+      <span class="good">From my perspective, I firmly believe that</span> living in <span class="err" tabindex="0" data-fix="a school dorm">school dorm</span><span class="code">ART</span> might be a wonderful experience <span class="err" tabindex="0" data-fix=", even though it may bring some challenges">instead of facing a lot of obstacles</span><span class="code">LOG</span>. <span class="err" tabindex="0" data-fix="Although I am still a high school student">Although I haven't graduated from senior</span><span class="code">MISS</span>, <span class="err" tabindex="0" data-fix="I once stayed in a school dorm during a summer camp">I have an experience to live in school dorm during my summer camp</span><span class="code">T</span>. When I walked into the dorm, <span class="err" tabindex="0" data-fix="I was shocked by what I saw">it gave me a shocked that I have never seen before</span><span class="code">WW</span>. Four beds and <span class="err" tabindex="0" data-fix="four desks were squeezed into a tiny room">tables are in a small room</span><span class="code">T</span>. <span class="err" tabindex="0" data-fix="The bed was so hard that I could not sleep well.">The bed was very thick that makes me can't sleep very well.</span><span class="code">CH</span> <span class="err" tabindex="0" data-fix="The hardest part, I think, was doing laundry.">The hardest thing I think is wash my clothes.</span><span class="code">WW</span> <span class="err" tabindex="0" data-fix="Because the washing machines were shared, I had to plan when to do my laundry.">I need to consider what time and which days to wash my clothes.</span><span class="code">T</span> However, I think <span class="err" tabindex="0" data-fix="it can help me grow and learn to deal with problems">it can makes me more grow and can face the problems</span><span class="code">SV</span> <span class="err" tabindex="0" data-fix="like a duck to water">just like a fish in a water</span><span class="code">WW</span>.</p>
+    </div>
+    <p style="font-size:14px;color:var(--good);margin-top:12px"><strong>✓ 值得保留：</strong>用自己夏令營住宿的真實經驗當例子，「四張床擠一間」「洗衣服要排時間」都是很具體的細節，比空泛的理由好很多。<em>From my perspective, I firmly believe that</em> 的開頭也用得正確。</p>
+  </section>
+
+  <section id="s4">
+    <div class="sec-head"><span class="sec-num">04</span><h2>詳細錯誤訂正</h2></div>
+    <p class="note-hide card gold" style="font-size:14px">答案目前蓋住中。先對照每一條的錯誤代碼自己改寫，再按上方按鈕掀開。</p>
+
+    <p class="para-h">PARAGRAPH 1</p>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">01</span><span class="orig">many people needs to make a choice for live in the school dorm or rent an apartment</span><span class="chips"><span class="chip">SV</span><span class="chip">PREP</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">many people need to choose between living in a school dorm and renting an apartment</span>
+      <p class="why">people 是複數，動詞不加 s。「在 A 和 B 之間選擇」用 choose between A and B，介系詞後面的動詞要改成 V-ing。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">02</span><span class="orig">the school dorm would cheaper than the house you rent outside</span><span class="chips"><span class="chip">MISS</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">living in a school dorm is cheaper than renting an apartment</span>
+      <p class="why">cheaper 是形容詞，前面少了 be 動詞。比較的對象要對等：「住宿舍」對「租房子」。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">03</span><span class="orig">save more money for your entertainments, traffic or even prepare for future</span><span class="chips"><span class="chip">PL</span><span class="chip">WW</span><span class="chip">ART</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">save money for entertainment and transportation, or even for the future</span>
+      <p class="why">entertainment 是不可數名詞，不加 s。traffic 是「路上的車流」，交通費要用 transportation。prepare 和前面的名詞不對等，直接改成 for the future，future 前面要加 the。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">04</span><span class="orig">it might be safer than rent an apartment</span><span class="chips"><span class="chip">WW</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">it might be safer than renting an apartment</span>
+      <p class="why">than 後面的比較對象要和主詞對等，用 V-ing。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">05</span><span class="orig">You can face the problems with your roommates.</span><span class="chips"><span class="chip">LOG</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">If something goes wrong, you have roommates to help you.</span>
+      <p class="why">這句沒有說明「為什麼比較安全」。要把安全和室友的關係講清楚，例如有人照應、有宿舍管理員。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">06</span><span class="orig">the distance in school dorm may closer than your apartment</span><span class="chips"><span class="chip">MISS</span><span class="chip">CH</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">the dorm is usually closer to your classrooms than an off-campus apartment</span>
+      <p class="why">同樣少了 be 動詞。「距離比較近」英文說 A is closer to B，不說 the distance in A is closer。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">07</span><span class="orig">You can slow down your step to look around the school.</span><span class="chips"><span class="chip">WW</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">You can take your time walking to class and enjoy the campus.</span>
+      <p class="why">slow down your step 是中文「放慢腳步」直譯，英文通常說 take your time。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">08</span><span class="orig">But, if you are worried about the quality in school dorm. You may properably choose to live outside.</span><span class="chips"><span class="chip">FRAG</span><span class="chip">SP</span><span class="chip">WW</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">However, if you care more about privacy, you may prefer to live off campus.</span>
+      <p class="why">if 子句不能單獨成句，要用逗號接主要子句。probably 拼錯。But 不放句首加逗號，用 However。另外，這句在幫另一個選項講話，削弱了自己的立場，建議刪掉。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">09</span><span class="orig">I would more prefer to live in the school dorm.</span><span class="chips"><span class="chip">WW</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">I would prefer to live in the school dorm.</span>
+      <p class="why">prefer 本身就有「比較喜歡」的意思，不能再加 more。</p></div></div>
+
+    <p class="para-h">PARAGRAPH 2</p>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">10</span><span class="orig">living in school dorm</span><span class="chips"><span class="chip">ART</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">living in a school dorm</span>
+      <p class="why">dorm 是可數名詞，單數要加冠詞。</p></div></div>
+
+    <div class="fix big"><div class="fix-top"><span class="fix-no">11</span><span class="orig">might be a wonderful experience instead of facing a lot of obstacles</span><span class="chips"><span class="chip">LOG</span><span class="chip">CONT</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">might be a wonderful experience, even though it may bring some challenges</span>
+      <p class="why"><strong>這句和題目衝突。</strong>題目要他討論會遇到的挑戰，這句卻說「不會遇到障礙」，等於否定了題目。改成「雖然會有挑戰」才接得上後面的內容。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">12</span><span class="orig">Although I haven't graduated from senior</span><span class="chips"><span class="chip">MISS</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Although I am still a high school student</span>
+      <p class="why">senior 後面少了 high school。直接說「我還是高中生」最簡單。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">13</span><span class="orig">I have an experience to live in school dorm during my summer camp</span><span class="chips"><span class="chip">WW</span><span class="chip">T</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">I once stayed in a school dorm during a summer camp</span>
+      <p class="why">have an experience to 是中式說法。這是過去的事，用過去式 stayed，加上 once 表示「曾經」。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">14</span><span class="orig">it gave me a shocked that I have never seen before</span><span class="chips"><span class="chip">WW</span><span class="chip">T</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">I was shocked by what I saw</span>
+      <p class="why">shocked 是形容詞，不能當 give 的受詞。主詞應該是「我」：I was shocked。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">15</span><span class="orig">Four beds and tables are in a small room.</span><span class="chips"><span class="chip">T</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Four beds and four desks were squeezed into a tiny room.</span>
+      <p class="why">整段在講過去的經驗，要用過去式。squeezed into 可以畫出「很擠」的感覺。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">16</span><span class="orig">The bed was very thick that makes me can't sleep very well.</span><span class="chips"><span class="chip">WW</span><span class="chip">CH</span><span class="chip">T</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">The bed was so hard that I could not sleep well.</span>
+      <p class="why">「太…以致於」是 so…that，不是 very…that。make me can't 不合文法（make + 受詞 + 原形動詞），直接用 I could not 最清楚。thick 是「厚」，床很厚不會睡不好，應該是想說 hard（硬）。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">17</span><span class="orig">The hardest thing I think is wash my clothes.</span><span class="chips"><span class="chip">WW</span><span class="chip">T</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">The hardest part, I think, was doing laundry.</span>
+      <p class="why">be 動詞後面接動作要用 V-ing 或 to V。I think 插在句中要用逗號隔開。洗衣服可以說 do laundry。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">18</span><span class="orig">I need to consider what time and which days to wash my clothes.</span><span class="chips"><span class="chip">T</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">Because the washing machines were shared, I had to plan when to do my laundry.</span>
+      <p class="why">改成過去式。補上「洗衣機是共用的」，讀者才知道為什麼要排時間。這是很好的細節，值得保留。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">19</span><span class="orig">it can makes me more grow and can face the problems</span><span class="chips"><span class="chip">SV</span><span class="chip">WW</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">it can help me grow and learn to deal with problems</span>
+      <p class="why">can 後面接原形動詞，不能加 s。more grow 不合文法，grow 本身就是「成長」。</p></div></div>
+
+    <div class="fix"><div class="fix-top"><span class="fix-no">20</span><span class="orig">just like a fish in a water</span><span class="chips"><span class="chip">WW</span><span class="chip">ART</span></span></div>
+      <div class="answer"><span class="arrow">➡️</span><span class="newtext">just like a duck to water</span>
+      <p class="why">water 不可數，不加 a。英文沒有 like a fish in water 這個說法；常見的 like a fish out of water 意思是「格格不入」，剛好相反。「很快就適應」要說 take to it like a duck to water。</p></div></div>
+  </section>
+
+  <section id="s5">
+    <div class="sec-head"><span class="sec-num">05</span><h2>高分優化建議</h2></div>
+
+    <h3>切題度：第二段一定要寫解決方法</h3>
+    <div class="card warn">
+      <ul class="tips">
+        <li>這是最大的扣分點。挑戰已經想好兩個，各補一句解法就能把內容分拉上來：</li>
+        <li><strong>床太硬</strong>：自己帶床墊或睡袋鋪在上面。</li>
+        <li><strong>洗衣服</strong>：和室友排好洗衣時間表，或趁人少的早上去洗。</li>
+        <li><strong>空間太小</strong>：用收納箱整理東西，和室友約好作息規則。</li>
+        <li>寫法：每個挑戰後面緊接著寫解法，不要先把挑戰全部列完，最後才用一句話帶過。</li>
+      </ul>
+    </div>
+
+    <h3>組織邏輯：立場放在第一句</h3>
+    <div class="card accent">
+      <ul class="tips">
+        <li>到第一段最後一句才說要住宿舍，閱卷老師讀了一整段才知道選哪個。第一句就要說：<em>If I were given the choice, I would definitely live in the school dorm.</em></li>
+        <li>刪掉 <em>But, if you are worried about…</em>：題目要選一邊並說明原因，替另一邊講話會讓立場模糊。</li>
+        <li>三個理由可以精簡成兩個講清楚。「安全」目前邏輯不通，可以刪掉，或改寫成有室友照應、有宿舍管理員。</li>
+      </ul>
+    </div>
+
+    <h3>把籠統換成具體</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>原本寫法</th><th>進階替換</th></tr></thead>
+        <tbody>
+          <tr><td class="from">I would more prefer to live in the school dorm</td><td class="to">If I were given the choice, I would definitely live in the school dorm.</td></tr>
+          <tr><td class="from">it can makes me more grow</td><td class="to">Overcoming these challenges would make me more independent.</td></tr>
+          <tr><td class="from">The hardest thing is wash my clothes</td><td class="to">Doing laundry turned out to be the biggest challenge.</td></tr>
+          <tr><td class="from">You can save more money</td><td class="to">It allows me to cut down on living expenses.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="s6">
+    <div class="sec-head"><span class="sec-num">06</span><h2>滿分示範改寫</h2></div>
+    <p class="note">保留原本的想法：比較便宜、離教室近、夏令營住宿經驗、四人擠一間、床太硬、洗衣服要排時間、讓自己成長。新增的只有三句解決方法和「學會和人相處」這個收穫。</p>
+    <div class="model">
+      <p>After graduating from high school, many students have to choose between living in a school dorm and renting an apartment. If I were given the choice, I would definitely live in the school dorm. To begin with, living in a dorm is much cheaper than renting an apartment, so I could save money for entertainment and transportation, or even for my future. Moreover, a dorm is usually located on campus, just a few minutes away from the classrooms. Instead of rushing through traffic every morning, I could take my time walking to class and enjoy the beauty of the campus. For these reasons, the school dorm is clearly the better choice for me.</p>
+      <p>Of course, living in a dorm comes with its own challenges. Although I am still a high school student, I once stayed in a school dorm during a summer camp, and I was shocked by what I saw. Four beds and four desks were squeezed into a tiny room, and the bed was so hard that I could not sleep well. <span class="good">To solve this problem, I would bring a soft mattress pad to make my bed more comfortable.</span> The hardest part, however, was doing laundry. Because the washing machines were shared by everyone on the floor, I had to plan carefully when to wash my clothes. <span class="good">In college, I would make a laundry schedule with my roommates so that we would not have to wait in line.</span> <span class="good">Overcoming these challenges would not only make me more independent but also teach me how to get along with others.</span> In the end, I believe I would take to dorm life like a duck to water.</p>
+      <p class="wordcount">約 270 words ｜ 綠底句是新增的解決方法 ｜ 第二段：挑戰 → 解法 → 挑戰 → 解法 → 收穫</p>
+    </div>
+  </section>
+
+  <footer>學測英文作文批改講義 ｜ 依大考中心分項評分指標（內容・組織・文法句構・字彙拼字・體例）</footer>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('toggle');
+  btn.addEventListener('click',function(){
+    var on=document.body.classList.toggle('hide-answers');
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    btn.textContent=on?'顯示修正答案':'蓋住修正答案';
+  });
+})();
+</script>
+
+</body>
+</html>
