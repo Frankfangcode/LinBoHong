@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第一堂・審題拆題單</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: worksheet on graph paper — numbered parts in teaching order; every answer hidden until the student asks */
+:root{
+  --ink:#12202e;--ink-soft:#4a5866;--paper:#faf9f5;--card:#ffffff;--line:#dfe3e0;--field:#fbfcfb;
+  --red:#c8342b;--red-wash:#fdeeec;--duck:#f5c518;--duck-wash:#fdf6d8;--harbor:#1b6f7f;--harbor-wash:#e6f1f2;--good:#2f7d4f;--good-wash:#e7f3ec;
+  --mast-bg:#12202e;--mast-fg:#ffffff;--mast-soft:#b9c6d2;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --sans:"Noto Sans TC","Bricolage Grotesque",system-ui,sans-serif;
+  --display:"Bricolage Grotesque","Noto Sans TC",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#e6ebf0;--ink-soft:#a3b0bc;--paper:#11171d;--card:#18212a;--line:#2a3640;--field:#121a21;
+  --red:#ff7b6e;--red-wash:#3a1f1d;--duck:#f5c518;--duck-wash:#33301a;--harbor:#5fc0cf;--harbor-wash:#173037;--good:#6fcf97;--good-wash:#18301f;
+  --mast-bg:#0a0f14;--mast-fg:#ffffff;--mast-soft:#9fb0c0;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --ink:#e6ebf0;--ink-soft:#a3b0bc;--paper:#11171d;--card:#18212a;--line:#2a3640;--field:#121a21;
+  --red:#ff7b6e;--red-wash:#3a1f1d;--duck:#f5c518;--duck-wash:#33301a;--harbor:#5fc0cf;--harbor-wash:#173037;--good:#6fcf97;--good-wash:#18301f;
+  --mast-bg:#0a0f14;--mast-fg:#ffffff;--mast-soft:#9fb0c0;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--ink);background-color:var(--paper);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:26px 26px;background-position:-1px -1px;line-height:1.8;font-size:16px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 90px}
+a{color:var(--harbor)}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid var(--harbor);outline-offset:2px}
+
+.masthead{background:var(--mast-bg);color:var(--mast-fg);padding:34px 16px 28px;border-bottom:6px solid var(--duck);margin-bottom:28px}
+.mast-inner{max-width:868px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--duck);margin:0 0 10px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(26px,4.6vw,40px);line-height:1.2;margin:0 0 12px;text-wrap:balance}
+.subtitle{margin:0;color:var(--mast-soft);font-size:15px;max-width:58ch}
+.goalbar{margin-top:18px;display:inline-block;border:2px solid var(--duck);border-radius:4px;padding:8px 16px;font-weight:700;background:rgba(245,197,24,.08)}
+
+section{margin:0 0 50px;scroll-margin-top:16px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:20px}
+.sec-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--red)}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(20px,3vw,26px);margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:700;font-size:17px;margin:22px 0 10px}
+.note{font-size:14px;color:var(--ink-soft);margin:-6px 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px 20px;margin-bottom:14px}
+.card p{margin:0}
+.card.gold{border-left:4px solid var(--duck)}
+.card.warn{border-left:4px solid var(--red)}
+.card.accent{border-left:4px solid var(--harbor)}
+
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.step .n{font-family:var(--display);font-weight:800;font-size:26px;color:var(--red);line-height:1}
+.step h4{margin:6px 0 6px;font-size:16.5px;font-family:var(--display)}
+.step p{margin:0;font-size:14.5px}
+.kw{display:inline-block;font-weight:700;background:var(--duck-wash);border-bottom:2px solid var(--duck);padding:0 3px;margin:1px 0}
+.trap{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px;margin-top:12px}
+.trap .card{margin:0}
+.trap b{color:var(--red)}
+
+/* quiz */
+.quiz{display:grid;gap:12px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.q .qt{font-weight:700;margin:0 0 10px}
+.q .qt span{font-family:var(--mono);color:var(--red);margin-right:6px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{font:inherit;font-size:14.5px;cursor:pointer;border:1.5px solid var(--line);background:var(--field);color:var(--ink);border-radius:4px;padding:8px 14px;text-align:left}
+.opt:hover{border-color:var(--ink)}
+.opt.right{border-color:var(--good);background:var(--good-wash);color:var(--good);font-weight:700}
+.opt.wrong{border-color:var(--red);background:var(--red-wash);color:var(--red);text-decoration:line-through}
+.fb{margin:10px 0 0;font-size:14px;color:var(--ink-soft)}
+
+/* prompt & demo */
+.prompt{background:var(--card);border:1px dashed var(--harbor);border-radius:4px;padding:16px 18px;margin-bottom:14px}
+.prompt .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;background:var(--harbor-wash);color:var(--harbor);padding:2px 8px;border-radius:2px;margin-bottom:6px}
+.prompt p{margin:0}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:4px}
+table{width:100%;border-collapse:collapse;background:var(--card);font-size:14.5px;min-width:560px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:12px;letter-spacing:.06em;font-weight:400}
+tbody tr:last-child td{border-bottom:none}
+td.ok{color:var(--good);font-weight:700;white-space:nowrap}
+td em{font-style:normal;color:var(--harbor)}
+
+/* practice */
+.practice{background:var(--card);border:1px solid var(--line);border-radius:4px;margin-bottom:22px;overflow:hidden}
+.p-head{display:flex;gap:12px;align-items:center;padding:12px 18px;background:var(--ink);color:var(--paper);flex-wrap:wrap}
+.p-head .n{font-family:var(--display);font-weight:800;font-size:22px;color:var(--duck)}
+.p-head h3{margin:0;font-size:17px;color:var(--paper)}
+.p-head .meta{margin-left:auto;font-family:var(--mono);font-size:12px;opacity:.75}
+.p-body{padding:16px 18px}
+.p-body .prompt{margin-bottom:16px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+label.f{display:block;font-weight:700;font-size:14.5px;margin-bottom:6px}
+label.f small{font-weight:400;color:var(--ink-soft)}
+textarea,input[type=text]{width:100%;font:inherit;font-size:15px;line-height:1.7;padding:10px 12px;border:1.5px solid var(--line);border-radius:4px;background:var(--field);color:var(--ink);resize:vertical}
+textarea{min-height:108px}
+textarea:focus,input[type=text]:focus{border-color:var(--harbor)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn{font:inherit;font-size:14.5px;font-weight:700;cursor:pointer;border-radius:4px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);padding:8px 16px}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.primary{background:var(--harbor);border-color:var(--harbor);color:#fff}
+.btn.primary:hover{filter:brightness(1.1)}
+.reveal{border-top:1px dashed var(--line);margin-top:16px;padding-top:16px}
+.reveal h4{margin:0 0 8px;font-size:15px;font-family:var(--display)}
+.key{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.key li{display:flex;gap:10px;align-items:baseline;font-size:15px}
+.key .pi{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--harbor);background:var(--harbor-wash);border-radius:2px;padding:1px 6px;white-space:nowrap}
+.orig{background:var(--field);border:1px solid var(--line);border-radius:4px;padding:12px 14px;font-size:15px;line-height:1.9;margin:6px 0 12px;font-family:Georgia,"Noto Sans TC",serif}
+.orig .miss{background:var(--red-wash);color:var(--red);border-bottom:2px wavy var(--red)}
+.orig .hit{background:var(--good-wash);border-bottom:2px solid var(--good)}
+.verdict{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.verdict li{font-size:14.5px;display:flex;gap:8px}
+.verdict .y{color:var(--good);font-weight:700}
+.verdict .x{color:var(--red);font-weight:700}
+.verdict .h{color:var(--duck);font-weight:700}
+.lesson-box{margin-top:12px;background:var(--duck-wash);border-left:4px solid var(--duck);padding:10px 14px;font-size:14.5px;border-radius:0 4px 4px 0}
+
+.grid-table{display:grid;grid-template-columns:120px 1fr;gap:8px 12px;align-items:start}
+.grid-table .gl{font-weight:700;font-size:14px;padding-top:9px}
+.grid-table .gl small{display:block;font-weight:400;color:var(--ink-soft);font-size:12.5px;line-height:1.4}
+.grid-table input{min-width:0}
+.para-label{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--harbor);margin:18px 0 8px;font-weight:700}
+
+.checklist{list-style:none;margin:0;padding:0}
+.checklist li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.checklist li:last-child{border-bottom:none}
+.checklist input{width:20px;height:20px;margin-top:4px;accent-color:var(--good);flex-shrink:0}
+.saved{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);margin-top:10px;min-height:1.4em}
+footer{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding-top:24px;border-top:1px solid var(--line)}
+
+@media (max-width:640px){
+  .grid-table{grid-template-columns:1fr;gap:2px}
+  .grid-table .gl{padding-top:8px}
+  .p-head .meta{margin-left:0;flex-basis:100%}
+}
+@media print{
+  body{background:#fff}
+  .actions{display:none}
+  .reveal[hidden]{display:none!important}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="mast-inner">
+    <p class="eyebrow">Writing Course · Lesson 01</p>
+    <h1>第一堂：審題<br>先拆題，再動筆</h1>
+    <p class="subtitle">這堂不改文法，只練一件事：看懂題目到底要你寫什麼。你在這頁打的答案會自動存在這台裝置上。</p>
+    <div class="goalbar">今天的目標：動筆前列出題目的每一項要求，寫完逐項打勾</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- 01 -->
+  <section id="why">
+    <div class="sec-head"><span class="sec-num">01</span><h2>為什麼先練這個</h2></div>
+    <div class="card gold">
+      <p>你這學期寫了 10 篇作文，<strong>兩次最高分（12 分、13 分）都是題目要求全部寫到的那兩篇</strong>。7 到 10 分的那幾篇，大多是漏掉了題目的某一項要求，不是英文太差。</p>
+      <p style="margin-top:10px">所以今天不改文法，先把「看懂題目」這件事練熟。這是最快拿回分數的方法。</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="method">
+    <div class="sec-head"><span class="sec-num">02</span><h2>拆題三步驟</h2></div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h4>找段落</h4><p>題目通常會寫「<span class="kw">第一段</span>…，<span class="kw">第二段</span>…」。先用斜線把兩段的要求切開。</p></div>
+      <div class="step"><div class="n">2</div><h4>圈動作</h4><p>圈出每一個要你做的動作：<span class="kw">選擇</span> <span class="kw">說明原因</span> <span class="kw">描述</span> <span class="kw">討論</span> <span class="kw">如何解決</span>。<strong>圈到幾個，就是幾項要求</strong>，一項寫一行。</p></div>
+      <div class="step"><div class="n">3</div><h4>看範圍</h4><p>注意數量和範圍的字：<span class="kw">哪一個</span>＝只選一個；<span class="kw">各有</span>＝每一邊都要寫；<span class="kw">這個問題</span>＝只能寫你選的那一個。</p></div>
+    </div>
+
+    <h3>最常掉進去的三個陷阱</h3>
+    <div class="trap">
+      <div class="card warn"><p><b>陷阱一：有圖片 ≠ 要描述圖片。</b><br>題目問「哪一個」，圖片只是選項，選一個就好。題目寫「描述圖片」，才要描述。</p></div>
+      <div class="card warn"><p><b>陷阱二：「A 以及 B」是兩項要求。</b><br>「挑戰以及如何解決」＝兩項。只寫挑戰，等於少寫一半。</p></div>
+      <div class="card warn"><p><b>陷阱三：寫著寫著換了主題。</b><br>題目選的是「綠地」，就整篇都講綠地。寫到空氣污染、汽車排碳就偏了。</p></div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section id="quiz">
+    <div class="sec-head"><span class="sec-num">03</span><h2>暖身：點選答案</h2></div>
+    <p class="note">每題點一個選項，馬上會告訴你對不對。</p>
+    <div class="quiz" id="quiz"></div>
+  </section>
+
+  <!-- 04 -->
+  <section id="demo">
+    <div class="sec-head"><span class="sec-num">04</span><h2>示範：你寫對的那一篇</h2></div>
+    <p class="note">咖啡廳或圖書館（11/8，13 分）。這篇的每一項要求，都能在你的作文裡找到對應的句子。</p>
+    <div class="prompt">
+      <span class="tag">題目</span>
+      <p>良好的讀書環境有助提升學習成效。<span class="kw">第一段</span>描述在圖 A 和圖 B 讀書<span class="kw">各有</span>哪些<span class="kw">好處</span>及<span class="kw">缺點</span>，<span class="kw">第二段</span>則說明你<span class="kw">偏好</span>在什麼地方讀書，並解釋你的<span class="kw">理由</span>。</p>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>題目要求</th><th>你寫的句子</th><th>有寫到</th></tr></thead>
+        <tbody>
+          <tr><td>① 咖啡廳的好處</td><td><em>studies in the cafe can enjoy the atmosphere around you, and eat some snacks</em></td><td class="ok">✓</td></tr>
+          <tr><td>② 咖啡廳的缺點</td><td><em>studying in a cafe can be distracting due to the background noise</em></td><td class="ok">✓</td></tr>
+          <tr><td>③ 圖書館的好處</td><td><em>the main advantage of studying in a library is a quiet environment</em></td><td class="ok">✓</td></tr>
+          <tr><td>④ 圖書館的缺點</td><td><em>its strict atmosphere can sometimes feel overwhelming and rigid</em></td><td class="ok">✓</td></tr>
+          <tr><td>⑤ 偏好哪裡</td><td><em>I prefer studying in the library</em></td><td class="ok">✓</td></tr>
+          <tr><td>⑥ 理由</td><td><em>the quiet environment helps me focus… seeing other people working hard… keeps me motivated</em></td><td class="ok">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent" style="margin-top:12px"><p>「<strong>各有</strong>哪些好處<strong>及</strong>缺點」拆出來是 2 個地方 × 2 件事＝<strong>4 項</strong>。你四項都寫到了，所以內容分拿得到。接下來的四題，用同樣的方法拆。</p></div>
+  </section>
+
+  <!-- 05 -->
+  <section id="practice">
+    <div class="sec-head"><span class="sec-num">05</span><h2>練習：重拆你寫過的四題</h2></div>
+    <p class="note">每一題先自己寫下題目要求（一行一項），寫完再按「對答案」，最後按「看我當時寫的」，自己找出當時漏了什麼。</p>
+    <div id="practice-list"></div>
+  </section>
+
+  <!-- 06 -->
+  <section id="newtask">
+    <div class="sec-head"><span class="sec-num">06</span><h2>新題目：只寫大綱，不寫作文</h2></div>
+    <p class="note">今天不用寫英文。用中文把格子填完，按「複製我的大綱」傳給老師，老師確認每一格都對到題目後，回家才寫成作文。</p>
+    <div class="practice">
+      <div class="p-head"><span class="n">★</span><h3>校園空地改建</h3><span class="meta">回家作業的題目</span></div>
+      <div class="p-body">
+        <div class="prompt">
+          <span class="tag">題目</span>
+          <p>你的學校打算把校園裡一塊閒置空地重新規劃，目前有兩個選項：(A) 安靜的戶外閱讀區；(B) 籃球場與運動空間。請寫一篇英文作文，文長至少 120 個單詞，文分兩段。第一段說明你希望學校選擇哪一個，並說明原因；第二段說明這個空間啟用後可能會遇到什麼問題，以及你認為可以如何解決。</p>
+        </div>
+
+        <p class="para-label">STEP 1 · 先拆題目</p>
+        <label class="f" for="n-req">題目要求 <small>（一行一項，寫完數一數有幾項）</small></label>
+        <textarea id="n-req" data-save placeholder="①&#10;②&#10;③&#10;④"></textarea>
+
+        <p class="para-label">STEP 2 · 第一段（中文就好）</p>
+        <div class="grid-table">
+          <div class="gl">表態<small>第一句就講你選哪個</small></div><input type="text" id="n-p1-choice" data-save>
+          <div class="gl">理由 1</div><input type="text" id="n-p1-r1" data-save>
+          <div class="gl">例子 1<small>什麼時候？發生什麼事？</small></div><input type="text" id="n-p1-e1" data-save>
+          <div class="gl">理由 2</div><input type="text" id="n-p1-r2" data-save>
+          <div class="gl">例子 2</div><input type="text" id="n-p1-e2" data-save>
+        </div>
+
+        <p class="para-label">STEP 3 · 第二段（中文就好）</p>
+        <div class="grid-table">
+          <div class="gl">問題 1<small>這個空間可能遇到什麼問題</small></div><input type="text" id="n-p2-q1" data-save>
+          <div class="gl">解決 1<small>緊接在問題後面</small></div><input type="text" id="n-p2-s1" data-save>
+          <div class="gl">問題 2</div><input type="text" id="n-p2-q2" data-save>
+          <div class="gl">解決 2</div><input type="text" id="n-p2-s2" data-save>
+          <div class="gl">收尾<small>只能收前面講過的</small></div><input type="text" id="n-p2-end" data-save>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" type="button" id="copy-outline">複製我的大綱</button>
+        </div>
+        <textarea id="copy-fallback" readonly hidden style="margin-top:10px;min-height:160px" aria-label="大綱文字，請全選後複製"></textarea>
+        <p class="saved" id="copy-msg" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section id="checklist">
+    <div class="sec-head"><span class="sec-num">07</span><h2>交卷前回頭打勾</h2></div>
+    <p class="note">以後每一篇作文，寫完都回到題目要求清單，一項一項打勾。今天先用新題目的大綱試一次。</p>
+    <div class="card">
+      <ul class="checklist">
+        <li><input type="checkbox" id="c1" data-save><label for="c1">題目要求清單上的每一項，都有對應的格子或句子。</label></li>
+        <li><input type="checkbox" id="c2" data-save><label for="c2">第一段第一句就表態，沒有替另一邊講話。</label></li>
+        <li><input type="checkbox" id="c3" data-save><label for="c3">第二段每一個「問題」後面，都緊接著寫了「怎麼解決」。</label></li>
+        <li><input type="checkbox" id="c4" data-save><label for="c4">整篇都扣住題目的主題，沒有寫到題目沒問的東西。</label></li>
+        <li><input type="checkbox" id="c5" data-save><label for="c5">分兩段，而且超過 120 字（寫成作文之後再勾）。</label></li>
+      </ul>
+    </div>
+    <div class="card gold">
+      <p><strong>今天要記住的一句話：</strong>題目叫你寫什麼，你就寫什麼。寫得再好，只要答錯題，內容分就拿不到，而內容是四項裡最重的一項。</p>
+    </div>
+    <p class="saved" id="save-msg" aria-live="polite"></p>
+  </section>
+
+  <footer>柏宏學測作文衝刺課程 ｜ 第 1 堂 / 共 10 堂 ｜ 搭配「動筆前大綱表」使用</footer>
+</div>
+
+<script>
+(function(){
+  /* ---------- quiz ---------- */
+  var QUIZ=[
+    {q:'題目寫「請說明你對<b>哪一個</b>活動最感興趣」，三張圖是三個活動。你要怎麼寫？',
+     o:['三張圖都介紹一遍','只選一個，說明原因','先描述三張圖，再選一個'],a:1,
+     e:'「哪一個」＝只選一個。三張圖只是選項，不用介紹。'},
+    {q:'「第一段描述在圖 A 和圖 B 讀書<b>各有</b>哪些好處<b>及</b>缺點」，第一段一共有幾項要求？',
+     o:['1 項','2 項','4 項'],a:2,
+     e:'2 個地方 × 好處、缺點 2 件事＝4 項。'},
+    {q:'「第二段請討論你可能面對的<b>挑戰</b>以及可以<b>如何解決</b>」，有幾項要求？',
+     o:['1 項：挑戰','2 項：挑戰＋解決方法','看心情'],a:1,
+     e:'「以及」把兩項要求連在一起，少寫一項就少一半的分數。'},
+    {q:'你選的問題是「缺乏綠地」。下面哪一個措施是在解決<b>這個問題</b>？',
+     o:['規定所有汽車定期檢查排氣','補助民眾換掉舊車','把閒置的停車場改成小公園'],a:2,
+     e:'排氣檢查、補助換車是在解決空氣污染。只有改成公園會讓綠地變多。'},
+    {q:'題目要你「說明你<b>希望</b>學校選哪一個」，下面哪一個開頭最好？',
+     o:['Both choices have their advantages and disadvantages.','If I could choose, I would ask the school to build a reading area.','Let\'s talk about the reading area first.'],a:1,
+     e:'第一句就表態。先講「兩個都有優缺點」，閱卷老師要讀到最後才知道你選什麼。'}
+  ];
+  var qz=document.getElementById('quiz');
+  QUIZ.forEach(function(item,i){
+    var d=document.createElement('div');d.className='q';
+    d.innerHTML='<p class="qt"><span>Q'+(i+1)+'</span>'+item.q+'</p><div class="opts"></div><p class="fb" hidden></p>';
+    var box=d.querySelector('.opts'),fb=d.querySelector('.fb');
+    item.o.forEach(function(t,j){
+      var b=document.createElement('button');b.type='button';b.className='opt';b.textContent=t;
+      b.addEventListener('click',function(){
+        box.querySelectorAll('.opt').forEach(function(x){x.classList.remove('right','wrong');});
+        if(j===item.a){b.classList.add('right');fb.textContent='✓ 答對了。'+item.e;}
+        else{b.classList.add('wrong');fb.textContent='再想一下。提示：'+item.e.split('。')[0]+'。';}
+        fb.hidden=false;
+      });
+      box.appendChild(b);
+    });
+    qz.appendChild(d);
+  });
+
+  /* ---------- practice ---------- */
+  var P=[
+    {id:'summer',title:'暑假戶外活動',meta:'9/12・7 分',
+     prompt:'暑假時你最喜歡從事什麼戶外活動？請仔細觀察以下三張圖片的廣告內容（露營音樂祭、登山健行、足球訓練營），然後寫一篇英文作文，文分兩段。<span class="kw">第一段</span>說明你對<span class="kw">哪一個</span>活動最感興趣，並說明<span class="kw">原因</span>；<span class="kw">第二段</span>描述你過去度過<span class="kw">最難忘的一個暑假</span>，說明<span class="kw">何事</span>令你留下深刻回憶。',
+     key:[['第一段','選出「一個」最感興趣的活動'],['第一段','說明原因'],['第二段','描述過去最難忘的「一個」暑假'],['第二段','說明是什麼事讓你印象深刻']],
+     orig:'<span class="miss">The three pictures describe different kinds of competitions. In the first picture, we can see there are many camps on the ground… The second pictures is a activity hiking in the mountain. The last one is about a soccer team play.</span> In my summer vacation, I ride a bike up and down in the mountain, feeling the wind blowing my face… <span class="miss">I joined a financial camp.</span> During the camp, I associate with a lot of friends…',
+     verdict:[['x','選一個活動：三張圖都在描述，一個都沒選'],['x','說明原因：完全沒有'],['h','最難忘的一個暑假：寫了騎車和財金營兩件事，焦點分散；財金營也不是戶外活動'],['y','印象深刻的事：有寫到交朋友']],
+     lesson:'第一段 68 字都在描述圖片，可是題目根本沒有要你描述圖片。這就是陷阱一：題目問「哪一個」，圖片只是選項。'},
+    {id:'lbd',title:'Learning by Doing（北模）',meta:'10/11・10 分',
+     prompt:'下面三張圖是學校的「Learning by Doing（做中學）」課程：(A) 動物收容所志工、(B) 模擬法庭、(C) 機器人組裝課。請寫一篇英文作文，文分兩段。<span class="kw">第一段</span><span class="kw">描述</span>圖片中的三個活動；<span class="kw">第二段</span>說明你最想參加<span class="kw">哪一個</span>，以及<span class="kw">原因</span>。<br><small style="color:var(--ink-soft)">（北模題本沒有公開，這是依你的作文推測的題目。）</small>',
+     key:[['第一段','描述三個活動'],['第二段','選出最想參加的一個'],['第二段','說明原因，而且原因要扣住「做中學」：親身去做能學到什麼']],
+     orig:'<span class="hit">In picture A, we can see four students have an experience to be a volunteer… In picture B, the teacher in teaching the student… In picture C, there is a robot assembly class.</span> <span class="hit">From my perspective. I extremely want to enjoy the stray animal shelter class.</span> First, because <span class="miss">there are many cats and dogs were lose on the road and don\'t have a safety home.</span> Second, <span class="miss">I think the volunteer needs a kind heart to have a job and I have too.</span> To sum up, <span class="miss">I firmly believe that the school can make have these kind of the class.</span>',
+     verdict:[['y','描述三個活動：有，而且很完整'],['y','選出一個：選了動物收容所'],['h','原因：寫了「動物很可憐」「我很善良」，都沒講到親身去做能學到什麼'],['x','結論：變成叫學校多開課，離開了「我為什麼想參加」']],
+     lesson:'題目的主題是「做中學」。理由要回答「我在這個活動裡，親手做了什麼、學到什麼」，例如學會照顧動物、學會負責任。這是陷阱三：寫著寫著換了主題。'},
+    {id:'dorm',title:'住宿舍或租屋',meta:'10/24・9 分',
+     prompt:'上大學後，許多人面臨著住在學校宿舍（live in the school dorm）或是自己租屋（rent an apartment）的選擇。請寫一篇兩段的文章，<span class="kw">第一段</span>討論在上述兩者中，你會<span class="kw">挑選哪一個</span>，並說明<span class="kw">原因</span>。<span class="kw">第二段</span>請討論你會因為這樣的選擇而可能面對到的<span class="kw">挑戰</span>以及可以<span class="kw">如何解決</span>。',
+     key:[['第一段','選宿舍或租屋，選一個'],['第一段','說明原因'],['第二段','可能面對的挑戰'],['第二段','可以如何解決']],
+     orig:'After graduating from high school, many people needs to make a choice… Both choices have their advantages and disadvantages. First, the school dorm would cheaper… <span class="miss">But, if you are worried about the quality in school dorm. You may properably choose to live outside.</span> <span class="hit">For me, I would more prefer to live in the school dorm.</span><br>…I think living in school dorm might be a wonderful experience <span class="miss">instead of facing a lot of obstacles.</span> …<span class="hit">The bed was very thick that makes me can\'t sleep very well. The hardest thing I think is wash my clothes.</span> However, <span class="miss">I think it can makes me more grow and can face the problems just like a fish in a water.</span>',
+     verdict:[['h','選一個：選了宿舍，但放在第一段最後一句，前面還替租屋講話'],['y','原因：比較便宜、比較安全、離學校近'],['y','挑戰：床太硬、洗衣服要排時間'],['x','如何解決：完全沒寫，只用一句「讓我成長」帶過']],
+     lesson:'這是陷阱二：「挑戰以及如何解決」是兩項要求。每寫一個挑戰，後面就緊接著寫一個解法，例如「床太硬 → 自己帶床墊」。'},
+    {id:'green',title:'城市問題：缺乏綠地',meta:'10/24・10 分',
+     prompt:'每個城市都有其獨特的問題，改善這些問題可以提升市民的生活品質。下列三張圖分別呈現城市中常見的三個問題（大眾運輸、缺乏綠地、犯罪與治安）。如果你能選擇解決其中一個問題，你會選擇哪一個？<span class="kw">第一段</span>說明你最想解決<span class="kw">哪一個問題</span>，並解釋<span class="kw">原因</span>。<span class="kw">第二段</span>說明你希望有關當局採取哪些<span class="kw">具體措施</span>來解決<span class="kw">這個問題</span>。',
+     key:[['第一段','選出一個問題'],['第一段','解釋原因：這個問題怎麼影響市民的生活品質'],['第二段','希望政府採取的具體措施，而且要能解決「這個」問題']],
+     orig:'<span class="hit">Among the three pictures, I will choose the second one.</span> …<span class="miss">With the rapid of industry advance… Governments build the houses quickly and cutting down the trees, the factories produce polluted water in the lake.</span><br>…Here, I have some advices for the government. First, <span class="miss">request every who drive the car must to check the device releasing the carbon dioxide.</span> Second, <span class="miss">donate citizen who don\'t have enough budget to replace the old car.</span> Third, <span class="hit">grow more trees and plants on the sidewalks.</span>',
+     verdict:[['y','選一個問題：選了缺乏綠地'],['h','原因：寫成工業發展、工廠污水，沒寫到沒有綠地對生活有什麼影響'],['x','措施：三個裡有兩個在管汽車排碳，只有種樹真的在增加綠地']],
+     lesson:'這也是陷阱三。每寫完一個措施，問自己一句：「這樣做，綠地會變多嗎？」答案是否定的就換掉，例如改成「把閒置的停車場改成公園」。'}
+  ];
+  var list=document.getElementById('practice-list');
+  P.forEach(function(p,i){
+    var el=document.createElement('div');el.className='practice';
+    var keyHtml=p.key.map(function(k,j){return '<li><span class="pi">'+k[0]+'</span>'+'①②③④⑤'[j]+' '+k[1]+'</li>';}).join('');
+    var vHtml=p.verdict.map(function(v){var m={y:'✓',x:'✗',h:'△'}[v[0]];return '<li><span class="'+v[0]+'">'+m+'</span><span>'+v[1]+'</span></li>';}).join('');
+    el.innerHTML=
+      '<div class="p-head"><span class="n">'+(i+1)+'</span><h3>'+p.title+'</h3><span class="meta">'+p.meta+'</span></div>'+
+      '<div class="p-body">'+
+        '<div class="prompt"><span class="tag">題目</span><p>'+p.prompt+'</p></div>'+
+        '<div class="fields">'+
+          '<div><label class="f" for="'+p.id+'-p1">第一段要求 <small>（一行一項）</small></label><textarea id="'+p.id+'-p1" data-save></textarea></div>'+
+          '<div><label class="f" for="'+p.id+'-p2">第二段要求 <small>（一行一項）</small></label><textarea id="'+p.id+'-p2" data-save></textarea></div>'+
+        '</div>'+
+        '<div class="actions"><button class="btn primary" type="button" data-show="'+p.id+'-key">對答案</button><button class="btn" type="button" data-show="'+p.id+'-orig">看我當時寫的</button></div>'+
+        '<div class="reveal" id="'+p.id+'-key" hidden><h4>題目要求（'+p.key.length+' 項）</h4><ul class="key">'+keyHtml+'</ul></div>'+
+        '<div class="reveal" id="'+p.id+'-orig" hidden><h4>我當時寫的</h4><p class="note" style="margin:0">綠底＝有回答到題目；紅色波浪＝漏掉、寫偏或和題目無關。</p>'+
+          '<div class="orig">'+p.orig+'</div>'+
+          '<h4>逐項對照</h4><ul class="verdict">'+vHtml+'</ul>'+
+          '<div class="lesson-box">'+p.lesson+'</div>'+
+          '<label class="f" for="'+p.id+'-fix" style="margin-top:14px">如果重寫一次，第一個要改的地方是什麼？</label>'+
+          '<input type="text" id="'+p.id+'-fix" data-save>'+
+        '</div>'+
+      '</div>';
+    list.appendChild(el);
+  });
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-show]');if(!b)return;
+    var t=document.getElementById(b.getAttribute('data-show'));
+    t.hidden=!t.hidden;
+    var base=b.textContent.replace(/^收起・/,'');
+    b.textContent=t.hidden?base:'收起・'+base;
+  });
+
+  /* ---------- save to this browser ---------- */
+  var KEY='bohong-lesson01-v1',store={},msg=document.getElementById('save-msg');
+  try{store=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){store={};}
+  var fields=document.querySelectorAll('[data-save]');
+  fields.forEach(function(f){
+    if(!(f.id in store))return;
+    if(f.type==='checkbox')f.checked=!!store[f.id];else f.value=store[f.id];
+  });
+  function save(e){
+    var f=e.target;if(!f.hasAttribute||!f.hasAttribute('data-save'))return;
+    store[f.id]=f.type==='checkbox'?f.checked:f.value;
+    try{localStorage.setItem(KEY,JSON.stringify(store));msg.textContent='答案已存在這台裝置';}
+    catch(err){msg.textContent='這個瀏覽器無法儲存，重新整理後答案會清空';}
+  }
+  document.addEventListener('input',save);document.addEventListener('change',save);
+
+  /* ---------- copy outline ---------- */
+  function v(id){return (document.getElementById(id).value||'').trim()||'（空白）';}
+  document.getElementById('copy-outline').addEventListener('click',function(){
+    var text='【第一堂作業大綱：校園空地改建】\n\n題目要求：\n'+v('n-req')+
+      '\n\n第一段\n表態：'+v('n-p1-choice')+'\n理由1：'+v('n-p1-r1')+'\n例子1：'+v('n-p1-e1')+'\n理由2：'+v('n-p1-r2')+'\n例子2：'+v('n-p1-e2')+
+      '\n\n第二段\n問題1：'+v('n-p2-q1')+'\n解決1：'+v('n-p2-s1')+'\n問題2：'+v('n-p2-q2')+'\n解決2：'+v('n-p2-s2')+'\n收尾：'+v('n-p2-end');
+    var cm=document.getElementById('copy-msg'),fb=document.getElementById('copy-fallback');
+    function fallback(){fb.value=text;fb.hidden=false;fb.focus();fb.select();cm.textContent='沒辦法自動複製，上面的文字已經全選，請手動複製後傳給老師。';}
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){cm.textContent='已複製，貼到 LINE 傳給老師。';},fallback);
+    }else fallback();
+  });
+})();
+</script>
+</body>
+</html>
