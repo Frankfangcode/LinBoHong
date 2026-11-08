@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>柏宏作文衝刺課程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: same marking-sheet identity as the review pages — ink masthead, graph-paper ground, a 3-phase lesson map in time order */
+:root{
+  --ink:#12202e;--ink-soft:#4a5866;--paper:#faf9f5;--card:#ffffff;--line:#dfe3e0;
+  --red:#c8342b;--red-wash:#fdeeec;--duck:#f5c518;--duck-wash:#fdf6d8;--harbor:#1b6f7f;--harbor-wash:#e6f1f2;--good:#2f7d4f;--good-wash:#e7f3ec;
+  --mast-bg:#12202e;--mast-fg:#ffffff;--mast-soft:#b9c6d2;--btn-bg:#ffffff;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --sans:"Noto Sans TC","Bricolage Grotesque",system-ui,sans-serif;
+  --display:"Bricolage Grotesque","Noto Sans TC",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#e6ebf0;--ink-soft:#a3b0bc;--paper:#11171d;--card:#18212a;--line:#26313b;
+  --red:#ff7b6e;--red-wash:#3a1f1d;--duck:#f5c518;--duck-wash:#33301a;--harbor:#5fc0cf;--harbor-wash:#173037;--good:#6fcf97;--good-wash:#18301f;
+  --mast-bg:#0a0f14;--mast-fg:#ffffff;--mast-soft:#9fb0c0;--btn-bg:#18212a;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --ink:#e6ebf0;--ink-soft:#a3b0bc;--paper:#11171d;--card:#18212a;--line:#26313b;
+  --red:#ff7b6e;--red-wash:#3a1f1d;--duck:#f5c518;--duck-wash:#33301a;--harbor:#5fc0cf;--harbor-wash:#173037;--good:#6fcf97;--good-wash:#18301f;
+  --mast-bg:#0a0f14;--mast-fg:#ffffff;--mast-soft:#9fb0c0;--btn-bg:#18212a;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--ink);background-color:var(--paper);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:26px 26px;background-position:-1px -1px;line-height:1.75;font-size:16px}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px 90px}
+a{color:var(--harbor);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--harbor);outline-offset:2px}
+
+.masthead{background:var(--mast-bg);color:var(--mast-fg);padding:38px 16px 30px;border-bottom:6px solid var(--duck);margin-bottom:30px}
+.mast-inner{max-width:928px;margin:0 auto;display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between}
+.mast-inner>div:first-child{min-width:0;flex:1 1 400px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--duck);margin:0 0 10px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 12px;text-wrap:balance}
+.subtitle{margin:0;color:var(--mast-soft);font-size:15px;max-width:56ch}
+.countbox{border:2px solid var(--duck);border-radius:4px;padding:14px 22px;text-align:center;min-width:170px;background:rgba(245,197,24,.08)}
+.countbox .label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--duck)}
+.countbox .num{font-family:var(--display);font-weight:800;font-size:46px;line-height:1;margin:6px 0 2px;font-variant-numeric:tabular-nums}
+.countbox .num small{font-size:16px;color:var(--mast-soft);font-weight:600}
+.countbox .band{font-family:var(--mono);font-size:12px;color:var(--mast-soft)}
+
+nav.toc{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 34px}
+nav.toc a{font-size:13.5px;font-weight:700;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:3px;padding:6px 12px}
+nav.toc a:hover{border-color:var(--ink)}
+
+section{margin:0 0 56px;scroll-margin-top:16px}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:22px}
+.sec-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--red)}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(20px,3vw,27px);margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:700;font-size:17px;margin:26px 0 10px}
+.note{font-size:14px;color:var(--ink-soft);margin:-8px 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px 20px}
+.card p{margin:0}
+
+.chart-box{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px 12px 8px;overflow-x:auto}
+.chart-box svg{display:block;width:100%;min-width:560px;height:auto}
+.chart-box text{font-family:var(--mono);fill:var(--ink-soft)}
+.chart-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink-soft);margin:10px 4px 0}
+.chart-legend span::before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;border-radius:2px;vertical-align:-1px;background:var(--sw)}
+
+.diag{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px;margin-top:18px}
+.diag .card{border-left:4px solid var(--red);display:flex;flex-direction:column;gap:8px}
+.diag .card.ok{border-left-color:var(--good)}
+.diag h4{margin:0;font-size:16px;font-family:var(--display)}
+.diag .ev{font-size:13.5px;color:var(--ink-soft)}
+.diag .ev em{font-family:var(--mono);font-style:normal;font-size:12.5px;color:var(--red);background:var(--red-wash);padding:0 4px;border-radius:2px}
+.diag .fixin{font-size:13px;font-family:var(--mono);color:var(--harbor);margin-top:auto}
+
+.goal{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px}
+.goal .card{text-align:center}
+.goal .big{font-family:var(--display);font-weight:800;font-size:34px;line-height:1.1;font-variant-numeric:tabular-nums}
+.goal .lbl{font-size:13px;color:var(--ink-soft)}
+
+.phase{margin:0 0 34px}
+.phase-head{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.phase-tag{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;background:var(--ink);color:var(--paper);padding:3px 10px;border-radius:2px}
+.phase-head h3{margin:0}
+.phase-head p{margin:0;font-size:14px;color:var(--ink-soft);flex-basis:100%}
+
+.lesson{background:var(--card);border:1px solid var(--line);border-radius:4px;margin-bottom:14px;overflow:hidden}
+.lesson-top{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+.lnum{font-family:var(--display);font-weight:800;font-size:28px;line-height:1;color:var(--red);font-variant-numeric:tabular-nums}
+.ltitle{min-width:0}
+.ltitle h4{margin:0;font-size:18px;font-family:var(--display);text-wrap:balance}
+.ltitle .target{font-size:14px;color:var(--ink-soft);margin-top:2px}
+.lweek{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:right;white-space:nowrap}
+.lesson-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:0}
+.lesson-body>div{padding:14px 18px;border-right:1px solid var(--line);min-width:0}
+.lesson-body>div:last-child{border-right:none}
+.lab{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--harbor);margin:0 0 6px;text-transform:uppercase}
+.lesson-body ul,.lesson-body ol{margin:0;padding-left:18px;font-size:14px}
+.lesson-body li{margin-bottom:4px}
+.lesson-body p{margin:0;font-size:14px}
+.why{background:var(--red-wash);padding:10px 18px;font-size:13.5px;border-bottom:1px solid var(--line)}
+.why b{color:var(--red)}
+.pass{background:var(--good-wash);padding:10px 18px;font-size:13.5px;border-top:1px solid var(--line)}
+.pass b{color:var(--good)}
+.mat a{font-weight:700}
+.mat small{color:var(--ink-soft)}
+.lesson.final .lnum{color:var(--duck)}
+
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:10px}
+.flow .card{padding:14px 16px}
+.flow .t{font-family:var(--mono);font-size:12px;color:var(--red);font-weight:700}
+.flow h4{margin:2px 0 4px;font-size:15.5px;font-family:var(--display)}
+.flow p{font-size:13.5px;color:var(--ink-soft)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:4px}
+table{width:100%;border-collapse:collapse;background:var(--card);font-size:14px;min-width:640px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:12px;letter-spacing:.06em;font-weight:400}
+tbody tr:last-child td{border-bottom:none}
+td.wk{font-family:var(--mono);font-size:12.5px;white-space:nowrap;color:var(--ink-soft)}
+td input[type=number]{width:70px;font:inherit;font-variant-numeric:tabular-nums;padding:4px 6px;border:1px solid var(--line);border-radius:3px;background:var(--paper);color:var(--ink)}
+td input[type=text]{width:100%;min-width:140px;font:inherit;font-size:13.5px;padding:4px 6px;border:1px solid var(--line);border-radius:3px;background:var(--paper);color:var(--ink)}
+td select{font:inherit;font-size:13.5px;padding:4px 6px;border:1px solid var(--line);border-radius:3px;background:var(--paper);color:var(--ink)}
+.saved{font-size:12.5px;color:var(--ink-soft);margin-top:8px;font-family:var(--mono)}
+
+ul.tips{margin:0;padding:0;list-style:none}
+ul.tips li{position:relative;padding-left:24px;margin-bottom:9px;font-size:15px}
+ul.tips li:last-child{margin-bottom:0}
+ul.tips li::before{content:"→";position:absolute;left:0;color:var(--red);font-family:var(--mono);font-weight:700}
+
+footer{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding-top:24px;border-top:1px solid var(--line)}
+
+@media (max-width:640px){
+  .lesson-top{grid-template-columns:auto 1fr}
+  .lweek{grid-column:1/-1;text-align:left}
+  .lesson-body>div{border-right:none;border-bottom:1px solid var(--line)}
+  .lesson-body>div:last-child{border-bottom:none}
+}
+@media print{
+  body{background:#fff}
+  nav.toc{display:none}
+  .lesson{break-inside:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="mast-inner">
+    <div>
+      <p class="eyebrow">GSAT English · Writing Course for 柏宏</p>
+      <h1>柏宏學測作文<br>衝刺課程</h1>
+      <p class="subtitle">根據 10 篇作文的批改紀錄量身設計：10 堂課，從 11 月第二週到學測前一週。每堂只練一件事，教材全部取自作文教材資料夾。</p>
+    </div>
+    <div class="countbox">
+      <div class="label">116 學測</div>
+      <div class="num">1/22<small>–24</small></div>
+      <div class="band">2027・共 10 堂＋考前週</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <nav class="toc" aria-label="頁面導覽">
+    <a href="#diagnosis">01 目前診斷</a>
+    <a href="#goal">02 課程目標</a>
+    <a href="#map">03 十堂課</a>
+    <a href="#routine">04 每堂流程</a>
+    <a href="#tracker">05 進度追蹤</a>
+  </nav>
+
+  <!-- 01 -->
+  <section id="diagnosis">
+    <div class="sec-head"><span class="sec-num">01</span><h2>目前診斷：10 篇作文看出來的問題</h2></div>
+    <p class="note">每根長條都連到那篇的批改講義。綠色是有用大綱表或完整審題的兩篇。</p>
+
+    <div class="chart-box">
+      <svg viewBox="0 52 620 176" role="img" aria-label="柏宏作文級分走勢：10、9、8、7、12、10、10、9、10、13 分，目標 15 分">
+        <line x1="30" y1="190" x2="610" y2="190" stroke="var(--line)" stroke-width="1.5"/>
+        <line x1="30" y1="70" x2="610" y2="70" stroke="var(--duck)" stroke-width="1.5" stroke-dasharray="6 5"/>
+        
+        <line x1="30" y1="110" x2="610" y2="110" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4"/>
+        <text x="24" y="114" font-size="10" text-anchor="end">10</text>
+        <text x="24" y="194" font-size="10" text-anchor="end">0</text>
+        <text x="24" y="74" font-size="10" text-anchor="end">15</text>
+
+        <a href="../20260731/gsat-english-review.html"><rect x="40" y="110" width="34" height="80" fill="var(--harbor)" rx="2"/></a>
+        <a href="../20260816/gsat-review-02-online-class.html"><rect x="98" y="118" width="34" height="72" fill="var(--harbor)" rx="2"/></a>
+        <a href="../20260828/gsat-review-03-rice-cooker.html"><rect x="156" y="126" width="34" height="64" fill="var(--harbor)" rx="2"/></a>
+        <a href="../20260912/gsat-review-05-summer-activity.html"><rect x="214" y="134" width="34" height="56" fill="var(--red)" rx="2"/></a>
+        <a href="../20260912/gsat-review-06-outline-rewrite.html"><rect x="272" y="94" width="34" height="96" fill="var(--good)" rx="2"/></a>
+        <a href="../20260926/gsat-review-07-online-reviews.html"><rect x="330" y="110" width="34" height="80" fill="var(--harbor)" rx="2"/></a>
+        <a href="../20261011/gsat-review-08-learning-by-doing.html"><rect x="388" y="110" width="34" height="80" fill="var(--harbor)" rx="2"/></a>
+        <a href="../20261024/gsat-review-09-dorm-or-apartment.html"><rect x="446" y="118" width="34" height="72" fill="var(--harbor)" rx="2"/></a>
+        <a href="../20261024/gsat-review-10-green-spaces.html"><rect x="504" y="110" width="34" height="80" fill="var(--harbor)" rx="2"/></a>
+        <a href="../20261108/gsat-review-11-cafe-or-library.html"><rect x="562" y="86" width="34" height="104" fill="var(--good)" rx="2"/></a>
+
+        <g font-size="12" text-anchor="middle" style="font-weight:700">
+          <text x="57" y="104">10</text><text x="115" y="112">9</text><text x="173" y="120">8</text><text x="231" y="128">7</text><text x="289" y="88">12</text>
+          <text x="347" y="104">10</text><text x="405" y="104">10</text><text x="463" y="112">9</text><text x="521" y="104">10</text><text x="579" y="80">13</text>
+        </g>
+        <g font-size="10.5" text-anchor="middle">
+          <text x="57" y="207">小鴨</text><text x="115" y="207">線上課</text><text x="173" y="207">電鍋</text><text x="231" y="207">暑假</text><text x="289" y="207">大綱重寫</text>
+          <text x="347" y="207">網評</text><text x="405" y="207">北模</text><text x="463" y="207">宿舍</text><text x="521" y="207">綠地</text><text x="579" y="207">咖啡廳</text>
+          <text x="57" y="222">7/31</text><text x="115" y="222">8/16</text><text x="173" y="222">8/28</text><text x="231" y="222">9/12</text><text x="289" y="222">9/12</text>
+          <text x="347" y="222">9/26</text><text x="405" y="222">10/11</text><text x="463" y="222">10/24</text><text x="521" y="222">10/24</text><text x="579" y="222">11/8</text>
+        </g>
+      </svg>
+      <div class="chart-legend">
+        <span style="--sw:var(--good)">有用大綱表／完整審題</span>
+        <span style="--sw:var(--red)">最低分（沒選活動、整段離題）</span>
+        <span style="--sw:var(--harbor)">其他</span>
+        <span style="--sw:var(--duck)">虛線：目標 15 分</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px;border-left:4px solid var(--duck)">
+      <p><strong>最重要的一個發現：</strong>他的分數不是被文法拉低的，是被「沒回答完整題目」拉低的。兩次高分（12、13）都是題目要求全部寫到的那篇；7 到 10 分的幾篇，幾乎都漏掉或寫偏了題目的一部分。所以課程第一堂先練審題，再處理文法。</p>
+    </div>
+
+    <div class="diag">
+      <div class="card">
+        <h4>① 漏寫或寫偏題目要求</h4>
+        <p class="ev">暑假活動只描述圖、沒選活動（7 分）；住宿舍漏寫解決方法；城市綠地的措施寫成空氣污染。</p>
+        <p class="fixin">→ 第 1 堂</p>
+      </div>
+      <div class="card">
+        <h4>② 第二段太短、理由空泛</h4>
+        <p class="ev">咖啡廳那篇第二段只有約 45 字；Learning by Doing 的理由只有「動物很可憐、我很善良」。</p>
+        <p class="fixin">→ 第 2 堂</p>
+      </div>
+      <div class="card">
+        <h4>③ 一句兩個動詞、少 be 動詞</h4>
+        <p class="ev"><em>a women is studies</em>、<em>the dorm would cheaper</em>、<em>are must be</em>、<em>make me can't</em>、<em>which upon my…</em></p>
+        <p class="fixin">→ 第 3 堂</p>
+      </div>
+      <div class="card">
+        <h4>④ 冠詞、單複數、詞性</h4>
+        <p class="ev"><em>in wild</em>、<em>restaurant that offer</em>、<em>publish industry</em>、<em>communicate skill</em>、<em>more convenience</em></p>
+        <p class="fixin">→ 第 4 堂</p>
+      </div>
+      <div class="card">
+        <h4>⑤ 背好的句型套錯地方</h4>
+        <p class="ev"><em>only everyone work… can we</em> 倒裝寫錯；翻譯 <em>Not until…, you can</em> 忘了倒裝；Last but not least 拿來當結論。</p>
+        <p class="fixin">→ 第 7 堂</p>
+      </div>
+      <div class="card ok">
+        <h4>✓ 已經有的優勢</h4>
+        <p class="ev">咖啡廳那篇第一次完整回答題目；用了 <em style="color:var(--good);background:var(--good-wash)">keeps me motivated</em>、<em style="color:var(--good);background:var(--good-wash)">It is not until…that</em> 等句型都正確；第一段描述圖片已經穩定。</p>
+        <p class="fixin" style="color:var(--good)">→ 每堂維持</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="goal">
+    <div class="sec-head"><span class="sec-num">02</span><h2>課程目標</h2></div>
+    <div class="goal">
+      <div class="card"><div class="big" style="color:var(--harbor)">13</div><div class="lbl">現在（咖啡廳那篇）</div></div>
+      <div class="card"><div class="big" style="color:var(--duck)">14–15</div><div class="lbl">學測目標：穩定拿到</div></div>
+      <div class="card"><div class="big" style="color:var(--good)">0</div><div class="lbl">每篇漏掉的題目要求</div></div>
+      <div class="card"><div class="big" style="color:var(--red)">≤ 5</div><div class="lbl">每篇文法錯誤（CH＋MISS＋ART＋PL）</div></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <ul class="tips">
+        <li><strong>穩定比偶爾高分重要。</strong>學測只考一次，目標是每一篇都不再掉到 10 分以下。</li>
+        <li><strong>每堂只練一個目標。</strong>照你一直以來的做法，前一堂的目標過關了，才進下一個。</li>
+        <li><strong>每週固定寫一篇作文、五題翻譯。</strong>作文一樣產出批改講義，用錯誤代碼追蹤進步。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section id="map">
+    <div class="sec-head"><span class="sec-num">03</span><h2>十堂課</h2></div>
+    <p class="note">週次是建議日期，可依實際上課日調整。教材連結都指向作文教材資料夾裡的檔案。</p>
+
+    <!-- Phase 1 -->
+    <div class="phase">
+      <div class="phase-head"><span class="phase-tag">PHASE 1 · 地基</span><h3>第 1–4 堂：先不失分</h3>
+        <p>把最常讓他掉分的四個問題各練一堂。這階段的作文分數不一定馬上變高，但錯誤數量要明顯下降。</p></div>
+
+      <div class="lesson">
+        <div class="lesson-top"><div class="lnum">01</div><div class="ltitle"><h4>審題：先拆題，再動筆</h4><div class="target">目標：動筆前列出題目的每一項要求，寫完逐項打勾</div></div><div class="lweek">11/9 – 11/15</div></div>
+        <div class="why"><b>為什麼先上這堂：</b>暑假活動那篇沒選活動（7 分），用大綱表重寫後變成 12 分；住宿舍、城市綠地都是寫到一半偏離題目要求。</div>
+        <div class="lesson-body">
+          <div class="mat"><p class="lab">教材</p><ul>
+            <li><a href="03_題型攻略/學測五大題型總覽_互動完整版.html">學測五大題型總覽</a><br><small>先認識題目有哪幾種</small></li>
+            <li><a href="../20260912/gsat-outline-grid.html">動筆前大綱表</a><br><small>這學期唯一證實有效的工具</small></li>
+            <li><a href="03_題型攻略/兩段式混合題型攻略.html">兩段式混合題型攻略</a><br><small>只上「一、題目長什麼樣」</small></li>
+          </ul></div>
+          <div><p class="lab">課堂</p><ol>
+            <li>把他寫過的 5 個題目（暑假活動、Learning by Doing、住宿舍、城市綠地、咖啡廳）拿出來，只拆題、只填大綱表，不寫文章。</li>
+            <li>每個題目圈出「第一段要什麼」「第二段要什麼」，對照他當時寫的內容，讓他自己找出漏了什麼。</li>
+          </ol></div>
+          <div><p class="lab">回家作業</p><ul>
+            <li>新題目一篇，必須附上大綱表。</li>
+            <li>每週翻譯照常。</li>
+          </ul></div>
+        </div>
+        <div class="pass"><b>過關標準：</b>連續兩篇，大綱表每一格都對應到題目要求，交卷前的打勾欄全部打勾。</div>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-top"><div class="lnum">02</div><div class="ltitle"><h4>第二段寫滿</h4><div class="target">目標：第二段 80–100 字，每個理由都有一個例子</div></div><div class="lweek">11/16 – 11/22</div></div>
+        <div class="why"><b>為什麼：</b>咖啡廳那篇第一段完整，但第二段只有約 45 字，內容分卡在 3.5。第二段是論說，大部分的分數在這裡。</div>
+        <div class="lesson-body">
+          <div class="mat"><p class="lab">教材</p><ul>
+            <li><a href="01_段落基礎/Unit5_漢堡段落寫法.html">Unit 5 漢堡段落寫法</a><br><small>主題句、支持句、結尾句</small></li>
+            <li><a href="01_段落基礎/腦力激盪_句子加長.html">腦力激盪・句子加長</a><br><small>用 wh- 問句把理由加長</small></li>
+            <li><a href="../20261108/gsat-review-11-cafe-or-library.html">咖啡廳批改講義</a><br><small>第 07 區「下一篇的目標」</small></li>
+          </ul></div>
+          <div><p class="lab">課堂</p><ol>
+            <li>教第二段骨架：主題句 → 理由一＋例子 → 理由二＋例子 → 讓步（Although…）→ 結尾句。</li>
+            <li>用 wh- 問句追問他的理由（什麼時候？發生什麼事？結果怎樣？），把答案變成例子句。</li>
+            <li>當場改寫咖啡廳那篇的第二段。</li>
+          </ol></div>
+          <div><p class="lab">回家作業</p><ul>
+            <li>改寫住宿舍那篇的第二段，把漏掉的解決方法補上。</li>
+            <li>新作文一篇，動筆前在題目旁寫「第一段 100／第二段 100」。</li>
+          </ul></div>
+        </div>
+        <div class="pass"><b>過關標準：</b>第二段 ≥ 80 字，兩個理由各有一個具體例子。</div>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-top"><div class="lnum">03</div><div class="ltitle"><h4>一句一組主詞＋動詞</h4><div class="target">目標：消滅雙動詞、少 be 動詞、中式句構（CH／MISS）</div></div><div class="lweek">11/23 – 11/29</div></div>
+        <div class="why"><b>為什麼：</b>每一篇都有，而且是最容易讓閱卷老師看不懂的錯誤：<em>a women is studies</em>、<em>the school dorm would cheaper</em>、<em>these phenomenon are must be changed</em>。</div>
+        <div class="lesson-body">
+          <div class="mat"><p class="lab">教材</p><ul>
+            <li><a href="05_批改與診斷/擺脫直翻_建立英文思維.html">擺脫直翻，建立英文思維</a></li>
+            <li><a href="02_句型文法工具/句型系統化特訓地圖.html">句型系統化特訓地圖</a><br><small>只上 Phase 1 基礎修復</small></li>
+            <li><a href="02_句型文法工具/及物不及物.html">及物與不及物動詞</a></li>
+          </ul></div>
+          <div><p class="lab">課堂</p><ol>
+            <li>複習「中文先簡化」：每句中文先改成小學生程度，一句只做一個動作，再翻成英文。</li>
+            <li>從他最近 4 篇作文挑 15 個病句做成病句卡，只標代碼，讓他自己改。</li>
+            <li>教他寫完每句問自己：「主詞是誰？動詞是哪一個？只有一個嗎？」</li>
+          </ol></div>
+          <div><p class="lab">回家作業</p><ul>
+            <li>新作文一篇。</li>
+            <li>病句卡改不出來的，抄三遍正確版本。</li>
+          </ul></div>
+        </div>
+        <div class="pass"><b>過關標準：</b>一篇作文的 CH＋MISS 錯誤 ≤ 3 個。</div>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-top"><div class="lnum">04</div><div class="ltitle"><h4>名詞三關：冠詞、單複數、詞性</h4><div class="target">目標：每個名詞都過三關——要加 a／the 嗎？要加 s 嗎？詞性對嗎？</div></div><div class="lweek">11/30 – 12/6</div></div>
+        <div class="why"><b>為什麼：</b>作文和翻譯都一直出現：<em>in wild</em>、<em>a café</em> 沒加冠詞、<em>restaurant that offer</em>、<em>publish industry</em>、<em>communicate skill</em>、<em>more convenience</em>。</div>
+        <div class="lesson-body">
+          <div class="mat"><p class="lab">教材</p><ul>
+            <li><a href="04_精準度與測驗/寫作精準度Quiz一.html">寫作精準度 Quiz 一</a></li>
+            <li><a href="04_精準度與測驗/寫作精準度Quiz二.html">寫作精準度 Quiz 二</a></li>
+            <li><a href="02_句型文法工具/核心詞彙與句型複習.html">核心詞彙與句型複習</a></li>
+          </ul></div>
+          <div><p class="lab">課堂</p><ol>
+            <li>拿 Week 17–19 的翻譯錯誤當教材，這些都是他自己犯過的。</li>
+            <li>教詞性判斷：放在名詞前面修飾的，通常是 -ing 或 -tion（publishing industry、communication skills）。</li>
+            <li>做 Quiz 一、二，錯的題目當場講。</li>
+          </ol></div>
+          <div><p class="lab">回家作業</p><ul>
+            <li>新作文一篇，寫完用螢光筆把每個名詞畫出來，逐一檢查三關。</li>
+            <li>拼錯的字（change、college、necessary、develop）放進單字週考。</li>
+          </ul></div>
+        </div>
+        <div class="pass"><b>過關標準：</b>一篇作文的 ART＋PL＋詞性錯誤 ≤ 3 個。</div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase">
+      <div class="phase-head"><span class="phase-tag">PHASE 2 · 題型</span><h3>第 5–8 堂：每種題型都有骨架</h3>
+        <p>地基穩了之後，按照他最常遇到的題型順序練。每堂一篇完整作文，限時 35 分鐘。</p></div>
+
+      <div class="lesson">
+        <div class="lesson-top"><div class="lnum">05</div><div class="ltitle"><h4>看圖描述＋論說（兩段式混合題）</h4><div class="target">目標：第一段描述 55–65 字不寫流水帳，第二段論說至少 80 字</div></div><div class="lweek">12/7 – 12/13</div></div>
+        <div class="why"><b>為什麼：</b>他這學期寫的題目大多是看圖題（小鴨、暑假活動、Learning by Doing、城市綠地、咖啡廳）。北模那篇第一段寫了約 120 字描述，第二段只剩約 90 字。</div>
+        <div class="lesson-body">
+          <div class="mat"><p class="lab">教材</p><ul>
+            <li><a href="03_題型攻略/兩段式混合題型攻略.html">兩段式混合題型攻略</a><br><small>二～五：兩段字數、考場 25 分鐘流程、常見失分</small></li>
+            <li><a href="03_題型攻略/感官描寫技巧.html">感官描寫與精準用字</a><br><small>讓描述段具體</small></li>
+          </ul></div>
+          <div><p class="lab">課堂</p><ol>
+            <li>描述圖片的順序：大景 → 主角 → 人物動作 → 氛圍，一層一句。</li>
+            <li>拿北模那篇練習「刪」：把第一段 120 字縮到 65 字。</li>
+            <li>限時寫一篇新的看圖題。</li>
+          </ol></div>
+          <div><p class="lab">回家作業</p><ul>
+            <li>另一篇看圖題，計時 35 分鐘。</li>
+          </ul></div>
+        </div>
+        <div class="pass"><b>過關標準：</b>35 分鐘內寫完，第一段 ≤ 70 字，第二段 ≥ 80 字。</div>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-top"><div class="lnum">06</div><div class="ltitle"><h4>二選一題型：選邊、理由、讓步</h4><div class="target">目標：第一句就寫出選擇，最後用 Although… 承認另一邊</div></div><div class="lweek">12/14 – 12/20</div></div>
+        <div class="why"><b>為什麼：</b>住宿舍那篇到第一段最後一句才表態，前面還替租屋講話，立場模糊；咖啡廳那篇沒有讓步句。</div>
+        <div class="lesson-body">
+          <div class="mat"><p class="lab">教材</p><ul>
+            <li><a href="02_句型文法工具/Unit4轉折詞.html">Unit 4 轉折詞</a></li>
+            <li><a href="02_句型文法工具/轉承詞大集合.html">轉承詞大集合</a></li>
+            <li><a href="03_題型攻略/範例練習_颱風假該不該放.html">範例練習：颱風假該不該放</a></li>
+          </ul></div>
+          <div><p class="lab">課堂</p><ol>
+            <li>固定三組轉承詞：To begin with／Moreover／All in all；However 轉到缺點；Although 讓步。</li>
+            <li>糾正 Last but not least：只能帶出最後一點，不能當結論開頭。</li>
+            <li>用颱風假範例練一次完整的選邊論說。</li>
+          </ol></div>
+          <div><p class="lab">回家作業</p><ul>
+            <li>二選一題型一篇。</li>
+          </ul></div>
+        </div>
+        <div class="pass"><b>過關標準：</b>第一句表態、有讓步句、轉承詞沒有用錯。</div>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-top"><div class="lnum">07</div><div class="ltitle"><h4>高分句型：用對地方才加分</h4><div class="target">目標：熟練 4 個句型，而且知道什麼時候<em>不要</em>用</div></div><div class="lweek">12/21 – 12/27</div></div>
+        <div class="why"><b>為什麼：</b>他背了句型但會套錯：<em>only everyone work hard together can we</em>；翻譯 <em>Not until develope…, you can</em> 忘了倒裝；前幾篇硬套 only by… 的結論還導致離題。</div>
+        <div class="lesson-body">
+          <div class="mat"><p class="lab">教材</p><ul>
+            <li><a href="02_句型文法工具/萬用句.html">作文煉金術：萬用句</a></li>
+            <li><a href="02_句型文法工具/句型系統化特訓地圖.html">句型系統化特訓地圖</a><br><small>Phase 2–3：關係代名詞、名詞子句、句型變身</small></li>
+            <li><a href="02_句型文法工具/分詞構句.html">分詞構句</a></li>
+          </ul></div>
+          <div><p class="lab">課堂</p><ol>
+            <li>只教 4 個句型：Only if／when… can we、It is not until… that、分詞構句、not only… but also（前後要對等）。</li>
+            <li>每個句型配「什麼時候不要用」：例如結論和前文無關時，不要為了倒裝硬套。</li>
+            <li>翻譯同步練倒裝題。</li>
+          </ol></div>
+          <div><p class="lab">回家作業</p><ul>
+            <li>新作文一篇，至少用到 2 個句型，而且要用對。</li>
+          </ul></div>
+        </div>
+        <div class="pass"><b>過關標準：</b>作文中的句型全部正確；翻譯的倒裝題全對。</div>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-top"><div class="lnum">08</div><div class="ltitle"><h4>保底題型：圖表題、記敘文、開頭</h4><div class="target">目標：其他題型各會一個開頭和骨架，考到不會慌</div></div><div class="lweek">12/28 – 1/3</div></div>
+        <div class="why"><b>為什麼：</b>他還沒寫過圖表題和記敘文。學測不一定考，但考到時只要有骨架，就不會掉到 10 分以下。</div>
+        <div class="lesson-body">
+          <div class="mat"><p class="lab">教材</p><ul>
+            <li><a href="03_題型攻略/圖表題寫作技巧.html">圖表題寫作技巧</a></li>
+            <li><a href="03_題型攻略/Unit6_敘述文.html">Unit 6 敘述文</a></li>
+            <li><a href="03_題型攻略/破題法.html">破題法</a><br><small>五種開頭選一種練熟</small></li>
+          </ul></div>
+          <div><p class="lab">課堂</p><ol>
+            <li>圖表題：描述趨勢的 6 個必備字，加上「先寫最大差異」的原則。</li>
+            <li>記敘文：時間順序＋一段感受，用萬用句的記敘文開頭。</li>
+            <li>每種題型只寫第一段。</li>
+          </ol></div>
+          <div><p class="lab">回家作業</p><ul>
+            <li>圖表題一篇（完整兩段）。</li>
+          </ul></div>
+        </div>
+        <div class="pass"><b>過關標準：</b>圖表題至少 11 分。</div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase">
+      <div class="phase-head"><span class="phase-tag">PHASE 3 · 實戰</span><h3>第 9–10 堂＋考前週：限時與總複習</h3>
+        <p>不再教新東西，只練時間分配和他自己的錯誤清單。</p></div>
+
+      <div class="lesson">
+        <div class="lesson-top"><div class="lnum">09</div><div class="ltitle"><h4>限時模考①＋個人錯誤清單</h4><div class="target">目標：翻譯＋作文在 45 分鐘內完成，整理他自己最常犯的 10 個錯</div></div><div class="lweek">1/4 – 1/10</div></div>
+        <div class="why"><b>為什麼：</b>考場上時間有限，平常可以慢慢想的錯，限時就會冒出來。錯誤清單用他 10 篇以上作文的代碼統計來做。</div>
+        <div class="lesson-body">
+          <div class="mat"><p class="lab">教材</p><ul>
+            <li><a href="06_模擬考與戰術/模擬考_0915_高頻考點鞏固卷.html">高頻考點鞏固卷</a></li>
+            <li><a href="06_模擬考與戰術/模擬考_0922_高頻文法鞏固卷.html">高頻文法鞏固卷</a></li>
+            <li><a href="04_精準度與測驗/GSAT弱點擊破v3.2_HardMode.html">GSAT 弱點擊破 v3.2</a></li>
+          </ul></div>
+          <div><p class="lab">課堂</p><ol>
+            <li>限時寫翻譯＋作文。</li>
+            <li>批改後和他一起整理「我的 10 大錯誤」，每一條附正確例句。</li>
+          </ol></div>
+          <div><p class="lab">回家作業</p><ul>
+            <li>錯誤清單背熟，再寫一篇限時作文。</li>
+          </ul></div>
+        </div>
+        <div class="pass"><b>過關標準：</b>限時內寫完，預估 ≥ 13 分。</div>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-top"><div class="lnum">10</div><div class="ltitle"><h4>限時模考②＋考前戰術</h4><div class="target">目標：再一次限時，確認考場流程，交卷前的檢查變成習慣</div></div><div class="lweek">1/11 – 1/17</div></div>
+        <div class="why"><b>為什麼：</b>最後一次完整演練。重點不是分數，是流程跑得順：拆題 → 大綱 → 寫 → 3 分鐘檢查。</div>
+        <div class="lesson-body">
+          <div class="mat"><p class="lab">教材</p><ul>
+            <li><a href="06_模擬考與戰術/終極鞏固卷.html">終極鞏固卷</a></li>
+            <li><a href="04_精準度與測驗/GSAT弱點擊破v4.0_FinalReview.html">GSAT 弱點擊破 v4.0</a></li>
+            <li><a href="06_模擬考與戰術/學測終極戰術板_最新版.html">學測終極戰術板</a></li>
+          </ul></div>
+          <div><p class="lab">課堂</p><ol>
+            <li>限時寫一篇他沒寫過的題型。</li>
+            <li>走一次戰術板，定下他自己的考場時間表。</li>
+          </ol></div>
+          <div><p class="lab">回家作業</p><ul>
+            <li>把錯誤清單和範本句庫整理成一張 A4。</li>
+          </ul></div>
+        </div>
+        <div class="pass"><b>過關標準：</b>預估 ≥ 14 分，而且題目要求全部寫到。</div>
+      </div>
+
+      <div class="lesson final">
+        <div class="lesson-top"><div class="lnum">★</div><div class="ltitle"><h4>考前週：只複習，不寫新篇</h4><div class="target">目標：維持手感、建立信心</div></div><div class="lweek">1/18 – 1/21</div></div>
+        <div class="lesson-body">
+          <div class="mat"><p class="lab">教材</p><ul>
+            <li><a href="06_模擬考與戰術/學測終極戰術板_20分鐘急救版.html">學測終極戰術板（20 分鐘急救版）</a></li>
+            <li>他的一張 A4：10 大錯誤＋範本句</li>
+          </ul></div>
+          <div><p class="lab">安排</p><ul>
+            <li>每天看一次 A4，重讀兩篇自己最高分的作文（大綱重寫、咖啡廳）。</li>
+            <li>考前一天不寫作文，只看戰術板。</li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section id="routine">
+    <div class="sec-head"><span class="sec-num">04</span><h2>每堂課的流程（2 小時）</h2></div>
+    <div class="flow">
+      <div class="card"><div class="t">0:00–0:25</div><h4>改上週作業</h4><p>只給錯誤代碼，學生先自己訂正，再打開批改講義對答案。</p></div>
+      <div class="card"><div class="t">0:25–1:05</div><h4>教這堂的目標</h4><p>用上面列的教材，只講這一個重點。</p></div>
+      <div class="card"><div class="t">1:05–1:45</div><h4>當場練習</h4><p>拆題、改病句或限時寫作，依該堂安排。</p></div>
+      <div class="card"><div class="t">1:45–2:00</div><h4>局部改寫＋派作業</h4><p>用同一篇改寫一段，確認他真的會了。</p></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <ul class="tips">
+        <li><strong>每週固定：</strong><a href="../translation.html">每週翻譯</a>五題、<a href="../學測單字週考.html">單字週考</a>，翻譯的錯誤直接接到當週的文法目標。</li>
+        <li><strong>每篇作文都做批改講義</strong>（像 gsat-review 系列），存到當週日期資料夾。</li>
+        <li><strong>部分教材的標題寫著「孝澤」或「澤享」</strong>，給柏宏用之前可以先改名。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section id="tracker">
+    <div class="sec-head"><span class="sec-num">05</span><h2>進度追蹤</h2></div>
+    <p class="note">每堂課後填上作文分數和是否過關。只存在這台裝置的瀏覽器裡，換裝置或清除瀏覽紀錄就會不見。</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>堂</th><th>週次</th><th>目標</th><th>作文分數</th><th>過關</th><th>備註</th></tr></thead>
+        <tbody id="tracker-body"></tbody>
+      </table>
+    </div>
+    <p class="saved" id="saved-msg" aria-live="polite"></p>
+  </section>
+
+  <footer>柏宏學測作文衝刺課程 ｜ 依大考中心分項評分指標與 10 篇批改紀錄設計 ｜ 2026/11/8</footer>
+</div>
+
+<script>
+(function(){
+  var rows=[
+    ['01','11/9–11/15','審題：先拆題，再動筆'],
+    ['02','11/16–11/22','第二段寫滿'],
+    ['03','11/23–11/29','一句一組主詞＋動詞'],
+    ['04','11/30–12/6','名詞三關'],
+    ['05','12/7–12/13','看圖描述＋論說'],
+    ['06','12/14–12/20','二選一題型'],
+    ['07','12/21–12/27','高分句型用對地方'],
+    ['08','12/28–1/3','圖表題、記敘文、開頭'],
+    ['09','1/4–1/10','限時模考①'],
+    ['10','1/11–1/17','限時模考②＋考前戰術']
+  ];
+  var KEY='bohong-course-tracker-v1', data={};
+  try{ data=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ data={}; }
+  var tb=document.getElementById('tracker-body'), msg=document.getElementById('saved-msg');
+  rows.forEach(function(r){
+    var id=r[0], d=data[id]||{};
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><strong>'+id+'</strong></td><td class="wk">'+r[1]+'</td><td>'+r[2]+'</td>'+
+      '<td><input type="number" min="0" max="20" step="0.5" id="score-'+id+'" aria-label="第'+id+'堂作文分數"></td>'+
+      '<td><select id="pass-'+id+'" aria-label="第'+id+'堂是否過關"><option value="">—</option><option value="yes">✓ 過關</option><option value="no">✗ 再練</option></select></td>'+
+      '<td><input type="text" id="note-'+id+'" aria-label="第'+id+'堂備註"></td>';
+    tb.appendChild(tr);
+    document.getElementById('score-'+id).value=d.score||'';
+    document.getElementById('pass-'+id).value=d.pass||'';
+    document.getElementById('note-'+id).value=d.note||'';
+  });
+  tb.addEventListener('input',save); tb.addEventListener('change',save);
+  function save(){
+    rows.forEach(function(r){
+      var id=r[0];
+      data[id]={score:document.getElementById('score-'+id).value,pass:document.getElementById('pass-'+id).value,note:document.getElementById('note-'+id).value};
+    });
+    try{ localStorage.setItem(KEY,JSON.stringify(data)); msg.textContent='已儲存在這個瀏覽器'; }
+    catch(e){ msg.textContent='這個瀏覽器無法儲存，重新整理後會清空'; }
+  }
+})();
+</script>
+</body>
+</html>
