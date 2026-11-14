@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<title>柏宏段考文法複習單 L4–L6</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: single reading column; each chapter = rule cards, then typed blanks graded per section; MC set graded on tap */
+:root{
+  --bg:#FBFCF9; --paper:#FFFFFF; --ink:#1E2A17; --muted:#5D6B55; --line:#D9E3D0;
+  --green:#26610A; --tint:#F1F6EC; --warm:#FFF7ED; --orange:#C75400;
+  --display:"Noto Serif TC",serif; --body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121710; --paper:#1A2117; --ink:#E6EDE0; --muted:#A3B198; --line:#33402C;
+  --green:#8FCB6B; --tint:#1F2A1A; --warm:#2A2016; --orange:#F2994A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121710; --paper:#1A2117; --ink:#E6EDE0; --muted:#A3B198; --line:#33402C;
+  --green:#8FCB6B; --tint:#1F2A1A; --warm:#2A2016; --orange:#F2994A; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.9 var(--body);padding-inline:16px;padding-block:24px 64px}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1{font:900 clamp(26px,5vw,36px)/1.25 var(--display);margin:0;text-wrap:balance}
+h2{font:700 22px/1.35 var(--display);margin:0;color:var(--green);text-wrap:balance}
+h3{font:700 16px/1.5 var(--body);margin:0}
+.sub{color:var(--muted);margin:4px 0 0;line-height:1.75}
+header{display:flex;flex-direction:column;gap:12px;border-bottom:2px solid var(--green);padding-bottom:16px}
+button{font:500 15px var(--body);background:var(--green);color:var(--paper);border:0;border-radius:6px;padding:8px 18px;cursor:pointer}
+button.ghost{background:transparent;color:var(--green);border:1px solid var(--green)}
+button:focus-visible,input:focus-visible,.opt:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+section{display:flex;flex-direction:column;gap:14px}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+.rule{background:var(--tint);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;line-height:1.75}
+.f{font:500 14px/1.6 var(--mono);background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:2px 6px;overflow-wrap:anywhere}
+.trap{background:var(--warm);border-left:3px solid var(--orange);padding:10px 14px;font-size:15px;line-height:1.75}
+.trap b{color:var(--orange)}
+ol{margin:0;padding-left:28px;display:flex;flex-direction:column;gap:10px}
+li{padding-left:4px}
+.zh{color:var(--muted);font-size:14px}
+table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.6}
+.tw{overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+th{background:var(--tint);font-weight:700}
+/* typed blanks */
+.blank{font:500 16px var(--body);color:var(--ink);background:var(--paper);border:0;border-bottom:2px solid var(--muted);border-radius:0;padding:0 4px;min-width:4.5em;max-width:100%;text-align:center}
+.blank.ok{border-bottom-color:var(--green);color:var(--green);background:var(--tint)}
+.blank.no{border-bottom-color:var(--orange);color:var(--orange);background:var(--warm)}
+.fix{font-size:14px;font-weight:700;color:var(--green);margin-left:4px}
+.fix::before{content:"→ "}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.result{font:500 14px var(--mono);color:var(--green);font-variant-numeric:tabular-nums}
+/* multiple choice */
+.score{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--bg);font:500 14px var(--mono);color:var(--green);padding:6px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.grp{font:700 15px var(--body);color:var(--orange);margin:18px 0 4px}
+.q{display:flex;flex-direction:column;gap:8px;padding:12px 0;border-bottom:1px solid var(--line);line-height:1.7}
+.stem{display:flex;gap:8px}.stem .n{font:500 14px var(--mono);color:var(--muted);min-width:2.2em;padding-top:2px;font-variant-numeric:tabular-nums}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:6px;padding-left:2.7em}
+.opt{font:400 15px/1.5 var(--body);text-align:left;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 10px;cursor:pointer;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--green)}
+.opt.right{background:var(--tint);border-color:var(--green);color:var(--green);font-weight:700}
+.opt.wrong{background:var(--warm);border-color:var(--orange);color:var(--orange);text-decoration:line-through}
+.why{padding-left:2.7em;font-size:14px;color:var(--muted)}
+.why b{color:var(--green)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">段考衝刺 · Book V L4–L6</div>
+  <h1>複合形容詞 · as if · 假設語氣倒裝</h1>
+  <p class="sub">先讀每一課的重點卡，再做練習。填空直接打字，寫完按「批改」；選擇題點一下就會告訴你對錯和原因。</p>
+</header>
+
+<!-- L4 -->
+<section>
+  <div class="eyebrow">Part 1 · L4 複合形容詞</div>
+  <h2>一個問題決定答案：「後面的名詞」自己做，還是被做？</h2>
+
+  <div class="rule">
+    <h3>① 有動作 → 主動用 V-ing，被動用 p.p.</h3>
+    <div class="tw"><table>
+      <tr><th>原本的句子</th><th>複合形容詞</th><th>為什麼</th></tr>
+      <tr><td>a car that moves fast</td><td><b>a fast-moving car</b></td><td>車<b>自己</b>動 → V-ing</td></tr>
+      <tr><td>a machine that saves time</td><td><b>a time-saving machine</b></td><td>機器<b>自己</b>省時間 → V-ing</td></tr>
+      <tr><td>a dog that is trained well</td><td><b>a well-trained dog</b></td><td>狗<b>被</b>訓練 → p.p.</td></tr>
+      <tr><td>vegetables grown at home</td><td><b>home-grown vegetables</b></td><td>菜<b>被</b>種 → p.p.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="rule">
+    <h3>② 數字 + 名詞 → 名詞用單數</h3>
+    <div><span class="f">a five-star hotel</span>　<span class="f">a twenty-story building</span>　<span class="f">a ten-page report</span>　<span class="f">a three-year-old boy</span></div>
+    <div>中間的名詞是「單位」，<b>不加 -s</b>。</div>
+  </div>
+
+  <div class="rule">
+    <h3>③ 外觀、個性 → 形容詞／數字 + N-ed</h3>
+    <div><span class="f">long-haired</span>　<span class="f">red-haired</span>　<span class="f">three-legged</span>　<span class="f">kind-hearted</span>　<span class="f">open-minded</span>　<span class="f">bad-tempered</span></div>
+    <div>意思是「<b>有</b>……的」：a girl with long hair = a long-haired girl。</div>
+  </div>
+
+  <div class="rule">
+    <h3>④ 看起來／聞起來／嚐起來 → 形容詞 + V-ing</h3>
+    <div><span class="f">nice-looking</span>　<span class="f">sweet-smelling</span>　<span class="f">good-tasting</span>　<span class="f">silly-looking</span></div>
+    <div>a dish that tastes good → a good-<b>tasting</b> dish（不是 good-tasted）</div>
+  </div>
+
+  <div class="rule">
+    <h3>⑤ 其他固定組合</h3>
+    <div>名詞 + 形容詞：<span class="f">sugar-free</span>　<span class="f">user-friendly</span>　<span class="f">world-famous</span></div>
+    <div>被動狀態：<span class="f">ready-made</span>（現成的）　<span class="f">red-painted</span></div>
+    <div>多字組成：<span class="f">an all-you-can-eat restaurant</span>　<span class="f">a once-in-a-lifetime experience</span></div>
+  </div>
+
+  <div class="trap"><b>兩個特殊考點</b><br>
+  ① strike 當「受災難、疾病所苦」時，p.p. 變成 <b>stricken</b>：drought-stricken、poverty-stricken、flood-stricken。<br>
+  ② <b>-ly 副詞</b>後面通常<b>不加連字號</b>：a <b>newly built</b> skyscraper。</div>
+</section>
+
+<!-- L5 -->
+<section>
+  <div class="eyebrow">Part 2 · L5 as if 彷彿、好像</div>
+  <h2>只要問：as if 後面那件事，跟前面「同時」還是「更早」？</h2>
+
+  <div class="rule">
+    <h3>① 同時發生 → as if + 過去式／were</h3>
+    <div><span class="f">He talks as if he knew everything.</span>（現在講得好像什麼都知道）</div>
+    <div><span class="f">He talked as if he knew everything.</span>（那時講得好像什麼都知道）</div>
+    <div>be 動詞不管主詞是誰，一律用 <b>were</b>：Katie looks as if she <b>were</b> ill.</div>
+  </div>
+
+  <div class="rule">
+    <h3>② 更早發生 → as if + had + p.p.</h3>
+    <div><span class="f">He talks as if he had known the news yesterday.</span></div>
+    <div><span class="f">Katie looked as if she had been ill.</span>（看起來好像之前生過病）</div>
+  </div>
+
+  <div class="trap"><b>常見錯誤</b>　前面用 talks 或 talked <b>都不影響</b>判斷，只看時間先後。<br>
+  had 後面一定要接 <b>p.p.</b>：had solve ✗ → had <b>solved</b> ✓</div>
+</section>
+
+<!-- L6 -->
+<section>
+  <div class="eyebrow">Part 3 · L5–L6 假設語氣 · 倒裝 · 混合</div>
+  <h2>先判斷時間，再決定動詞</h2>
+
+  <div class="rule">
+    <h3>① 三種假設語氣</h3>
+    <div class="tw"><table>
+      <tr><th>跟什麼相反</th><th>if 子句</th><th>主要子句</th></tr>
+      <tr><td>現在</td><td>If I <b>were</b> you, / If I <b>won</b>…</td><td>would／could + VR</td></tr>
+      <tr><td>過去</td><td>If I <b>had taken</b>…</td><td>would／could + <b>have p.p.</b></td></tr>
+      <tr><td>未來（不太可能）</td><td>If Peter <b>were to</b> ask me out…</td><td>would／could + VR</td></tr>
+    </table></div>
+  </div>
+
+  <div class="rule">
+    <h3>② 倒裝：拿掉 if，把 were／had 移到主詞前面</h3>
+    <div><span class="f">If I were you → Were I you</span></div>
+    <div><span class="f">If I had known → Had I known</span></div>
+    <div><span class="f">If it were not for… → Were it not for…</span>（要不是…，現在）</div>
+    <div><span class="f">If it had not been for… → Had it not been for…</span>（要不是…，過去）</div>
+  </div>
+
+  <div class="rule">
+    <h3>③ 混合句：過去的條件 → 現在的結果</h3>
+    <div><span class="f">If he had taken the advice <b>then</b>, he would be fine <b>now</b>.</span></div>
+    <div>看到句子裡有 <b>then／last year</b> 和 <b>now／today</b> 同時出現，就要想到混合句。</div>
+  </div>
+
+  <div class="rule">
+    <h3>④ wish 假設語氣</h3>
+    <div><span class="f">I wish I were tall.</span>（現在）　<span class="f">I wish I had told her the truth.</span>（過去）</div>
+  </div>
+
+  <div class="trap"><b>陷阱</b>　不是每個 if 都是假設！If it <b>rains</b> tomorrow, we <b>will</b> stay home. 這是<b>真的可能發生</b>的條件句，用現在式＋will。<br>
+  另外：If I had <b>a</b> wings ✗ → If I had wings ✓（wings 是複數，不加 a）</div>
+</section>
+
+<!-- REDO -->
+<section class="drill">
+  <div class="eyebrow">Part 4 · 錯題回練</div>
+  <h2>上次寫錯的類型，換句再練一次</h2>
+  <ol>
+    <li>We must control the <span class="ans" data-alt="fast-spreading|fast spreading">fast-spreading</span> fire. <span class="zh">(a fire that spreads fast)</span></li>
+    <li>It was a <span class="ans" data-alt="fast-growing|fast growing">fast-growing</span> company. <span class="zh">(a company that grows fast)</span></li>
+    <li>She lives in a <span class="ans" data-alt="ten-story|ten story">ten-story</span> building. <span class="zh">(a building with ten stories)</span></li>
+    <li>The boy acted as if he <span class="ans">were</span> a king last night. <span class="zh">(be)</span></li>
+    <li>Mia talks as if she <span class="ans">were</span> my mom, but she isn't. <span class="zh">(be)</span></li>
+    <li>Leo talks as if he <span class="ans">had finished</span> the homework, but he hasn't. <span class="zh">(finish)</span></li>
+    <li>Tom looked pale, as if he <span class="ans">had seen</span> a ghost. <span class="zh">(see)</span></li>
+    <li>If I <span class="ans">had</span> wings, I would fly to you. <span class="zh">(have)</span></li>
+    <li><span class="ans">Had</span> I studied harder, I would have passed the test.</li>
+    <li><span class="ans">Were</span> I you, I would say sorry to her.</li>
+  </ol>
+</section>
+
+<!-- MC -->
+<section>
+  <div class="eyebrow">Part 5 · 段考模擬選擇題</div>
+  <h2>點一下選答案</h2>
+  <div class="score" id="score">已作答 0 / 0　答對 0</div>
+  <div id="mcList"></div>
+  <div class="actions"><button type="button" id="mcReset" class="ghost">清除重做</button></div>
+</section>
+</div>
+
+<script>
+const MC=[
+["L4 複合形容詞"],
+["Be careful of the ___ cars on this road.",["fast-moved","fast-moving","fastly-moving","moving-fast"],1,"車自己動 → 主動 V-ing。"],
+["The ___ cake looked so beautiful that nobody wanted to cut it.",["home-making","home-made","made-home","house-making"],1,"蛋糕是「被」做的 → p.p.。"],
+["They live in a ___ house by the lake.",["two-stories","two-story","twos-story","two-storys"],1,"數字 + 名詞當形容詞，名詞用單數。"],
+["Mr. Chen is a ___ man; he gets angry easily.",["short-tempered","short-temper","temper-short","short-tempering"],0,"個性特質 → 形容詞 + N-ed。"],
+["This phone is very ___; even my grandma can use it.",["user-friendly","users-friendly","friendly-user","user-friendlied"],0,"名詞 + 形容詞：對使用者友善。"],
+["The ___ soup made everyone ask for a second bowl.",["good-tasted","well-tasting","good-tasting","tasting-good"],2,"嚐起來好喝 → 形容詞 + V-ing（taste 是連綴動詞，接形容詞 good）。"],
+["Thousands of people in the ___ area need clean water.",["flood-strike","flood-striking","flood-struck","flood-stricken"],3,"受災難所苦 → stricken。"],
+["Turning off the lights is an ___ habit.",["energy-saved","energy-saving","saving-energy","energies-saving"],1,"這個習慣「自己」省能源 → V-ing；名詞用單數。"],
+["I bought a ___ dress because there was no time to have one made.",["ready-made","ready-making","made-ready","readily-made"],0,"ready-made：現成的。"],
+["There was a grand opening for the ___ hotel.",["newly-building","newly built","new-building","newly builds"],1,"-ly 副詞後面不加連字號；飯店「被」蓋 → built。"],
+["Our class went on a ___ trip to Hualien.",["three-days","three-day","three-day's","day-three"],1,"數字 + 名詞，名詞用單數。"],
+["Dad is an ___ person; he always listens to different ideas.",["open-minded","open-mind","mind-opened","opening-minded"],0,"個性特質 → 形容詞 + N-ed。"],
+["Nobody wanted this ___ job because it takes hours every day.",["time-consumed","time-consuming","times-consuming","consuming-time"],1,"工作「自己」花掉時間 → V-ing；time 不加 s。"],
+["Bad habits in childhood can have ___ effects on one's life.",["long-lasting","long-lasted","lasting-long","long-last"],0,"影響「自己」持續 → V-ing。"],
+["L5 as if"],
+["Kevin talks as if he ___ everything about cars, but he knows very little.",["knows","knew","has known","had known"],1,"跟 talks 同時、與現在事實相反 → 過去式 knew。"],
+["She looked tired, as if she ___ all night.",["doesn't sleep","didn't sleep","hasn't slept","hadn't slept"],3,"沒睡覺比「看起來累」更早 → had p.p.。"],
+["My little brother speaks as if he ___ a teacher.",["is","were","has been","will be"],1,"同時、與事實相反 → were。"],
+["Amy described Japan as if she ___ there, but she has never left Taiwan.",["were","has been","had been","is"],2,"去過日本比「描述」更早 → had been。"],
+["Mom treats the dog as if it ___ her baby.",["is","were","had been","will be"],1,"同時 → were（主詞是 it 也用 were）。"],
+["He ate the pizza quickly, as if he ___ for days.",["doesn't eat","hadn't eaten","didn't eat","hasn't eaten"],1,"沒吃東西比「吃披薩」更早 → had p.p.。"],
+["The kid acted as if he ___ an adult last night, but he is only seven.",["is","was","were","had been"],2,"「表現得像大人」跟 acted 同時 → were（考試不要寫 was）。"],
+["Lily smiled at me ___ she knew my secret.",["as if","even if","if","unless"],0,"彷彿、好像 → as if。"],
+["Jason talks as if he ___ the math problem, but actually he hasn't solved it.",["solves","solved","had solved","has solve"],2,"解題比「講話」更早 → had + p.p.（solved）。"],
+["The little girl held her dad's hand tightly, as if he ___.",["will disappear","would disappear","had disappeared","disappear"],1,"擔心「之後」會發生的事 → would + VR。"],
+["L5–L6 假設語氣 · 倒裝"],
+["___ I you, I would apologize to her.",["Was","Were","Had","Am"],1,"If I were you → Were I you。"],
+["___ more time, I would have finished the test.",["If I have","Had I had","Have I had","Were I have"],1,"與過去相反 If I had had → Had I had。"],
+["___ your help, I would have failed the exam.",["Were it not for","Had it not been for","If it is not for","Unless"],1,"主要子句 would have failed（過去）→ Had it not been for。"],
+["___ the rain, we could go hiking now.",["Were it not for","Had it not been for","If not","Unless"],0,"now → 與現在相反 → Were it not for。"],
+["Had she left home earlier, she ___ the bus.",["wouldn't miss","wouldn't have missed","won't miss","hadn't missed"],1,"Had she left = If she had left（過去）→ would have p.p.。"],
+["If I had taken the doctor's advice then, I ___ healthy now.",["would be","would have been","will be","am"],0,"混合句：then（過去條件）→ now（現在結果）→ would + VR。"],
+["If he ___ harder last year, he would be a college student today.",["studied","had studied","studies","would study"],1,"混合句：last year 是過去 → had p.p.。"],
+["I wish I ___ the truth to her yesterday.",["told","tell","had told","would tell"],2,"wish + 過去 → had p.p.。"],
+["I wish I ___ taller.",["am","were","had been","will be"],1,"wish + 現在 → were。"],
+["If the sun ___ in the west tomorrow, I would believe you.",["rises","were to rise","had risen","will rise"],1,"與未來事實相反（不可能）→ were to + VR。"],
+["If it ___ tomorrow, we will stay home.",["rains","rained","had rained","were to rain"],0,"主要子句是 will → 真實條件句，if 用現在式。"],
+["___ the weather been nice, the game wouldn't have been canceled.",["If","Were","Had","Should"],2,"If the weather had been → Had the weather been。"],
+["Amy is very busy, but if she ___, she would join us.",["isn't","weren't","hadn't been","doesn't"],1,"與現在事實相反 → weren't。"],
+["I would be in trouble now ___ your warning years ago.",["had it not been for","were it not for","if it is not for","unless"],0,"years ago（過去）→ now（現在）的混合句。"]
+];
+</script>
+<script>
+/* ---------- typed blanks ---------- */
+const norm=s=>s.toLowerCase().replace(/[’‘`]/g,"'").replace(/[.?!,]/g,"").replace(/\s+/g," ").trim();
+let bid=0;
+document.querySelectorAll('.drill').forEach(drill=>{
+  drill.querySelectorAll('.ans').forEach(sp=>{
+    const key=sp.textContent.trim(), alts=(sp.dataset.alt||key).split('|');
+    const inp=document.createElement('input');
+    inp.type='text';inp.className='blank';inp.id='b'+(++bid);
+    inp.setAttribute('autocomplete','off');inp.setAttribute('autocapitalize','off');inp.setAttribute('autocorrect','off');inp.spellcheck=false;
+    inp.setAttribute('aria-label','第 '+bid+' 格');
+    inp.style.width=Math.max(4.5,key.length*0.75+2)+'em';
+    inp.dataset.key=key;inp.dataset.alts=JSON.stringify(alts.map(norm));
+    inp.addEventListener('input',()=>{inp.classList.remove('ok','no');const f=inp.nextElementSibling;if(f&&f.classList.contains('fix'))f.remove()});
+    sp.replaceWith(inp);
+  });
+  const bar=document.createElement('div');bar.className='actions';
+  bar.innerHTML='<button type="button">批改</button><button type="button" class="ghost">清除</button><span class="result" aria-live="polite"></span>';
+  const [gradeBtn,clearBtn,res]=bar.children;
+  drill.appendChild(bar);
+  const inputs=[...drill.querySelectorAll('.blank')];
+  gradeBtn.addEventListener('click',()=>{
+    let ok=0,filled=0;
+    inputs.forEach(inp=>{
+      const f=inp.nextElementSibling;if(f&&f.classList.contains('fix'))f.remove();
+      const v=norm(inp.value);if(v)filled++;
+      const good=JSON.parse(inp.dataset.alts).includes(v);
+      inp.classList.toggle('ok',good);inp.classList.toggle('no',!good);
+      if(good)ok++;else{const s=document.createElement('span');s.className='fix';s.textContent=inp.dataset.key;inp.after(s)}
+    });
+    res.textContent=`答對 ${ok} / ${inputs.length}`+(filled<inputs.length?`（${inputs.length-filled} 格空白）`:'');
+  });
+  clearBtn.addEventListener('click',()=>{inputs.forEach(inp=>{inp.value='';inp.classList.remove('ok','no');const f=inp.nextElementSibling;if(f&&f.classList.contains('fix'))f.remove()});res.textContent=''});
+  inputs.forEach((inp,i)=>inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();(inputs[i+1]||gradeBtn).focus()}}));
+});
+
+/* ---------- multiple choice ---------- */
+const L="ABCD",list=document.getElementById('mcList'),scoreEl=document.getElementById('score');
+let n=0,total=0,done=0,right=0;
+MC.forEach(it=>{
+  if(it.length===1){const h=document.createElement('div');h.className='grp';h.textContent=it[0];list.appendChild(h);return}
+  n++;total++;const [stem,opts,ok,why]=it;
+  const q=document.createElement('div');q.className='q';
+  q.innerHTML=`<div class="stem"><span class="n">${n}.</span><span>${stem}</span></div><div class="opts"></div><div class="why" hidden></div>`;
+  const box=q.querySelector('.opts'),w=q.querySelector('.why');
+  opts.forEach((o,i)=>{const bt=document.createElement('button');bt.type='button';bt.className='opt';bt.textContent=`(${L[i]}) ${o}`;
+    bt.addEventListener('click',()=>{if(q.dataset.done)return;q.dataset.done=1;done++;
+      if(i===ok){bt.classList.add('right');right++}else{bt.classList.add('wrong');box.children[ok].classList.add('right')}
+      w.innerHTML=`<b>答案 (${L[ok]})</b>　${why}`;w.hidden=false;upd()});
+    box.appendChild(bt)});
+  list.appendChild(q)});
+function upd(){scoreEl.textContent=`已作答 ${done} / ${total}　答對 ${right}`}
+upd();
+document.getElementById('mcReset').addEventListener('click',()=>{done=right=0;list.querySelectorAll('.q').forEach(q=>{delete q.dataset.done;q.querySelector('.why').hidden=true;q.querySelectorAll('.opt').forEach(o=>o.classList.remove('right','wrong'))});upd()});
+</script>
+
+</body>
+</html>
